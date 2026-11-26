@@ -1,19 +1,11 @@
 # Phase 3: keyless ERC-5564 history retrieval
 
-**Free public RPCs can miss ERC-5564 announcements without returning an error.**
-On Base, one endpoint silently omitted 48 logs during a sequential backfill. The
-parallel backfill reached head in 28 minutes and 16,296 requests, using four workers
-and five RPC hostnames across four providers.
+**Public RPCs can silently omit ERC-5564 announcements.** On Base, one endpoint skipped 48 logs during sequential backfill. The parallel run reached head in 28 minutes and 16,296 requests using four workers and five hostnames across four providers.
 
-Keyless retrieval reached head on all seven chains. Where an endpoint accepted the
-whole history, a cold start took 8–17 seconds and 30–52 requests. Of 190 probed
-endpoints, 105 answered `eth_getLogs` and 77 accepted the deploy-block query.
+Keyless scans reached head on seven chains. Where an endpoint accepted the entire history, cold starts took 8–17 s and 30–52 requests. Of 190 endpoints probed, 105 answered `eth_getLogs` and 77 accepted the deploy-block query.
 
-The benchmark covers `Announcement` logs from deployment to the measured head of the
-canonical Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`. The read-only run
-used a residential Bazzite host on 2026-11-26, at most 4 requests/s per host and
-Retry-After-aware backoff on HTTP 429. User-Agent was
-`erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)`.
+The read-only Bazzite run on 2026-11-26 queried canonical Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564` from deployment to the measured head. It used a residential IP, ≤4 requests/s per host, Retry-After-aware HTTP 429 backoff and User-Agent `erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)`.
+
 [Code](src/phase3/) · [Raw results](data/phase3/)
 
 ## Summary per chain
@@ -45,38 +37,10 @@ code at the deploy block and no code at the previous block.
 
 ## Findings
 
-1. **Block-range caps drive request cost.** Observed caps ran from 10 blocks to
-   10,000,000 on arb1.arbitrum.io. Tenderly accepted whole-history queries on Ethereum,
-   Arbitrum, OP Mainnet, Polygon and Sepolia, as did rpc.gnosischain.com and gateway.fm
-   on Gnosis. No tested Base endpoint accepted the whole range. Pocket handled roughly
-   10,000 blocks per request before reporting pruned history. At 1,000 blocks per
-   request, Base would take about 47,000 requests and over three hours at 4 requests/s.
-   The parallel run used Pocket, two Tenderly hostnames, thirdweb and Sentio.
-   [Base parallel run](data/phase3/canonical/retrieve-base-parallel.json)
-2. **Recent-block access can hide an archive limit.** publicnode required a token for
-   history on five chains. blockreq served the last 1,024 blocks, blockmachine the last
-   100–10,000, and thyme and blazingnode the last 128. Across chains, 28–53% of probed
-   endpoints did not answer `eth_getLogs` successfully.
-   [Endpoint results](data/phase3/endpoints.csv)
-3. **A successful response can omit logs.** Three Base endpoints
-   (`base.daybreak-rpc.network`, `rpc.degenprotocol.io`, `rpc.baseazul.dev`) and one OP
-   Mainnet endpoint (`public.1rpc.io`) returned `[]` for windows with known
-   announcements. The OP endpoint did so four times for 50-block windows.
-   All four passed the deploy-block probe. On Base, the sequential
-   probe-informed run switched to Daybreak at block 34,304,282 and exhausted its
-   8,000-request budget at block 46,544,282, about 66% through history. It returned no
-   logs in the range served by Daybreak. The parallel run returned the missing logs.
-   Pocket also returned one OP window correctly and reported pruned history on retry.
-   Its observed spans varied from 10,438 to 70,538 blocks despite a 10,001-block error
-   message. [Consistency checks](data/phase3/consistency/) · [Base sequential run](data/phase3/canonical/retrieve-base-probe-informed.json)
-4. **Indexers also miss logs.** Blockscout v2 matched the Ethereum and OP Mainnet sets.
-   On Sepolia it missed 13 logs in blocks 11,909,881–11,926,046 while reporting 0–2 blocks
-   of head lag. It indexed the transactions, but `/transactions/{hash}/logs` returned
-   HTTP 500. Routescan and both RPC runs had those logs. On Ethereum, the first
-   Blockscout v2 fetch omitted transaction hashes on 263 of 296 rows, so comparison
-   also used block and log index. Routescan covered Ethereum and Sepolia, with 51–471
-   blocks of head lag. Etherscan v2 requires a key and its free tier excludes Base.
-   [Source comparisons](data/phase3/cross-source.csv)
+1. **Whole-history queries work on six chains.** Tenderly accepted them on Ethereum, Arbitrum, OP Mainnet, Polygon and Sepolia. Gnosis also had rpc.gnosischain.com and gateway.fm. Base needed multiple endpoints (Pocket, two Tenderly hostnames, thirdweb and Sentio). At 1,000 blocks/request and 4 requests/s, a Base backfill would take ~47,000 calls and over three hours. [Base parallel run](data/phase3/canonical/retrieve-base-parallel.json)
+2. **Recent access can hide archive limits.** publicnode required a token for history on five chains. blockreq served the last 1,024 blocks, blockmachine 100–10,000, thyme and blazingnode 128. Per chain, 28–53% of probed endpoints failed `eth_getLogs`. [Endpoint results](data/phase3/endpoints.csv)
+3. **Successful responses can omit logs.** Base’s `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev` and OP’s `public.1rpc.io` returned `[]` for known announcements despite passing the deploy-block probe. OP had four misses in 50-block windows. The Base probe-informed run switched to Daybreak at block 34,304,282, got no more logs and exhausted 8,000 requests at block 46,544,282 (66% through history). Parallel retrieval recovered the missing logs. Pocket’s OP response succeeded once and reported pruned history on retry. Observed spans varied from 10,438 to 70,538 blocks despite a 10,001-block error. [Consistency checks](data/phase3/consistency/) · [Base sequential run](data/phase3/canonical/retrieve-base-probe-informed.json)
+4. **Indexers can also miss logs.** Blockscout v2 matched Ethereum and OP, but missed 13 Sepolia logs in blocks 11,909,881–11,926,046 with 0–2 blocks of head lag. It indexed the transactions, but `/transactions/{hash}/logs` returned HTTP 500. Routescan and both RPC runs returned those logs. The first Ethereum Blockscout v2 fetch lacked transaction hashes on 263 of 296 rows, so comparison used block and log index. Routescan lagged 51–471 blocks on Ethereum and Sepolia. Etherscan v2 requires a key and its free tier excludes Base. [Source comparisons](data/phase3/cross-source.csv)
 
 ## How the endpoints behave
 
@@ -168,8 +132,7 @@ on Arbitrum. Starting at deployment cuts requests by 25–76%.
 
 ## Other stealth-payment activity (extra scope)
 
-Counted the same way (keyless RPC, deploy block to head, adaptive client). Data is in
-[`data/phase3/umbra/`](data/phase3/umbra/). Umbra predates ERC-5564 and announces through
+Keyless adaptive scans counted Umbra logs from deployment to head. Umbra predates ERC-5564 and uses
 its own contract `0xFb2dc580Eed955B528407b4d36FfaFe3da685401`, event
 `Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)`.
 Its deploy blocks were found by `eth_getCode` bisection and confirmed on two endpoints.
@@ -203,8 +166,7 @@ log:
 - Shielded pools (Railgun, Privacy Pools, Aztec) are a different mechanism and are not
   stealth-address announcements.
 
-Not checked: other contracts that might emit a lookalike event. This section covers only the
-canonical singleton and Umbra.
+Coverage is limited to the canonical singleton and Umbra. Other contracts may emit similar events.
 
 ## Wallet retrieval and progress
 
@@ -250,32 +212,12 @@ canonical singleton and Umbra.
 
 ## Caveats
 
-- One day, one vantage point (a residential IP in Europe), one run per strategy. Public
-  endpoint behaviour changes often (several chainlist entries were discontinued that day),
-  and load-balanced services (Pocket, routeme, xrpc) answered the same query differently
-  minutes apart. Treat caps as observed on 2026-11-26, not as documented limits.
-- "Full history" means the endpoint returned the deploy-block window without an error. Four
-  endpoints passed that check while returning empty results (finding 3). The consistency
-  check catches these only for windows around known announcements (3 targets per chain). Only Ethereum,
-  OP Mainnet and Sepolia have an independent indexer reference. On Base, Arbitrum,
-  Gnosis and Polygon the reference is RPC runs over different endpoints. They agree exactly
-  on Arbitrum, Gnosis and Polygon. On Base, the complete run agrees with both partial runs
-  on every range not served by a silent endpoint.
-- The max-span search ends at head. An endpoint that serves only recent blocks shows its
-  recent window as its "span". The summary therefore reports spans only for full-history
-  endpoints; `endpoints.csv` has all of them.
-- Latency covers ≤1,000-block windows over a small event set. Response times for larger
-  windows or heavier events are not characterised. p95 from 10 samples is close to the max.
-- The client is a reference implementation in Bun, not a browser. A browser adds CORS:
-  not tested here. Some endpoints may refuse browser origins.
-- Blockscout Cloudflare challenges are recorded as blocked. A real browser may pass them.
-  An automated client should not try to.
-- The max-span search treats any error as "too wide". One load-balanced endpoint
-  (publicnode Sepolia) answered "block range extends beyond current head" because its
-  backend lagged; its recorded span of 3 is that artifact, not a cap. The classifier now
-  treats that message as transient.
-- Request rates were kept at ≤4/s per host. A wallet that parallelises harder will see
-  more 429s than recorded here.
+- One run per strategy on 2026-11-26 from a residential IP in Europe. Some Chainlist endpoints were discontinued that day. Pocket, routeme and xrpc gave different answers minutes apart. Caps are observations for that date.
+- A successful deploy-block query qualifies as “full history” even if it omits logs. The consistency check only tests windows around three known logs per chain. Only Ethereum, OP and Sepolia have indexer references. RPC-only comparisons agree on Arbitrum, Gnosis and Polygon, and on Base outside ranges served by silent endpoints.
+- Max-span probes end at head, so recent-only endpoints show their recent window as their span. The summary uses deploy-block-capable endpoints, while [endpoints.csv](data/phase3/endpoints.csv) includes all spans. The search treated errors as range limits. A lagging publicnode backend in Sepolia produced a spurious 3-block span. The classifier now treats its “block range extends beyond current head” message as transient.
+- Latency covers ≤1,000-block windows with few logs. With 10 samples, p95 is close to the maximum.
+- The Bun client leaves browser CORS untested. Blockscout Cloudflare challenges count as blocked. Keep those challenges out of automated retries.
+- Probes used ≤4 requests/s per host. Higher concurrency can trigger more 429s.
 
 ## Reproduce
 

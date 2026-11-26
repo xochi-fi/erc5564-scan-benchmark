@@ -1,52 +1,46 @@
 # Methods
 
-How the harness generates inputs, what each timer covers, and what it writes. Headline results are in the [README](README.md); details in [PHASE1.md](PHASE1.md), [FINDINGS.md](FINDINGS.md) and [PHASE3.md](PHASE3.md). The last section has the full reproduce commands, repository layout and cross-phase caveats.
+[Overview](README.md) · [Phase 1](PHASE1.md) · [Phase 2](FINDINGS.md) · [Phase 3](PHASE3.md) · [Commands](#commands)
 
 # Phase 1: local scanning
 
 ## Workloads and correctness
 
-- `zero`: every announcement targets a decoy recipient.
-- `sparse`: index `i` targets the scanned recipient when `i % matchEvery === 0`; the default `matchEvery` is 1000. Remaining entries target the decoy.
-- Every entry uses a distinct, validated ephemeral key. Scalar generation is domain-separated SHA256 with rejection sampling, never an SDK random-key fallback.
-- Recipient keys, ephemeral keys, transaction/block hashes, log positions, and ETH metadata are deterministic for a given seed and fixture options. Generated JSONL and manifest bytes are reproducible with the pinned software.
-- Raw JSON-RPC-shaped logs contain valid ABI-encoded `Announcement` data and topics. There are 128 synthetic announcements per block, each in a distinct synthetic transaction. These are not observed chain traffic or adoption estimates.
-- The sender-selected destination schedule creates `expectedIndices`; scanning does not create its own correctness oracle. Verification compares exact ordered `(blockHash, transactionHash, logIndex)` identities, including multiplicity. Dropped SDK rejections cannot silently become a passing result.
-- Generation counts target view-tag hits using the target viewing key and **each announcement's** ephemeral key. There is no fixed per-recipient view tag. Natural nonmatch tag hits are retained and reported, not forced to an assumed rate.
+- `zero` targets a decoy throughout. `sparse` targets the recipient at indices divisible by `matchEvery` (default 1000), and the decoy elsewhere.
+- Domain-separated SHA256 with rejection sampling generates distinct, validated ephemeral keys. A fixed seed and options reproduce keys, event identities, ETH metadata, JSONL and manifest bytes.
+- ABI-encoded synthetic logs model 128 announcements per block, each in its own transaction. Generation counts per-announcement tag hits with the target viewing key and each ephemeral key, including natural nonmatch hits.
+- The sender schedule supplies `expectedIndices`. Verification checks ordered `(blockHash, transactionHash, logIndex)` with multiplicity, so dropped SDK rejections cannot pass as missing matches.
 
-The loader verifies schema, scalar/point validity, event decoding, deterministic identities/order, row count, file SHA256, and serialized byte accounting before measurement. Tag-hit counts come from the generation manifest; the loader does not repeat per-entry ECDH and accidentally warm that scan path.
+Before timing, the loader checks schema, scalar/point validity, decoding, identities/order, row count, SHA256 and byte accounting. It reads tag-hit counts from the manifest to avoid warming ECDH.
 
-Regression tests cover byte determinism, matching/nonmatching entries, independent target-tag calculations, derived stealth private keys, truncated/corrupt inputs, manifest errors, incremental equivalence, and duplicate multiplicities. No mocks or network calls are used.
+Offline tests use real implementations and cover determinism, matches/nonmatches, independent tag calculations, stealth private keys, input corruption, manifest errors, incremental equivalence and duplicates.
 
 ## Measurement boundary
 
-Each engine/mode/repetition runs in a **fresh Bun process**, sequentially:
+Each engine/mode/repetition runs sequentially in a fresh Bun process:
 
-1. Read provenance and collect garbage; snapshot memory before fixture loading.
-2. Load, validate and decode the fixture; collect garbage and snapshot memory.
+1. Read provenance, collect garbage and snapshot memory before loading.
+2. Load, validate and decode, then collect garbage and snapshot memory.
 3. Prepare expected identities and optionally scan the first `--warmup` entries.
-4. Collect garbage and snapshot memory; time one complete scan.
-5. Snapshot CPU/memory and process-lifetime peak RSS; verify returned identities outside the timer.
+4. Collect garbage, snapshot memory and time one complete scan.
+5. Snapshot CPU and memory (including lifetime peak RSS), then verify returned identities.
 
-`--warmup 0` means no explicit scan warmup, not a cold OS cache or untouched cryptographic runtime: imports, ABI decoding, key validation and recipient derivation already occurred during setup. Fixture generation, loading, decoding, checksums, setup GC, warmup, provenance, and correctness comparisons are excluded from `scanMs`. In-scan allocation and automatic GC remain included.
+`scanMs` covers scan allocation and automatic GC. `--warmup 0` skips explicit warmup, after imports, ABI decoding, key validation and recipient derivation have already run.
 
 ### Engines and modes
 
-- **sdk:** unmodified public `getAnnouncementsForUser`, without sender filters or a client. Its eager promises and matching-result allocations are part of the measurement. It does not fetch transactions on this path.
-- **crypto:** `checkStealthAddress` plus view-tag extraction and matching-result collection. Every entry still performs ECDH/hash before the tag check.
-- **full:** one whole-array scan.
-- **incremental:** contiguous batches, including batching/result-accumulation overhead. This measures processing an available history in bounded batches, not network streaming, persisted checkpoints, new-head delivery, or reorg recovery.
-
-A fresh full scan models discarding caller-owned scan progress while retaining viewing keys. It does **not** prove seed-only recovery, StOMR state recovery, completeness of a remote provider, or that discovered synthetic addresses hold spendable funds.
+- **sdk** uses unmodified `getAnnouncementsForUser` without sender filters or a client, including eager promises and result allocation.
+- **crypto** uses `checkStealthAddress`, with ECDH/hash per entry before the view-tag check, and collects matches.
+- **full** scans the whole array once. A fresh run models losing scan progress while retaining viewing keys. Seed-only and StOMR recovery, provider completeness and spendability are outside scope.
+- **incremental** scans contiguous batches of retained history, including batch/result overhead. Network streaming, checkpoints, new heads and reorgs are outside scope.
 
 ### Memory and bytes
 
-- Memory snapshots report RSS, JS heap used, and external memory before loading, after loading/GC, before scanning/GC, and immediately after scanning. Snapshot differences are not an exact allocation profile.
-- `processLifetimePeakRssBytes` is the OS process high-water mark through the scan, including imports, fixture loading/validation and warmup. It is **not** scan-only peak memory. An in-process unit-test run is not an isolated memory measurement.
-- `fixtureBytes` counts on-disk JSONL bytes.
-- `syntheticRpcResponseBytes` counts the uncompressed UTF-8 serialization of `{"jsonrpc":"2.0","id":1,"result":[...rawLogs]}`. It is not observed download traffic, HTTP/TLS/compression overhead, calldata size, or a gas estimate.
+- Snapshots record RSS, JS heap and external memory before loading, after loading/GC, before scanning/GC and immediately after scanning. Deltas are approximate.
+- `processLifetimePeakRssBytes` includes imports, fixture loading/validation and warmup. Use fresh processes for isolation.
+- `fixtureBytes` is on-disk JSONL size. `syntheticRpcResponseBytes` counts uncompressed UTF-8 bytes of `{"jsonrpc":"2.0","id":1,"result":[...rawLogs]}`, excluding transport overhead and compression.
 
-Fixture generation/loading are streamed, but generation retains an ephemeral-key uniqueness set and loading retains the full decoded dataset plus validation sets. Full SDK scans also create one promise per input. Do not interpret streaming I/O as constant-memory operation; provision RAM for million-entry runs.
+Streaming fixture I/O still retains key uniqueness sets during generation and decoded data plus validation sets when loading. Full SDK scans allocate one promise per entry. Provision several GB of RAM for million-entry runs.
 
 ## Artifacts
 
@@ -166,22 +160,7 @@ Phase 2 measures what a wallet pays to discover its payments when it pages throu
 
 ## What phase 2 does not measure
 
-- Real provider behaviour: TLS, HTTP compression, provider-side query time,
-  block-range/result-size limits, rate limiting, retries, jitter or loss. The
-  optional mainnet probe records real fetch cost separately; it is not mixed
-  into the deterministic results.
-- Overlap: fetching, scanning and verifying are strictly sequential so the
-  costs are separable. A wallet that prefetches the next page while scanning
-  would hide up to min(network, scan) of the total.
-- Ordering: pages are scanned oldest-first from the first fixture block; the
-  sparse schedule has a payment at index 0, so `firstMatchS` is essentially the
-  cost of the first page. Newest-first or birthday-block strategies are not
-  modelled.
-- Reorgs, removed logs, new-head subscriptions, ERC-20 payments, nonce/gas for
-  spending, private key derivation for sweeping, privacy of the queries
-  (every getLogs and every receipt/balance lookup reveals interest to the RPC),
-  browser/mobile runtimes, and adoption-realistic announcement volumes or match
-  rates (1 in 1000 here).
+See [shared caveats](#caveats-for-phases-1-and-2) for modeled link and runtime limits. The optional mainnet probe records real fetch cost separately. Oldest-first order and a match at index 0 make `firstMatchS` a first-page metric. Birthday-block and newest-first scans are outside scope, along with reorgs, subscriptions, ERC-20 payments, spending nonce/gas and sweeping key derivation. Query privacy is outside scope: every log, receipt and balance lookup reveals interest to the RPC.
 
 # Reproducing, layout and scope
 
@@ -209,8 +188,8 @@ bun run bench --sizes 256 --match-every 16 --batch-size 37 --repetitions 1
 # Phase 1: scale sweep (1m fixtures need several GB of RAM and disk, and hours)
 bun run bench --sizes 10000,100000,1000000
 
-# Phase 1: profiled crypto scan of an existing fixture (macOS or Linux)
-bun run profile --fixture results/<run>/fixtures/100000-zero --output results/profile-100k \
+# Phase 1: profile an existing zero-match fixture (adjust the run directory)
+bun run profile --fixture results/baseline-100k-1m/fixtures/100000-zero --output results/profile-100k \
   --engine crypto --batch-size 0
 
 # Phase 2: regenerate fixtures and check them against the pinned digests
@@ -228,15 +207,14 @@ scripts/run-bazzite.sh repeat-bazzite   # i7 pinning defaults, host-gated, about
 scripts/phase2-run.sh repeat-turing     # per Pi node; see FINDINGS.md "Reproduce" for the env
 
 # Phase 2: optional read-only mainnet fetch probe (off by default, never mixed into the results)
-bun run phase2:mainnet --rpc <public RPC> --output results/mainnet-probe
+bun run phase2:mainnet --rpc https://ethereum-rpc.publicnode.com --output results/mainnet-probe
 
 # Phase 3 (live network, read-only, keyless; all stages in PHASE3.md)
 bun test test/phase3.test.ts                 # offline: recorded error bodies, simulated endpoints
 bun run phase3 --stage endpoints,reference,probe,retrieve,consistency,report
 ```
 
-Run output goes to `results/` and `work/` (both git-ignored). Output directories must
-not already exist. Every sample checks its discovered payments against an oracle taken
+Phases 1 and 2 use fresh output directories under ignored `results/` or `work/`. Phase 3 writes to `data/phase3/` by default and can overwrite recorded files. Pass `--output results/phase3-my-run` on every stage to keep a separate live run. Every sample checks its discovered payments against an oracle taken
 from the fixture's sender-side schedule; a run exits nonzero if any sample does not
 match. Do not put the large workloads in ordinary CI.
 
@@ -247,9 +225,7 @@ in [`data/phase1/*/fixtures/*/manifest.json`](data/phase1/) and in
 
 ## Hosts
 
-Host labels are listed in the README. Phase 2 used Turing node 1 for the single run (FINDINGS.md Appendix A) and nodes 1-3 for the repeats. None of the hosts were reserved for benchmarking. Host state (load, memory, swap,
-thermals, CPU frequency) is recorded with every phase-2 sample. The three RK1 nodes
-differ by up to 17% because of cooling (see FINDINGS.md, Controls).
+[Hardware and pinning](README.md#hardware) · [Phase 2 node and host-state details](FINDINGS.md#repeat-design)
 
 ## Repository layout
 
@@ -262,7 +238,7 @@ differ by up to 17% because of cooling (see FINDINGS.md, Controls).
 | `scripts/` | host run plans (`phase2-run.sh`), Bazzite wrapper, repeat matrices |
 | `data/` | recorded results: summary CSVs and per-run JSON/JSONL ([data/README.md](data/README.md)) |
 | `PHASE1.md` | phase 1 findings |
-| `FINDINGS.md` | phase 2 findings, verdicts, full tables, Appendix A single run |
+| `FINDINGS.md` | phase 2 findings, repeat tables and Appendix A single run |
 | `PHASE3.md` | phase 3 findings: keyless log retrieval per chain, guidance for wallets |
 | `METHODS.md` | workloads, measurement boundaries, artifacts, phase-2 components, this section |
 

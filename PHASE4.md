@@ -46,6 +46,6 @@ bun scripts/phase4/run.ts "$ORCA_PHASE4_CLI" PAGE_ID data/phase4/reference.json 
 bun scripts/phase4/preflight.ts results/phase4-replay/preflight.json
 ```
 
-To independently recapture the reference, run `bun scripts/phase4/reference.ts results/phase4-replay/reference.json`. The replay needs a fresh sample output directory. The local server serves the harness, controls, and fixture and receives sample output. Chrome fetch accesses public RPC endpoints directly with normal CORS enforcement and omitted credentials.
+To independently recapture the reference, run `bun scripts/phase4/reference.ts results/phase4-replay/reference.json`. Reference requests are paced at a minimum of 275 ms between starts per provider. The replay needs a fresh sample output directory. The local server serves the harness, controls, and fixture and receives sample output. Chrome fetch accesses public RPC endpoints directly with normal CORS enforcement and omitted credentials.
 
 [Sample CSV](data/phase4/samples.csv) · [Browser samples](data/phase4/samples/) · [Pinned reference](data/phase4/reference.json) · [Browser CORS controls](data/phase4/controls.json) · [Command-line preflight summary](data/phase4/preflight.json)

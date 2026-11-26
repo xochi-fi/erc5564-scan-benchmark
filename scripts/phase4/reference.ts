@@ -12,9 +12,12 @@ type Raw = LogIdentity & { address: string; topics: string[]; data: string; remo
 const captures = await Promise.all(sources.map(async ({ url, span }) => {
   const requests: unknown[] = [];
   const startedAt = new Date().toISOString();
+  let nextRequest = 0;
   const makeCall = async <T>(method: string, params: unknown[]): Promise<T> => {
     const id = requests.length + 1;
+    await Bun.sleep(Math.max(0, nextRequest - performance.now()));
     const start = performance.now();
+    nextRequest = start + 275;
     const request = { jsonrpc: '2.0', id, method, params };
     try {
       const response = await fetch(url, {

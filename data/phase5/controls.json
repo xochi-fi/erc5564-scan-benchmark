@@ -1,0 +1,73 @@
+{
+  "startedAt": "2026-11-26T20:00:21.101Z",
+  "suite": "all",
+  "scope": {
+    "chainId": "0x2105",
+    "start": 34304282,
+    "head": 46544281,
+    "pageBlocks": 1000
+  },
+  "controls": [
+    {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "eth_chainId",
+        "params": []
+      },
+      "endpoint": "http://127.0.0.1:8785/allow",
+      "requestBytes": 59,
+      "elapsedMs": 2.900000000372529,
+      "status": 200,
+      "bodyBytes": 42,
+      "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x2105\"}"
+    },
+    {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "eth_chainId",
+        "params": []
+      },
+      "endpoint": "http://127.0.0.1:8785/deny",
+      "requestBytes": 59,
+      "elapsedMs": 1.3999999985098839,
+      "error": {
+        "kind": "fetch-rejection",
+        "message": "TypeError: Failed to fetch"
+      }
+    }
+  ],
+  "controlEvents": [
+    {
+      "method": "OPTIONS",
+      "path": "/allow",
+      "origin": "http://127.0.0.1:8784"
+    },
+    {
+      "method": "POST",
+      "path": "/allow",
+      "origin": "http://127.0.0.1:8784"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/deny",
+      "origin": "http://127.0.0.1:8784"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/allow",
+      "origin": "http://127.0.0.1:8784"
+    },
+    {
+      "method": "POST",
+      "path": "/allow",
+      "origin": "http://127.0.0.1:8784"
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/deny",
+      "origin": "http://127.0.0.1:8784"
+    }
+  ]
+}

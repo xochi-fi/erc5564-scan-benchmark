@@ -1,6 +1,6 @@
 # Methods
 
-[Overview](README.md) · [Phase 1](PHASE1.md) · [Phase 2](FINDINGS.md) · [Phase 3](PHASE3.md) · [Commands](#commands)
+[Overview](README.md) · [Phase 1](PHASE1.md) · [Phase 2](FINDINGS.md) · [Phase 3](PHASE3.md) · [Phase 4](PHASE4.md) · [Phase 5](PHASE5.md) · [Commands](#commands)
 
 # Phase 1: local scanning
 

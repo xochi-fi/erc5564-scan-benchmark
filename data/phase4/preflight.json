@@ -1,0 +1,73 @@
+{
+  "measuredAt": "2026-11-26T19:33:46.744Z",
+  "rows": [
+    {
+      "name": "pocket",
+      "status": 204,
+      "elapsedMs": 173.161518,
+      "corsPreflightSupported": true,
+      "corsHeaders": {
+        "access-control-allow-headers": "content-type",
+        "access-control-allow-methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+        "access-control-allow-origin": "http://127.0.0.1:8764",
+        "access-control-max-age": "86400"
+      }
+    },
+    {
+      "name": "sentio",
+      "status": 200,
+      "elapsedMs": 210.51552099999998,
+      "corsPreflightSupported": true,
+      "corsHeaders": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "content-type",
+        "access-control-allow-methods": "GET, PUT, DELETE, POST, PATCH, OPTIONS",
+        "access-control-allow-origin": "http://127.0.0.1:8764"
+      }
+    },
+    {
+      "name": "blockpi",
+      "status": 200,
+      "elapsedMs": 103.59311600000001,
+      "corsPreflightSupported": true,
+      "corsHeaders": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "authorization, content-type, server",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "access-control-allow-origin": "*",
+        "access-control-max-age": "172800"
+      }
+    },
+    {
+      "name": "base",
+      "status": 200,
+      "elapsedMs": 161.657936,
+      "corsPreflightSupported": true,
+      "corsHeaders": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "Content-Type,Authorization,User-Agent",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-origin": "http://127.0.0.1:8764"
+      }
+    },
+    {
+      "name": "drpc",
+      "status": 204,
+      "elapsedMs": 109.689808,
+      "corsPreflightSupported": true,
+      "corsHeaders": {
+        "access-control-allow-headers": "content-type",
+        "access-control-allow-methods": "POST",
+        "access-control-allow-origin": "http://127.0.0.1:8764",
+        "access-control-max-age": "600"
+      }
+    },
+    {
+      "name": "blockscout",
+      "status": 403,
+      "elapsedMs": 72.981479,
+      "corsPreflightSupported": false,
+      "corsHeaders": {}
+    }
+  ]
+}

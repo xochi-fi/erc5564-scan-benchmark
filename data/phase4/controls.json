@@ -1,0 +1,60 @@
+{
+  "startedAt": "2026-11-26T19:33:13.427Z",
+  "rounds": 3,
+  "scope": {
+    "chainId": "0x2105",
+    "start": 62241130,
+    "saved": 62244129,
+    "head": 62246129,
+    "pageBlocks": 500
+  },
+  "controls": [
+    {
+      "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x2105\"}",
+      "bodyBytes": 42,
+      "elapsedMs": 4.5,
+      "request": {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "method": "eth_chainId",
+        "params": []
+      },
+      "requestBytes": 59,
+      "status": 200
+    },
+    {
+      "elapsedMs": 0.8999999985098839,
+      "error": {
+        "kind": "fetch-rejection",
+        "message": "TypeError: Failed to fetch"
+      },
+      "request": {
+        "id": 2,
+        "jsonrpc": "2.0",
+        "method": "eth_chainId",
+        "params": []
+      },
+      "requestBytes": 59
+    }
+  ],
+  "controlEvents": [
+    {
+      "method": "OPTIONS",
+      "path": "/allow",
+      "origin": "http://127.0.0.1:8764",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "path": "/allow",
+      "origin": "http://127.0.0.1:8764",
+      "status": 200
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/deny",
+      "origin": "http://127.0.0.1:8764",
+      "status": 204
+    }
+  ]
+}

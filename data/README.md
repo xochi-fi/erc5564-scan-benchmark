@@ -20,6 +20,8 @@
 | `phase2/single-run/<host>` | the same files for the original single run (`sweep/`, and `million/` for the Pi 1m rescan). |
 | `phase2/mainnet-probe` | the optional keyless mainnet fetch-only probe. |
 | `phase3/` | keyless retrieval study ([PHASE3.md](../PHASE3.md)): `endpoints.json` (chainlist snapshot metadata and per-chain candidate URLs), `probe/<chain>.json` (per-endpoint limits, errors, archive depth, latency), `canonical/` and `umbra/` (`reference-*` indexer runs, `retrieve-*` full-history runs with identities for the canonical Announcer, `deploy-check-*`), `consistency/<chain>.json` (known-announcement re-checks), and the derived `summary.md/csv`, `endpoints.csv`, `cross-source.csv`. |
+| [phase4/](phase4/) | [Browser discovery](../PHASE4.md). Browser samples and per-sample timings, counts and verdicts in `samples.csv`, dual-provider reference, browser CORS controls and command-line preflight summary. |
+| [phase5/](phase5/) | [Base RPC recovery](../PHASE5.md). Pinned window manifest and receipt-corroborated reference, live and loopback browser captures, browser CORS controls and parser-verified `summary.json`. |
 
 Absolute home-directory prefixes in recorded paths were replaced with `~`. Host labels
 (`bazzite`, `turing-node-N`) are the run labels used throughout the findings.

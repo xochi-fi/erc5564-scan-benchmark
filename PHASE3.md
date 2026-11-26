@@ -1,116 +1,82 @@
-# Phase 3: can a keyless wallet retrieve the whole announcement history?
+# Phase 3: keyless ERC-5564 history retrieval
 
-**Question.** Can a wallet or web app with no account and no API key reliably fetch every
-ERC-5564 `Announcement` from the canonical Announcer
-`0x55649E01B5Df198D18D95b5cc5051630cfD45564`, from its deploy block to head, on each chain?
+**Free public RPCs can miss ERC-5564 announcements without returning an error.**
+On Base, one endpoint silently omitted 48 logs during a sequential backfill. The
+parallel backfill reached head in 28 minutes and 16,296 requests, using four workers
+and five RPC hostnames across four providers.
 
-**Short answer.** Yes on all seven chains, but only if the wallet chooses its endpoints
-carefully. It also has to check what it gets back, because nothing in a response says
-history is missing. Of the 190 keyless endpoints probed, 105 answered `eth_getLogs` and 77
-served the deploy block. Their block-range caps ranged from 10 blocks to the whole history.
-With an endpoint that takes the whole history, a cold start took 8-17 s and 30-52 requests
-per chain. Base has no such endpoint: it needed 16,296 requests and 28 min, spread over
-four hosts. Walking the chainlist order instead took 17 s to 72 min, and on Base it
-failed after 8,000 requests. Four endpoints returned an empty result, with no error, for
-windows that held real announcements: one on OP Mainnet and three on Base. One of them
-silently dropped 48 Base announcements from a sequential cold start. One indexer was
-missing 13 of 1,039 Sepolia announcements while reporting itself 0-2 blocks behind head.
+Keyless retrieval reached head on all seven chains. Where an endpoint accepted the
+whole history, a cold start took 8–17 seconds and 30–52 requests. Of 190 probed
+endpoints, 105 answered `eth_getLogs` and 77 accepted the deploy-block query.
 
-Measured 2026-11-26 from the Bazzite host (residential connection), read-only, no keys,
-User-Agent `erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)`, at most
-4 requests/s per host, with Retry-After-aware backoff on 429. Code: [`src/phase3/`](src/phase3/).
-Raw results: [`data/phase3/`](data/phase3/).
+The benchmark covers `Announcement` logs from deployment to the measured head of the
+canonical Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`. The read-only run
+used a residential Bazzite host on 2026-11-26, at most 4 requests/s per host and
+Retry-After-aware backoff on HTTP 429. User-Agent was
+`erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)`.
+[Code](src/phase3/) · [Raw results](data/phase3/)
 
 ## Summary per chain
 
-Announcements are counted from the deploy block to the head at measurement time. Sources
-agreeing on the exact set are listed in the Count column. Two sets are equal when they
-have the same `(block, logIndex)` rows and the same transaction hash for every row. "Full
-history" endpoints are keyless endpoints that returned a deploy-block window without an
-error. The span column gives their largest accepted `eth_getLogs` range
+The Announcements column lists agreeing sources. Comparisons use `(block, logIndex)`
+and check transaction hashes where available. "Full history" means an endpoint
+accepted a deploy-block window. Span counts both endpoints of the block range
 (`toBlock - fromBlock + 1`).
 
 | Chain | Deploy block | Announcements | First - last announcement | Per month (since first) | Keyless endpoints: listed / probed / answered getLogs / full history | Max span of full-history endpoints, blocks: median [min-max] | Best keyless cold start | Naive cold start (chainlist order) | Keyless indexers |
 | --- | ---: | --- | --- | ---: | --- | --- | --- | --- | --- |
 | Ethereum | 20,042,207 | **298**: Blockscout v2 = Routescan = RPC (2 endpoint sets) | 21,140,089 (2024-11-08) - 26,499,925 (2026-11-26) | 12.1 (30-36 in each of the last 3 months) | 72 / 36 / 17 / 11 | 1,001 [10 - whole history]; 2 took the whole history | OK, exact: 8 s, 30 requests, 335 KiB | OK, exact: 26 min, 1,299 requests | Blockscout v2 OK (50/page); Routescan OK (100/page, ~441 blocks behind head); Blockscout etherscan-API timed out (90 s) or 429 |
-| Base | 15,502,414 | **679**: RPC only (matches both partial runs on their silent-free prefixes) | 16,819,551 (2024-07-08) - 62,245,129 (2026-11-25) | 23.7 | 41 / 33 / 16 / 11 (3 of the 11 return silent empty results) | 1,001 [10 - 63,752] (none took the whole history) | OK: 28 min, 16,296 requests, 1.4 MiB, 4 hosts in parallel (Pocket, Tenderly ×2, thirdweb, then Sentio). Sequential with the same order: FAILED at 66% of history (8,000-request budget), and 48 announcements silently missing (daybreak) | FAILED: 8,000-request budget spent at 17% of history (34 min, 457 announcements so far) | Blockscout: Cloudflare challenge (blocked); Basescan/Etherscan: key required |
+| Base | 15,502,414 | **679**: RPC only (matches both partial runs on their silent-free prefixes) | 16,819,551 (2024-07-08) - 62,245,129 (2026-11-25) | 23.7 | 41 / 33 / 16 / 11 (3 of the 11 return silent empty results) | 1,001 [10 - 63,752] (none took the whole history) | OK, parallel: 1.4 MiB (see above) | FAILED: 8,000-request budget spent at 17% of history (34 min, 457 announcements so far) | Blockscout: Cloudflare challenge (blocked); Basescan/Etherscan: key required |
 | Arbitrum One | 219,468,264 | **19**: RPC (2 endpoint sets agree) | 434,497,958 - 522,929,374 | 2.1 | 35 / 27 / 15 / 12 | 551 [10 - whole history]; 1 took the whole history | OK: 14 s, 52 requests | OK: 17 s, 68 requests | Blockscout: Cloudflare challenge (blocked) |
 | OP Mainnet | 121,097,390 | **2**: Blockscout v2 = Blockscout etherscan-API = RPC | 154,353,397 - 154,455,081 (2026-07-17..20) | 0.5 | 36 / 25 / 18 / 13 | 5,001 [50 - whole history]; 2 took the whole history | OK, exact: 10 s, 40 requests | OK, exact: 18 min, 3,930 requests | Blockscout (explorer.optimism.io) OK |
 | Gnosis | 34,349,356 | **3**: RPC (2 endpoint sets agree) | 40,967,594 - 41,054,058 (2025-07) | 0.2 | 25 / 20 / 10 / 9 | 10,000 [101 - whole history]; 3 took the whole history | OK: 17 s, 34 requests | OK: 72 min, 4,268 requests | Blockscout: Cloudflare challenge (blocked) |
 | Polygon PoS | 57,888,814 | **9**: RPC (2 endpoint sets agree) | 85,999,710 - 95,895,782 | 1.3 | 40 / 28 / 15 / 10 | 1,001 [51 - whole history]; 2 took the whole history | OK: 12 s, 40 requests | OK: 17 min, 4,026 requests | Blockscout: Cloudflare challenge (blocked) |
 | Sepolia | 5,486,597 | **1,039**: Routescan = RPC (2 endpoint sets); **Blockscout has 1,026** | 6,241,244 (2024-07-04) - 12,186,737 | 36.2 | 30 / 21 / 14 / 11 | 10,001 [50 - whole history]; 2 took the whole history (one 3-block value excluded: a head-lag artifact, see caveats) | OK: 8 s, 30 requests | OK: 66 s, 80 requests | Blockscout v2 and etherscan-API: 13 missing; Routescan OK |
 
-"Best keyless cold start" orders the endpoints the way a well-informed wallet would: full-history endpoints
-first, by measured span. "Naive" uses the chainlist order of the endpoints that answered
-a 10-block `eth_getLogs`. Both use the same adaptive client (below), start at a
-10,000-block window, and fall back across up to 8 endpoints. Deploy blocks come from the
-Blockscout creation transaction (Ethereum, OP Mainnet, Sepolia) or from an `eth_getCode`
-bisection (the rest). Every deploy block was rechecked on two more endpoints: code at N,
-none at N-1. The full table with request bytes and failure text is
-[`data/phase3/summary.md`](data/phase3/summary.md) (also `summary.csv`); per-endpoint
-results are in [`endpoints.csv`](data/phase3/endpoints.csv); cross-source comparisons
-are in [`cross-source.csv`](data/phase3/cross-source.csv).
+Probe-informed runs rank deploy-block-capable endpoints by measured span. The
+list-order runs use Chainlist order for endpoints that answered a 10-block
+`eth_getLogs`. Both adapt from an initial 10,000-block window and use up to eight
+endpoints. The parallel strategy splits the range into 64 resumable chunks.
+
+Deploy blocks come from Blockscout creation transactions on Ethereum, OP Mainnet and
+Sepolia and `eth_getCode` bisection elsewhere. Two additional endpoints confirmed
+code at the deploy block and no code at the previous block.
+[Full run metrics](data/phase3/summary.md) · [Endpoint results](data/phase3/endpoints.csv) · [Source comparisons](data/phase3/cross-source.csv)
 
 ## Findings
 
-1. **The block-range cap is the whole story, and it varies 10-million-fold.**
-   Among keyless endpoints that serve the deploy block, the cap on one `eth_getLogs` ran from
-   10 blocks (Blast) and 50 (Nodies, 1rpc) through 100 (dRPC, Tatum), 1,000 (Tenderly
-   on Base, thirdweb, Sentio) and 5,000-10,000 (BlockPI, QuickNode, mainnet.optimism.io,
-   Pocket) up to 10,000,000 (arb1.arbitrum.io: "only 10000000 are allowed"). A few took the whole history:
-   Tenderly's gateway on Ethereum, Arbitrum, OP, Polygon and Sepolia; rpc.gnosischain.com
-   and gateway.fm on Gnosis. The cap decides the cost of a cold start. Ethereum took 30
-   requests with Tenderly and 1,299 requests (26 min) when a 5,000-block endpoint did the
-   work. **Base has no keyless endpoint that takes more than about 10k blocks and serves
-   history correctly.** Pocket is the only one over 1,000 that returned correct results,
-   and it reported pruned history partway (finding 3). A cold start therefore needed
-   16,296 requests (28 min spread over four hosts at ≤4 req/s each). One endpoint alone
-   at 1,000 blocks per request would need about 47,000 requests, 3+ hours.
-2. **The "10k recent blocks" wall is real, but it is an archive limit, not a range limit.**
-   publicnode (Ethereum, Base, Arbitrum, OP, Polygon), blockreq (last 1,024 blocks),
-   blockmachine (last 100-10,000), thyme (last 128) and blazingnode (128) answer recent
-   ranges and refuse older ones. Their errors say so: "Archive requests require a
-   personal token", "public endpoint only serves recent blocks (last 1024)",
-   "Historical queries outside the latest 128 blocks require an API key". This is the
-   failure DROO described to the working group: a wallet on such an endpoint sees nothing
-   older than a few hours to days. Across chains, 7-19 of the probed endpoints (28-53%) did not
-   answer `eth_getLogs` at all (key, paid plan, discontinued, Cloudflare block,
-   unsupported method). See the "answered getLogs" column.
-3. **Some endpoints lose history without an error.** public.1rpc.io on OP Mainnet
-   returned `{"result": []}` four times for 50-block windows that contain a known
-   announcement. Its deploy-block probe also "succeeded" with an empty result. Pocket
-   (load-balanced backends) gave different answers to the same question: accepted
-   spans of 10,438-70,538 blocks while its error text says "max 10001". It also answered
-   one OP window correctly and then "pruned history unavailable" on the retry. Partway
-   through the Base cold start it also reported pruned history. **On Base, three
-   endpoints (base.daybreak-rpc.network, rpc.degenprotocol.io, rpc.baseazul.dev) return
-   `[]` for windows that hold known announcements**, while Pocket and Tenderly return
-   them. They passed the deploy-block probe the same way 1rpc did. This cost real data:
-   the sequential informed cold start fell back to daybreak at block 34,304,282 and
-   recorded 0 of the 48 announcements in blocks 34.3M-46.5M. The run finished those windows
-   "successfully". A wallet that trusts one endpoint's empty answer can "lose" a payment.
-   Only a second source shows the gap.
-4. **Indexers help, where they are reachable, and they are not ground truth either.**
-   Blockscout's keyless API v2 gave the full set in 1-21 pages on Ethereum, OP and
-   Sepolia, 0-7 blocks behind head. On Base, Arbitrum, Gnosis and Polygon it answered our
-   client with a Cloudflare challenge (recorded as blocked; not worked around). On
-   Sepolia, Blockscout lacks 13 announcements in blocks 11,909,881-11,926,046: it knows the
-   transactions, but `/transactions/{hash}/logs` returns HTTP 500. Routescan and both RPC
-   endpoint sets have them. On Ethereum, 263 of 296 Blockscout v2 log rows (first fetch) carry an empty
-   `transaction_hash`, so v2 cannot be compared on tx hash alone. Routescan
-   (keyless etherscan-compatible API) covers only Ethereum and Sepolia among these
-   chains, at 100 results per call and 51-471 blocks behind head. Etherscan v2 needs a
-   key on every chain. Base on its free tier says: "Free API access is not supported for
-   this chain".
-5. **At today's volume, the data is tiny; access is the cost.** The full canonical
-   history is 298 logs (335 KiB of JSON) on Ethereum, 1,039 on Sepolia, 679 on Base,
-   and 2-19 elsewhere. Umbra's own contract, for comparison, has 25,558-102,552
-   announcements on its four busiest chains (below), and one keyless endpoint returned
-   100k of them in 55 requests. Median `eth_getLogs` latency on full-history endpoints was 42-924 ms
-   (median of medians 69-127 ms per chain; worst p95 2.0 s). None of the endpoints that
-   accepted a range was slow enough to matter. What dominates is how many requests the
-   cap forces and the rate limit on each one: Tatum allows 5 requests/min, OnFinality
-   and routeme answer 429 quickly, and Sentio returns HTTP 429 to mean "range too large".
+1. **Block-range caps drive request cost.** Observed caps ran from 10 blocks to
+   10,000,000 on arb1.arbitrum.io. Tenderly accepted whole-history queries on Ethereum,
+   Arbitrum, OP Mainnet, Polygon and Sepolia, as did rpc.gnosischain.com and gateway.fm
+   on Gnosis. No tested Base endpoint accepted the whole range. Pocket handled roughly
+   10,000 blocks per request before reporting pruned history. At 1,000 blocks per
+   request, Base would take about 47,000 requests and over three hours at 4 requests/s.
+   The parallel run used Pocket, two Tenderly hostnames, thirdweb and Sentio.
+   [Base parallel run](data/phase3/canonical/retrieve-base-parallel.json)
+2. **Recent-block access can hide an archive limit.** publicnode required a token for
+   history on five chains. blockreq served the last 1,024 blocks, blockmachine the last
+   100–10,000, and thyme and blazingnode the last 128. Across chains, 28–53% of probed
+   endpoints did not answer `eth_getLogs` successfully.
+   [Endpoint results](data/phase3/endpoints.csv)
+3. **A successful response can omit logs.** Three Base endpoints
+   (`base.daybreak-rpc.network`, `rpc.degenprotocol.io`, `rpc.baseazul.dev`) and one OP
+   Mainnet endpoint (`public.1rpc.io`) returned `[]` for windows with known
+   announcements. The OP endpoint did so four times for 50-block windows.
+   All four passed the deploy-block probe. On Base, the sequential
+   probe-informed run switched to Daybreak at block 34,304,282 and exhausted its
+   8,000-request budget at block 46,544,282, about 66% through history. It returned no
+   logs in the range served by Daybreak. The parallel run returned the missing logs.
+   Pocket also returned one OP window correctly and reported pruned history on retry.
+   Its observed spans varied from 10,438 to 70,538 blocks despite a 10,001-block error
+   message. [Consistency checks](data/phase3/consistency/) · [Base sequential run](data/phase3/canonical/retrieve-base-probe-informed.json)
+4. **Indexers also miss logs.** Blockscout v2 matched the Ethereum and OP Mainnet sets.
+   On Sepolia it missed 13 logs in blocks 11,909,881–11,926,046 while reporting 0–2 blocks
+   of head lag. It indexed the transactions, but `/transactions/{hash}/logs` returned
+   HTTP 500. Routescan and both RPC runs had those logs. On Ethereum, the first
+   Blockscout v2 fetch omitted transaction hashes on 263 of 296 rows, so comparison
+   also used block and log index. Routescan covered Ethereum and Sepolia, with 51–471
+   blocks of head lag. Etherscan v2 requires a key and its free tier excludes Base.
+   [Source comparisons](data/phase3/cross-source.csv)
 
 ## How the endpoints behave
 
@@ -196,11 +162,9 @@ probe data:
 | Polygon PoS | 19,600 | 8,022 | 4 |
 | Sepolia | 2,444 | 1,347 | 7 |
 
-So, on a typical keyless endpoint (caps of 10-1,000 blocks), the SDK default fails on
-the first chunk. On a good one it makes thousands of sequential requests, mostly over
-blocks before the Announcer existed. At the measured median latencies, from block 0 that
-is 7-28 min on Ethereum, and 1.5-3.4 h on Arbitrum. Passing `fromBlock` = deploy block
-removes 25-76% of the requests. A chunk size the endpoint accepts, and a retry, do the rest.
+Endpoints capped below 5,000 blocks reject the first request. At measured median
+latencies, a scan from block 0 would take 7–28 minutes on Ethereum and 1.5–3.4 hours
+on Arbitrum. Starting at deployment cuts requests by 25–76%.
 
 ## Other stealth-payment activity (extra scope)
 
@@ -220,12 +184,10 @@ Its deploy blocks were found by `eth_getCode` bisection and confirmed on two end
 | Polygon PoS | 20,750,142 | 102,552 | 2021-11-03 - 2026-11-18 | 9 |
 | Sepolia | 3,539,169 | 9,690 | 2023-05-31 - 2026-11-23 | 1,039 |
 
-These are raw event counts: each is one stealth payment announced through Umbra (ETH or
-a token). Counts were not filtered for spam or test traffic. The 296-298 figure is
-therefore about the canonical singleton, not stealth payments in general. Most
-EVM stealth-payment traffic so far is Umbra's own pre-standard event. (Blockscout v2 on
-Sepolia again lacks some of these: 9,659 vs 9,690. Its v2 and Routescan pagings stopped
-short on the large Umbra sets; see the reference files.)
+These are raw Umbra payment announcements, including any spam or test traffic.
+On Sepolia, Blockscout v2 returned 9,659 of the 9,690 observed logs. Its v2 and
+Routescan pagination stopped short on the large Umbra sets.
+[Umbra reference files](data/phase3/umbra/)
 
 Systems that cannot be counted this way, because they publish no on-chain announcement
 log:
@@ -244,12 +206,10 @@ log:
 Not checked: other contracts that might emit a lookalike event. This section covers only the
 canonical singleton and Umbra.
 
-## What a wallet or web app should do so a payment never "disappears"
+## Wallet retrieval and progress
 
-1. **Start a cold scan at the Announcer's deploy block, not block 0, and not "recent"**:
-   Ethereum 20,042,207; Base 15,502,414; Arbitrum One 219,468,264; OP Mainnet
-   121,097,390; Gnosis 34,349,356; Polygon PoS 57,888,814; Sepolia 5,486,597. Hard-code
-   these per chain. A scan window of "the last N blocks" is how a claim seems to vanish.
+1. **Start a cold scan at the Announcer's deploy block.** Use the per-chain deploy
+   blocks in the summary table.
 2. **Checkpoint the next unscanned block, and advance it only after a window succeeded**
    (and has been scanned). An interruption then resumes rather than skips. Store the
    checkpoint with the viewing-key fingerprint and chain id. Keep found announcements
@@ -270,9 +230,7 @@ canonical singleton and Umbra.
    ("archive requests require a token", "pruned history", "only serves recent blocks")
    as a reason to switch endpoints, not a reason to give up. Move endpoints whose cap is
    under ~1,000 blocks to the back. Retry 5xx/timeouts with backoff before switching.
-   Ship the list with the app and re-probe it occasionally. Of the keyless chainlist entries,
-   28-53% per chain were dead, keyed, discontinued, unsupported or behind Cloudflare on
-   the day we looked.
+   Ship the list with the app and re-probe it occasionally.
 5. **Never trust a single empty answer for history.** A clean `[]` from one endpoint
    is not proof of absence (finding 3). Cheap defences, given how small the data is: fetch
    the full history from two independent sources and compare counts per range. Or
@@ -337,3 +295,4 @@ bun run phase3 --stage report                     # summary.md/csv, endpoints.cs
 
 `--chains` takes a comma list of `ethereum,base,arbitrum,optimism,gnosis,polygon,sepolia`.
 The probe and the naive cold start make several thousand requests per chain at ≤4/s per host.
+Probe-informed and parallel runs skip hosts flagged by any saved consistency results.

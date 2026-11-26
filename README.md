@@ -9,6 +9,11 @@ It uses ScopeLift's `@scopelift/stealth-address-sdk` 1.0.0-beta.5, unmodified, o
 
 ## Headline findings
 
+**Phase 3, keyless history retrieval** ([PHASE3.md](PHASE3.md)). Public RPCs
+silently omitted ERC-5564 logs. The benchmark reached the measured head on all
+seven chains, with independent indexer comparisons on three. Base needed a
+parallel backfill after both sequential runs exhausted their request budgets.
+
 **Phase 1, local scanning** ([PHASE1.md](PHASE1.md)): ECDH and view-tag check over
 announcements already in memory.
 
@@ -29,23 +34,6 @@ verifies. Medians of 3 repetitions.
 - Bigger pages delay the first match (0.09 s at 1 block, 16-22 s at 256) and raise memory
   (100-280 MiB up to 64 blocks, 500-750 MiB at 256).
 - Catching up 64 new blocks takes 4.0-4.5 s on the i7 with a 100k or a 1m history.
-
-**Phase 3, keyless history retrieval** ([PHASE3.md](PHASE3.md)): live, read-only, no keys,
-2026-11-26.
-
-- The canonical Announcer has 298 announcements on Ethereum, 679 on Base, 19 on Arbitrum
-  One, 2 on OP Mainnet, 3 on Gnosis, 9 on Polygon PoS and 1,039 on Sepolia.
-- A keyless cold start from the deploy block worked on every chain. With an endpoint that
-  takes the whole history it took 8-17 s and 30-52 requests. Base has none: 16,296 requests
-  and 28 min over four hosts. Walking the chainlist order took 17 s to 72 min, and ran out
-  of an 8,000-request budget on Base.
-- Block-range caps ran from 10 blocks to the whole history. Many endpoints serve only
-  recent blocks. Four endpoints returned empty results, with no error, for windows that
-  hold real announcements; one of them silently dropped 48 Base announcements.
-- Blockscout lacks 13 of 1,039 Sepolia announcements. On Base, Arbitrum, Gnosis and Polygon
-  it served a Cloudflare challenge.
-- Umbra's own pre-standard contract carries far more traffic: 25,558-102,552
-  announcements on each of its four busiest chains.
 
 ## Hardware
 

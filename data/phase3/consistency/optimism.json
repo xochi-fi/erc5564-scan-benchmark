@@ -1,0 +1,487 @@
+{
+ "chain": "optimism",
+ "measuredAt": "2026-11-26T15:24:31.712Z",
+ "source": "blockscout-v2 https://explorer.optimism.io",
+ "targets": [
+  "154353397:112",
+  "154455081:74"
+ ],
+ "endpoints": [
+  {
+   "host": "xrpc.cl",
+   "url": "https://xrpc.cl/optimism",
+   "window": 100,
+   "returned": 1,
+   "empty": 0,
+   "errors": 3,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "error: http",
+     "message": "XRPC Cluster: Backend optimism node currently syncing and fallbacks busy"
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "XRPC Cluster: Backend optimism node currently syncing and fallbacks busy"
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "error: http",
+     "message": "XRPC Cluster: Backend optimism node currently syncing and fallbacks busy"
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "lb.routeme.sh",
+   "url": "https://lb.routeme.sh/rpc/evm/10",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "mainnet.optimism.io",
+   "url": "https://mainnet.optimism.io",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "public.1rpc.io",
+   "url": "https://public.1rpc.io/op",
+   "window": 50,
+   "returned": 0,
+   "empty": 4,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "optimism-public.nodies.app",
+   "url": "https://optimism-public.nodies.app",
+   "window": 50,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "optimism.public.blockpi.network",
+   "url": "https://optimism.public.blockpi.network/v1/rpc/public",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "optimism.drpc.org",
+   "url": "https://optimism.drpc.org",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "optimism.gateway.tenderly.co",
+   "url": "https://optimism.gateway.tenderly.co",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "url": "https://gateway.tenderly.co/public/optimism",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "optimism-mainnet.gateway.tatum.io",
+   "url": "https://optimism-mainnet.gateway.tatum.io",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "op.api.pocket.network",
+   "url": "https://op.api.pocket.network",
+   "window": 100,
+   "returned": 2,
+   "empty": 0,
+   "errors": 2,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    }
+   ]
+  },
+  {
+   "host": "public-op-mainnet.fastnode.io",
+   "url": "https://public-op-mainnet.fastnode.io",
+   "window": 100,
+   "returned": 0,
+   "empty": 0,
+   "errors": 4,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    }
+   ]
+  },
+  {
+   "host": "optimism.rpc.sentio.xyz",
+   "url": "https://optimism.rpc.sentio.xyz",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "10.rpc.thirdweb.com",
+   "url": "https://10.rpc.thirdweb.com",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

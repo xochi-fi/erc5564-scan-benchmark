@@ -1,0 +1,518 @@
+{
+ "chain": "polygon",
+ "measuredAt": "2026-11-26T15:26:36.678Z",
+ "source": "keyless RPC retrieval (probe-informed)",
+ "targets": [
+  "85999710:2473",
+  "87526204:1540",
+  "95895782:2537"
+ ],
+ "endpoints": [
+  {
+   "host": "lb.routeme.sh",
+   "url": "https://lb.routeme.sh/rpc/evm/137",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc-mainnet.matic.quiknode.pro",
+   "url": "https://rpc-mainnet.matic.quiknode.pro",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "public.1rpc.io",
+   "url": "https://public.1rpc.io/matic",
+   "window": 51,
+   "returned": 5,
+   "empty": 0,
+   "errors": 1,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "polygon-bor-rpc.publicnode.com",
+   "url": "https://polygon-bor-rpc.publicnode.com",
+   "window": 100,
+   "returned": 2,
+   "empty": 0,
+   "errors": 4,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "polygon.drpc.org",
+   "url": "https://polygon.drpc.org",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "polygon.gateway.tenderly.co",
+   "url": "https://polygon.gateway.tenderly.co",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "url": "https://gateway.tenderly.co/public/polygon",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "polygon-mainnet.gateway.tatum.io",
+   "url": "https://polygon-mainnet.gateway.tatum.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "poly.api.pocket.network",
+   "url": "https://poly.api.pocket.network",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "matic.rpc.sentio.xyz",
+   "url": "https://matic.rpc.sentio.xyz",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "137.rpc.thirdweb.com",
+   "url": "https://137.rpc.thirdweb.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "85999710:2473",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "85999710:2473",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "87526204:1540",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "95895782:2537",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

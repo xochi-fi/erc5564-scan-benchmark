@@ -1,0 +1,564 @@
+{
+ "chain": "sepolia",
+ "measuredAt": "2026-11-26T15:25:32.638Z",
+ "source": "blockscout-v2 https://eth-sepolia.blockscout.com",
+ "targets": [
+  "6241244:26",
+  "10602606:174",
+  "12186737:31"
+ ],
+ "endpoints": [
+  {
+   "host": "lb.routeme.sh",
+   "url": "https://lb.routeme.sh/rpc/evm/11155111",
+   "window": 100,
+   "returned": 4,
+   "empty": 0,
+   "errors": 2,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "error: rate-limit",
+     "message": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at comp"
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "error: rate-limit",
+     "message": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at comp"
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "sepolia.gateway.tenderly.co",
+   "url": "https://sepolia.gateway.tenderly.co",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "url": "https://gateway.tenderly.co/public/sepolia",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum-sepolia-rpc.publicnode.com",
+   "url": "https://ethereum-sepolia-rpc.publicnode.com",
+   "window": 3,
+   "returned": 0,
+   "empty": 0,
+   "errors": 6,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable"
+    }
+   ]
+  },
+  {
+   "host": "public.1rpc.io",
+   "url": "https://public.1rpc.io/sepolia",
+   "window": 8,
+   "returned": 4,
+   "empty": 0,
+   "errors": 2,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "error: unsupported",
+     "message": "HTTP 200: invalid JSON-RPC envelope {\"timestamp\":\"2026-11-26T15:22:57.639058159Z\",\"status\":200,\"error\":\"Method \\\"eth_get"
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "eth-sepolia.api.onfinality.io",
+   "url": "https://eth-sepolia.api.onfinality.io/public",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum-sepolia-public.nodies.app",
+   "url": "https://ethereum-sepolia-public.nodies.app",
+   "window": 50,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "0xrpc.io",
+   "url": "https://0xrpc.io/sep",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum-sepolia.gateway.tatum.io",
+   "url": "https://ethereum-sepolia.gateway.tatum.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "eth-sepolia-testnet.api.pocket.network",
+   "url": "https://eth-sepolia-testnet.api.pocket.network",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "sepolia.rpc.sentio.xyz",
+   "url": "https://sepolia.rpc.sentio.xyz",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc.sepolia.ethpandaops.io",
+   "url": "https://rpc.sepolia.ethpandaops.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "6241244:26",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "6241244:26",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "10602606:174",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "12186737:31",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

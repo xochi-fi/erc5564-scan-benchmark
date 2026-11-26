@@ -1,0 +1,151 @@
+{
+ "chain": "optimism",
+ "measuredAt": "2026-11-26T15:08:33.253Z",
+ "filter": {
+  "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7"
+ },
+ "strategy": "probe-informed",
+ "endpointOrder": [
+  "optimism.gateway.tenderly.co",
+  "gateway.tenderly.co",
+  "mainnet.optimism.io",
+  "lb.routeme.sh",
+  "optimism.public.blockpi.network",
+  "10.rpc.thirdweb.com",
+  "optimism.rpc.sentio.xyz",
+  "optimism-mainnet.gateway.tatum.io"
+ ],
+ "initialSpan": 10000,
+ "result": {
+  "success": true,
+  "failure": null,
+  "fromBlock": 121097390,
+  "toBlock": 160053462,
+  "checkpoint": 160053463,
+  "requests": 40,
+  "okRequests": 40,
+  "responseBytes": 3991,
+  "requestBytes": 9760,
+  "totalMs": 10491.486492000055,
+  "fetchMs": 6075.367459000554,
+  "endpointSwitches": 0,
+  "spanHistogram": {
+   "8192": 4,
+   "16384": 4,
+   "32768": 4,
+   "65536": 4,
+   "131072": 4,
+   "262144": 4,
+   "524288": 4,
+   "1048576": 4,
+   "2097152": 5,
+   "4194304": 3
+  },
+  "endpoints": [
+   {
+    "url": "https://optimism.gateway.tenderly.co",
+    "requests": 40,
+    "ok": 40,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/optimism",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://mainnet.optimism.io",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/10",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism.public.blockpi.network/v1/rpc/public",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://10.rpc.thirdweb.com",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism.rpc.sentio.xyz",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism-mainnet.gateway.tatum.io",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   }
+  ],
+  "count": 2,
+  "firstBlock": 154353397,
+  "lastBlock": 154455081,
+  "firstTime": "2026-07-17T16:26:11.000Z",
+  "lastTime": "2026-07-20T00:55:39.000Z"
+ },
+ "identities": [
+  "154353397:112:0x2d2dba56e84fa736eddf4d6f4fff9c8ef66fe5d2b405ad0c58c6c8fba2ce278f",
+  "154455081:74:0xbe234b0309342a2ba32be07209a441fca8094e8de49e363024af322e93463b59"
+ ],
+ "comparison": {
+  "reference": 2,
+  "candidate": 2,
+  "matched": 2,
+  "missing": [],
+  "extra": [],
+  "txMismatch": [],
+  "referenceTxMissing": 0,
+  "exact": true,
+  "exactOnTxHash": true
+ },
+ "referenceSource": "blockscout-v2 https://explorer.optimism.io",
+ "deployBlock": 121097390,
+ "deploySource": "https://explorer.optimism.io creation transaction; bisection agrees (eth_getCode bisection on mainnet.optimism.io (28 requests))"
+}

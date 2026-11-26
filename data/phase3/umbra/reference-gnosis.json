@@ -1,0 +1,44 @@
+{
+ "chain": "gnosis",
+ "measuredAt": "2026-11-26T15:00:52.120Z",
+ "filter": {
+  "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
+  "topic0": "0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219"
+ },
+ "deploy": {
+  "block": null,
+  "creationTx": null,
+  "source": null,
+  "notes": [
+   "https://gnosis.blockscout.com: blocked: Cloudflare challenge"
+  ]
+ },
+ "indexers": [
+  {
+   "source": "blockscout-v2",
+   "base": "https://gnosis.blockscout.com",
+   "ok": false,
+   "blocked": true,
+   "failure": "blocked: Cloudflare challenge",
+   "pages": 0,
+   "pageSizeObserved": null,
+   "requests": 1,
+   "responseBytes": 5777,
+   "totalMs": 351.31597799999963,
+   "latencyMs": [
+    213
+   ],
+   "indexedHead": null,
+   "finalUrl": null,
+   "rateLimitHits": 0,
+   "count": 0,
+   "firstBlock": null,
+   "lastBlock": null,
+   "latencyMedianMs": 213.12131299999965,
+   "latencyP95Ms": 213.12131299999965,
+   "headLagBlocks": null
+  }
+ ],
+ "reference": null,
+ "rpcHead": 49480535
+}

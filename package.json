@@ -10,7 +10,8 @@
     "check": "tsc --noEmit",
     "test": "bun test",
     "phase2": "bun run src/phase2/sweep.ts",
-    "phase2:mainnet": "bun run src/phase2/mainnet.ts"
+    "phase2:mainnet": "bun run src/phase2/mainnet.ts",
+    "phase3": "bun run src/phase3/run.ts"
   },
   "dependencies": {
     "@noble/secp256k1": "2.3.0",

@@ -1,0 +1,89 @@
+{
+ "chain": "optimism",
+ "measuredAt": "2026-11-26T16:03:53.716Z",
+ "filter": {
+  "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7"
+ },
+ "deploy": {
+  "block": 121097390,
+  "creationTx": "0x655c2bea0d951a3a211fbb096de73da675165114602241df2bc5d131d499cb94",
+  "source": "https://explorer.optimism.io creation transaction",
+  "notes": []
+ },
+ "indexers": [
+  {
+   "source": "blockscout-v2",
+   "base": "https://explorer.optimism.io",
+   "ok": true,
+   "blocked": false,
+   "failure": null,
+   "pages": 1,
+   "pageSizeObserved": 2,
+   "requests": 1,
+   "responseBytes": 6258,
+   "totalMs": 248.4380430000001,
+   "latencyMs": [
+    140
+   ],
+   "indexedHead": 160055120,
+   "finalUrl": null,
+   "rateLimitHits": 0,
+   "identities": [
+    "154353397:112:0x2d2dba56e84fa736eddf4d6f4fff9c8ef66fe5d2b405ad0c58c6c8fba2ce278f",
+    "154455081:74:0xbe234b0309342a2ba32be07209a441fca8094e8de49e363024af322e93463b59"
+   ],
+   "count": 2,
+   "firstBlock": 154353397,
+   "lastBlock": 154455081,
+   "latencyMedianMs": 140.09296099999983,
+   "latencyP95Ms": 140.09296099999983,
+   "headLagBlocks": 7
+  },
+  {
+   "source": "blockscout-etherscan-api",
+   "base": "https://explorer.optimism.io/api",
+   "ok": true,
+   "blocked": false,
+   "failure": null,
+   "pages": 2,
+   "pageSizeObserved": 2,
+   "requests": 2,
+   "responseBytes": 3483,
+   "totalMs": 613.260499,
+   "latencyMs": [
+    65,
+    60
+   ],
+   "indexedHead": 160055120,
+   "finalUrl": null,
+   "rateLimitHits": 0,
+   "identities": [
+    "154353397:112:0x2d2dba56e84fa736eddf4d6f4fff9c8ef66fe5d2b405ad0c58c6c8fba2ce278f",
+    "154455081:74:0xbe234b0309342a2ba32be07209a441fca8094e8de49e363024af322e93463b59"
+   ],
+   "count": 2,
+   "firstBlock": 154353397,
+   "lastBlock": 154455081,
+   "latencyMedianMs": 60.193635000000086,
+   "latencyP95Ms": 65.45801100000017,
+   "headLagBlocks": 7
+  }
+ ],
+ "reference": {
+  "source": "blockscout-v2 https://explorer.optimism.io",
+  "count": 2,
+  "identities": [
+   "154353397:112:0x2d2dba56e84fa736eddf4d6f4fff9c8ef66fe5d2b405ad0c58c6c8fba2ce278f",
+   "154455081:74:0xbe234b0309342a2ba32be07209a441fca8094e8de49e363024af322e93463b59"
+  ],
+  "firstBlock": 154353397,
+  "lastBlock": 154455081,
+  "firstTime": "2026-07-17T16:26:11.000Z",
+  "lastTime": "2026-07-20T00:55:39.000Z",
+  "perMonth": {
+   "2026-07": 2
+  }
+ },
+ "rpcHead": 160055127
+}

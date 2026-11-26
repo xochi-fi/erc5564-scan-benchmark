@@ -1,0 +1,23 @@
+{
+ "chain": "base",
+ "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+ "deployBlock": 15502414,
+ "confirmed": 2,
+ "checks": [
+  {
+   "host": "base.api.pocket.network",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  },
+  {
+   "host": "base.daybreak-rpc.network",
+   "codeAtDeploy": null,
+   "codeBefore": null
+  },
+  {
+   "host": "rpc.degenprotocol.io",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  }
+ ]
+}

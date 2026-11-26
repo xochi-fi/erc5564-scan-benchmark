@@ -1,0 +1,137 @@
+{
+ "chain": "gnosis",
+ "measuredAt": "2026-11-26T16:01:36.288Z",
+ "filter": {
+  "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7"
+ },
+ "strategy": "list-order",
+ "endpointOrder": [
+  "lb.routeme.sh",
+  "rpc.gnosischain.com",
+  "rpc.gnosis.gateway.fm",
+  "rpc.ap-southeast-1.gateway.fm",
+  "gnosis.drpc.org",
+  "gnosis-rpc.publicnode.com",
+  "gnosis.api.pocket.network",
+  "gnosis.oat.farm"
+ ],
+ "initialSpan": 10000,
+ "result": {
+  "success": true,
+  "failure": null,
+  "fromBlock": 34349356,
+  "toBlock": 49480404,
+  "checkpoint": 49480405,
+  "requests": 4268,
+  "okRequests": 1514,
+  "responseBytes": 75184,
+  "requestBytes": 385162,
+  "totalMs": 4297059.994548,
+  "fetchMs": 795659.0321299981,
+  "endpointSwitches": 0,
+  "spanHistogram": {
+   "1024": 1,
+   "8192": 1513
+  },
+  "endpoints": [
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/100",
+    "requests": 4268,
+    "ok": 1514,
+    "errors": {
+     "rate-limit": 59,
+     "range-limit": 1
+    },
+    "learnedMaxSpan": 10000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://rpc.gnosischain.com",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://rpc.gnosis.gateway.fm",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://rpc.ap-southeast-1.gateway.fm/v4/gnosis/non-archival/mainnet",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gnosis.drpc.org",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gnosis-rpc.publicnode.com",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gnosis.api.pocket.network",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gnosis.oat.farm",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   }
+  ],
+  "count": 3,
+  "firstBlock": 40967594,
+  "lastBlock": 41054058,
+  "firstTime": "2025-07-07T13:24:15.000Z",
+  "lastTime": "2025-07-12T18:38:35.000Z"
+ },
+ "identities": [
+  "40967594:20:0x63395b8e3d4ef341c19aa6af1f122faec018a344906104de96cd65761a95397a",
+  "41054049:14:0xa25fd0ce3b3140ca9d95d546c273778d44c4185eed282457333bdd3b8e2b0ae4",
+  "41054058:7:0x462952b35df3d8544db74907b1cd2160496f6246a0ad9f002acd34ec09cce98f"
+ ],
+ "comparison": null,
+ "referenceSource": null,
+ "deployBlock": 34349356,
+ "deploySource": "eth_getCode bisection on rpc.gnosischain.com (27 requests)"
+}

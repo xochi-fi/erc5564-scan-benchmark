@@ -1,0 +1,18 @@
+{
+ "chain": "gnosis",
+ "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
+ "deployBlock": 28237950,
+ "confirmed": 2,
+ "checks": [
+  {
+   "host": "rpc.gnosischain.com",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  },
+  {
+   "host": "rpc.gnosis.gateway.fm",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  }
+ ]
+}

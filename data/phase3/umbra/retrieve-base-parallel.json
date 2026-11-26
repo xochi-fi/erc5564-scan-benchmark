@@ -1,0 +1,213 @@
+{
+ "chain": "base",
+ "measuredAt": "2026-11-26T18:51:19.577Z",
+ "filter": {
+  "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
+  "topic0": "0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219"
+ },
+ "strategy": "parallel",
+ "endpointOrder": [
+  "base.api.pocket.network",
+  "base.gateway.tenderly.co",
+  "gateway.tenderly.co",
+  "8453.rpc.thirdweb.com",
+  "base.rpc.sentio.xyz",
+  "base.drpc.org",
+  "base-public.nodies.app",
+  "base-mainnet.public.blastapi.io"
+ ],
+ "initialSpan": 10000,
+ "result": {
+  "success": true,
+  "failure": null,
+  "fromBlock": 10761374,
+  "toBlock": 62633246,
+  "checkpoint": 62633247,
+  "requests": 20475,
+  "okRequests": 20069,
+  "responseBytes": 6875474,
+  "requestBytes": 4920341,
+  "totalMs": 2044518.140332,
+  "fetchMs": 3514039.0589119988,
+  "endpointSwitches": 6,
+  "spanHistogram": {
+   "256": 58,
+   "512": 17058,
+   "1024": 8,
+   "2048": 8,
+   "4096": 9,
+   "8192": 2751,
+   "16384": 83,
+   "32768": 58,
+   "65536": 36
+  },
+  "endpoints": [
+   {
+    "url": "https://base.api.pocket.network",
+    "requests": 3044,
+    "ok": 2997,
+    "errors": {
+     "range-limit": 45,
+     "archive-missing": 2
+    },
+    "errorSamples": {
+     "range-limit": "[80000 blocks] invalid argument 0: block range exceeds maximum 50000",
+     "archive-missing": "[10001 blocks] pruned history unavailable"
+    },
+    "learnedMaxSpan": 10001,
+    "abandonedAt": 39238846,
+    "abandonReason": "archive-missing: pruned history unavailable",
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://base.gateway.tenderly.co",
+    "requests": 6676,
+    "ok": 6529,
+    "errors": {
+     "range-limit": 9
+    },
+    "errorSamples": {
+     "range-limit": "[10000 blocks] invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0xb092a1, 0xb09689], or use an access key for larger ranges.)"
+    },
+    "learnedMaxSpan": 1000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/base",
+    "requests": 7447,
+    "ok": 7299,
+    "errors": {
+     "range-limit": 9
+    },
+    "errorSamples": {
+     "range-limit": "[10000 blocks] invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0xbcf0a4, 0xbcf48c], or use an access key for larger ranges.)"
+    },
+    "learnedMaxSpan": 1000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://8453.rpc.thirdweb.com",
+    "requests": 48,
+    "ok": 0,
+    "errors": {
+     "rate-limit": 12
+    },
+    "errorSamples": {
+     "rate-limit": "[10000 blocks] Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
+    },
+    "learnedMaxSpan": null,
+    "abandonedAt": 13192871,
+    "abandonReason": "rate-limit: Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing",
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://base.rpc.sentio.xyz",
+    "requests": 3260,
+    "ok": 3244,
+    "errors": {
+     "range-limit": 4
+    },
+    "errorSamples": {
+     "range-limit": "[10000 blocks] HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+    },
+    "learnedMaxSpan": 1000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://base.drpc.org",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "errorSamples": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://base-public.nodies.app",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "errorSamples": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://base-mainnet.public.blastapi.io",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "errorSamples": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   }
+  ],
+  "count": 7955,
+  "firstBlock": 10833221,
+  "lastBlock": 60123262,
+  "firstTime": "2024-02-20T19:03:09.000Z",
+  "lastTime": "2026-11-20T22:50:28.000Z"
+ },
+ "identities": [],
+ "comparison": null,
+ "referenceSource": null,
+ "deployBlock": 10761374,
+ "deploySource": "eth_getCode bisection on base.gateway.tenderly.co (27 requests)",
+ "perMonthBlocks": {
+  "blocksPer30d": 1296000,
+  "buckets": [
+   6,
+   10,
+   338,
+   419,
+   295,
+   226,
+   130,
+   216,
+   249,
+   106,
+   812,
+   379,
+   213,
+   343,
+   299,
+   311,
+   152,
+   1880,
+   66,
+   132,
+   220,
+   290,
+   97,
+   315,
+   197,
+   141,
+   8,
+   3,
+   3,
+   22,
+   25,
+   27,
+   20,
+   0,
+   3,
+   0,
+   1,
+   0,
+   1,
+   0,
+   0
+  ]
+ }
+}

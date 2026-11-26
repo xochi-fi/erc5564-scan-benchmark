@@ -1,0 +1,702 @@
+{
+ "chain": "ethereum",
+ "measuredAt": "2026-11-26T15:25:03.307Z",
+ "source": "blockscout-v2 https://eth.blockscout.com",
+ "targets": [
+  "21140089:635",
+  "25383557:682",
+  "26499925:8"
+ ],
+ "endpoints": [
+  {
+   "host": "xrpc.cl",
+   "url": "https://xrpc.cl/eth",
+   "window": 100,
+   "returned": 3,
+   "empty": 0,
+   "errors": 3,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "XRPC Cluster: Backend eth node currently syncing and fallbacks busy"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "error: http",
+     "message": "XRPC Cluster: Backend eth node currently syncing and fallbacks busy"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "XRPC Cluster: Backend eth node currently syncing and fallbacks busy"
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum-rpc.publicnode.com",
+   "url": "https://ethereum-rpc.publicnode.com",
+   "window": 100,
+   "returned": 1,
+   "empty": 0,
+   "errors": 5,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    }
+   ]
+  },
+  {
+   "host": "eth-mainnet.public.blastapi.io",
+   "url": "https://eth-mainnet.public.blastapi.io",
+   "window": 10,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum-public.nodies.app",
+   "url": "https://ethereum-public.nodies.app",
+   "window": 50,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum.public.blockpi.network",
+   "url": "https://ethereum.public.blockpi.network/v1/rpc/public",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "eth.drpc.org",
+   "url": "https://eth.drpc.org",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "mainnet.gateway.tenderly.co",
+   "url": "https://mainnet.gateway.tenderly.co",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "url": "https://gateway.tenderly.co/public/mainnet",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "ethereum-mainnet.gateway.tatum.io",
+   "url": "https://ethereum-mainnet.gateway.tatum.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "public-eth.nownodes.io",
+   "url": "https://public-eth.nownodes.io",
+   "window": 41,
+   "returned": 0,
+   "empty": 0,
+   "errors": 6,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "error: timeout",
+     "message": "timeout after 25000 ms"
+    }
+   ]
+  },
+  {
+   "host": "ethereum-json-rpc.stakely.io",
+   "url": "https://ethereum-json-rpc.stakely.io",
+   "window": 3,
+   "returned": 4,
+   "empty": 0,
+   "errors": 2,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "error: unsupported",
+     "message": "method not available"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "error: unsupported",
+     "message": "method not available"
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "eth.api.pocket.network",
+   "url": "https://eth.api.pocket.network",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "mainnet.rpc.sentio.xyz",
+   "url": "https://mainnet.rpc.sentio.xyz",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc-eth.blockmachine.io",
+   "url": "https://rpc-eth.blockmachine.io",
+   "window": 100,
+   "returned": 2,
+   "empty": 0,
+   "errors": 4,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "keyless requests are served for the most recent 10000 blocks only; block 21140039 is older than that; use an API key for"
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "keyless requests are served for the most recent 10000 blocks only; block 21140039 is older than that; use an API key for"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "keyless requests are served for the most recent 10000 blocks only; block 25383507 is older than that; use an API key for"
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "keyless requests are served for the most recent 10000 blocks only; block 25383507 is older than that; use an API key for"
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "1.rpc.thirdweb.com",
+   "url": "https://1.rpc.thirdweb.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "21140089:635",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "21140089:635",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "25383557:682",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "26499925:8",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,161 @@
+{
+ "chain": "arbitrum",
+ "measuredAt": "2026-11-26T14:50:04.253Z",
+ "filter": {
+  "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7"
+ },
+ "strategy": "list-order",
+ "endpointOrder": [
+  "arb1.arbitrum.io",
+  "public.1rpc.io",
+  "arbitrum-one-public.nodies.app",
+  "arbitrum-one.public.blastapi.io",
+  "arbitrum-one-rpc.publicnode.com",
+  "arbitrum.drpc.org",
+  "arbitrum.gateway.tenderly.co",
+  "arb-one-mainnet.gateway.tatum.io"
+ ],
+ "initialSpan": 10000,
+ "result": {
+  "success": true,
+  "failure": null,
+  "fromBlock": 219468264,
+  "toBlock": 527754682,
+  "checkpoint": 527754683,
+  "requests": 68,
+  "okRequests": 67,
+  "responseBytes": 27281,
+  "requestBytes": 16508,
+  "totalMs": 16920.090215,
+  "fetchMs": 8970.053817999997,
+  "endpointSwitches": 0,
+  "spanHistogram": {
+   "8192": 4,
+   "16384": 4,
+   "32768": 4,
+   "65536": 4,
+   "131072": 4,
+   "262144": 4,
+   "524288": 4,
+   "1048576": 4,
+   "2097152": 4,
+   "4194304": 5,
+   "8388608": 26
+  },
+  "endpoints": [
+   {
+    "url": "https://arb1.arbitrum.io/rpc",
+    "requests": 68,
+    "ok": 67,
+    "errors": {
+     "range-limit": 1
+    },
+    "learnedMaxSpan": 10000000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://public.1rpc.io/arb",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://arbitrum-one-public.nodies.app",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://arbitrum-one.public.blastapi.io",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://arbitrum-one-rpc.publicnode.com",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://arbitrum.drpc.org",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://arbitrum.gateway.tenderly.co",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://arb-one-mainnet.gateway.tatum.io",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   }
+  ],
+  "count": 19,
+  "firstBlock": 434497958,
+  "lastBlock": 522929374,
+  "firstTime": "2026-02-21T16:58:20.000Z",
+  "lastTime": "2026-11-10T08:54:03.000Z"
+ },
+ "identities": [
+  "434497958:1:0xcb07cc3d2726e0784b1cc9ab6cf8a20640ca5c4afbeeeb617f5bb8b5e04a0b2c",
+  "434798933:0:0xfac168c9479940a8d45311f599dd14603386c4af033ca37d94b475254b100a0b",
+  "434799458:2:0xc3f383b5b94cdcd4992035ebcfe6ade7c35e270dcfed39c71992b7e1f265e412",
+  "447971703:3:0xd2c34345f15d81afc988702a43458f2539f73ba94557e9bb231f2a092c9f0faf",
+  "447973540:11:0xeabd5569e66c0ac567cf473d8828f04fb16cf7964c37fee87b6f918b2203971d",
+  "447978673:8:0x05a1d0903cf82e3f2c226f0d3c4f1b1f65b0660e3e9311b8369f4b215f2952e3",
+  "485180403:5:0xd1cc597e3b2b8d4ef113f32062faeb8d608db35376cb85116a1905ea227f65f6",
+  "485661330:17:0xb89931352bd8a6d4311c87470387bf601201ee8f12280d8bb66567ecbaa9b27c",
+  "485803774:0:0x331ba3f67dedd17e85a1132277638baea5531b816e8ac2e2e97179fa007c4863",
+  "485817023:1:0xb4579c40ea558c168c5fa5f0c780f1c8c43ad1c97a2e7b117cf0b96ef6c778a7",
+  "487005343:7:0x0a3e89eb3750e906e7d0d1e71188f8c8ea34191288279a8ae867db787998d25f",
+  "487021939:51:0x9a8c7261e13f0b922a176c5f61407845490c1a04042915e87c4a02d19b339e26",
+  "487025116:1:0x2845730272fd60f67a2eaf7340f452cda1ce3e46f74bd0f38479f25c7497a8e5",
+  "487038079:1:0x1fe1f2007a139910b3ba21cd8439da946efe79905ba70ef652a228f834769aec",
+  "487038770:7:0xc8b6533905ed8a44cef00f6875a766ae64da63bb9b5a95897bee801285b42d7b",
+  "487056150:6:0xd3aec906efe63bb93de082442b613d6be60125c6aca6a9598775a4e244c2b9cf",
+  "487952585:15:0x85dafb40709bef0d7b3d92ce19b6ed6f0a94cc52ac46157465f610631b2e40d3",
+  "522928490:6:0x6b84e046a854d1359cce265f5fb6b5e2a1c095f5ef2f08f4993a61d429dfbf6a",
+  "522929374:4:0xe1203ad86692d980367eff6f245a9c1648cb7b54fcbfdbe01147cfae09cb776b"
+ ],
+ "comparison": null,
+ "referenceSource": null,
+ "deployBlock": 219468264,
+ "deploySource": "eth_getCode bisection on arbitrum-one.public.blastapi.io (30 requests)"
+}

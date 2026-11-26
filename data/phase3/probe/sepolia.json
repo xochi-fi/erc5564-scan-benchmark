@@ -1,0 +1,2236 @@
+{
+ "chain": "sepolia",
+ "measuredAt": "2026-11-26T14:56:17.959Z",
+ "deployBlock": 5486597,
+ "deploySource": "https://eth-sepolia.blockscout.com creation transaction; bisection agrees (eth_getCode bisection on sepolia.gateway.tenderly.co (25 requests))",
+ "deployNotes": [
+  "xrpc.cl: no archive state at block 1",
+  "lb.routeme.sh: eth_getCode failed at block 5486578 (no archive state?)",
+  "eth-sepolia.public.blastapi.io: no archive state at block 1"
+ ],
+ "firstLog": {
+  "blockNumber": 6241244,
+  "identity": "6241244:26"
+ },
+ "endpoints": [
+  {
+   "url": "https://xrpc.cl/sepolia",
+   "host": "xrpc.cl",
+   "chainIdOk": true,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_blockNumber: http: XRPC Cluster: Backend sepolia node currently syncing and fallbacks busy",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 2,
+   "responseBytes": 182,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [
+    "1"
+   ],
+   "errors": [
+    {
+     "kind": "http",
+     "code": -32000,
+     "message": "XRPC Cluster: Backend sepolia node currently syncing and fallbacks busy",
+     "httpStatus": 503,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 1181.9672409999184
+  },
+  {
+   "url": "https://lb.routeme.sh/rpc/evm/11155111",
+   "host": "lb.routeme.sh",
+   "chainIdOk": true,
+   "head": 12217139,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10000,
+    "minFail": 10001,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 117 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 144 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "range-limit: block range too large; try a block range of at most 10000 blocks"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 172 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "ok",
+      "note": "0 logs, 275 ms"
+     },
+     {
+      "blocks": 10001,
+      "verdict": "fail",
+      "note": "range-limit: block range too large; try a block range of at most 10000 blocks"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207139,
+     "toBlock": 12208138,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117139,
+     "toBlock": 12118138,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217139,
+     "toBlock": 11218138,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730542,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730542,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 129.72844700003043,
+    "p95Ms": 161.47164300002623,
+    "maxMs": 161.47164300002623
+   },
+   "requests": 60,
+   "responseBytes": 10416,
+   "rateLimitHits": 36,
+   "retryAfterSeen": [
+    "1"
+   ],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "block range too large; try a block range of at most 10000 blocks",
+     "httpStatus": 400,
+     "limitHint": 10000,
+     "span": 16000
+    },
+    {
+     "kind": "rate-limit",
+     "code": -32029,
+     "message": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 10001
+    }
+   ],
+   "probeMs": 51510.29981800006
+  },
+  {
+   "url": "https://eth-sepolia.public.blastapi.io",
+   "host": "eth-sepolia.public.blastapi.io",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 207,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32000,
+     "message": "Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 20.542722000041977
+  },
+  {
+   "url": "https://sepolia.gateway.tenderly.co",
+   "host": "sepolia.gateway.tenderly.co",
+   "chainIdOk": true,
+   "head": 12217140,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 6730544,
+    "minFail": null,
+    "unbounded": true,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 67 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 71 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 73 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "ok",
+      "note": "23 logs, 187 ms"
+     },
+     {
+      "blocks": 256000,
+      "verdict": "ok",
+      "note": "56 logs, 202 ms"
+     },
+     {
+      "blocks": 1024000,
+      "verdict": "ok",
+      "note": "273 logs, 195 ms"
+     },
+     {
+      "blocks": 4096000,
+      "verdict": "ok",
+      "note": "872 logs, 852 ms"
+     },
+     {
+      "blocks": 6730544,
+      "verdict": "ok",
+      "note": "1039 logs, 405 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207140,
+     "toBlock": 12208139,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117140,
+     "toBlock": 12118139,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217140,
+     "toBlock": 11218139,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730543,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730543,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 68.89300200005528,
+    "p95Ms": 79.60823799995705,
+    "maxMs": 79.60823799995705
+   },
+   "requests": 26,
+   "responseBytes": 2778635,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [],
+   "probeMs": 7285.998448000057
+  },
+  {
+   "url": "https://gateway.tenderly.co/public/sepolia",
+   "host": "gateway.tenderly.co",
+   "chainIdOk": true,
+   "head": 12217140,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 6730544,
+    "minFail": null,
+    "unbounded": true,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 63 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 103 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 189 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "ok",
+      "note": "23 logs, 159 ms"
+     },
+     {
+      "blocks": 256000,
+      "verdict": "ok",
+      "note": "56 logs, 125 ms"
+     },
+     {
+      "blocks": 1024000,
+      "verdict": "ok",
+      "note": "273 logs, 169 ms"
+     },
+     {
+      "blocks": 4096000,
+      "verdict": "ok",
+      "note": "872 logs, 255 ms"
+     },
+     {
+      "blocks": 6730544,
+      "verdict": "ok",
+      "note": "1039 logs, 235 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207140,
+     "toBlock": 12208139,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117140,
+     "toBlock": 12118139,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217140,
+     "toBlock": 11218139,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730543,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730543,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 66.92954700009432,
+    "p95Ms": 75.2652399999788,
+    "maxMs": 75.2652399999788
+   },
+   "requests": 26,
+   "responseBytes": 2778635,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [],
+   "probeMs": 6325.361309999949
+  },
+  {
+   "url": "https://api.zan.top/eth-sepolia",
+   "host": "api.zan.top",
+   "chainIdOk": true,
+   "head": 12217140,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): unsupported: HTTP 200: invalid JSON-RPC envelope {\"timestamp\":\"2026-11-26T14:42:19.520179635Z\",\"status\":200,\"error\":\"Method \\\"eth_getLogs\\\" is not available for unregist",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 341,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "unsupported",
+     "code": null,
+     "message": "HTTP 200: invalid JSON-RPC envelope {\"timestamp\":\"2026-11-26T14:42:19.520179635Z\",\"status\":200,\"error\":\"Method \\\"eth_getLogs\\\" is not available for unregist",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 965.4236509999027
+  },
+  {
+   "url": "https://ethereum-sepolia-rpc.publicnode.com",
+   "host": "ethereum-sepolia-rpc.publicnode.com",
+   "chainIdOk": true,
+   "head": 12217140,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 3,
+    "minFail": 4,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     },
+     {
+      "blocks": 15,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     },
+     {
+      "blocks": 3,
+      "verdict": "ok",
+      "note": "0 logs, 66 ms"
+     },
+     {
+      "blocks": 9,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     },
+     {
+      "blocks": 6,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     },
+     {
+      "blocks": 4,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block: requested 12217140, head 12217139"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207140,
+     "toBlock": 12207142,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117140,
+     "toBlock": 12117142,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217140,
+     "toBlock": 11217142,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730543,
+     "fromBlock": 5486597,
+     "toBlock": 5486599,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730543,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 3,
+    "samples": 10,
+    "okSamples": 9,
+    "medianMs": 56.88893899996765,
+    "p95Ms": 68.26655600010417,
+    "maxMs": 68.26655600010417
+   },
+   "requests": 26,
+   "responseBytes": 3021,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "block range extends beyond current head block: requested 12217140, head 12217139",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 6307.422505000024
+  },
+  {
+   "url": "https://public.1rpc.io/sepolia",
+   "host": "public.1rpc.io",
+   "chainIdOk": true,
+   "head": 12217140,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 8,
+    "minFail": 9,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 15,
+      "verdict": "fail",
+      "note": "auth-required: chain is not available on free plan, please upgrade to paid plan"
+     },
+     {
+      "blocks": 3,
+      "verdict": "ok",
+      "note": "0 logs, 1581 ms"
+     },
+     {
+      "blocks": 9,
+      "verdict": "fail",
+      "note": "range-limit: block range extends beyond current head block"
+     },
+     {
+      "blocks": 6,
+      "verdict": "ok",
+      "note": "0 logs, 3428 ms"
+     },
+     {
+      "blocks": 7,
+      "verdict": "ok",
+      "note": "0 logs, 1570 ms"
+     },
+     {
+      "blocks": 8,
+      "verdict": "ok",
+      "note": "0 logs, 5772 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207140,
+     "toBlock": 12207147,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117140,
+     "toBlock": 12117147,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217140,
+     "toBlock": 11217147,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730543,
+     "fromBlock": 5486597,
+     "toBlock": 5486604,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "chain is not available on free plan, please upgrade to paid plan"
+    }
+   ],
+   "archiveDepthServed": 1000000,
+   "servesDeployBlock": false,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 8,
+    "samples": 10,
+    "okSamples": 7,
+    "medianMs": 1318.7153949999483,
+    "p95Ms": 3264.7222670000046,
+    "maxMs": 3264.7222670000046
+   },
+   "requests": 31,
+   "responseBytes": 3171,
+   "rateLimitHits": 4,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs is limited to 0 - 50 blocks range",
+     "httpStatus": 200,
+     "limitHint": 50,
+     "span": 1000
+    },
+    {
+     "kind": "auth-required",
+     "code": 35,
+     "message": "chain is not available on free plan, please upgrade to paid plan",
+     "httpStatus": 400,
+     "limitHint": null,
+     "span": 15
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "block range extends beyond current head block",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 9
+    },
+    {
+     "kind": "unsupported",
+     "code": null,
+     "message": "HTTP 200: invalid JSON-RPC envelope {\"timestamp\":\"2026-11-26T14:43:00.212479610Z\",\"status\":200,\"error\":\"Method \\\"eth_getLogs\\\" is not available for unregist",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 8
+    }
+   ],
+   "probeMs": 52962.653147000005
+  },
+  {
+   "url": "https://eth-sepolia.api.onfinality.io/public",
+   "host": "eth-sepolia.api.onfinality.io",
+   "chainIdOk": true,
+   "head": 12217140,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 3411988,
+    "minFail": 3411989,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 102 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 104 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 103 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "ok",
+      "note": "23 logs, 231 ms"
+     },
+     {
+      "blocks": 256000,
+      "verdict": "ok",
+      "note": "56 logs, 344 ms"
+     },
+     {
+      "blocks": 1024000,
+      "verdict": "ok",
+      "note": "273 logs, 1197 ms"
+     },
+     {
+      "blocks": 4096000,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 2560000,
+      "verdict": "ok",
+      "note": "737 logs, 8939 ms"
+     },
+     {
+      "blocks": 3328000,
+      "verdict": "ok",
+      "note": "785 logs, 22043 ms"
+     },
+     {
+      "blocks": 3712000,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 3520000,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 3424000,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 3376000,
+      "verdict": "ok",
+      "note": "787 logs, 23147 ms"
+     },
+     {
+      "blocks": 3400000,
+      "verdict": "ok",
+      "note": "787 logs, 23905 ms"
+     },
+     {
+      "blocks": 3412000,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 3406000,
+      "verdict": "ok",
+      "note": "787 logs, 24403 ms"
+     },
+     {
+      "blocks": 3409000,
+      "verdict": "ok",
+      "note": "787 logs, 24421 ms"
+     },
+     {
+      "blocks": 3410500,
+      "verdict": "ok",
+      "note": "787 logs, 24493 ms"
+     },
+     {
+      "blocks": 3411250,
+      "verdict": "ok",
+      "note": "787 logs, 24646 ms"
+     },
+     {
+      "blocks": 3411625,
+      "verdict": "ok",
+      "note": "787 logs, 24657 ms"
+     },
+     {
+      "blocks": 3411812,
+      "verdict": "ok",
+      "note": "787 logs, 24659 ms"
+     },
+     {
+      "blocks": 3411906,
+      "verdict": "ok",
+      "note": "787 logs, 24600 ms"
+     },
+     {
+      "blocks": 3411953,
+      "verdict": "ok",
+      "note": "787 logs, 24645 ms"
+     },
+     {
+      "blocks": 3411976,
+      "verdict": "ok",
+      "note": "787 logs, 24794 ms"
+     },
+     {
+      "blocks": 3411988,
+      "verdict": "ok",
+      "note": "787 logs, 24922 ms"
+     },
+     {
+      "blocks": 3411994,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 3411991,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     },
+     {
+      "blocks": 3411989,
+      "verdict": "fail",
+      "note": "timeout: timeout after 25000 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207140,
+     "toBlock": 12208139,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117140,
+     "toBlock": 12118139,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217140,
+     "toBlock": 11218139,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730543,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730543,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 103.48678099992685,
+    "p95Ms": 105.59825000003912,
+    "maxMs": 105.59825000003912
+   },
+   "requests": 92,
+   "responseBytes": 13877833,
+   "rateLimitHits": 37,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "timeout",
+     "code": null,
+     "message": "timeout after 25000 ms",
+     "httpStatus": 0,
+     "limitHint": null,
+     "span": 4096000
+    }
+   ],
+   "probeMs": 838201.966508
+  },
+  {
+   "url": "https://ethereum-sepolia-public.nodies.app",
+   "host": "ethereum-sepolia-public.nodies.app",
+   "chainIdOk": true,
+   "head": 12217141,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 50,
+    "minFail": 51,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 15,
+      "verdict": "ok",
+      "note": "0 logs, 145 ms"
+     },
+     {
+      "blocks": 38,
+      "verdict": "ok",
+      "note": "0 logs, 154 ms"
+     },
+     {
+      "blocks": 50,
+      "verdict": "ok",
+      "note": "0 logs, 144 ms"
+     },
+     {
+      "blocks": 56,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 53,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 51,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207141,
+     "toBlock": 12207190,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117141,
+     "toBlock": 12117190,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217141,
+     "toBlock": 11217190,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730544,
+     "fromBlock": 5486597,
+     "toBlock": 5486646,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730544,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 50,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 145.11513699998613,
+    "p95Ms": 159.03492300002836,
+    "maxMs": 159.03492300002836
+   },
+   "requests": 27,
+   "responseBytes": 4406,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32001,
+     "message": "Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.",
+     "httpStatus": 200,
+     "limitHint": 50,
+     "span": 1000
+    }
+   ],
+   "probeMs": 6672.445096999989
+  },
+  {
+   "url": "https://0xrpc.io/sep",
+   "host": "0xrpc.io",
+   "chainIdOk": true,
+   "head": 12217139,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10001,
+    "minFail": 10002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 60 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 53 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 53 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "ok",
+      "note": "0 logs, 53 ms"
+     },
+     {
+      "blocks": 10001,
+      "verdict": "ok",
+      "note": "0 logs, 54 ms"
+     },
+     {
+      "blocks": 13000,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 11500,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10750,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10375,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10188,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10094,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10047,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10024,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10012,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10006,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10003,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     },
+     {
+      "blocks": 10002,
+      "verdict": "fail",
+      "note": "other: Request contains invalid block params"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207139,
+     "toBlock": 12208138,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117139,
+     "toBlock": 12118138,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217139,
+     "toBlock": 11218138,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730542,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730542,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 53.10185800003819,
+    "p95Ms": 57.3177339999238,
+    "maxMs": 57.3177339999238
+   },
+   "requests": 49,
+   "responseBytes": 12429,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "other",
+     "code": -32601,
+     "message": "Request contains invalid block params",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 16000
+    }
+   ],
+   "probeMs": 28989.9120730001
+  },
+  {
+   "url": "https://ethereum-sepolia.gateway.tatum.io",
+   "host": "ethereum-sepolia.gateway.tatum.io",
+   "chainIdOk": true,
+   "head": 12217146,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 101,
+    "minFail": 102,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 44 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 44 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 50 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 119,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 110,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 105,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 103,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 102,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207146,
+     "toBlock": 12207246,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117146,
+     "toBlock": 12117246,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217146,
+     "toBlock": 11217246,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730549,
+     "fromBlock": 5486597,
+     "toBlock": 5486697,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730549,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 101,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 44.13144799997099,
+    "p95Ms": 48.195157000096515,
+    "maxMs": 48.195157000096515
+   },
+   "requests": 57,
+   "responseBytes": 4934,
+   "rateLimitHits": 18,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "other",
+     "code": -16412,
+     "message": "Requested range is over limit of 100",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 565876.0128119999
+  },
+  {
+   "url": "https://eth-sepolia-testnet.api.pocket.network",
+   "host": "eth-sepolia-testnet.api.pocket.network",
+   "chainIdOk": true,
+   "head": 12217141,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10761,
+    "minFail": 10762,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 50 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 60 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 46 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "ok",
+      "note": "0 logs, 104 ms"
+     },
+     {
+      "blocks": 10001,
+      "verdict": "ok",
+      "note": "0 logs, 178 ms"
+     },
+     {
+      "blocks": 13000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 11500,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10750,
+      "verdict": "ok",
+      "note": "0 logs, 85 ms"
+     },
+     {
+      "blocks": 11125,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10937,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10843,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10796,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10773,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10761,
+      "verdict": "ok",
+      "note": "0 logs, 63 ms"
+     },
+     {
+      "blocks": 10767,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10764,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10762,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207141,
+     "toBlock": 12208140,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117141,
+     "toBlock": 12118140,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217141,
+     "toBlock": 11218140,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730544,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730544,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 46.03304200002458,
+    "p95Ms": 52.65148999996018,
+    "maxMs": 52.65148999996018
+   },
+   "requests": 36,
+   "responseBytes": 11159,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs block range too large (max 10001 blocks)",
+     "httpStatus": 200,
+     "limitHint": 10001,
+     "span": 16000
+    }
+   ],
+   "probeMs": 8934.588037000038
+  },
+  {
+   "url": "https://sepolia.rpc.sentio.xyz",
+   "host": "sepolia.rpc.sentio.xyz",
+   "chainIdOk": true,
+   "head": 12217141,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1000,
+    "minFail": 1001,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 194 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207141,
+     "toBlock": 12208140,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117141,
+     "toBlock": 12118140,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217141,
+     "toBlock": 11218140,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730544,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730544,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 186.0250600000145,
+    "p95Ms": 191.4090670000296,
+    "maxMs": 191.4090670000296
+   },
+   "requests": 43,
+   "responseBytes": 10068,
+   "rateLimitHits": 24,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": null,
+     "message": "HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 56985.399376000045
+  },
+  {
+   "url": "https://ethereum-sepolia.rpc.thyme.sh/public",
+   "host": "ethereum-sepolia.rpc.thyme.sh",
+   "chainIdOk": true,
+   "head": 12217143,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 126,
+    "minFail": 127,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 23 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 22 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 22 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 119,
+      "verdict": "ok",
+      "note": "0 logs, 23 ms"
+     },
+     {
+      "blocks": 128,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 123,
+      "verdict": "ok",
+      "note": "0 logs, 22 ms"
+     },
+     {
+      "blocks": 125,
+      "verdict": "ok",
+      "note": "0 logs, 22 ms"
+     },
+     {
+      "blocks": 126,
+      "verdict": "ok",
+      "note": "0 logs, 25 ms"
+     },
+     {
+      "blocks": 127,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207143,
+     "toBlock": 12207268,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117143,
+     "toBlock": 12117268,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217143,
+     "toBlock": 11217268,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 6730546,
+     "fromBlock": 5486597,
+     "toBlock": 5486722,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": false,
+   "latency": {
+    "span": 126,
+    "samples": 10,
+    "okSamples": 1,
+    "medianMs": 22.102151000057347,
+    "p95Ms": 22.102151000057347,
+    "maxMs": 22.102151000057347
+   },
+   "requests": 58,
+   "responseBytes": 3685,
+   "rateLimitHits": 27,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32001,
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 41272.44396200008
+  },
+  {
+   "url": "https://rpc.sepolia.org",
+   "host": "rpc.sepolia.org",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: http: HTTP 404: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 277,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "http",
+     "code": null,
+     "message": "HTTP 404: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"> <html><head> <title>404 Not Found</title> </head><body> <h1>Not Found</h1> <p>The requested URL was not found",
+     "httpStatus": 404,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 260.6622529999586
+  },
+  {
+   "url": "https://rpc2.sepolia.org",
+   "host": "rpc2.sepolia.org",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: timeout: timeout after 25000 ms",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 0,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "timeout",
+     "code": null,
+     "message": "timeout after 25000 ms",
+     "httpStatus": 0,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 25000.203609999968
+  },
+  {
+   "url": "https://rpc.sepolia.ethpandaops.io",
+   "host": "rpc.sepolia.ethpandaops.io",
+   "chainIdOk": true,
+   "head": 12217145,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 30000,
+    "minFail": 30001,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 74 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 107 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 82 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 20000,
+      "verdict": "ok",
+      "note": "0 logs, 86 ms"
+     },
+     {
+      "blocks": 50000,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 20001,
+      "verdict": "ok",
+      "note": "0 logs, 175 ms"
+     },
+     {
+      "blocks": 35000,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 27500,
+      "verdict": "ok",
+      "note": "0 logs, 248 ms"
+     },
+     {
+      "blocks": 31250,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 29375,
+      "verdict": "ok",
+      "note": "0 logs, 209 ms"
+     },
+     {
+      "blocks": 30312,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 29843,
+      "verdict": "ok",
+      "note": "0 logs, 152 ms"
+     },
+     {
+      "blocks": 30077,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 29960,
+      "verdict": "ok",
+      "note": "0 logs, 170 ms"
+     },
+     {
+      "blocks": 30018,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 29989,
+      "verdict": "ok",
+      "note": "0 logs, 163 ms"
+     },
+     {
+      "blocks": 30003,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 29996,
+      "verdict": "ok",
+      "note": "0 logs, 156 ms"
+     },
+     {
+      "blocks": 29999,
+      "verdict": "ok",
+      "note": "0 logs, 162 ms"
+     },
+     {
+      "blocks": 30001,
+      "verdict": "fail",
+      "note": "range-limit: getLogs request exceeded max allowed range"
+     },
+     {
+      "blocks": 30000,
+      "verdict": "ok",
+      "note": "0 logs, 161 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207145,
+     "toBlock": 12208144,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117145,
+     "toBlock": 12118144,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217145,
+     "toBlock": 11218144,
+     "ok": true,
+     "logs": 6,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 6730548,
+     "fromBlock": 5486597,
+     "toBlock": 5487596,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 6730548,
+   "servesDeployBlock": true,
+   "firstLogReturned": true,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 77.88886399997864,
+    "p95Ms": 165.65777999989223,
+    "maxMs": 165.65777999989223
+   },
+   "requests": 40,
+   "responseBytes": 12545,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32012,
+     "message": "getLogs request exceeded max allowed range",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 64000
+    }
+   ],
+   "probeMs": 9828.31251399999
+  },
+  {
+   "url": "https://sepolia.drpc.org",
+   "host": "sepolia.drpc.org",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: chain is not available on free plan, please upgrade to paid plan",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 124,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": 35,
+     "message": "chain is not available on free plan, please upgrade to paid plan",
+     "httpStatus": 400,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 116.85788999998476
+  },
+  {
+   "url": "https://ethereum-sepolia-rpc.blockreq.com/v1/rpc/public",
+   "host": "ethereum-sepolia-rpc.blockreq.com",
+   "chainIdOk": true,
+   "head": 12217145,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 500,
+    "minFail": 501,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs range of 1000 blocks exceeds the 500-block limit for this plan; split the request into ranges of at most 500 blocks"
+     },
+     {
+      "blocks": 250,
+      "verdict": "ok",
+      "note": "0 logs, 902 ms"
+     },
+     {
+      "blocks": 500,
+      "verdict": "ok",
+      "note": "0 logs, 251 ms"
+     },
+     {
+      "blocks": 501,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs range of 501 blocks exceeds the 500-block limit for this plan; split the request into ranges of at most 500 blocks"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 12207145,
+     "toBlock": 12207644,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 12117145,
+     "toBlock": 12117644,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 11217145,
+     "toBlock": 11217644,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 6730548,
+     "fromBlock": 5486597,
+     "toBlock": 5487096,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": false,
+   "latency": {
+    "span": 500,
+    "samples": 10,
+    "okSamples": 2,
+    "medianMs": 244.41594700003043,
+    "p95Ms": 271.8613530000439,
+    "maxMs": 271.8613530000439
+   },
+   "requests": 22,
+   "responseBytes": 2958,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32005,
+     "message": "eth_getLogs range of 1000 blocks exceeds the 500-block limit for this plan; split the request into ranges of at most 500 blocks",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1000
+    },
+    {
+     "kind": "archive-missing",
+     "code": -32601,
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 500
+    }
+   ],
+   "probeMs": 6631.520912999986
+  },
+  {
+   "url": "https://api.blockvectra.com/v1/eth_sepolia/public",
+   "host": "api.blockvectra.com",
+   "chainIdOk": true,
+   "head": 12217146,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): unsupported: method is not available on the public endpoint",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 383,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "unsupported",
+     "code": -32601,
+     "message": "method is not available on the public endpoint",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 556.7538750000531
+  }
+ ]
+}

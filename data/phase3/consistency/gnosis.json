@@ -1,0 +1,426 @@
+{
+ "chain": "gnosis",
+ "measuredAt": "2026-11-26T16:02:22.006Z",
+ "source": "keyless RPC retrieval (probe-informed)",
+ "targets": [
+  "40967594:20",
+  "41054049:14",
+  "41054058:7"
+ ],
+ "endpoints": [
+  {
+   "host": "lb.routeme.sh",
+   "url": "https://lb.routeme.sh/rpc/evm/100",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc.gnosischain.com",
+   "url": "https://rpc.gnosischain.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc.gnosis.gateway.fm",
+   "url": "https://rpc.gnosis.gateway.fm",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc.ap-southeast-1.gateway.fm",
+   "url": "https://rpc.ap-southeast-1.gateway.fm/v4/gnosis/non-archival/mainnet",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gnosis.drpc.org",
+   "url": "https://gnosis.drpc.org",
+   "window": 100,
+   "returned": 0,
+   "empty": 0,
+   "errors": 6,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "error: http",
+     "message": "Temporary internal error. Please retry, trace-id: e77aa42b9b59200b48388a3a7f3c9b1f"
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "Temporary internal error. Please retry, trace-id: 2b753a97ef48cb21dabc6b9774123ad5"
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "error: timeout",
+     "message": "Request timeout on the free plan, please upgrade to paid plan"
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "Temporary internal error. Please retry, trace-id: 15e4dd49e4236264d26390e6e519f646"
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "error: http",
+     "message": "Temporary internal error. Please retry, trace-id: 906b8920a5135eb2fae2516ebe45b5a5"
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "Temporary internal error. Please retry, trace-id: a7d83fda73d4126829dcd5f1dc20fcc9"
+    }
+   ]
+  },
+  {
+   "host": "gnosis-rpc.publicnode.com",
+   "url": "https://gnosis-rpc.publicnode.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gnosis.api.pocket.network",
+   "url": "https://gnosis.api.pocket.network",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gnosis.oat.farm",
+   "url": "https://gnosis.oat.farm",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "100.rpc.thirdweb.com",
+   "url": "https://100.rpc.thirdweb.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "40967594:20",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "40967594:20",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054049:14",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "41054058:7",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

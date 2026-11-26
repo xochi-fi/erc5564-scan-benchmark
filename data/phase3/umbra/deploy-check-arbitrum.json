@@ -1,0 +1,33 @@
+{
+ "chain": "arbitrum",
+ "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
+ "deployBlock": 7285883,
+ "confirmed": 2,
+ "checks": [
+  {
+   "host": "arbitrum.gateway.tenderly.co",
+   "codeAtDeploy": null,
+   "codeBefore": null
+  },
+  {
+   "host": "public-arb-mainnet.fastnode.io",
+   "codeAtDeploy": null,
+   "codeBefore": null
+  },
+  {
+   "host": "arb1.arbitrum.io",
+   "codeAtDeploy": null,
+   "codeBefore": null
+  },
+  {
+   "host": "arb-one.api.pocket.network",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  },
+  {
+   "host": "42161.rpc.thirdweb.com",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  }
+ ]
+}

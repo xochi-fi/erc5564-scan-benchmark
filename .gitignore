@@ -1,0 +1,11 @@
+node_modules/
+results/
+work/
+/fixtures/
+announcements.jsonl
+.runtime/
+*.tar.gz
+*.tar
+*.cpuprofile
+.DS_Store
+._*

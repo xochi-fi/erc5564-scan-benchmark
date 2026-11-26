@@ -1,0 +1,17 @@
+[
+  {
+    "name": "100000-zero",
+    "path": "~/stealth-scan-phase2-repeat/work/fixtures/100000-zero",
+    "source": "existing"
+  },
+  {
+    "name": "100000-sparse",
+    "path": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "source": "reused ~/stealth-scan-phase2/work/fixtures/100000-sparse (SHA256 verified against manifest and pinned digest)"
+  },
+  {
+    "name": "1000000-zero",
+    "path": "~/stealth-scan-phase2-repeat/work/fixtures/1000000-zero",
+    "source": "reused ~/stealth-scan-phase2/work/fixtures/1000000-zero (SHA256 verified against manifest and pinned digest)"
+  }
+]

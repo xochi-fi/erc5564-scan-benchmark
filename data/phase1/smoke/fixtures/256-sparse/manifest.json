@@ -1,0 +1,34 @@
+{
+  "count": 256,
+  "seed": "erc5564-scan-v1",
+  "matchEvery": 16,
+  "schemaVersion": 1,
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "recipient": {
+    "spendingPublicKey": "0x03b790fa25d152286e031a9f45fbda836e51daaed14d2818ac4248b6e048bd9f49",
+    "viewingPrivateKey": "0x1244ed4b491a7d778dbd171a5efe9403d45661d3e09cbfca2fa0380b75e08f68"
+  },
+  "expectedIndices": [
+    0,
+    16,
+    32,
+    48,
+    64,
+    80,
+    96,
+    112,
+    128,
+    144,
+    160,
+    176,
+    192,
+    208,
+    224,
+    240
+  ],
+  "viewTagHits": 16,
+  "nonmatchViewTagHits": 0,
+  "fixtureSha256": "aa6d56a6d8131040e6cbb824f0e1ab0bc3389e8c8e7aec675675ccb4eab00444",
+  "rpcResponseBytes": 287203
+}

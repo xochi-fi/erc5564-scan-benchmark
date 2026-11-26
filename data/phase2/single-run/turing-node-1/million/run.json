@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "kind": "phase2-paged-discovery",
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "bun": "1.4.4",
+  "startedAt": "2026-11-25T20:38:08.108Z",
+  "options": {
+    "fixtures": [
+      "~/stealth-scan-phase2/work/fixtures/1000000-zero"
+    ],
+    "pages": [
+      64
+    ],
+    "sizePages": {},
+    "profiles": [
+      "none"
+    ],
+    "scenarios": [
+      "cold"
+    ],
+    "catchupBlocks": 64,
+    "prefixPages": 64,
+    "engine": "sdk",
+    "repetitions": 1,
+    "controlFixture": "~/stealth-scan-phase2/work/fixtures/100000-zero",
+    "walletCpus": "4,5,6",
+    "chainCpus": "7",
+    "controlCpus": "4-7",
+    "output": "~/stealth-scan-phase2/results/phase2-paged-discovery/turing-node-1-turing-20261125T191219Z/million"
+  },
+  "profiles": {
+    "none": {
+      "name": "none",
+      "oneWayLatencyMs": 0,
+      "downlinkBytesPerSecond": null,
+      "uplinkBytesPerSecond": null,
+      "description": "Loopback pass-through; bytes are counted, nothing is delayed."
+    }
+  },
+  "hostState": {
+    "at": "2026-11-25T20:38:08.109Z",
+    "loadavg": [
+      1.65,
+      1.4,
+      1.2
+    ],
+    "totalMemoryBytes": 8058859520,
+    "freeMemoryBytes": 7060791296,
+    "memAvailableBytes": 7060791296,
+    "swapTotalBytes": 5103165440,
+    "swapFreeBytes": 5099233280,
+    "pswpin": 75611,
+    "pswpout": 256002,
+    "thermalC": {
+      "0:soc-thermal": 84.076,
+      "1:bigcore0-thermal": 85.888,
+      "2:bigcore1-thermal": 85.888,
+      "3:littlecore-thermal": 85,
+      "4:center-thermal": 83.153,
+      "5:gpu-thermal": 83.153,
+      "6:npu-thermal": 84.076
+    },
+    "cpuMHz": {
+      "0": 1416,
+      "1": 1416,
+      "2": 1416,
+      "3": 1416,
+      "4": 2016,
+      "5": 2016,
+      "6": 2016,
+      "7": 2016
+    },
+    "memoryPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=5019218\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3949490"
+  }
+}

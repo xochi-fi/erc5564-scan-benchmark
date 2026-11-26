@@ -1,0 +1,16 @@
+
+
+Sampling rate: 20000.000000 microseconds. Total samples: 2343
+Top functions as <numSamples  'functionName#hash:sourceID'>
+  1008    'add#A6fxNU:2'
+   946    'M#BSE4zt:2'
+    99    'lift_x#COVwoJ:2'
+    89    'invert#BbugyJ:2'
+    52    'multiply#ELmuVK:2'
+    29    'freeze#<nil>:4294967295'
+    24    'padh#DCzfNr:2'
+    22    'keccakP#CwOmy6:4'
+     8    'arange#DmjyYy:2'
+     8    'Point#B5gUBK:2'
+     7    'subarray#<nil>:4294967295'
+     5    'padStart#<nil>:4294967295'

@@ -1,0 +1,75 @@
+{
+  "host": "turing-node-1",
+  "samePrefixInputs": true,
+  "rows": [
+    {
+      "file": "100k-unprofiled-before.json",
+      "retained": 100000,
+      "scanned": 100000,
+      "scanSeconds": 168.45708928399998,
+      "cpuSeconds": 169.480109,
+      "verified": true
+    },
+    {
+      "file": "100k-crypto/result.json",
+      "retained": 100000,
+      "scanned": 100000,
+      "scanSeconds": 180.607215547,
+      "cpuSeconds": 182.474613,
+      "verified": true,
+      "gcCollectionSpanSeconds": 1.041672207415104,
+      "majorFaultsDuringScan": 0,
+      "processSwapSnapshots": [
+        "0 kB",
+        "0 kB"
+      ],
+      "scanInputSha256": "46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05"
+    },
+    {
+      "file": "1m-retained-100k-scan/result.json",
+      "retained": 1000000,
+      "scanned": 100000,
+      "scanSeconds": 180.92732429000003,
+      "cpuSeconds": 182.655109,
+      "verified": true,
+      "gcCollectionSpanSeconds": 0.20321318414062262,
+      "majorFaultsDuringScan": 0,
+      "processSwapSnapshots": [
+        "0 kB",
+        "0 kB"
+      ],
+      "scanInputSha256": "46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05"
+    },
+    {
+      "file": "1m-crypto/result.json",
+      "retained": 1000000,
+      "scanned": 1000000,
+      "scanSeconds": 1812.7282569,
+      "cpuSeconds": 1818.080718,
+      "verified": true,
+      "gcCollectionSpanSeconds": 2.0716992607340217,
+      "majorFaultsDuringScan": 0,
+      "processSwapSnapshots": [
+        "0 kB",
+        "0 kB"
+      ],
+      "scanInputSha256": "72651f24dd02ead579f102348bd589044b2a219dada8bdec2a990847e53b9e44"
+    },
+    {
+      "file": "1m-unprofiled.json",
+      "retained": 1000000,
+      "scanned": 1000000,
+      "scanSeconds": 1804.304765902,
+      "cpuSeconds": 1806.509037,
+      "verified": true
+    },
+    {
+      "file": "100k-unprofiled-after.json",
+      "retained": 100000,
+      "scanned": 100000,
+      "scanSeconds": 181.94608139800002,
+      "cpuSeconds": 183.223356,
+      "verified": true
+    }
+  ]
+}

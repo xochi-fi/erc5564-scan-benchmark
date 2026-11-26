@@ -1,0 +1,17 @@
+[
+  {
+    "name": "100000-zero",
+    "path": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-zero",
+    "source": "reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)"
+  },
+  {
+    "name": "100000-sparse",
+    "path": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "source": "reused ~/CODE/stealth-scan-phase2/work/fixtures/100000-sparse (SHA256 verified against manifest and pinned digest)"
+  },
+  {
+    "name": "1000000-sparse",
+    "path": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "source": "reused ~/CODE/stealth-scan-phase2/work/fixtures/1000000-sparse (SHA256 verified against manifest and pinned digest)"
+  }
+]

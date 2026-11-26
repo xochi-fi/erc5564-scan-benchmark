@@ -1,0 +1,72 @@
+{
+  "host": "bazzite",
+  "samePrefixInputs": true,
+  "rows": [
+    {
+      "file": "100k-unprofiled-before.json",
+      "retained": 100000,
+      "scanned": 100000,
+      "scanSeconds": 48.530980027,
+      "cpuSeconds": 48.58632300000001,
+      "gcCollectionSpanSeconds": null,
+      "peakRssMiB": 691.3359375,
+      "inputSha256": null,
+      "verified": true
+    },
+    {
+      "file": "100k-crypto/result.json",
+      "retained": 100000,
+      "scanned": 100000,
+      "scanSeconds": 48.225969621,
+      "cpuSeconds": 48.198699,
+      "gcCollectionSpanSeconds": 0.26640732410305645,
+      "peakRssMiB": 694.1796875,
+      "inputSha256": "46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05",
+      "verified": true
+    },
+    {
+      "file": "1m-retained-100k-scan/result.json",
+      "retained": 1000000,
+      "scanned": 100000,
+      "scanSeconds": 47.157315389,
+      "cpuSeconds": 47.818493,
+      "gcCollectionSpanSeconds": 0.060577446027309634,
+      "peakRssMiB": 5583.03125,
+      "inputSha256": "46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05",
+      "verified": true
+    },
+    {
+      "file": "1m-crypto/result.json",
+      "retained": 1000000,
+      "scanned": 1000000,
+      "scanSeconds": 507.59861175199995,
+      "cpuSeconds": 505.090294,
+      "gcCollectionSpanSeconds": 0.6816871789633296,
+      "peakRssMiB": 6689.09765625,
+      "inputSha256": "72651f24dd02ead579f102348bd589044b2a219dada8bdec2a990847e53b9e44",
+      "verified": true
+    },
+    {
+      "file": "1m-unprofiled.json",
+      "retained": 1000000,
+      "scanned": 1000000,
+      "scanSeconds": 519.083563088,
+      "cpuSeconds": 515.203515,
+      "gcCollectionSpanSeconds": null,
+      "peakRssMiB": 5838.91015625,
+      "inputSha256": null,
+      "verified": true
+    },
+    {
+      "file": "100k-unprofiled-after.json",
+      "retained": 100000,
+      "scanned": 100000,
+      "scanSeconds": 51.951486168,
+      "cpuSeconds": 51.569772,
+      "gcCollectionSpanSeconds": null,
+      "peakRssMiB": 672.22265625,
+      "inputSha256": null,
+      "verified": true
+    }
+  ]
+}

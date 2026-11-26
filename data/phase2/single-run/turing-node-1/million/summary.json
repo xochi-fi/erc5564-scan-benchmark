@@ -1,0 +1,28 @@
+[
+  {
+    "count": 1000000,
+    "scenario": "cold",
+    "profile": "none",
+    "pageBlocks": 64,
+    "engine": "sdk",
+    "repetition": 1,
+    "blocks": 7813,
+    "announcements": 1000000,
+    "matches": 0,
+    "requests": 124,
+    "networkS": 5.156,
+    "decodeS": 58.153,
+    "scanS": 1818.81,
+    "verifyS": 0,
+    "verifyNetworkS": 0,
+    "otherS": 0.193,
+    "totalS": 1882.312,
+    "firstMatchS": null,
+    "pageFetchP50Ms": 41.29,
+    "wireDownMiB": 1069.8,
+    "wireUpMiB": 0.05,
+    "bodyMiB": 1069.82,
+    "peakRssMiB": 250.2,
+    "chainRssMiB": 382.2
+  }
+]

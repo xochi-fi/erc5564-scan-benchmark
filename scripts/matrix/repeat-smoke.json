@@ -1,0 +1,6 @@
+{
+  "description": "Two-minute end-to-end check of the repeat path.",
+  "entries": [
+    { "fixture": "10000-sparse", "scenarios": ["cold", "catchup"], "profiles": ["none", "public"], "pages": [4, 64] }
+  ]
+}

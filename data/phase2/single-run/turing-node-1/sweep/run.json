@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "kind": "phase2-paged-discovery",
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "bun": "1.4.4",
+  "startedAt": "2026-11-25T19:21:00.778Z",
+  "options": {
+    "fixtures": [
+      "~/stealth-scan-phase2/work/fixtures/10000-sparse",
+      "~/stealth-scan-phase2/work/fixtures/100000-sparse"
+    ],
+    "pages": [
+      1,
+      4,
+      16,
+      64,
+      256
+    ],
+    "sizePages": {},
+    "profiles": [
+      "none",
+      "lan",
+      "public"
+    ],
+    "scenarios": [
+      "cold",
+      "catchup"
+    ],
+    "catchupBlocks": 64,
+    "prefixPages": 64,
+    "engine": "sdk",
+    "repetitions": 1,
+    "controlFixture": "~/stealth-scan-phase2/work/fixtures/100000-zero",
+    "walletCpus": "4,5,6",
+    "chainCpus": "7",
+    "controlCpus": "4-7",
+    "output": "~/stealth-scan-phase2/results/phase2-paged-discovery/turing-node-1-turing-20261125T191219Z/sweep"
+  },
+  "profiles": {
+    "none": {
+      "name": "none",
+      "oneWayLatencyMs": 0,
+      "downlinkBytesPerSecond": null,
+      "uplinkBytesPerSecond": null,
+      "description": "Loopback pass-through; bytes are counted, nothing is delayed."
+    },
+    "lan": {
+      "name": "lan",
+      "oneWayLatencyMs": 0.5,
+      "downlinkBytesPerSecond": 125000000,
+      "uplinkBytesPerSecond": 125000000,
+      "description": "1 ms RTT, 1 Gbit/s each direction (self-hosted node on the local network)."
+    },
+    "public": {
+      "name": "public",
+      "oneWayLatencyMs": 50,
+      "downlinkBytesPerSecond": 6250000,
+      "uplinkBytesPerSecond": 2500000,
+      "description": "100 ms RTT, 50 Mbit/s down, 20 Mbit/s up, uncompressed (typical public RPC over home broadband; no provider-side processing delay or rate limits)."
+    }
+  },
+  "hostState": {
+    "at": "2026-11-25T19:21:00.779Z",
+    "loadavg": [
+      1.88,
+      1.63,
+      0.94
+    ],
+    "totalMemoryBytes": 8058859520,
+    "freeMemoryBytes": 7072055296,
+    "memAvailableBytes": 7072055296,
+    "swapTotalBytes": 5103165440,
+    "swapFreeBytes": 5099233280,
+    "pswpin": 75611,
+    "pswpout": 256002,
+    "thermalC": {
+      "0:soc-thermal": 84.076,
+      "1:bigcore0-thermal": 85,
+      "2:bigcore1-thermal": 85,
+      "3:littlecore-thermal": 85,
+      "4:center-thermal": 83.153,
+      "5:gpu-thermal": 82.23,
+      "6:npu-thermal": 83.153
+    },
+    "cpuMHz": {
+      "0": 1608,
+      "1": 1608,
+      "2": 1608,
+      "3": 1608,
+      "4": 2208,
+      "5": 2208,
+      "6": 2208,
+      "7": 2208
+    },
+    "memoryPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=5019218\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3949490"
+  }
+}

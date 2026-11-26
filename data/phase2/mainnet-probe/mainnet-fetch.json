@@ -1,0 +1,656 @@
+{
+  "kind": "phase2-mainnet-fetch-only",
+  "rpcHost": "ethereum-rpc.publicnode.com",
+  "announcer": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "headBlock": 26494826,
+  "fromBlock": 26444827,
+  "measuredAt": "2026-11-25T21:16:53.147Z",
+  "note": "Network cost only. Body bytes are after HTTP content decoding; content-length (if sent) is the on-wire body size.",
+  "environment": {
+    "bun": "1.4.4",
+    "bunRevision": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "platform": "linux",
+    "arch": "arm64",
+    "osRelease": "5.10.160-rockchip",
+    "cpuModel": "unknown",
+    "logicalCpus": 8,
+    "totalMemoryBytes": 8058859520,
+    "lockfileSha256": "d17ecebbd04e00717b3316f8b9bb3cb6d35e755ba330978e4d220eefaff3c00e",
+    "sourceSha256": {
+      "src/worker.ts": "5b98900afcbd07e3d350486d7dd059b977d8596ce28b611b2fc8d75163459a29",
+      "src/phase2/wallet.ts": "cfba81ff0a1cb87a9b3aafbb23fb8dfef3e35b9e215837fc10fa86c765b8ab9c",
+      "src/phase2/chain.ts": "0beac253f78e47e4937f75d1e713bf60196623513ad47776c9d1441820c0604a",
+      "src/phase2/link.ts": "961998c2d3195950ce86dca593173a2532f88fdaa8a93a74e4e67da9aa44b54f"
+    },
+    "dependencies": {
+      "@scopelift/stealth-address-sdk": "1.0.0-beta.5",
+      "@noble/secp256k1": "2.3.0",
+      "viem": "2.58.0",
+      "zod": "4.6.7"
+    }
+  },
+  "runs": [
+    {
+      "pageBlocks": 1000,
+      "requests": 50,
+      "errors": 40,
+      "logs": 14,
+      "totalMs": 3314.248412,
+      "fetchMsSum": 3196.1692830000006,
+      "responseBodyBytes": 21741,
+      "pages": [
+        {
+          "fromBlock": 26444827,
+          "toBlock": 26445826,
+          "logs": 0,
+          "fetchMs": 53.05252000000007,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":2}\n"
+        },
+        {
+          "fromBlock": 26445827,
+          "toBlock": 26446826,
+          "logs": 0,
+          "fetchMs": 60.451772000000005,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":3}\n"
+        },
+        {
+          "fromBlock": 26446827,
+          "toBlock": 26447826,
+          "logs": 0,
+          "fetchMs": 71.14447399999995,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":4}\n"
+        },
+        {
+          "fromBlock": 26447827,
+          "toBlock": 26448826,
+          "logs": 0,
+          "fetchMs": 65.04906900000003,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":5}\n"
+        },
+        {
+          "fromBlock": 26448827,
+          "toBlock": 26449826,
+          "logs": 0,
+          "fetchMs": 65.97751200000005,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":6}\n"
+        },
+        {
+          "fromBlock": 26449827,
+          "toBlock": 26450826,
+          "logs": 0,
+          "fetchMs": 64.20638199999996,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":7}\n"
+        },
+        {
+          "fromBlock": 26450827,
+          "toBlock": 26451826,
+          "logs": 0,
+          "fetchMs": 51.36627199999998,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":8}\n"
+        },
+        {
+          "fromBlock": 26451827,
+          "toBlock": 26452826,
+          "logs": 0,
+          "fetchMs": 86.52110300000004,
+          "responseBodyBytes": 152,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":9}\n"
+        },
+        {
+          "fromBlock": 26452827,
+          "toBlock": 26453826,
+          "logs": 0,
+          "fetchMs": 71.56333799999993,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":10}\n"
+        },
+        {
+          "fromBlock": 26453827,
+          "toBlock": 26454826,
+          "logs": 0,
+          "fetchMs": 68.22730200000001,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":11}\n"
+        },
+        {
+          "fromBlock": 26454827,
+          "toBlock": 26455826,
+          "logs": 0,
+          "fetchMs": 69.10324199999991,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":12}\n"
+        },
+        {
+          "fromBlock": 26455827,
+          "toBlock": 26456826,
+          "logs": 0,
+          "fetchMs": 61.99276099999997,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":13}\n"
+        },
+        {
+          "fromBlock": 26456827,
+          "toBlock": 26457826,
+          "logs": 0,
+          "fetchMs": 53.261078,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":14}\n"
+        },
+        {
+          "fromBlock": 26457827,
+          "toBlock": 26458826,
+          "logs": 0,
+          "fetchMs": 76.6836310000001,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":15}\n"
+        },
+        {
+          "fromBlock": 26458827,
+          "toBlock": 26459826,
+          "logs": 0,
+          "fetchMs": 57.45467800000006,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":16}\n"
+        },
+        {
+          "fromBlock": 26459827,
+          "toBlock": 26460826,
+          "logs": 0,
+          "fetchMs": 66.22982199999979,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":17}\n"
+        },
+        {
+          "fromBlock": 26460827,
+          "toBlock": 26461826,
+          "logs": 0,
+          "fetchMs": 59.59800100000007,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":18}\n"
+        },
+        {
+          "fromBlock": 26461827,
+          "toBlock": 26462826,
+          "logs": 0,
+          "fetchMs": 66.96866799999998,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":19}\n"
+        },
+        {
+          "fromBlock": 26462827,
+          "toBlock": 26463826,
+          "logs": 0,
+          "fetchMs": 58.276363000000174,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":20}\n"
+        },
+        {
+          "fromBlock": 26463827,
+          "toBlock": 26464826,
+          "logs": 0,
+          "fetchMs": 63.443616999999904,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":21}\n"
+        },
+        {
+          "fromBlock": 26464827,
+          "toBlock": 26465826,
+          "logs": 0,
+          "fetchMs": 54.43833100000006,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":22}\n"
+        },
+        {
+          "fromBlock": 26465827,
+          "toBlock": 26466826,
+          "logs": 0,
+          "fetchMs": 66.46929799999998,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":23}\n"
+        },
+        {
+          "fromBlock": 26466827,
+          "toBlock": 26467826,
+          "logs": 0,
+          "fetchMs": 55.81859899999995,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":24}\n"
+        },
+        {
+          "fromBlock": 26467827,
+          "toBlock": 26468826,
+          "logs": 0,
+          "fetchMs": 61.845458000000235,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":25}\n"
+        },
+        {
+          "fromBlock": 26468827,
+          "toBlock": 26469826,
+          "logs": 0,
+          "fetchMs": 59.21355700000004,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":26}\n"
+        },
+        {
+          "fromBlock": 26469827,
+          "toBlock": 26470826,
+          "logs": 0,
+          "fetchMs": 64.88543100000015,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":27}\n"
+        },
+        {
+          "fromBlock": 26470827,
+          "toBlock": 26471826,
+          "logs": 0,
+          "fetchMs": 66.44187899999997,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":28}\n"
+        },
+        {
+          "fromBlock": 26471827,
+          "toBlock": 26472826,
+          "logs": 0,
+          "fetchMs": 61.240205999999944,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":29}\n"
+        },
+        {
+          "fromBlock": 26472827,
+          "toBlock": 26473826,
+          "logs": 0,
+          "fetchMs": 64.51294600000028,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":30}\n"
+        },
+        {
+          "fromBlock": 26473827,
+          "toBlock": 26474826,
+          "logs": 0,
+          "fetchMs": 68.43469199999981,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":31}\n"
+        },
+        {
+          "fromBlock": 26474827,
+          "toBlock": 26475826,
+          "logs": 0,
+          "fetchMs": 65.0198989999999,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":32}\n"
+        },
+        {
+          "fromBlock": 26475827,
+          "toBlock": 26476826,
+          "logs": 0,
+          "fetchMs": 53.417131000000154,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":33}\n"
+        },
+        {
+          "fromBlock": 26476827,
+          "toBlock": 26477826,
+          "logs": 0,
+          "fetchMs": 54.08743000000004,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":34}\n"
+        },
+        {
+          "fromBlock": 26477827,
+          "toBlock": 26478826,
+          "logs": 0,
+          "fetchMs": 57.11048500000015,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":35}\n"
+        },
+        {
+          "fromBlock": 26478827,
+          "toBlock": 26479826,
+          "logs": 0,
+          "fetchMs": 62.35561999999982,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":36}\n"
+        },
+        {
+          "fromBlock": 26479827,
+          "toBlock": 26480826,
+          "logs": 0,
+          "fetchMs": 53.17911400000003,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":37}\n"
+        },
+        {
+          "fromBlock": 26480827,
+          "toBlock": 26481826,
+          "logs": 0,
+          "fetchMs": 65.47639100000015,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":38}\n"
+        },
+        {
+          "fromBlock": 26481827,
+          "toBlock": 26482826,
+          "logs": 0,
+          "fetchMs": 58.593718999999965,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":39}\n"
+        },
+        {
+          "fromBlock": 26482827,
+          "toBlock": 26483826,
+          "logs": 0,
+          "fetchMs": 60.109621999999945,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":40}\n"
+        },
+        {
+          "fromBlock": 26483827,
+          "toBlock": 26484826,
+          "logs": 0,
+          "fetchMs": 57.01189400000021,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":41}\n"
+        },
+        {
+          "fromBlock": 26484827,
+          "toBlock": 26485826,
+          "logs": 0,
+          "fetchMs": 71.85035900000003,
+          "responseBodyBytes": 38,
+          "contentLength": "38",
+          "contentEncoding": null,
+          "error": null
+        },
+        {
+          "fromBlock": 26485827,
+          "toBlock": 26486826,
+          "logs": 0,
+          "fetchMs": 91.59034999999994,
+          "responseBodyBytes": 38,
+          "contentLength": "38",
+          "contentEncoding": null,
+          "error": null
+        },
+        {
+          "fromBlock": 26486827,
+          "toBlock": 26487826,
+          "logs": 1,
+          "fetchMs": 87.59247400000004,
+          "responseBodyBytes": 1126,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": null
+        },
+        {
+          "fromBlock": 26487827,
+          "toBlock": 26488826,
+          "logs": 0,
+          "fetchMs": 70.89274699999987,
+          "responseBodyBytes": 38,
+          "contentLength": "38",
+          "contentEncoding": null,
+          "error": null
+        },
+        {
+          "fromBlock": 26488827,
+          "toBlock": 26489826,
+          "logs": 0,
+          "fetchMs": 72.92960500000027,
+          "responseBodyBytes": 38,
+          "contentLength": "38",
+          "contentEncoding": null,
+          "error": null
+        },
+        {
+          "fromBlock": 26489827,
+          "toBlock": 26490826,
+          "logs": 2,
+          "fetchMs": 60.538986999999906,
+          "responseBodyBytes": 2217,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": null
+        },
+        {
+          "fromBlock": 26490827,
+          "toBlock": 26491826,
+          "logs": 6,
+          "fetchMs": 56.27859099999978,
+          "responseBodyBytes": 6573,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": null
+        },
+        {
+          "fromBlock": 26491827,
+          "toBlock": 26492826,
+          "logs": 5,
+          "fetchMs": 61.35979700000007,
+          "responseBodyBytes": 5485,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": null
+        },
+        {
+          "fromBlock": 26492827,
+          "toBlock": 26493826,
+          "logs": 0,
+          "fetchMs": 65.88504599999987,
+          "responseBodyBytes": 38,
+          "contentLength": "38",
+          "contentEncoding": null,
+          "error": null
+        },
+        {
+          "fromBlock": 26493827,
+          "toBlock": 26494826,
+          "logs": 0,
+          "fetchMs": 57.01801999999998,
+          "responseBodyBytes": 38,
+          "contentLength": "38",
+          "contentEncoding": null,
+          "error": null
+        }
+      ]
+    },
+    {
+      "pageBlocks": 5000,
+      "requests": 10,
+      "errors": 8,
+      "logs": 14,
+      "totalMs": 636.8565989999997,
+      "fetchMsSum": 601.5045850000001,
+      "responseBodyBytes": 16551,
+      "pages": [
+        {
+          "fromBlock": 26444827,
+          "toBlock": 26449826,
+          "logs": 0,
+          "fetchMs": 62.96991500000013,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":52}\n"
+        },
+        {
+          "fromBlock": 26449827,
+          "toBlock": 26454826,
+          "logs": 0,
+          "fetchMs": 59.19663799999989,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":53}\n"
+        },
+        {
+          "fromBlock": 26454827,
+          "toBlock": 26459826,
+          "logs": 0,
+          "fetchMs": 55.78855500000009,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":54}\n"
+        },
+        {
+          "fromBlock": 26459827,
+          "toBlock": 26464826,
+          "logs": 0,
+          "fetchMs": 55.22588799999994,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":55}\n"
+        },
+        {
+          "fromBlock": 26464827,
+          "toBlock": 26469826,
+          "logs": 0,
+          "fetchMs": 62.70156300000008,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":56}\n"
+        },
+        {
+          "fromBlock": 26469827,
+          "toBlock": 26474826,
+          "logs": 0,
+          "fetchMs": 57.69065299999966,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":57}\n"
+        },
+        {
+          "fromBlock": 26474827,
+          "toBlock": 26479826,
+          "logs": 0,
+          "fetchMs": 56.236587999999756,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":58}\n"
+        },
+        {
+          "fromBlock": 26479827,
+          "toBlock": 26484826,
+          "logs": 0,
+          "fetchMs": 70.28282800000034,
+          "responseBodyBytes": 153,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": "HTTP 403: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":59}\n"
+        },
+        {
+          "fromBlock": 26484827,
+          "toBlock": 26489826,
+          "logs": 1,
+          "fetchMs": 54.769688000000315,
+          "responseBodyBytes": 1126,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": null
+        },
+        {
+          "fromBlock": 26489827,
+          "toBlock": 26494826,
+          "logs": 13,
+          "fetchMs": 66.64226899999994,
+          "responseBodyBytes": 14201,
+          "contentLength": null,
+          "contentEncoding": "br",
+          "error": null
+        }
+      ]
+    }
+  ]
+}

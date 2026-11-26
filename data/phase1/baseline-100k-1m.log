@@ -1,0 +1,42 @@
+$ bun run src/cli.ts --sizes "100000,1000000" --batch-size "1000" --repetitions "1" --output "results/baseline-100k-1m"
+Generating zero fixture: 100000 announcements
+Scanning 100000 zero: sdk/full (1/1)
+Scanning 100000 zero: sdk/incremental (1/1)
+Scanning 100000 zero: crypto/full (1/1)
+Scanning 100000 zero: crypto/incremental (1/1)
+Generating sparse fixture: 100000 announcements
+Scanning 100000 sparse: sdk/full (1/1)
+Scanning 100000 sparse: sdk/incremental (1/1)
+Scanning 100000 sparse: crypto/full (1/1)
+Scanning 100000 sparse: crypto/incremental (1/1)
+Generating zero fixture: 1000000 announcements
+Scanning 1000000 zero: sdk/full (1/1)
+Scanning 1000000 zero: sdk/incremental (1/1)
+Scanning 1000000 zero: crypto/full (1/1)
+Scanning 1000000 zero: crypto/incremental (1/1)
+Generating sparse fixture: 1000000 announcements
+Scanning 1000000 sparse: sdk/full (1/1)
+Scanning 1000000 sparse: sdk/incremental (1/1)
+Scanning 1000000 sparse: crypto/full (1/1)
+Scanning 1000000 sparse: crypto/incremental (1/1)
+┌────┬─────────┬────────┬────────┬─────────────┬─────────┬──────┬─────────────┬──────────────┐
+│    │ count   │ case   │ engine │ mode        │ matches │ runs │ median ms   │ peak RSS MiB │
+├────┼─────────┼────────┼────────┼─────────────┼─────────┼──────┼─────────────┼──────────────┤
+│  0 │ 100000  │ zero   │ sdk    │ full        │ 0       │ 1    │ 55663.195   │ 470.38       │
+│  1 │ 100000  │ zero   │ sdk    │ incremental │ 0       │ 1    │ 54805.412   │ 483.39       │
+│  2 │ 100000  │ zero   │ crypto │ full        │ 0       │ 1    │ 54423.816   │ 471.6        │
+│  3 │ 100000  │ zero   │ crypto │ incremental │ 0       │ 1    │ 52796.227   │ 470.1        │
+│  4 │ 100000  │ sparse │ sdk    │ full        │ 100     │ 1    │ 50073.268   │ 474.58       │
+│  5 │ 100000  │ sparse │ sdk    │ incremental │ 100     │ 1    │ 54787.521   │ 474.25       │
+│  6 │ 100000  │ sparse │ crypto │ full        │ 100     │ 1    │ 80389.921   │ 486.63       │
+│  7 │ 100000  │ sparse │ crypto │ incremental │ 100     │ 1    │ 48926.594   │ 463.94       │
+│  8 │ 1000000 │ zero   │ sdk    │ full        │ 0       │ 1    │ 1482502.696 │ 3924.38      │
+│  9 │ 1000000 │ zero   │ sdk    │ incremental │ 0       │ 1    │ 1252374.74  │ 3893.15      │
+│ 10 │ 1000000 │ zero   │ crypto │ full        │ 0       │ 1    │ 1130187.468 │ 3879.07      │
+│ 11 │ 1000000 │ zero   │ crypto │ incremental │ 0       │ 1    │ 1071910.898 │ 3916.6       │
+│ 12 │ 1000000 │ sparse │ sdk    │ full        │ 1000    │ 1    │ 1045438.171 │ 4099.17      │
+│ 13 │ 1000000 │ sparse │ sdk    │ incremental │ 1000    │ 1    │ 1013437.336 │ 3960.18      │
+│ 14 │ 1000000 │ sparse │ crypto │ full        │ 1000    │ 1    │ 1031191.928 │ 3923.2       │
+│ 15 │ 1000000 │ sparse │ crypto │ incremental │ 1000    │ 1    │ 1152592.742 │ 3946.27      │
+└────┴─────────┴────────┴────────┴─────────────┴─────────┴──────┴─────────────┴──────────────┘
+Verified 16 isolated samples. Results: ~/CODE/stealth-scan-benchmark/results/baseline-100k-1m

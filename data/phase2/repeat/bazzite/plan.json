@@ -1,0 +1,626 @@
+[
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 0
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 1
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 1,
+    "order": 2
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 3
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 4
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 5
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 6
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 7
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 8
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 9
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 10
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 11
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 12
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 13
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 14
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 15
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 16
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 17
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 18
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 19
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 20
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 1,
+    "order": 21
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 1,
+    "order": 22
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 23
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 1,
+    "order": 24
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 1,
+    "order": 25
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 2,
+    "order": 26
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 27
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 28
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 29
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 30
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 31
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 32
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 33
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 34
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 35
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 36
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 37
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 38
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 39
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 40
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 41
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 42
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 43
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 44
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 45
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 2,
+    "order": 46
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 47
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 48
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 49
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 50
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 51
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 52
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 53
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 54
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 55
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 56
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 57
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 58
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 59
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 60
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 61
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 62
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 63
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 64
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 65
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 66
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 3,
+    "order": 67
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 68
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 69
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 70
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 3,
+    "order": 71
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 72
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 3,
+    "order": 73
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 74
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 75
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 3,
+    "order": 76
+  },
+  {
+    "fixtureDir": "~/CODE/stealth-scan-phase2-repeat/work/fixtures/1000000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 3,
+    "order": 77
+  }
+]

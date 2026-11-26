@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "startedAt": "2026-11-18T23:19:23.184Z",
+  "options": {
+    "sizes": [
+      256
+    ],
+    "cases": [
+      "zero",
+      "sparse"
+    ],
+    "matchEvery": 16,
+    "engines": [
+      "sdk",
+      "crypto"
+    ],
+    "modes": [
+      "full",
+      "incremental"
+    ],
+    "batchSize": 37,
+    "repetitions": 1,
+    "warmupCount": 0,
+    "seed": "erc5564-scan-v1",
+    "output": "~/CODE/stealth-scan-benchmark/results/smoke"
+  }
+}

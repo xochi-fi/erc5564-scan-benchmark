@@ -1,0 +1,122 @@
+[
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 2,
+    "order": 0
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 1
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 2
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 3
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 4
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 5
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 6
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 7
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "none",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 8
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "repetition": 2,
+    "order": 9
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 2,
+    "order": 10
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 11
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "repetition": 2,
+    "order": 12
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "repetition": 2,
+    "order": 13
+  },
+  {
+    "fixtureDir": "~/stealth-scan-phase2-repeat/work/fixtures/1000000-zero",
+    "profile": "none",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "repetition": 2,
+    "order": 14
+  }
+]

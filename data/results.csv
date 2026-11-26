@@ -1,0 +1,7 @@
+host,cpu,announcements,observation,scan_seconds
+"Bazzite","Intel i7-13700K","100000","control_before","48.531"
+"Bazzite","Intel i7-13700K","100000","control_after","51.951"
+"Bazzite","Intel i7-13700K","1000000","million_run","519.084"
+"Turing Pi","Cortex-A76","100000","control_before","168.457"
+"Turing Pi","Cortex-A76","100000","control_after","181.946"
+"Turing Pi","Cortex-A76","1000000","million_run","1804.305"

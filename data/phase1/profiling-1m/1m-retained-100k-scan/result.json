@@ -1,0 +1,3049 @@
+{
+  "schemaVersion": 1,
+  "options": {
+    "fixture": "~/CODE/stealth-scan-benchmark/results/baseline-100k-1m/fixtures/1000000-zero",
+    "output": "~/CODE/stealth-scan-benchmark/results/profiling-1m/1m-retained-100k-scan",
+    "engine": "crypto",
+    "batchSize": 0,
+    "scanCount": 100000,
+    "intervalUs": 20000,
+    "nativeSeconds": 10
+  },
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "fixtureSha256": "c45698bd93baa934c4674788195564ef60a543f0fbfb08ba2aa5dcee1bc436ba",
+  "scanInputSha256": "46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05",
+  "retainedAnnouncements": 1000000,
+  "scannedAnnouncements": 100000,
+  "matches": 0,
+  "scanMs": 161410.78391700002,
+  "cpuUserMs": 55451.668,
+  "cpuSystemMs": 59201.97,
+  "resourcesBefore": {
+    "userCPUTime": 97876646,
+    "systemCPUTime": 72176225,
+    "maxRSS": 3188968,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 13404870,
+    "majorPageFault": 3375,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 0,
+    "ipcSent": 0,
+    "ipcReceived": 16,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 154582,
+    "involuntaryContextSwitches": 1989520
+  },
+  "resourcesAfter": {
+    "userCPUTime": 153328319,
+    "systemCPUTime": 131378210,
+    "maxRSS": 3899209,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 33613561,
+    "majorPageFault": 5062,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 0,
+    "ipcSent": 0,
+    "ipcReceived": 16,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 249188,
+    "involuntaryContextSwitches": 2751050
+  },
+  "gc": {
+    "events": 116,
+    "costRawSum": 2551933.6657598615,
+    "types": {
+      "Scavenge": 116
+    }
+  },
+  "profiler": {
+    "intervalSeconds": 0.02,
+    "samples": 6967,
+    "topSelf": [
+      {
+        "frame": "M [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:98]",
+        "samples": 1840,
+        "sampleSharePct": 26.410219606717384
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:229]",
+        "samples": 455,
+        "sampleSharePct": 6.530788000574135
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:261]",
+        "samples": 196,
+        "sampleSharePct": 2.813262523324243
+      },
+      {
+        "frame": "invert [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:110]",
+        "samples": 193,
+        "sampleSharePct": 2.770202382661117
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:231]",
+        "samples": 187,
+        "sampleSharePct": 2.6840821013348646
+      },
+      {
+        "frame": "M [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:99]",
+        "samples": 168,
+        "sampleSharePct": 2.4113678771350653
+      },
+      {
+        "frame": "lift_x [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:150]",
+        "samples": 165,
+        "sampleSharePct": 2.368307736471939
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:249]",
+        "samples": 153,
+        "sampleSharePct": 2.1960671738194346
+      },
+      {
+        "frame": "invert [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:109]",
+        "samples": 123,
+        "sampleSharePct": 1.7654657671881728
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:228]",
+        "samples": 118,
+        "sampleSharePct": 1.6936988660829626
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:263]",
+        "samples": 114,
+        "sampleSharePct": 1.6362853451987942
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:260]",
+        "samples": 112,
+        "sampleSharePct": 1.6075785847567101
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:250]",
+        "samples": 108,
+        "sampleSharePct": 1.550165063872542
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:236]",
+        "samples": 107,
+        "sampleSharePct": 1.5358116836515
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:253]",
+        "samples": 107,
+        "sampleSharePct": 1.5358116836515
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:233]",
+        "samples": 104,
+        "sampleSharePct": 1.4927515429883738
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:265]",
+        "samples": 101,
+        "sampleSharePct": 1.4496914023252476
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:258]",
+        "samples": 101,
+        "sampleSharePct": 1.4496914023252476
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:241]",
+        "samples": 101,
+        "sampleSharePct": 1.4496914023252476
+      },
+      {
+        "frame": "lift_x [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:149]",
+        "samples": 98,
+        "sampleSharePct": 1.4066312616621215
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:242]",
+        "samples": 98,
+        "sampleSharePct": 1.4066312616621215
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:264]",
+        "samples": 97,
+        "sampleSharePct": 1.3922778814410794
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:259]",
+        "samples": 96,
+        "sampleSharePct": 1.3779245012200374
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:248]",
+        "samples": 96,
+        "sampleSharePct": 1.3779245012200374
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark/node_modules/@noble/secp256k1/index.js:245]",
+        "samples": 96,
+        "sampleSharePct": 1.3779245012200374
+      }
+    ]
+  },
+  "environment": {
+    "bun": "1.4.4",
+    "nodeCompatibility": "26.3.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "25.3.0",
+    "cpu": "Apple M1",
+    "totalMemoryBytes": 8589934592,
+    "sourceHashes": {
+      "bun.lock": "d17ecebbd04e00717b3316f8b9bb3cb6d35e755ba330978e4d220eefaff3c00e",
+      "src/profile.ts": "3533116008dba8b637af2c5a2f15d56282a3990167881c324a2dee9b4195f2bd",
+      "src/worker.ts": "5b98900afcbd07e3d350486d7dd059b977d8596ce28b611b2fc8d75163459a29",
+      "src/fixtures.ts": "7e4c95934081dcdc5fe9e72175bd3ce4a6af020816f75d49e8dd28275f787b82"
+    }
+  },
+  "phases": {
+    "beforeLoad": {
+      "epochMs": 1795075468539,
+      "monotonicMs": 252.358542,
+      "memory": {
+        "rss": 51005248,
+        "heapTotal": 11995136,
+        "heapUsed": 8626776,
+        "external": 2312392,
+        "arrayBuffers": 480
+      },
+      "resources": {
+        "userCPUTime": 158949,
+        "systemCPUTime": 153967,
+        "maxRSS": 49809,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 3902,
+        "majorPageFault": 1109,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 0,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 2903,
+        "involuntaryContextSwitches": 4291
+      },
+      "host": {
+        "vm": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                3621.\nPages active:                             72861.\nPages inactive:                           65426.\nPages speculative:                         6609.\nPages throttled:                              0.\nPages wired down:                        171975.\nPages purgeable:                              2.\n\"Translation faults\":               51305399845.\nPages copy-on-write:                  972014520.\nPages zero filled:                   9816610558.\nPages reactivated:                  20803608982.\nPages purged:                         352032745.\nFile-backed pages:                        56165.\nAnonymous pages:                          88731.\nPages stored in compressor:             1996195.\nPages occupied by compressor:            167837.\nDecompressions:                     23906775260.\nCompressions:                       25752184566.\nPageins:                             1794195241.\nPageouts:                              34196288.\nSwapins:                             1523659915.\nSwapouts:                            1578916926.\n",
+        "pressure": "The system has 8589934592 (524288 pages with a page size of 16384).\nSystem-wide memory free percentage: 30%\n",
+        "swap": "vm.swapusage: total = 8192.00M  used = 7480.50M  free = 711.50M  (encrypted)\n",
+        "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded\n"
+      }
+    },
+    "beforeScan": {
+      "epochMs": 1795075628312,
+      "monotonicMs": 160025.215625,
+      "memory": {
+        "rss": 2802819520,
+        "heapTotal": 710726656,
+        "heapUsed": 1641183061,
+        "external": 1057003925,
+        "arrayBuffers": 704
+      },
+      "resources": {
+        "userCPUTime": 97426642,
+        "systemCPUTime": 71681310,
+        "maxRSS": 3188968,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 13318032,
+        "majorPageFault": 3281,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 0,
+        "ipcSent": 0,
+        "ipcReceived": 11,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 152786,
+        "involuntaryContextSwitches": 1981180
+      },
+      "host": {
+        "vm": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                3636.\nPages active:                             64345.\nPages inactive:                           60255.\nPages speculative:                         3200.\nPages throttled:                              0.\nPages wired down:                        168468.\nPages purgeable:                              2.\n\"Translation faults\":               51332515999.\nPages copy-on-write:                  972291494.\nPages zero filled:                   9819442956.\nPages reactivated:                  20812733649.\nPages purged:                         352084812.\nFile-backed pages:                        43512.\nAnonymous pages:                          84288.\nPages stored in compressor:             2163998.\nPages occupied by compressor:            188452.\nDecompressions:                     23922153738.\nCompressions:                       25767897991.\nPageins:                             1794621275.\nPageouts:                              34198579.\nSwapins:                             1524477025.\nSwapouts:                            1579824250.\n",
+        "pressure": "The system has 8589934592 (524288 pages with a page size of 16384).\nSystem-wide memory free percentage: 26%\n",
+        "swap": "vm.swapusage: total = 10240.00M  used = 8879.56M  free = 1360.44M  (encrypted)\n",
+        "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded\n"
+      },
+      "heap": {
+        "objectTypeCounts": {
+          "string": 9996277,
+          "BigInt": 2013086,
+          "Object": 1016330,
+          "Array": 1003790,
+          "Function": 9842,
+          "UnlinkedFunctionExecutable": 5780,
+          "SymbolTable": 5285,
+          "Structure": 5210,
+          "Promise": 4299,
+          "FunctionExecutable": 3974,
+          "JSLexicalEnvironment": 3548,
+          "JSModuleEnvironment": 1431,
+          "JSSourceCode": 1431,
+          "ModuleRecord": 1431,
+          "ModuleRegistryEntry": 1431,
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "GetterSetter": 1335,
+          "Cell Butterfly": 1245,
+          "NativeExecutable": 963,
+          "FunctionRareData": 720,
+          "ModuleProgramExecutable": 610,
+          "StructureRareData": 389,
+          "FunctionCodeBlock": 358,
+          "PropertyTable": 257,
+          "RegExp": 255,
+          "UnlinkedFunctionCodeBlock": 226,
+          "StructureChain": 200,
+          "AsyncFunction": 168,
+          "Module": 130,
+          "UnlinkedProgramCodeBlock": 129,
+          "ProgramExecutable": 123,
+          "Set": 115,
+          "SparseArrayValueMap": 100,
+          "symbol": 98,
+          "ModuleNamespaceObject": 97,
+          "CustomGetterSetter": 87,
+          "DOMAttributeGetterSetter": 52,
+          "Map": 43,
+          "Uint8Array": 42,
+          "Uint32Array": 21,
+          "WeakMap": 17,
+          "WeakSet": 15,
+          "JSPropertyNameEnumerator": 12,
+          "Sentinel": 11,
+          "TextEncoder": 6,
+          "JSAsyncGeneratorFunction": 4,
+          "ResourceUsage": 4,
+          "ArrayBuffer": 3,
+          "Callee": 3,
+          "Error": 3,
+          "Hash": 3,
+          "ImportMeta": 3,
+          "AsyncGeneratorFunction": 2,
+          "Cipher": 2,
+          "DataView": 2,
+          "DiffieHellman": 2,
+          "Dirent": 2,
+          "ECDH": 2,
+          "GeneratorFunction": 2,
+          "Hmac": 2,
+          "Iterator": 2,
+          "KeyObject": 2,
+          "MIMEParams": 2,
+          "MIMEType": 2,
+          "NodeJSFS": 2,
+          "Performance": 2,
+          "Sign": 2,
+          "Stats": 2,
+          "StringDecoder": 2,
+          "Subprocess": 2,
+          "SubtleCrypto": 2,
+          "TextDecoder": 2,
+          "URL": 2,
+          "Verify": 2,
+          "X509Certificate": 2,
+          "Array Iterator": 1,
+          "AsyncDisposableStack": 1,
+          "AsyncFromSyncIterator": 1,
+          "AsyncFunctionGenerator": 1,
+          "AsyncGenerator": 1,
+          "AsyncIterator": 1,
+          "BigInt64ArrayPrototype": 1,
+          "BigUint64ArrayPrototype": 1,
+          "Blob": 1,
+          "Boolean": 1,
+          "Buffer": 1,
+          "Bun": 1,
+          "Crypto": 1,
+          "DiffieHellmanGroup": 1,
+          "DisposableStack": 1,
+          "EventEmitter": 1,
+          "EventTarget": 1,
+          "Float16ArrayPrototype": 1,
+          "Float32ArrayPrototype": 1,
+          "Float64ArrayPrototype": 1,
+          "Generator": 1,
+          "GlobalObject": 1,
+          "Int16ArrayPrototype": 1,
+          "Int32ArrayPrototype": 1,
+          "Int8ArrayPrototype": 1,
+          "Int8Array": 1,
+          "InternalFieldTuple": 1,
+          "InternalModuleRegistry": 1,
+          "Intl": 1,
+          "Iterator Helper": 1,
+          "JSGlobalLexicalEnvironment": 1,
+          "JSGlobalProxy": 1,
+          "JSON": 1,
+          "Map Iterator": 1,
+          "Math": 1,
+          "ModuleLoader": 1,
+          "NextTickQueue": 1,
+          "Number": 1,
+          "ProcessBindingConstants": 1,
+          "ProcessEnv": 1,
+          "Process": 1,
+          "Prototype": 1,
+          "Reflect": 1,
+          "RegExp String Iterator": 1,
+          "Set Iterator": 1,
+          "ShadowRealm": 1,
+          "String Iterator": 1,
+          "String": 1,
+          "StrongRootBlock": 1,
+          "Symbol": 1,
+          "Temporal": 1,
+          "Uint16ArrayPrototype": 1,
+          "Uint32ArrayPrototype": 1,
+          "Uint8ArrayPrototype": 1,
+          "Uint8ClampedArrayPrototype": 1,
+          "console": 1,
+          "require": 1,
+          "resolve": 1
+        },
+        "protectedObjectTypeCounts": {
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "UnlinkedProgramCodeBlock": 129,
+          "UnlinkedFunctionExecutable": 4,
+          "GlobalObject": 1,
+          "Promise": 1,
+          "Subprocess": 1
+        },
+        "heapSize": 1641184915,
+        "heapCapacity": 1864920659,
+        "extraMemorySize": 1057005779,
+        "objectCount": 16088547,
+        "protectedObjectCount": 1555,
+        "globalObjectCount": 1,
+        "protectedGlobalObjectCount": 1,
+        "mimalloc": {
+          "stat_version": 5,
+          "mimalloc_version": 30503,
+          "process": {
+            "elapsed_msecs": 161231,
+            "user_msecs": 97874,
+            "system_msecs": 72170,
+            "page_faults": 3333,
+            "rss_current": 781877248,
+            "rss_peak": 1490616320,
+            "commit_current": 3613589504,
+            "commit_peak": 3613589504
+          },
+          "pages": {
+            "total": 67507,
+            "peak": 28644,
+            "current": 26157
+          },
+          "reserved": {
+            "total": 4300013568,
+            "peak": 4300013568,
+            "current": 4300013568
+          },
+          "committed": {
+            "total": 3613589504,
+            "peak": 3613589504,
+            "current": 3613589504
+          },
+          "reset": 0,
+          "purged": 7971307520,
+          "page_committed": {
+            "total": 5118840744,
+            "peak": 5118840744,
+            "current": 5118840744
+          },
+          "pages_abandoned": {
+            "total": 521066,
+            "peak": 26754,
+            "current": 23136
+          },
+          "threads": {
+            "total": 28,
+            "peak": 20,
+            "current": 16
+          },
+          "malloc_normal": {
+            "total": 27133181640,
+            "peak": 3118381896,
+            "current": 2719642008
+          },
+          "malloc_huge": {
+            "total": 416743424,
+            "peak": 203292672,
+            "current": 111673344
+          },
+          "malloc_requested": 27549925064,
+          "mmap_calls": 14,
+          "commit_calls": 4,
+          "reset_calls": 0,
+          "purge_calls": 323384,
+          "arena_count": 5,
+          "malloc_normal_count": 116771907,
+          "malloc_huge_count": 290,
+          "malloc_guarded_count": 0,
+          "arena_rollback_count": 0,
+          "arena_purges": 2150,
+          "pages_extended": 461508,
+          "pages_retire": 17462,
+          "page_searches": 3252330,
+          "page_searches_count": 1456483,
+          "segments": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_cache": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "_segments_reserved": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "heaps": {
+            "total": 1552,
+            "peak": 5,
+            "current": 4
+          },
+          "theaps": {
+            "total": 1578,
+            "peak": 20,
+            "current": 18
+          },
+          "pages_os_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_os_allocated": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_reclaim_on_alloc": 57820,
+          "pages_reclaim_on_free": 439030,
+          "pages_reabandon_full": 61046,
+          "pages_unabandon_busy_wait": 12,
+          "heaps_delete_wait": 0,
+          "pages_stat_updates": 967787,
+          "pages_stat_update_count": 224227561,
+          "profile_samples": 0,
+          "malloc_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 255895,
+              "peak": 112693,
+              "current": 12531,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 4181031,
+              "peak": 49817,
+              "current": 9274,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 53034450,
+              "peak": 555179,
+              "current": 31403,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 4251684,
+              "peak": 43720,
+              "current": 13614,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 11223315,
+              "peak": 2121710,
+              "current": 2007601,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 5097581,
+              "peak": 345056,
+              "current": 10246,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 21320750,
+              "peak": 5302718,
+              "current": 5077579,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 2224239,
+              "peak": 105126,
+              "current": 47326,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 3238065,
+              "peak": 35815,
+              "current": 5292,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 4114448,
+              "peak": 1022804,
+              "current": 1007357,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 148637,
+              "peak": 101236,
+              "current": 1203,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 1038542,
+              "peak": 11966,
+              "current": 2247,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 1077552,
+              "peak": 12793,
+              "current": 2451,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 2083362,
+              "peak": 12357,
+              "current": 2690,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 72513,
+              "peak": 6571,
+              "current": 1623,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 239952,
+              "peak": 202257,
+              "current": 2200,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 40180,
+              "peak": 4184,
+              "current": 619,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 1053369,
+              "peak": 1001159,
+              "current": 1000946,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 21814,
+              "peak": 1944,
+              "current": 287,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 16602,
+              "peak": 2076,
+              "current": 287,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 34593,
+              "peak": 2914,
+              "current": 351,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 1021035,
+              "peak": 10766,
+              "current": 430,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 16216,
+              "peak": 1345,
+              "current": 175,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 9877,
+              "peak": 718,
+              "current": 122,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 12930,
+              "peak": 967,
+              "current": 98,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 15676,
+              "peak": 1236,
+              "current": 239,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 6717,
+              "peak": 371,
+              "current": 74,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 4208,
+              "peak": 472,
+              "current": 111,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 77433,
+              "peak": 2159,
+              "current": 79,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 3286,
+              "peak": 385,
+              "current": 118,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 1632,
+              "peak": 186,
+              "current": 43,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 801,
+              "peak": 77,
+              "current": 55,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 6309,
+              "peak": 976,
+              "current": 41,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 888,
+              "peak": 104,
+              "current": 85,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 717,
+              "peak": 49,
+              "current": 26,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 347,
+              "peak": 50,
+              "current": 17,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 771642,
+              "peak": 93117,
+              "current": 77889,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 535,
+              "peak": 39,
+              "current": 24,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 198,
+              "peak": 15,
+              "current": 11,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 276,
+              "peak": 15,
+              "current": 7,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 228,
+              "peak": 11,
+              "current": 9,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 260,
+              "peak": 38,
+              "current": 10,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 114,
+              "peak": 9,
+              "current": 6,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 132,
+              "peak": 14,
+              "current": 4,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 17209,
+              "peak": 589,
+              "current": 2,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 34369,
+              "peak": 666,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 70,
+              "peak": 6,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 58,
+              "peak": 7,
+              "current": 5,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 50,
+              "peak": 3,
+              "current": 0,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 32,
+              "peak": 4,
+              "current": 2,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 21,
+              "peak": 3,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 17,
+              "peak": 2,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 17,
+              "peak": 6,
+              "current": 4,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 17,
+              "peak": 3,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 8,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 6,
+              "peak": 3,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 2,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "page_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1282,
+              "peak": 24,
+              "current": 14,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1282,
+              "peak": 19,
+              "current": 19,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 1557,
+              "peak": 287,
+              "current": 176,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 1256,
+              "peak": 48,
+              "current": 38,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 3347,
+              "peak": 2089,
+              "current": 2089,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 763,
+              "peak": 433,
+              "current": 221,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 8245,
+              "peak": 7787,
+              "current": 7572,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 1871,
+              "peak": 196,
+              "current": 194,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 2354,
+              "peak": 87,
+              "current": 45,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 3602,
+              "peak": 2516,
+              "current": 2516,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 589,
+              "peak": 308,
+              "current": 19,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 1842,
+              "peak": 52,
+              "current": 25,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 684,
+              "peak": 65,
+              "current": 38,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 390,
+              "peak": 30,
+              "current": 28,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 1583,
+              "peak": 26,
+              "current": 25,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 2556,
+              "peak": 1394,
+              "current": 29,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 173,
+              "peak": 20,
+              "current": 19,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 10424,
+              "peak": 9822,
+              "current": 9820,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 1576,
+              "peak": 20,
+              "current": 18,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 970,
+              "peak": 19,
+              "current": 18,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 510,
+              "peak": 30,
+              "current": 25,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 8629,
+              "peak": 218,
+              "current": 29,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 447,
+              "peak": 18,
+              "current": 16,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 490,
+              "peak": 18,
+              "current": 15,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 979,
+              "peak": 30,
+              "current": 16,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 659,
+              "peak": 27,
+              "current": 24,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 422,
+              "peak": 21,
+              "current": 14,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 217,
+              "peak": 31,
+              "current": 15,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 1927,
+              "peak": 77,
+              "current": 17,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 311,
+              "peak": 33,
+              "current": 15,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 228,
+              "peak": 25,
+              "current": 11,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 174,
+              "peak": 14,
+              "current": 11,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 283,
+              "peak": 27,
+              "current": 12,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 147,
+              "peak": 21,
+              "current": 20,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 195,
+              "peak": 9,
+              "current": 8,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 107,
+              "peak": 8,
+              "current": 7,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 3124,
+              "peak": 2926,
+              "current": 2925,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 194,
+              "peak": 11,
+              "current": 9,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 116,
+              "peak": 8,
+              "current": 6,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 141,
+              "peak": 6,
+              "current": 3,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 155,
+              "peak": 7,
+              "current": 5,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 81,
+              "peak": 4,
+              "current": 1,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 77,
+              "peak": 5,
+              "current": 4,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 73,
+              "peak": 4,
+              "current": 1,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 363,
+              "peak": 74,
+              "current": 2,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 603,
+              "peak": 112,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 50,
+              "peak": 4,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 35,
+              "peak": 3,
+              "current": 2,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 42,
+              "peak": 1,
+              "current": 0,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 27,
+              "peak": 4,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 3,
+              "current": 1,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 3,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 10,
+              "peak": 3,
+              "current": 1,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 17,
+              "peak": 3,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 7,
+              "peak": 1,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 2,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 2,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 290,
+              "peak": 85,
+              "current": 10,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "chunk_bins": [
+            {
+              "total": 83,
+              "peak": 83,
+              "current": 83,
+              "bin": "S"
+            },
+            {
+              "total": 10,
+              "peak": 9,
+              "current": 8,
+              "bin": "X"
+            },
+            {
+              "total": 11,
+              "peak": 10,
+              "current": 10,
+              "bin": "M"
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 0,
+              "bin": "L"
+            },
+            {
+              "total": 4,
+              "peak": 4,
+              "current": 4,
+              "bin": "H"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": " "
+            }
+          ]
+        }
+      }
+    },
+    "scanEnd": {
+      "epochMs": 1795075790938,
+      "monotonicMs": 322650.606083,
+      "memory": {
+        "rss": 3992610176,
+        "heapTotal": 2328545280,
+        "heapUsed": 1642110211,
+        "external": 1057468119,
+        "arrayBuffers": 146320
+      },
+      "resources": {
+        "userCPUTime": 153328330,
+        "systemCPUTime": 131378461,
+        "maxRSS": 3899209,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 33613571,
+        "majorPageFault": 5066,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 0,
+        "ipcSent": 0,
+        "ipcReceived": 16,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 249188,
+        "involuntaryContextSwitches": 2751058
+      }
+    },
+    "afterScan": {
+      "epochMs": 1795075791311,
+      "monotonicMs": 323023.755917,
+      "memory": {
+        "rss": 4102612480,
+        "heapTotal": 2328545280,
+        "heapUsed": 1642110211,
+        "external": 1057468119,
+        "arrayBuffers": 146320
+      },
+      "resources": {
+        "userCPUTime": 153447868,
+        "systemCPUTime": 131436140,
+        "maxRSS": 4006457,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 33624698,
+        "majorPageFault": 5244,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 0,
+        "ipcSent": 0,
+        "ipcReceived": 16,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 250439,
+        "involuntaryContextSwitches": 2751874
+      },
+      "host": {
+        "vm": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                3542.\nPages active:                             71492.\nPages inactive:                           66115.\nPages speculative:                         3994.\nPages throttled:                              0.\nPages wired down:                        167295.\nPages purgeable:                              2.\n\"Translation faults\":               51361977170.\nPages copy-on-write:                  972368083.\nPages zero filled:                   9819851121.\nPages reactivated:                  20818811627.\nPages purged:                         352126561.\nFile-backed pages:                        45405.\nAnonymous pages:                          96196.\nPages stored in compressor:             2224169.\nPages occupied by compressor:            175982.\nDecompressions:                     23938391088.\nCompressions:                       25784288204.\nPageins:                             1795007529.\nPageouts:                              34201980.\nSwapins:                             1525533323.\nSwapouts:                            1580958782.\n",
+        "pressure": "The system has 8589934592 (524288 pages with a page size of 16384).\nSystem-wide memory free percentage: 29%\n",
+        "swap": "vm.swapusage: total = 11264.00M  used = 10087.38M  free = 1176.62M  (encrypted)\n",
+        "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded\n"
+      },
+      "heap": {
+        "objectTypeCounts": {
+          "BigInt": 12321915,
+          "string": 10032478,
+          "Object": 1266807,
+          "Array": 1013042,
+          "Function": 11830,
+          "UnlinkedFunctionExecutable": 5785,
+          "Structure": 5386,
+          "SymbolTable": 5298,
+          "Uint8Array": 4532,
+          "JSLexicalEnvironment": 4524,
+          "Promise": 4305,
+          "FunctionExecutable": 3989,
+          "JSModuleEnvironment": 1431,
+          "JSSourceCode": 1431,
+          "ModuleRecord": 1431,
+          "ModuleRegistryEntry": 1431,
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "GetterSetter": 1335,
+          "Cell Butterfly": 1246,
+          "NativeExecutable": 968,
+          "FunctionRareData": 827,
+          "Uint32Array": 656,
+          "ArrayIterator": 633,
+          "ModuleProgramExecutable": 610,
+          "FunctionCodeBlock": 467,
+          "StructureRareData": 400,
+          "ArrayBuffer": 352,
+          "PropertyTable": 284,
+          "UnlinkedFunctionCodeBlock": 269,
+          "RegExp": 255,
+          "StructureChain": 200,
+          "AsyncFunction": 170,
+          "Module": 130,
+          "UnlinkedProgramCodeBlock": 129,
+          "ProgramExecutable": 123,
+          "Set": 115,
+          "SparseArrayValueMap": 100,
+          "symbol": 98,
+          "ModuleNamespaceObject": 97,
+          "CustomGetterSetter": 87,
+          "DOMAttributeGetterSetter": 52,
+          "Map": 43,
+          "WeakMap": 17,
+          "WeakSet": 15,
+          "JSPropertyNameEnumerator": 12,
+          "Sentinel": 11,
+          "TextEncoder": 6,
+          "JSAsyncGeneratorFunction": 4,
+          "ResourceUsage": 4,
+          "AsyncFunctionGenerator": 3,
+          "Callee": 3,
+          "Error": 3,
+          "Hash": 3,
+          "ImportMeta": 3,
+          "Subprocess": 3,
+          "AsyncGeneratorFunction": 2,
+          "Cipher": 2,
+          "DataView": 2,
+          "DiffieHellman": 2,
+          "Dirent": 2,
+          "ECDH": 2,
+          "FinalizationRegistry": 2,
+          "GeneratorFunction": 2,
+          "Hmac": 2,
+          "Iterator": 2,
+          "KeyObject": 2,
+          "MIMEParams": 2,
+          "MIMEType": 2,
+          "NodeJSFS": 2,
+          "Performance": 2,
+          "Sign": 2,
+          "Stats": 2,
+          "StringDecoder": 2,
+          "SubtleCrypto": 2,
+          "TextDecoder": 2,
+          "URL": 2,
+          "Verify": 2,
+          "X509Certificate": 2,
+          "Array Iterator": 1,
+          "AsyncDisposableStack": 1,
+          "AsyncFromSyncIterator": 1,
+          "AsyncGenerator": 1,
+          "AsyncIterator": 1,
+          "BigInt64ArrayPrototype": 1,
+          "BigUint64ArrayPrototype": 1,
+          "Blob": 1,
+          "Boolean": 1,
+          "Buffer": 1,
+          "Bun": 1,
+          "Crypto": 1,
+          "DiffieHellmanGroup": 1,
+          "DisposableStack": 1,
+          "EventEmitter": 1,
+          "EventTarget": 1,
+          "Float16ArrayPrototype": 1,
+          "Float32ArrayPrototype": 1,
+          "Float64ArrayPrototype": 1,
+          "FullPromiseReaction": 1,
+          "Generator": 1,
+          "GlobalObject": 1,
+          "Int16ArrayPrototype": 1,
+          "Int32ArrayPrototype": 1,
+          "Int8ArrayPrototype": 1,
+          "Int8Array": 1,
+          "InternalFieldTuple": 1,
+          "InternalModuleRegistry": 1,
+          "Intl": 1,
+          "Iterator Helper": 1,
+          "JSGlobalLexicalEnvironment": 1,
+          "JSGlobalProxy": 1,
+          "JSON": 1,
+          "Map Iterator": 1,
+          "Math": 1,
+          "ModuleLoader": 1,
+          "NextTickQueue": 1,
+          "Number": 1,
+          "ProcessBindingConstants": 1,
+          "ProcessEnv": 1,
+          "Process": 1,
+          "Prototype": 1,
+          "Reflect": 1,
+          "RegExp String Iterator": 1,
+          "Set Iterator": 1,
+          "ShadowRealm": 1,
+          "String Iterator": 1,
+          "String": 1,
+          "StrongRootBlock": 1,
+          "Symbol": 1,
+          "Temporal": 1,
+          "Uint16ArrayPrototype": 1,
+          "Uint32ArrayPrototype": 1,
+          "Uint8ArrayPrototype": 1,
+          "Uint8ClampedArrayPrototype": 1,
+          "console": 1,
+          "require": 1,
+          "resolve": 1
+        },
+        "protectedObjectTypeCounts": {
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "UnlinkedProgramCodeBlock": 129,
+          "UnlinkedFunctionExecutable": 4,
+          "Subprocess": 2,
+          "GlobalObject": 1,
+          "Promise": 1
+        },
+        "heapSize": 1642246662,
+        "heapCapacity": 3483229526,
+        "extraMemorySize": 1057469974,
+        "objectCount": 16102850,
+        "protectedObjectCount": 1556,
+        "globalObjectCount": 1,
+        "protectedGlobalObjectCount": 1,
+        "mimalloc": {
+          "stat_version": 5,
+          "mimalloc_version": 30503,
+          "process": {
+            "elapsed_msecs": 329114,
+            "user_msecs": 154133,
+            "system_msecs": 132936,
+            "page_faults": 5330,
+            "rss_current": 2369880064,
+            "rss_peak": 2369880064,
+            "commit_current": 4217176064,
+            "commit_peak": 4217176064
+          },
+          "pages": {
+            "total": 72126,
+            "peak": 29203,
+            "current": 27823
+          },
+          "reserved": {
+            "total": 4300079104,
+            "peak": 4300079104,
+            "current": 4300079104
+          },
+          "committed": {
+            "total": 4217176064,
+            "peak": 4217176064,
+            "current": 4217176064
+          },
+          "reset": 0,
+          "purged": 8468217856,
+          "page_committed": {
+            "total": 6171152504,
+            "peak": 6171152504,
+            "current": 6171152504
+          },
+          "pages_abandoned": {
+            "total": 529352,
+            "peak": 26754,
+            "current": 25078
+          },
+          "threads": {
+            "total": 46,
+            "peak": 20,
+            "current": 16
+          },
+          "malloc_normal": {
+            "total": 29598559704,
+            "peak": 3894168272,
+            "current": 3791976920
+          },
+          "malloc_huge": {
+            "total": 464977920,
+            "peak": 203292672,
+            "current": 116457472
+          },
+          "malloc_requested": 30063537624,
+          "mmap_calls": 15,
+          "commit_calls": 4,
+          "reset_calls": 0,
+          "purge_calls": 325001,
+          "arena_count": 5,
+          "malloc_normal_count": 128365641,
+          "malloc_huge_count": 306,
+          "malloc_guarded_count": 0,
+          "arena_rollback_count": 0,
+          "arena_purges": 2384,
+          "pages_extended": 533466,
+          "pages_retire": 18545,
+          "page_searches": 3424806,
+          "page_searches_count": 1570709,
+          "segments": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_cache": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "_segments_reserved": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "heaps": {
+            "total": 1552,
+            "peak": 5,
+            "current": 4
+          },
+          "theaps": {
+            "total": 1595,
+            "peak": 20,
+            "current": 17
+          },
+          "pages_os_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_os_allocated": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_reclaim_on_alloc": 60998,
+          "pages_reclaim_on_free": 441916,
+          "pages_reabandon_full": 61307,
+          "pages_unabandon_busy_wait": 12,
+          "heaps_delete_wait": 0,
+          "pages_stat_updates": 986455,
+          "pages_stat_update_count": 247159740,
+          "profile_samples": 0,
+          "malloc_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 292941,
+              "peak": 112693,
+              "current": 13541,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 4415864,
+              "peak": 49817,
+              "current": 10369,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 61399138,
+              "peak": 1447601,
+              "current": 92848,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 4799320,
+              "peak": 189762,
+              "current": 20832,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 11355397,
+              "peak": 2121710,
+              "current": 2009767,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 5136245,
+              "peak": 345056,
+              "current": 12237,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 22149734,
+              "peak": 5302718,
+              "current": 5090874,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 2600410,
+              "peak": 147221,
+              "current": 146971,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 3619037,
+              "peak": 98483,
+              "current": 6154,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 4237193,
+              "peak": 1022804,
+              "current": 1008264,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 166278,
+              "peak": 101236,
+              "current": 1311,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 1150141,
+              "peak": 11966,
+              "current": 2644,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 1098149,
+              "peak": 12793,
+              "current": 2501,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 2198211,
+              "peak": 81299,
+              "current": 2754,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 101540,
+              "peak": 6571,
+              "current": 1649,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 254726,
+              "peak": 202257,
+              "current": 2450,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 52023,
+              "peak": 4184,
+              "current": 676,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 1072601,
+              "peak": 1002491,
+              "current": 1000976,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 31017,
+              "peak": 1944,
+              "current": 37,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 23748,
+              "peak": 2076,
+              "current": 296,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 49005,
+              "peak": 2914,
+              "current": 392,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 1031540,
+              "peak": 10766,
+              "current": 399,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 24705,
+              "peak": 1345,
+              "current": 181,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 15419,
+              "peak": 1043,
+              "current": 126,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 20157,
+              "peak": 975,
+              "current": 103,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 27311,
+              "peak": 7239,
+              "current": 731,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 11505,
+              "peak": 531,
+              "current": 75,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 7043,
+              "peak": 472,
+              "current": 112,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 81176,
+              "peak": 2159,
+              "current": 76,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 5717,
+              "peak": 793,
+              "current": 125,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 2976,
+              "peak": 272,
+              "current": 43,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 1079,
+              "peak": 89,
+              "current": 56,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 6630,
+              "peak": 976,
+              "current": 44,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 1162,
+              "peak": 120,
+              "current": 83,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 1057,
+              "peak": 79,
+              "current": 26,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 449,
+              "peak": 50,
+              "current": 19,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 870522,
+              "peak": 142333,
+              "current": 142302,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 734,
+              "peak": 53,
+              "current": 25,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 285,
+              "peak": 15,
+              "current": 11,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 395,
+              "peak": 16,
+              "current": 7,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 245,
+              "peak": 12,
+              "current": 9,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 370,
+              "peak": 38,
+              "current": 10,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 128,
+              "peak": 10,
+              "current": 7,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 193,
+              "peak": 14,
+              "current": 5,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 17239,
+              "peak": 589,
+              "current": 2,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 34426,
+              "peak": 666,
+              "current": 6,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 88,
+              "peak": 6,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 105,
+              "peak": 10,
+              "current": 4,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 59,
+              "peak": 3,
+              "current": 0,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 56,
+              "peak": 5,
+              "current": 2,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 38,
+              "peak": 4,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 30,
+              "peak": 2,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 27,
+              "peak": 6,
+              "current": 4,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 30,
+              "peak": 3,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 11,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 3,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "page_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1283,
+              "peak": 24,
+              "current": 15,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1285,
+              "peak": 21,
+              "current": 19,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 2104,
+              "peak": 723,
+              "current": 178,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 1374,
+              "peak": 155,
+              "current": 46,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 3351,
+              "peak": 2092,
+              "current": 2092,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 764,
+              "peak": 433,
+              "current": 221,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 8248,
+              "peak": 7787,
+              "current": 7574,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 2079,
+              "peak": 273,
+              "current": 273,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 2518,
+              "peak": 204,
+              "current": 48,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 3608,
+              "peak": 2518,
+              "current": 2515,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 591,
+              "peak": 308,
+              "current": 21,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 1847,
+              "peak": 52,
+              "current": 29,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 691,
+              "peak": 65,
+              "current": 40,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 777,
+              "peak": 410,
+              "current": 29,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 1583,
+              "peak": 26,
+              "current": 25,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 2564,
+              "peak": 1394,
+              "current": 32,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 181,
+              "peak": 22,
+              "current": 19,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 10442,
+              "peak": 9825,
+              "current": 9822,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 1586,
+              "peak": 23,
+              "current": 16,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 974,
+              "peak": 19,
+              "current": 18,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 569,
+              "peak": 39,
+              "current": 27,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 8701,
+              "peak": 218,
+              "current": 30,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 464,
+              "peak": 22,
+              "current": 17,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 520,
+              "peak": 32,
+              "current": 16,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 1013,
+              "peak": 30,
+              "current": 16,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 994,
+              "peak": 300,
+              "current": 43,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 510,
+              "peak": 37,
+              "current": 14,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 297,
+              "peak": 33,
+              "current": 15,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 2108,
+              "peak": 77,
+              "current": 17,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 447,
+              "peak": 72,
+              "current": 16,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 326,
+              "peak": 36,
+              "current": 11,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 204,
+              "peak": 14,
+              "current": 11,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 286,
+              "peak": 27,
+              "current": 12,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 156,
+              "peak": 22,
+              "current": 20,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 205,
+              "peak": 9,
+              "current": 8,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 115,
+              "peak": 9,
+              "current": 7,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 4653,
+              "peak": 4454,
+              "current": 4454,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 237,
+              "peak": 12,
+              "current": 9,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 170,
+              "peak": 8,
+              "current": 6,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 199,
+              "peak": 6,
+              "current": 3,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 163,
+              "peak": 7,
+              "current": 6,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 106,
+              "peak": 4,
+              "current": 1,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 88,
+              "peak": 6,
+              "current": 4,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 102,
+              "peak": 4,
+              "current": 1,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 379,
+              "peak": 74,
+              "current": 2,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 636,
+              "peak": 112,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 62,
+              "peak": 4,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 58,
+              "peak": 4,
+              "current": 2,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 51,
+              "peak": 1,
+              "current": 0,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 42,
+              "peak": 4,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 25,
+              "peak": 3,
+              "current": 1,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 21,
+              "peak": 3,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 16,
+              "peak": 3,
+              "current": 1,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 29,
+              "peak": 3,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 9,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 6,
+              "peak": 2,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 306,
+              "peak": 85,
+              "current": 12,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "chunk_bins": [
+            {
+              "total": 84,
+              "peak": 84,
+              "current": 84,
+              "bin": "S"
+            },
+            {
+              "total": 13,
+              "peak": 11,
+              "current": 10,
+              "bin": "X"
+            },
+            {
+              "total": 25,
+              "peak": 24,
+              "current": 24,
+              "bin": "M"
+            },
+            {
+              "total": 5,
+              "peak": 1,
+              "current": 0,
+              "bin": "L"
+            },
+            {
+              "total": 4,
+              "peak": 4,
+              "current": 4,
+              "bin": "H"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": " "
+            }
+          ]
+        }
+      }
+    }
+  },
+  "verified": true
+}

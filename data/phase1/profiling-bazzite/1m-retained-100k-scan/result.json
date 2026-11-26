@@ -1,0 +1,3364 @@
+{
+  "schemaVersion": 1,
+  "options": {
+    "fixture": "~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/1000000-zero",
+    "output": "~/CODE/stealth-scan-benchmark-20261119/results/profiling-bazzite/1m-retained-100k-scan",
+    "engine": "crypto",
+    "batchSize": 0,
+    "scanCount": 100000,
+    "intervalUs": 20000,
+    "nativeSeconds": 0
+  },
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "fixtureSha256": "c45698bd93baa934c4674788195564ef60a543f0fbfb08ba2aa5dcee1bc436ba",
+  "scanInputSha256": "46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05",
+  "retainedAnnouncements": 1000000,
+  "scannedAnnouncements": 100000,
+  "matches": 0,
+  "scanMs": 47157.315388999996,
+  "cpuUserMs": 46749.518,
+  "cpuSystemMs": 1068.975,
+  "resourcesBefore": {
+    "userCPUTime": 72673883,
+    "systemCPUTime": 5014920,
+    "maxRSS": 5497300,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 3724664,
+    "majorPageFault": 0,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 264,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 155914,
+    "involuntaryContextSwitches": 2875
+  },
+  "resourcesAfter": {
+    "userCPUTime": 119423402,
+    "systemCPUTime": 6083905,
+    "maxRSS": 5717024,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 4455559,
+    "majorPageFault": 0,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 264,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 170368,
+    "involuntaryContextSwitches": 3334
+  },
+  "gc": {
+    "events": 61,
+    "costRawSum": 60577.446027309634,
+    "types": {
+      "Scavenge": 61
+    }
+  },
+  "profiler": {
+    "intervalSeconds": 0.02,
+    "samples": 2343,
+    "topSelf": [
+      {
+        "frame": "M [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:98]",
+        "samples": 892,
+        "sampleSharePct": 38.07084933845497
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:229]",
+        "samples": 102,
+        "sampleSharePct": 4.353393085787452
+      },
+      {
+        "frame": "invert [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:110]",
+        "samples": 58,
+        "sampleSharePct": 2.4754588134869824
+      },
+      {
+        "frame": "M [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:99]",
+        "samples": 54,
+        "sampleSharePct": 2.3047375160051216
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:263]",
+        "samples": 53,
+        "sampleSharePct": 2.2620571916346566
+      },
+      {
+        "frame": "lift_x [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:150]",
+        "samples": 43,
+        "sampleSharePct": 1.8352539479300043
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:258]",
+        "samples": 39,
+        "sampleSharePct": 1.6645326504481435
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:228]",
+        "samples": 39,
+        "sampleSharePct": 1.6645326504481435
+      },
+      {
+        "frame": "lift_x [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:149]",
+        "samples": 38,
+        "sampleSharePct": 1.6218523260776783
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:249]",
+        "samples": 38,
+        "sampleSharePct": 1.6218523260776783
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:245]",
+        "samples": 37,
+        "sampleSharePct": 1.579172001707213
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:260]",
+        "samples": 33,
+        "sampleSharePct": 1.408450704225352
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:234]",
+        "samples": 33,
+        "sampleSharePct": 1.408450704225352
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:231]",
+        "samples": 32,
+        "sampleSharePct": 1.3657703798548868
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:236]",
+        "samples": 32,
+        "sampleSharePct": 1.3657703798548868
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:241]",
+        "samples": 31,
+        "sampleSharePct": 1.3230900554844216
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:264]",
+        "samples": 31,
+        "sampleSharePct": 1.3230900554844216
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:253]",
+        "samples": 31,
+        "sampleSharePct": 1.3230900554844216
+      },
+      {
+        "frame": "invert [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:109]",
+        "samples": 31,
+        "sampleSharePct": 1.3230900554844216
+      },
+      {
+        "frame": "freeze [native:4294967295]",
+        "samples": 29,
+        "sampleSharePct": 1.2377294067434912
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:233]",
+        "samples": 29,
+        "sampleSharePct": 1.2377294067434912
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:250]",
+        "samples": 27,
+        "sampleSharePct": 1.1523687580025608
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:259]",
+        "samples": 27,
+        "sampleSharePct": 1.1523687580025608
+      },
+      {
+        "frame": "multiply [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:286]",
+        "samples": 26,
+        "sampleSharePct": 1.1096884336320956
+      },
+      {
+        "frame": "add [~/CODE/stealth-scan-benchmark-20261119/node_modules/@noble/secp256k1/index.js:261]",
+        "samples": 26,
+        "sampleSharePct": 1.1096884336320956
+      }
+    ]
+  },
+  "environment": {
+    "bun": "1.4.4",
+    "nodeCompatibility": "26.3.0",
+    "platform": "linux",
+    "arch": "x64",
+    "osRelease": "7.3.4-ogc6.1.fc45.x86_64",
+    "cpu": "13th Gen Intel(R) Core(TM) i7-13700K",
+    "totalMemoryBytes": 33383620608,
+    "sourceHashes": {
+      "bun.lock": "d17ecebbd04e00717b3316f8b9bb3cb6d35e755ba330978e4d220eefaff3c00e",
+      "src/profile.ts": "605bdf847e73df95a29cf4523eec56110024440bdb85b41af89af4d26ea78135",
+      "src/worker.ts": "5b98900afcbd07e3d350486d7dd059b977d8596ce28b611b2fc8d75163459a29",
+      "src/fixtures.ts": "7e4c95934081dcdc5fe9e72175bd3ce4a6af020816f75d49e8dd28275f787b82"
+    }
+  },
+  "phases": {
+    "beforeLoad": {
+      "epochMs": 1795081112816,
+      "monotonicMs": 98.636146,
+      "memory": {
+        "rss": 75042816,
+        "heapTotal": 12142592,
+        "heapUsed": 8653589,
+        "external": 2339333,
+        "arrayBuffers": 480
+      },
+      "resources": {
+        "userCPUTime": 126526,
+        "systemCPUTime": 19514,
+        "maxRSS": 73284,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 11289,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 64,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 601,
+        "involuntaryContextSwitches": 6
+      },
+      "host": {
+        "memory": "MemTotal:       32601192 kB\nMemFree:         1736016 kB\nMemAvailable:   15924120 kB\nBuffers:             300 kB\nCached:         13189256 kB\nSwapCached:         8236 kB\nActive:          5079512 kB\nInactive:       16529632 kB\nActive(anon):    4722252 kB\nInactive(anon):  3903404 kB\nActive(file):     357260 kB\nInactive(file): 12626228 kB\nUnevictable:       13188 kB\nMlocked:             524 kB\nSwapTotal:      16300540 kB\nSwapFree:        1629100 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:             10716 kB\nWriteback:             0 kB\nAnonPages:       8427140 kB\nMapped:          1312476 kB\nShmem:            206216 kB\nKReclaimable:    1676776 kB\nSlab:            3520192 kB\nSReclaimable:    1670148 kB\nSUnreclaim:      1850044 kB\nKernelStack:       52744 kB\nPageTables:       139464 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    32601136 kB\nCommitted_AS:   48000484 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:      285480 kB\nVmallocChunk:          0 kB\nPercpu:            29760 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:   1050624 kB\nShmemHugePages:    10240 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:     3037932 kB\nDirectMap2M:    28176384 kB\nDirectMap1G:     2097152 kB\n",
+        "vm": "nr_free_pages 433549\nnr_free_pages_blocks 48640\nnr_zone_inactive_anon 975851\nnr_zone_active_anon 1180472\nnr_zone_inactive_file 3156557\nnr_zone_active_file 89315\nnr_zone_unevictable 3297\nnr_zone_write_pending 2679\nnr_mlock 131\nnr_zspages 1120244\nnr_free_cma 0\nnr_unaccepted 0\nnuma_hit 1690607014\nnuma_miss 0\nnuma_foreign 0\nnuma_interleave 2166\nnuma_local 1690607014\nnuma_other 0\nnr_inactive_anon 975851\nnr_active_anon 1180472\nnr_inactive_file 3156557\nnr_active_file 89315\nnr_unevictable 3297\nnr_slab_reclaimable 417537\nnr_slab_unreclaimable 462511\nnr_isolated_anon 0\nnr_isolated_file 0\nworkingset_nodes 127960\nworkingset_refault_anon 731467\nworkingset_refault_file 14418752\nworkingset_activate_anon 184337\nworkingset_activate_file 105553\nworkingset_restore_anon 186016\nworkingset_restore_file 1127725\nworkingset_nodereclaim 774576\nnr_anon_pages 2106694\nnr_mapped 328210\nnr_file_pages 3299448\nnr_dirty 2679\nnr_writeback 0\nnr_shmem 51554\nnr_shmem_hugepages 5\nnr_shmem_pmdmapped 0\nnr_file_hugepages 0\nnr_file_pmdmapped 0\nnr_anon_transparent_hugepages 513\nnr_vmscan_write 4970186\nnr_vmscan_immediate_reclaim 140328\nnr_dirtied 51278664\nnr_written 52130782\nnr_throttled_written 0\nnr_kernel_misc_reclaimable 1657\nnr_foll_pin_acquired 10475\nnr_foll_pin_released 10266\nnr_vmalloc 71370\nnr_kernel_stack 52744\nnr_page_table_pages 34866\nnr_sec_page_table_pages 0\nnr_iommu_pages 0\nnr_swapcached 2059\npgpromote_success 0\npgpromote_candidate 0\npgpromote_candidate_nrl 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgsteal_kswapd 42228664\npgsteal_direct 6725929\npgsteal_khugepaged 1198\npgsteal_proactive 0\npgsteal_anon 4861673\npgsteal_file 44094118\npgscan_kswapd 43491361\npgscan_direct 7985939\npgscan_khugepaged 1314\npgscan_proactive 0\npgscan_anon 6693957\npgscan_file 44784657\npgrotate_anon 1832284\npgrotate_file 690539\npgrefill 39788893\nnr_hugetlb 0\nnr_balloon_pages 0\nnr_kernel_file_pages 724862\nnr_gpu_active 0\nnr_gpu_reclaim 0\nnr_dirty_threshold 722106\nnr_dirty_background_threshold 360612\nnr_memmap_pages 48128\nnr_memmap_boot_pages 130560\npgpgin 103051157\npgpgout 251473909\npswpin 694353\npswpout 4668600\npgalloc_dma 1024\npgalloc_dma32 6688526\npgalloc_normal 1904569468\npgalloc_movable 0\npgalloc_device 0\nallocstall_dma 0\nallocstall_dma32 0\nallocstall_normal 7255\nallocstall_movable 104843\nallocstall_device 0\npgskip_dma 0\npgskip_dma32 0\npgskip_normal 158\npgskip_movable 0\npgskip_device 0\npgfree 1929421200\npgactivate 2986131\npgdeactivate 69\npglazyfree 0\npgfault 1596839576\npgmajfault 759653\npglazyfreed 0\npgreuse 130126584\npgscan_direct_throttle 0\nzone_reclaim_success 0\nzone_reclaim_failed 0\npginodesteal 585\nslabs_scanned 32001815\nkswapd_inodesteal 2679967\nkswapd_low_wmark_hit_quickly 10172\nkswapd_high_wmark_hit_quickly 87\npageoutrun 10907\npgrotated 136474\ndrop_pagecache 0\ndrop_slab 0\noom_kill 0\nnuma_pte_updates 0\nnuma_huge_pte_updates 0\nnuma_hint_faults 0\nnuma_hint_faults_local 0\nnuma_pages_migrated 0\npgmigrate_success 10832776\npgmigrate_fail 72829\nthp_migration_success 0\nthp_migration_fail 0\nthp_migration_split 0\ncompact_migrate_scanned 390074482\ncompact_free_scanned 283915072\ncompact_isolated 22298721\ncompact_stall 35550\ncompact_fail 16035\ncompact_success 19515\ncompact_daemon_wake 7155\ncompact_daemon_migrate_scanned 272987975\ncompact_daemon_free_scanned 129836169\nhtlb_buddy_alloc_success 0\nhtlb_buddy_alloc_fail 0\ncma_alloc_success 0\ncma_alloc_fail 0\nunevictable_pgs_culled 190888\nunevictable_pgs_scanned 12475\nunevictable_pgs_rescued 50447\nunevictable_pgs_mlocked 38112\nunevictable_pgs_munlocked 37910\nunevictable_pgs_cleared 0\nunevictable_pgs_stranded 71\nthp_fault_alloc 34322\nthp_fault_fallback 2583\nthp_fault_fallback_charge 0\nthp_collapse_alloc 750\nthp_collapse_alloc_failed 6\nthp_file_alloc 23\nthp_file_fallback 1\nthp_file_fallback_charge 0\nthp_file_mapped 0\nthp_split_page 469\nthp_split_page_failed 0\nthp_deferred_split_page 4505\nthp_underused_split_page 0\nthp_split_pmd 5091\nthp_scan_exceed_none_pte 142\nthp_scan_exceed_swap_pte 105888\nthp_scan_exceed_share_pte 565\nthp_split_pud 0\nthp_zero_page_alloc 3\nthp_zero_page_alloc_failed 0\nthp_swpout 146\nthp_swpout_fallback 443\nballoon_inflate 0\nballoon_deflate 0\nballoon_migrate 0\nswap_ra 0\nswap_ra_hit 3\nswpin_zero 38382\nswpout_zero 180450\nksm_swpin_copy 0\ncow_ksm 0\nzswpin 0\nzswpout 0\nzswpwb 0\ndirect_map_level2_splits 1472\ndirect_map_level3_splits 27\ndirect_map_level2_collapses 0\ndirect_map_level3_collapses 0\nnrswpin 694353\nnrswpout 4593967\nnr_unstable 0\n",
+        "memoryPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=14278132\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12743607\n",
+        "cpuPressure": "some avg10=0.00 avg60=0.01 avg300=0.00 total=663658163\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+        "swap": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/dev/zram0                              partition\t16300540\t14671440\t100\n",
+        "load": "3.16 3.05 3.54 3/3274 1267294\n",
+        "process": "Name:\tbun\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t1267273\nNgid:\t0\nPid:\t1267273\nPPid:\t1267272\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t1024\nGroups:\t10 1000 \nNStgid:\t1267273\nNSpid:\t1267273\nNSpgid:\t1251028\nNSsid:\t1251028\nKthread:\t0\nVmPeak:\t10602676 kB\nVmSize:\t 6699304 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   73836 kB\nVmRSS:\t   73836 kB\nRssAnon:\t   41512 kB\nRssFile:\t   32324 kB\nRssShmem:\t       0 kB\nVmData:\t 6329328 kB\nVmStk:\t     140 kB\nVmExe:\t   79832 kB\nVmLib:\t    2280 kB\nVmPTE:\t     476 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t14\nSigQ:\t4/126415\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t00000001600044fa\nCapInh:\t0000000800000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\t000055\nCpus_allowed_list:\t0,2,4,6\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t38\nnonvoluntary_ctxt_switches:\t3\nx86_Thread_features:\t\nx86_Thread_features_locked:\t\n",
+        "/sys/class/thermal/thermal_zone2/type": "x86_pkg_temp\n",
+        "/sys/class/thermal/thermal_zone2/temp": "75000\n",
+        "/sys/class/thermal/thermal_zone0/type": "acpitz\n",
+        "/sys/class/thermal/thermal_zone0/temp": "16800\n",
+        "/sys/class/thermal/thermal_zone1/type": "acpitz\n",
+        "/sys/class/thermal/thermal_zone1/temp": "27800\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_cur_freq": "5148160\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/affected_cpus": "11\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/affected_cpus": "8\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_cur_freq": "5299495\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/affected_cpus": "6\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_cur_freq": "3935108\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/affected_cpus": "18\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/affected_cpus": "4\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_cur_freq": "3897487\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/affected_cpus": "16\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_cur_freq": "5299668\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/affected_cpus": "2\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/affected_cpus": "14\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/affected_cpus": "0\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_cur_freq": "3895243\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/affected_cpus": "22\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/affected_cpus": "12\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/affected_cpus": "9\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_cur_freq": "3997108\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/affected_cpus": "20\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/affected_cpus": "10\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/affected_cpus": "7\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_cur_freq": "3919137\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/affected_cpus": "19\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/affected_cpus": "5\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_cur_freq": "3914593\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/affected_cpus": "17\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_cur_freq": "5299761\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/affected_cpus": "3\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/affected_cpus": "15\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_cur_freq": "5300434\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/affected_cpus": "1\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_cur_freq": "3912191\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/affected_cpus": "23\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/affected_cpus": "13\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_cur_freq": "4002308\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/affected_cpus": "21\n"
+      }
+    },
+    "beforeScan": {
+      "epochMs": 1795081164103,
+      "monotonicMs": 51385.459941,
+      "memory": {
+        "rss": 2916478976,
+        "heapTotal": 1075723264,
+        "heapUsed": 1639968819,
+        "external": 1055761811,
+        "arrayBuffers": 704
+      },
+      "resources": {
+        "userCPUTime": 72267610,
+        "systemCPUTime": 5013574,
+        "maxRSS": 5497300,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 3724632,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 64,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 155829,
+        "involuntaryContextSwitches": 2865
+      },
+      "host": {
+        "memory": "MemTotal:       32601192 kB\nMemFree:         2559164 kB\nMemAvailable:   13069036 kB\nBuffers:             300 kB\nCached:          9531692 kB\nSwapCached:         8088 kB\nActive:          7547304 kB\nInactive:       12817176 kB\nActive(anon):    6967960 kB\nInactive(anon):  4070232 kB\nActive(file):     579344 kB\nInactive(file):  8746944 kB\nUnevictable:       13188 kB\nMlocked:             524 kB\nSwapTotal:      16300540 kB\nSwapFree:        1271836 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              2576 kB\nWriteback:             0 kB\nAnonPages:      10839784 kB\nMapped:          1316416 kB\nShmem:            205852 kB\nKReclaimable:    1655744 kB\nSlab:            3499300 kB\nSReclaimable:    1649116 kB\nSUnreclaim:      1850184 kB\nKernelStack:       53184 kB\nPageTables:       151020 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    32601136 kB\nCommitted_AS:   48262860 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:      286056 kB\nVmallocChunk:          0 kB\nPercpu:            29760 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:   1050624 kB\nShmemHugePages:    10240 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:     3037932 kB\nDirectMap2M:    28176384 kB\nDirectMap1G:     2097152 kB\n",
+        "vm": "nr_free_pages 639791\nnr_free_pages_blocks 10240\nnr_zone_inactive_anon 1017558\nnr_zone_active_anon 1742148\nnr_zone_inactive_file 2186736\nnr_zone_active_file 144836\nnr_zone_unevictable 3297\nnr_zone_write_pending 644\nnr_mlock 131\nnr_zspages 1130381\nnr_free_cma 0\nnr_unaccepted 0\nnuma_hit 1694602902\nnuma_miss 0\nnuma_foreign 0\nnuma_interleave 2166\nnuma_local 1694602902\nnuma_other 0\nnr_inactive_anon 1017558\nnr_active_anon 1741990\nnr_inactive_file 2186736\nnr_active_file 144836\nnr_unevictable 3297\nnr_slab_reclaimable 412279\nnr_slab_unreclaimable 462546\nnr_isolated_anon 0\nnr_isolated_file 0\nworkingset_nodes 170150\nworkingset_refault_anon 731556\nworkingset_refault_file 14419734\nworkingset_activate_anon 184375\nworkingset_activate_file 105553\nworkingset_restore_anon 186054\nworkingset_restore_file 1127725\nworkingset_nodereclaim 774576\nnr_anon_pages 2709946\nnr_mapped 329104\nnr_file_pages 2385020\nnr_dirty 644\nnr_writeback 0\nnr_shmem 51463\nnr_shmem_hugepages 5\nnr_shmem_pmdmapped 0\nnr_file_hugepages 0\nnr_file_pmdmapped 0\nnr_anon_transparent_hugepages 513\nnr_vmscan_write 5059629\nnr_vmscan_immediate_reclaim 140329\nnr_dirtied 51283616\nnr_written 52222279\nnr_throttled_written 0\nnr_kernel_misc_reclaimable 1657\nnr_foll_pin_acquired 10484\nnr_foll_pin_released 10275\nnr_vmalloc 71514\nnr_kernel_stack 53184\nnr_page_table_pages 37755\nnr_sec_page_table_pages 0\nnr_iommu_pages 0\nnr_swapcached 2022\npgpromote_success 0\npgpromote_candidate 0\npgpromote_candidate_nrl 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgsteal_kswapd 43226630\npgsteal_direct 6732830\npgsteal_khugepaged 1198\npgsteal_proactive 0\npgsteal_anon 4951116\npgsteal_file 45009542\npgscan_kswapd 44494712\npgscan_direct 7992841\npgscan_khugepaged 1314\npgscan_proactive 0\npgscan_anon 6788274\npgscan_file 45700593\npgrotate_anon 1837158\npgrotate_file 691051\npgrefill 40147339\nnr_hugetlb 0\nnr_balloon_pages 0\nnr_kernel_file_pages 724928\nnr_gpu_active 0\nnr_gpu_reclaim 0\nnr_dirty_threshold 580529\nnr_dirty_background_threshold 289910\nnr_memmap_pages 48128\nnr_memmap_boot_pages 130560\npgpgin 103055397\npgpgout 251857829\npswpin 694441\npswpout 4753134\npgalloc_dma 1024\npgalloc_dma32 6732958\npgalloc_normal 1908807182\npgalloc_movable 0\npgalloc_device 0\nallocstall_dma 0\nallocstall_dma32 0\nallocstall_normal 7259\nallocstall_movable 104947\nallocstall_device 0\npgskip_dma 0\npgskip_dma32 0\npgskip_normal 158\npgskip_movable 0\npgskip_device 0\npgfree 1934051104\npgactivate 2991438\npgdeactivate 69\npglazyfree 0\npgfault 1600656171\npgmajfault 759743\npglazyfreed 0\npgreuse 130172197\npgscan_direct_throttle 0\nzone_reclaim_success 0\nzone_reclaim_failed 0\npginodesteal 1075\nslabs_scanned 32857879\nkswapd_inodesteal 2784181\nkswapd_low_wmark_hit_quickly 10344\nkswapd_high_wmark_hit_quickly 89\npageoutrun 11115\npgrotated 136474\ndrop_pagecache 0\ndrop_slab 0\noom_kill 0\nnuma_pte_updates 0\nnuma_huge_pte_updates 0\nnuma_hint_faults 0\nnuma_hint_faults_local 0\nnuma_pages_migrated 0\npgmigrate_success 10876434\npgmigrate_fail 73205\nthp_migration_success 0\nthp_migration_fail 0\nthp_migration_split 0\ncompact_migrate_scanned 392686778\ncompact_free_scanned 301764895\ncompact_isolated 22388705\ncompact_stall 35550\ncompact_fail 16035\ncompact_success 19515\ncompact_daemon_wake 7361\ncompact_daemon_migrate_scanned 275600271\ncompact_daemon_free_scanned 147685992\nhtlb_buddy_alloc_success 0\nhtlb_buddy_alloc_fail 0\ncma_alloc_success 0\ncma_alloc_fail 0\nunevictable_pgs_culled 190888\nunevictable_pgs_scanned 12475\nunevictable_pgs_rescued 50447\nunevictable_pgs_mlocked 38112\nunevictable_pgs_munlocked 37910\nunevictable_pgs_cleared 0\nunevictable_pgs_stranded 71\nthp_fault_alloc 34322\nthp_fault_fallback 2583\nthp_fault_fallback_charge 0\nthp_collapse_alloc 750\nthp_collapse_alloc_failed 6\nthp_file_alloc 23\nthp_file_fallback 1\nthp_file_fallback_charge 0\nthp_file_mapped 0\nthp_split_page 469\nthp_split_page_failed 0\nthp_deferred_split_page 4505\nthp_underused_split_page 0\nthp_split_pmd 5091\nthp_scan_exceed_none_pte 142\nthp_scan_exceed_swap_pte 105909\nthp_scan_exceed_share_pte 565\nthp_split_pud 0\nthp_zero_page_alloc 3\nthp_zero_page_alloc_failed 0\nthp_swpout 146\nthp_swpout_fallback 443\nballoon_inflate 0\nballoon_deflate 0\nballoon_migrate 0\nswap_ra 0\nswap_ra_hit 3\nswpin_zero 38383\nswpout_zero 185359\nksm_swpin_copy 0\ncow_ksm 0\nzswpin 0\nzswpout 0\nzswpwb 0\ndirect_map_level2_splits 1472\ndirect_map_level3_splits 27\ndirect_map_level2_collapses 0\ndirect_map_level3_collapses 0\nnrswpin 694441\nnrswpout 4678501\nnr_unstable 0\n",
+        "memoryPressure": "some avg10=0.03 avg60=0.05 avg300=0.01 total=14443016\nfull avg10=0.03 avg60=0.05 avg300=0.01 total=12907174\n",
+        "cpuPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=663914720\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+        "swap": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/dev/zram0                              partition\t16300540\t15028704\t100\n",
+        "load": "4.23 3.35 3.61 3/3300 1267621\n",
+        "process": "Name:\tbun\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t1267273\nNgid:\t0\nPid:\t1267273\nPPid:\t1267272\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t1024\nGroups:\t10 1000 \nNStgid:\t1267273\nNSpid:\t1267273\nNSpgid:\t1251028\nNSsid:\t1251028\nKthread:\t0\nVmPeak:\t11942888 kB\nVmSize:\t11942888 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t 5497300 kB\nVmRSS:\t 2848052 kB\nRssAnon:\t 2811484 kB\nRssFile:\t   36568 kB\nRssShmem:\t       0 kB\nVmData:\t11572912 kB\nVmStk:\t     140 kB\nVmExe:\t   79832 kB\nVmLib:\t    2280 kB\nVmPTE:\t   11148 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t12\nSigQ:\t4/126415\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t00000001600044fa\nCapInh:\t0000000800000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\t000055\nCpus_allowed_list:\t0,2,4,6\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t9096\nnonvoluntary_ctxt_switches:\t635\nx86_Thread_features:\t\nx86_Thread_features_locked:\t\n",
+        "/sys/class/thermal/thermal_zone2/type": "x86_pkg_temp\n",
+        "/sys/class/thermal/thermal_zone2/temp": "71000\n",
+        "/sys/class/thermal/thermal_zone0/type": "acpitz\n",
+        "/sys/class/thermal/thermal_zone0/temp": "16800\n",
+        "/sys/class/thermal/thermal_zone1/type": "acpitz\n",
+        "/sys/class/thermal/thermal_zone1/temp": "27800\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_cur_freq": "5299513\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/affected_cpus": "11\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/affected_cpus": "8\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/affected_cpus": "6\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_cur_freq": "4000196\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/affected_cpus": "18\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq": "5299912\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/affected_cpus": "4\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_cur_freq": "3996935\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/affected_cpus": "16\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_cur_freq": "5300142\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/affected_cpus": "2\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/affected_cpus": "14\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/affected_cpus": "0\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_cur_freq": "3997391\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/affected_cpus": "22\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_cur_freq": "5075328\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/affected_cpus": "12\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_cur_freq": "5297386\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/affected_cpus": "9\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_cur_freq": "3998498\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/affected_cpus": "20\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/affected_cpus": "10\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_cur_freq": "5299204\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/affected_cpus": "7\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_cur_freq": "3996904\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/affected_cpus": "19\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_cur_freq": "5281767\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/affected_cpus": "5\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_cur_freq": "4000773\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/affected_cpus": "17\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_cur_freq": "5300436\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/affected_cpus": "3\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_cur_freq": "5300481\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/affected_cpus": "15\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/affected_cpus": "1\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_cur_freq": "3998505\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/affected_cpus": "23\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_cur_freq": "4961617\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/affected_cpus": "13\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_cur_freq": "4001750\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/affected_cpus": "21\n"
+      },
+      "heap": {
+        "objectTypeCounts": {
+          "string": 9996437,
+          "BigInt": 2013087,
+          "Object": 1016336,
+          "Array": 1003829,
+          "Function": 9840,
+          "UnlinkedFunctionExecutable": 5780,
+          "Structure": 5341,
+          "SymbolTable": 5290,
+          "Promise": 4300,
+          "FunctionExecutable": 3974,
+          "JSLexicalEnvironment": 3547,
+          "JSModuleEnvironment": 1431,
+          "JSSourceCode": 1431,
+          "ModuleRecord": 1431,
+          "ModuleRegistryEntry": 1431,
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "GetterSetter": 1335,
+          "Cell Butterfly": 1254,
+          "NativeExecutable": 963,
+          "FunctionRareData": 716,
+          "ModuleProgramExecutable": 610,
+          "FunctionCodeBlock": 425,
+          "StructureRareData": 398,
+          "PropertyTable": 258,
+          "RegExp": 255,
+          "UnlinkedFunctionCodeBlock": 240,
+          "StructureChain": 201,
+          "AsyncFunction": 168,
+          "Module": 130,
+          "UnlinkedProgramCodeBlock": 129,
+          "ProgramExecutable": 123,
+          "Set": 115,
+          "SparseArrayValueMap": 100,
+          "symbol": 98,
+          "ModuleNamespaceObject": 97,
+          "CustomGetterSetter": 87,
+          "DOMAttributeGetterSetter": 52,
+          "Uint8Array": 47,
+          "Map": 43,
+          "Uint32Array": 21,
+          "WeakMap": 17,
+          "WeakSet": 15,
+          "JSPropertyNameEnumerator": 12,
+          "Sentinel": 11,
+          "ResourceUsage": 7,
+          "TextEncoder": 6,
+          "JSAsyncGeneratorFunction": 4,
+          "ArrayBuffer": 3,
+          "Callee": 3,
+          "Error": 3,
+          "Hash": 3,
+          "ImportMeta": 3,
+          "AsyncGeneratorFunction": 2,
+          "Cipher": 2,
+          "DataView": 2,
+          "DiffieHellman": 2,
+          "Dirent": 2,
+          "ECDH": 2,
+          "GeneratorFunction": 2,
+          "Hmac": 2,
+          "Iterator": 2,
+          "KeyObject": 2,
+          "MIMEParams": 2,
+          "MIMEType": 2,
+          "NodeJSFS": 2,
+          "Performance": 2,
+          "Sign": 2,
+          "Stats": 2,
+          "StringDecoder": 2,
+          "Subprocess": 2,
+          "SubtleCrypto": 2,
+          "TextDecoder": 2,
+          "URL": 2,
+          "Verify": 2,
+          "X509Certificate": 2,
+          "Array Iterator": 1,
+          "AsyncDisposableStack": 1,
+          "AsyncFromSyncIterator": 1,
+          "AsyncFunctionGenerator": 1,
+          "AsyncGenerator": 1,
+          "AsyncIterator": 1,
+          "BigInt64ArrayPrototype": 1,
+          "BigUint64ArrayPrototype": 1,
+          "Blob": 1,
+          "Boolean": 1,
+          "Buffer": 1,
+          "Bun": 1,
+          "Crypto": 1,
+          "DiffieHellmanGroup": 1,
+          "DisposableStack": 1,
+          "EventEmitter": 1,
+          "EventTarget": 1,
+          "Float16ArrayPrototype": 1,
+          "Float32ArrayPrototype": 1,
+          "Float64ArrayPrototype": 1,
+          "Generator": 1,
+          "GlobalObject": 1,
+          "Int16ArrayPrototype": 1,
+          "Int32ArrayPrototype": 1,
+          "Int8ArrayPrototype": 1,
+          "Int8Array": 1,
+          "InternalFieldTuple": 1,
+          "InternalModuleRegistry": 1,
+          "Intl": 1,
+          "Iterator Helper": 1,
+          "JSGlobalLexicalEnvironment": 1,
+          "JSGlobalProxy": 1,
+          "JSON": 1,
+          "Map Iterator": 1,
+          "Math": 1,
+          "ModuleLoader": 1,
+          "NextTickQueue": 1,
+          "Number": 1,
+          "ProcessBindingConstants": 1,
+          "ProcessEnv": 1,
+          "Process": 1,
+          "Prototype": 1,
+          "Reflect": 1,
+          "RegExp String Iterator": 1,
+          "Set Iterator": 1,
+          "ShadowRealm": 1,
+          "String Iterator": 1,
+          "String": 1,
+          "StrongRootBlock": 1,
+          "Symbol": 1,
+          "Temporal": 1,
+          "Uint16ArrayPrototype": 1,
+          "Uint32ArrayPrototype": 1,
+          "Uint8ArrayPrototype": 1,
+          "Uint8ClampedArrayPrototype": 1,
+          "console": 1,
+          "require": 1,
+          "resolve": 1
+        },
+        "protectedObjectTypeCounts": {
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "UnlinkedProgramCodeBlock": 129,
+          "UnlinkedFunctionExecutable": 4,
+          "GlobalObject": 1,
+          "Promise": 1,
+          "Subprocess": 1
+        },
+        "heapSize": 1639977220,
+        "heapCapacity": 2228704228,
+        "extraMemorySize": 1055770212,
+        "objectCount": 16088397,
+        "protectedObjectCount": 1555,
+        "globalObjectCount": 1,
+        "protectedGlobalObjectCount": 1,
+        "mimalloc": {
+          "stat_version": 5,
+          "mimalloc_version": 30503,
+          "process": {
+            "elapsed_msecs": 51795,
+            "user_msecs": 72673,
+            "system_msecs": 5013,
+            "page_faults": 0,
+            "rss_current": 2916495360,
+            "rss_peak": 5629235200,
+            "commit_current": 7717715968,
+            "commit_peak": 7717715968
+          },
+          "pages": {
+            "total": 83228,
+            "peak": 33806,
+            "current": 30690
+          },
+          "reserved": {
+            "total": 6445662208,
+            "peak": 6445662208,
+            "current": 6445662208
+          },
+          "committed": {
+            "total": 7717650432,
+            "peak": 7717650432,
+            "current": 7717650432
+          },
+          "reset": 0,
+          "purged": 12644802560,
+          "page_committed": {
+            "total": 8315097976,
+            "peak": 8315097976,
+            "current": 8315097976
+          },
+          "pages_abandoned": {
+            "total": 562894,
+            "peak": 31734,
+            "current": 22043
+          },
+          "threads": {
+            "total": 16,
+            "peak": 13,
+            "current": 11
+          },
+          "malloc_normal": {
+            "total": 51485625040,
+            "peak": 5288207304,
+            "current": 4368363936
+          },
+          "malloc_huge": {
+            "total": 503447552,
+            "peak": 226820096,
+            "current": 115539968
+          },
+          "malloc_requested": 51989072592,
+          "mmap_calls": 20,
+          "commit_calls": 4,
+          "reset_calls": 0,
+          "purge_calls": 332627,
+          "arena_count": 7,
+          "malloc_normal_count": 119651716,
+          "malloc_huge_count": 314,
+          "malloc_guarded_count": 0,
+          "arena_rollback_count": 0,
+          "arena_purges": 1404,
+          "pages_extended": 691482,
+          "pages_retire": 12532,
+          "page_searches": 3317967,
+          "page_searches_count": 1628832,
+          "segments": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_cache": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "_segments_reserved": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "heaps": {
+            "total": 1552,
+            "peak": 5,
+            "current": 4
+          },
+          "theaps": {
+            "total": 1566,
+            "peak": 13,
+            "current": 13
+          },
+          "pages_os_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_os_allocated": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_reclaim_on_alloc": 135793,
+          "pages_reclaim_on_free": 404069,
+          "pages_reabandon_full": 142680,
+          "pages_unabandon_busy_wait": 3,
+          "heaps_delete_wait": 0,
+          "pages_stat_updates": 1253747,
+          "pages_stat_update_count": 229862052,
+          "profile_samples": 0,
+          "malloc_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 254078,
+              "peak": 91515,
+              "current": 12958,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 4180712,
+              "peak": 98084,
+              "current": 9513,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 53039092,
+              "peak": 1410519,
+              "current": 31740,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 4229937,
+              "peak": 102108,
+              "current": 13899,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 11220959,
+              "peak": 2217765,
+              "current": 2007976,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 5095486,
+              "peak": 436664,
+              "current": 10557,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 21316073,
+              "peak": 5419421,
+              "current": 5077411,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 3691623,
+              "peak": 247703,
+              "current": 69146,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 3234051,
+              "peak": 93029,
+              "current": 4954,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 4110845,
+              "peak": 1073360,
+              "current": 1008619,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 144783,
+              "peak": 101329,
+              "current": 1281,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 1042278,
+              "peak": 31012,
+              "current": 2285,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 1083681,
+              "peak": 31945,
+              "current": 2469,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 2081598,
+              "peak": 13917,
+              "current": 2683,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 71171,
+              "peak": 6550,
+              "current": 1632,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 239786,
+              "peak": 180660,
+              "current": 2247,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 24713,
+              "peak": 4210,
+              "current": 686,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 1049711,
+              "peak": 1001071,
+              "current": 1000959,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 21680,
+              "peak": 1877,
+              "current": 298,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 15758,
+              "peak": 1922,
+              "current": 289,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 32898,
+              "peak": 2708,
+              "current": 304,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 1020637,
+              "peak": 29865,
+              "current": 388,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 14245,
+              "peak": 1014,
+              "current": 175,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 9645,
+              "peak": 651,
+              "current": 123,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 12775,
+              "peak": 797,
+              "current": 106,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 15077,
+              "peak": 1218,
+              "current": 220,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 6408,
+              "peak": 489,
+              "current": 72,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 3850,
+              "peak": 480,
+              "current": 111,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 69051,
+              "peak": 3223,
+              "current": 93,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 3173,
+              "peak": 309,
+              "current": 118,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 1451,
+              "peak": 173,
+              "current": 43,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 783,
+              "peak": 71,
+              "current": 51,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 6184,
+              "peak": 1044,
+              "current": 41,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 867,
+              "peak": 80,
+              "current": 78,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 634,
+              "peak": 38,
+              "current": 28,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 355,
+              "peak": 41,
+              "current": 19,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 2252198,
+              "peak": 216527,
+              "current": 178328,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 505,
+              "peak": 31,
+              "current": 21,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 192,
+              "peak": 12,
+              "current": 12,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 243,
+              "peak": 13,
+              "current": 7,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 224,
+              "peak": 11,
+              "current": 9,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 234,
+              "peak": 38,
+              "current": 10,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 102,
+              "peak": 8,
+              "current": 6,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 114,
+              "peak": 10,
+              "current": 4,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 17201,
+              "peak": 799,
+              "current": 1,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 34374,
+              "peak": 1283,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 61,
+              "peak": 5,
+              "current": 0,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 62,
+              "peak": 10,
+              "current": 9,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 49,
+              "peak": 5,
+              "current": 3,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 24,
+              "peak": 3,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 25,
+              "peak": 4,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 2,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 17,
+              "peak": 6,
+              "current": 3,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 15,
+              "peak": 3,
+              "current": 3,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 9,
+              "peak": 2,
+              "current": 0,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 5,
+              "peak": 3,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "page_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1278,
+              "peak": 20,
+              "current": 10,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1322,
+              "peak": 33,
+              "current": 25,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 1965,
+              "peak": 702,
+              "current": 169,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 1623,
+              "peak": 81,
+              "current": 37,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 3436,
+              "peak": 2182,
+              "current": 2182,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 878,
+              "peak": 545,
+              "current": 153,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 8413,
+              "peak": 7958,
+              "current": 7957,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 2123,
+              "peak": 438,
+              "current": 437,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 4681,
+              "peak": 191,
+              "current": 36,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 3723,
+              "peak": 2633,
+              "current": 2632,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 582,
+              "peak": 304,
+              "current": 14,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 2975,
+              "peak": 110,
+              "current": 19,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 3055,
+              "peak": 132,
+              "current": 27,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 378,
+              "peak": 24,
+              "current": 23,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 1576,
+              "peak": 22,
+              "current": 19,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 2406,
+              "peak": 1242,
+              "current": 23,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 149,
+              "peak": 15,
+              "current": 14,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 10399,
+              "peak": 9819,
+              "current": 9818,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 1570,
+              "peak": 16,
+              "current": 14,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 965,
+              "peak": 15,
+              "current": 14,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 541,
+              "peak": 37,
+              "current": 19,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 13138,
+              "peak": 588,
+              "current": 22,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 438,
+              "peak": 13,
+              "current": 12,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 485,
+              "peak": 16,
+              "current": 11,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 999,
+              "peak": 25,
+              "current": 11,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 679,
+              "peak": 20,
+              "current": 18,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 366,
+              "peak": 18,
+              "current": 9,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 203,
+              "peak": 31,
+              "current": 12,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 1550,
+              "peak": 55,
+              "current": 12,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 311,
+              "peak": 31,
+              "current": 13,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 228,
+              "peak": 22,
+              "current": 7,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 169,
+              "peak": 11,
+              "current": 10,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 281,
+              "peak": 28,
+              "current": 10,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 143,
+              "peak": 17,
+              "current": 16,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 185,
+              "peak": 6,
+              "current": 5,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 96,
+              "peak": 6,
+              "current": 5,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 7095,
+              "peak": 6825,
+              "current": 6818,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 198,
+              "peak": 7,
+              "current": 6,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 111,
+              "peak": 5,
+              "current": 4,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 138,
+              "peak": 4,
+              "current": 3,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 152,
+              "peak": 6,
+              "current": 5,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 53,
+              "peak": 4,
+              "current": 2,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 66,
+              "peak": 5,
+              "current": 4,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 64,
+              "peak": 4,
+              "current": 2,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 388,
+              "peak": 100,
+              "current": 1,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 1153,
+              "peak": 213,
+              "current": 3,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 44,
+              "peak": 4,
+              "current": 0,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 33,
+              "peak": 3,
+              "current": 3,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 38,
+              "peak": 3,
+              "current": 2,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 17,
+              "peak": 3,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 3,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 9,
+              "peak": 3,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 10,
+              "peak": 4,
+              "current": 3,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 3,
+              "current": 2,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 6,
+              "peak": 2,
+              "current": 0,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 2,
+              "current": 2,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 314,
+              "peak": 98,
+              "current": 12,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "chunk_bins": [
+            {
+              "total": 140,
+              "peak": 125,
+              "current": 124,
+              "bin": "S"
+            },
+            {
+              "total": 14,
+              "peak": 14,
+              "current": 14,
+              "bin": "X"
+            },
+            {
+              "total": 29,
+              "peak": 26,
+              "current": 26,
+              "bin": "M"
+            },
+            {
+              "total": 7,
+              "peak": 1,
+              "current": 1,
+              "bin": "L"
+            },
+            {
+              "total": 4,
+              "peak": 4,
+              "current": 4,
+              "bin": "H"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": " "
+            }
+          ]
+        }
+      }
+    },
+    "scanEnd": {
+      "epochMs": 1795081211670,
+      "monotonicMs": 98952.418476,
+      "memory": {
+        "rss": 5846458368,
+        "heapTotal": 4127409152,
+        "heapUsed": 1640468514,
+        "external": 1056245862,
+        "arrayBuffers": 202511
+      },
+      "resources": {
+        "userCPUTime": 119423417,
+        "systemCPUTime": 6083905,
+        "maxRSS": 5717024,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 4455559,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 264,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 170368,
+        "involuntaryContextSwitches": 3334
+      }
+    },
+    "afterScan": {
+      "epochMs": 1795081211714,
+      "monotonicMs": 98995.939653,
+      "memory": {
+        "rss": 5882847232,
+        "heapTotal": 4127409152,
+        "heapUsed": 1640468514,
+        "external": 1056245862,
+        "arrayBuffers": 202511
+      },
+      "resources": {
+        "userCPUTime": 119457004,
+        "systemCPUTime": 6093872,
+        "maxRSS": 5744968,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 4464565,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 264,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 170375,
+        "involuntaryContextSwitches": 3334
+      },
+      "host": {
+        "memory": "MemTotal:       32601192 kB\nMemFree:          271620 kB\nMemAvailable:   10557824 kB\nBuffers:             300 kB\nCached:          9308504 kB\nSwapCached:         8088 kB\nActive:         10511316 kB\nInactive:       12536008 kB\nActive(anon):    9874060 kB\nInactive(anon):  4070172 kB\nActive(file):     637256 kB\nInactive(file):  8465836 kB\nUnevictable:       13188 kB\nMlocked:             524 kB\nSwapTotal:      16300540 kB\nSwapFree:        1272132 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              1900 kB\nWriteback:             0 kB\nAnonPages:      13745944 kB\nMapped:          1317204 kB\nShmem:            205860 kB\nKReclaimable:    1655272 kB\nSlab:            3498584 kB\nSReclaimable:    1648644 kB\nSUnreclaim:      1849940 kB\nKernelStack:       53056 kB\nPageTables:       151264 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    32601136 kB\nCommitted_AS:   48023492 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:      285864 kB\nVmallocChunk:          0 kB\nPercpu:            29760 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:   1050624 kB\nShmemHugePages:    10240 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:     3037932 kB\nDirectMap2M:    28176384 kB\nDirectMap1G:     2097152 kB\n",
+        "vm": "nr_free_pages 69307\nnr_free_pages_blocks 10752\nnr_zone_inactive_anon 1017543\nnr_zone_active_anon 2467007\nnr_zone_inactive_file 2116459\nnr_zone_active_file 159314\nnr_zone_unevictable 3297\nnr_zone_write_pending 475\nnr_mlock 131\nnr_zspages 1130381\nnr_free_cma 0\nnr_unaccepted 0\nnuma_hit 1695482791\nnuma_miss 0\nnuma_foreign 0\nnuma_interleave 2166\nnuma_local 1695482791\nnuma_other 0\nnr_inactive_anon 1017543\nnr_active_anon 2467059\nnr_inactive_file 2116459\nnr_active_file 159314\nnr_unevictable 3297\nnr_slab_reclaimable 412161\nnr_slab_unreclaimable 462485\nnr_isolated_anon 0\nnr_isolated_file 0\nworkingset_nodes 172197\nworkingset_refault_anon 731630\nworkingset_refault_file 14419799\nworkingset_activate_anon 184414\nworkingset_activate_file 105553\nworkingset_restore_anon 186093\nworkingset_restore_file 1127725\nworkingset_nodereclaim 774576\nnr_anon_pages 3435030\nnr_mapped 329301\nnr_file_pages 2329223\nnr_dirty 475\nnr_writeback 0\nnr_shmem 51465\nnr_shmem_hugepages 5\nnr_shmem_pmdmapped 0\nnr_file_hugepages 0\nnr_file_pmdmapped 0\nnr_anon_transparent_hugepages 513\nnr_vmscan_write 5059629\nnr_vmscan_immediate_reclaim 140329\nnr_dirtied 51288198\nnr_written 52226930\nnr_throttled_written 0\nnr_kernel_misc_reclaimable 1657\nnr_foll_pin_acquired 10508\nnr_foll_pin_released 10299\nnr_vmalloc 71466\nnr_kernel_stack 53056\nnr_page_table_pages 37816\nnr_sec_page_table_pages 0\nnr_iommu_pages 0\nnr_swapcached 2022\npgpromote_success 0\npgpromote_candidate 0\npgpromote_candidate_nrl 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgsteal_kswapd 43282668\npgsteal_direct 6732830\npgsteal_khugepaged 1198\npgsteal_proactive 0\npgsteal_anon 4951116\npgsteal_file 45065580\npgscan_kswapd 44550750\npgscan_direct 7992841\npgscan_khugepaged 1314\npgscan_proactive 0\npgscan_anon 6788274\npgscan_file 45756631\npgrotate_anon 1837158\npgrotate_file 691051\npgrefill 40161823\nnr_hugetlb 0\nnr_balloon_pages 0\nnr_kernel_file_pages 724945\nnr_gpu_active 0\nnr_gpu_reclaim 0\nnr_dirty_threshold 455303\nnr_dirty_background_threshold 227373\nnr_memmap_pages 48128\nnr_memmap_boot_pages 130560\npgpgin 103055965\npgpgout 251886533\npswpin 694514\npswpout 4753134\npgalloc_dma 1024\npgalloc_dma32 6737273\npgalloc_normal 1909969462\npgalloc_movable 0\npgalloc_device 0\nallocstall_dma 0\nallocstall_dma32 0\nallocstall_normal 7259\nallocstall_movable 104947\nallocstall_device 0\npgskip_dma 0\npgskip_dma32 0\npgskip_normal 158\npgskip_movable 0\npgskip_device 0\npgfree 1934554216\npgactivate 2991438\npgdeactivate 69\npglazyfree 0\npgfault 1601494218\npgmajfault 759817\npglazyfreed 0\npgreuse 130213223\npgscan_direct_throttle 0\nzone_reclaim_success 0\nzone_reclaim_failed 0\npginodesteal 1075\nslabs_scanned 32910103\nkswapd_inodesteal 2801909\nkswapd_low_wmark_hit_quickly 10359\nkswapd_high_wmark_hit_quickly 89\npageoutrun 11133\npgrotated 136475\ndrop_pagecache 0\ndrop_slab 0\noom_kill 0\nnuma_pte_updates 0\nnuma_huge_pte_updates 0\nnuma_hint_faults 0\nnuma_hint_faults_local 0\nnuma_pages_migrated 0\npgmigrate_success 10882134\npgmigrate_fail 73242\nthp_migration_success 0\nthp_migration_fail 0\nthp_migration_split 0\ncompact_migrate_scanned 392920195\ncompact_free_scanned 302970345\ncompact_isolated 22400196\ncompact_stall 35550\ncompact_fail 16035\ncompact_success 19515\ncompact_daemon_wake 7378\ncompact_daemon_migrate_scanned 275833688\ncompact_daemon_free_scanned 148891442\nhtlb_buddy_alloc_success 0\nhtlb_buddy_alloc_fail 0\ncma_alloc_success 0\ncma_alloc_fail 0\nunevictable_pgs_culled 190888\nunevictable_pgs_scanned 12475\nunevictable_pgs_rescued 50447\nunevictable_pgs_mlocked 38112\nunevictable_pgs_munlocked 37910\nunevictable_pgs_cleared 0\nunevictable_pgs_stranded 71\nthp_fault_alloc 34322\nthp_fault_fallback 2583\nthp_fault_fallback_charge 0\nthp_collapse_alloc 750\nthp_collapse_alloc_failed 6\nthp_file_alloc 23\nthp_file_fallback 1\nthp_file_fallback_charge 0\nthp_file_mapped 0\nthp_split_page 469\nthp_split_page_failed 0\nthp_deferred_split_page 4505\nthp_underused_split_page 0\nthp_split_pmd 5091\nthp_scan_exceed_none_pte 142\nthp_scan_exceed_swap_pte 105924\nthp_scan_exceed_share_pte 565\nthp_split_pud 0\nthp_zero_page_alloc 3\nthp_zero_page_alloc_failed 0\nthp_swpout 146\nthp_swpout_fallback 443\nballoon_inflate 0\nballoon_deflate 0\nballoon_migrate 0\nswap_ra 0\nswap_ra_hit 3\nswpin_zero 38384\nswpout_zero 185359\nksm_swpin_copy 0\ncow_ksm 0\nzswpin 0\nzswpout 0\nzswpwb 0\ndirect_map_level2_splits 1472\ndirect_map_level3_splits 27\ndirect_map_level2_collapses 0\ndirect_map_level3_collapses 0\nnrswpin 694514\nnrswpout 4678501\nnr_unstable 0\n",
+        "memoryPressure": "some avg10=0.00 avg60=0.02 avg300=0.00 total=14445314\nfull avg10=0.00 avg60=0.02 avg300=0.00 total=12909443\n",
+        "cpuPressure": "some avg10=0.00 avg60=0.01 avg300=0.00 total=663979272\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+        "swap": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/dev/zram0                              partition\t16300540\t15028408\t100\n",
+        "load": "3.16 3.19 3.54 4/3297 1267920\n",
+        "process": "Name:\tbun\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t1267273\nNgid:\t0\nPid:\t1267273\nPPid:\t1267272\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t1024\nGroups:\t10 1000 \nNStgid:\t1267273\nNSpid:\t1267273\nNSpgid:\t1251028\nNSsid:\t1251028\nKthread:\t0\nVmPeak:\t11943404 kB\nVmSize:\t11943404 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t 5744968 kB\nVmRSS:\t 5705900 kB\nRssAnon:\t 5668516 kB\nRssFile:\t   37384 kB\nRssShmem:\t       0 kB\nVmData:\t11573428 kB\nVmStk:\t     140 kB\nVmExe:\t   79832 kB\nVmLib:\t    2280 kB\nVmPTE:\t   11784 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t12\nSigQ:\t4/126415\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t00000001600044fa\nCapInh:\t0000000800000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nSpeculationIndirectBranch:\tconditional enabled\nCpus_allowed:\t000055\nCpus_allowed_list:\t0,2,4,6\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t11837\nnonvoluntary_ctxt_switches:\t1080\nx86_Thread_features:\t\nx86_Thread_features_locked:\t\n",
+        "/sys/class/thermal/thermal_zone2/type": "x86_pkg_temp\n",
+        "/sys/class/thermal/thermal_zone2/temp": "75000\n",
+        "/sys/class/thermal/thermal_zone0/type": "acpitz\n",
+        "/sys/class/thermal/thermal_zone0/temp": "16800\n",
+        "/sys/class/thermal/thermal_zone1/type": "acpitz\n",
+        "/sys/class/thermal/thermal_zone1/temp": "27800\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_cur_freq": "5299943\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy11/affected_cpus": "11\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy8/affected_cpus": "8\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/affected_cpus": "6\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_cur_freq": "4035011\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy18/affected_cpus": "18\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/affected_cpus": "4\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_cur_freq": "4024871\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy16/affected_cpus": "16\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy2/affected_cpus": "2\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy14/affected_cpus": "14\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/affected_cpus": "0\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_cur_freq": "3979666\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy22/affected_cpus": "22\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_cur_freq": "5299800\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy12/affected_cpus": "12\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy9/affected_cpus": "9\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_cur_freq": "3999758\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy20/affected_cpus": "20\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_cur_freq": "5299610\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/scaling_max_freq": "5400000\n",
+        "/sys/devices/system/cpu/cpufreq/policy10/affected_cpus": "10\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_cur_freq": "5297968\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy7/affected_cpus": "7\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_cur_freq": "4000434\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy19/affected_cpus": "19\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy5/affected_cpus": "5\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_cur_freq": "4021846\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy17/affected_cpus": "17\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_cur_freq": "5299432\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy3/affected_cpus": "3\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy15/affected_cpus": "15\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy1/affected_cpus": "1\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_cur_freq": "4027338\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy23/affected_cpus": "23\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_cur_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/scaling_max_freq": "5300000\n",
+        "/sys/devices/system/cpu/cpufreq/policy13/affected_cpus": "13\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_governor": "powersave\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_cur_freq": "4020435\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/scaling_max_freq": "4200000\n",
+        "/sys/devices/system/cpu/cpufreq/policy21/affected_cpus": "21\n"
+      },
+      "heap": {
+        "objectTypeCounts": {
+          "BigInt": 16935759,
+          "string": 10033577,
+          "Object": 1281722,
+          "Array": 1009066,
+          "Function": 12661,
+          "UnlinkedFunctionExecutable": 5785,
+          "Uint8Array": 5773,
+          "Structure": 5514,
+          "SymbolTable": 5298,
+          "JSLexicalEnvironment": 4935,
+          "Promise": 4306,
+          "FunctionExecutable": 3989,
+          "JSModuleEnvironment": 1431,
+          "JSSourceCode": 1431,
+          "ModuleRecord": 1431,
+          "ModuleRegistryEntry": 1431,
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "GetterSetter": 1335,
+          "Cell Butterfly": 1257,
+          "NativeExecutable": 968,
+          "Uint32Array": 964,
+          "ArrayIterator": 920,
+          "FunctionRareData": 775,
+          "ModuleProgramExecutable": 610,
+          "FunctionCodeBlock": 526,
+          "ArrayBuffer": 483,
+          "StructureRareData": 409,
+          "PropertyTable": 283,
+          "UnlinkedFunctionCodeBlock": 281,
+          "RegExp": 255,
+          "StructureChain": 201,
+          "AsyncFunction": 170,
+          "Module": 130,
+          "UnlinkedProgramCodeBlock": 129,
+          "ProgramExecutable": 123,
+          "Set": 115,
+          "SparseArrayValueMap": 100,
+          "symbol": 98,
+          "ModuleNamespaceObject": 97,
+          "CustomGetterSetter": 87,
+          "DOMAttributeGetterSetter": 52,
+          "Map": 43,
+          "WeakMap": 17,
+          "WeakSet": 15,
+          "JSPropertyNameEnumerator": 12,
+          "Sentinel": 11,
+          "ResourceUsage": 7,
+          "TextEncoder": 6,
+          "JSAsyncGeneratorFunction": 4,
+          "AsyncFunctionGenerator": 3,
+          "Callee": 3,
+          "Error": 3,
+          "Hash": 3,
+          "ImportMeta": 3,
+          "AsyncGeneratorFunction": 2,
+          "Cipher": 2,
+          "DataView": 2,
+          "DiffieHellman": 2,
+          "Dirent": 2,
+          "ECDH": 2,
+          "FinalizationRegistry": 2,
+          "GeneratorFunction": 2,
+          "Hmac": 2,
+          "Iterator": 2,
+          "KeyObject": 2,
+          "MIMEParams": 2,
+          "MIMEType": 2,
+          "NodeJSFS": 2,
+          "Performance": 2,
+          "Sign": 2,
+          "Stats": 2,
+          "StringDecoder": 2,
+          "Subprocess": 2,
+          "SubtleCrypto": 2,
+          "TextDecoder": 2,
+          "URL": 2,
+          "Verify": 2,
+          "X509Certificate": 2,
+          "Array Iterator": 1,
+          "AsyncDisposableStack": 1,
+          "AsyncFromSyncIterator": 1,
+          "AsyncGenerator": 1,
+          "AsyncIterator": 1,
+          "BigInt64ArrayPrototype": 1,
+          "BigUint64ArrayPrototype": 1,
+          "Blob": 1,
+          "Boolean": 1,
+          "Buffer": 1,
+          "Bun": 1,
+          "Crypto": 1,
+          "DiffieHellmanGroup": 1,
+          "DisposableStack": 1,
+          "EventEmitter": 1,
+          "EventTarget": 1,
+          "Float16ArrayPrototype": 1,
+          "Float32ArrayPrototype": 1,
+          "Float64ArrayPrototype": 1,
+          "FullPromiseReaction": 1,
+          "Generator": 1,
+          "GlobalObject": 1,
+          "Int16ArrayPrototype": 1,
+          "Int32ArrayPrototype": 1,
+          "Int8ArrayPrototype": 1,
+          "Int8Array": 1,
+          "InternalFieldTuple": 1,
+          "InternalModuleRegistry": 1,
+          "Intl": 1,
+          "Iterator Helper": 1,
+          "JSGlobalLexicalEnvironment": 1,
+          "JSGlobalProxy": 1,
+          "JSON": 1,
+          "Map Iterator": 1,
+          "Math": 1,
+          "ModuleLoader": 1,
+          "NextTickQueue": 1,
+          "Number": 1,
+          "ProcessBindingConstants": 1,
+          "ProcessEnv": 1,
+          "Process": 1,
+          "Prototype": 1,
+          "Reflect": 1,
+          "RegExp String Iterator": 1,
+          "Set Iterator": 1,
+          "ShadowRealm": 1,
+          "String Iterator": 1,
+          "String": 1,
+          "StrongRootBlock": 1,
+          "Symbol": 1,
+          "Temporal": 1,
+          "Uint16ArrayPrototype": 1,
+          "Uint32ArrayPrototype": 1,
+          "Uint8ArrayPrototype": 1,
+          "Uint8ClampedArrayPrototype": 1,
+          "console": 1,
+          "require": 1,
+          "resolve": 1
+        },
+        "protectedObjectTypeCounts": {
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "UnlinkedProgramCodeBlock": 129,
+          "UnlinkedFunctionExecutable": 4,
+          "GlobalObject": 1,
+          "Promise": 1,
+          "Subprocess": 1
+        },
+        "heapSize": 1640673304,
+        "heapCapacity": 5280841720,
+        "extraMemorySize": 1056254264,
+        "objectCount": 16092388,
+        "protectedObjectCount": 1555,
+        "globalObjectCount": 1,
+        "protectedGlobalObjectCount": 1,
+        "mimalloc": {
+          "stat_version": 5,
+          "mimalloc_version": 30503,
+          "process": {
+            "elapsed_msecs": 99743,
+            "user_msecs": 120198,
+            "system_msecs": 6096,
+            "page_faults": 0,
+            "rss_current": 5842587648,
+            "rss_peak": 5882847232,
+            "commit_current": 8487763968,
+            "commit_peak": 8487763968
+          },
+          "pages": {
+            "total": 85912,
+            "peak": 33806,
+            "current": 31821
+          },
+          "reserved": {
+            "total": 6445662208,
+            "peak": 6445662208,
+            "current": 6445662208
+          },
+          "committed": {
+            "total": 8487763968,
+            "peak": 8487763968,
+            "current": 8487763968
+          },
+          "reset": 0,
+          "purged": 12896731136,
+          "page_committed": {
+            "total": 9005307336,
+            "peak": 9005307336,
+            "current": 9005307336
+          },
+          "pages_abandoned": {
+            "total": 573335,
+            "peak": 31734,
+            "current": 24156
+          },
+          "threads": {
+            "total": 22,
+            "peak": 14,
+            "current": 11
+          },
+          "malloc_normal": {
+            "total": 55234892912,
+            "peak": 5633855960,
+            "current": 5603304464
+          },
+          "malloc_huge": {
+            "total": 532217856,
+            "peak": 226820096,
+            "current": 118947840
+          },
+          "malloc_requested": 55767110768,
+          "mmap_calls": 20,
+          "commit_calls": 4,
+          "reset_calls": 0,
+          "purge_calls": 334463,
+          "arena_count": 7,
+          "malloc_normal_count": 129765448,
+          "malloc_huge_count": 328,
+          "malloc_guarded_count": 0,
+          "arena_rollback_count": 0,
+          "arena_purges": 1554,
+          "pages_extended": 736657,
+          "pages_retire": 13267,
+          "page_searches": 3466024,
+          "page_searches_count": 1742475,
+          "segments": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_cache": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "_segments_reserved": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "heaps": {
+            "total": 1552,
+            "peak": 5,
+            "current": 4
+          },
+          "theaps": {
+            "total": 1571,
+            "peak": 15,
+            "current": 12
+          },
+          "pages_os_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_os_allocated": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_reclaim_on_alloc": 142189,
+          "pages_reclaim_on_free": 405900,
+          "pages_reabandon_full": 142767,
+          "pages_unabandon_busy_wait": 3,
+          "heaps_delete_wait": 0,
+          "pages_stat_updates": 1277991,
+          "pages_stat_update_count": 249688069,
+          "profile_samples": 0,
+          "malloc_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 285938,
+              "peak": 91515,
+              "current": 13916,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 4409753,
+              "peak": 98084,
+              "current": 10768,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 60220722,
+              "peak": 1410519,
+              "current": 141861,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 4638427,
+              "peak": 102108,
+              "current": 17527,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 11347545,
+              "peak": 2217765,
+              "current": 2010192,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 5126663,
+              "peak": 436664,
+              "current": 12097,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 22138949,
+              "peak": 5419421,
+              "current": 5095410,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 4098257,
+              "peak": 272657,
+              "current": 256001,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 3537443,
+              "peak": 93029,
+              "current": 6062,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 4169091,
+              "peak": 1073360,
+              "current": 1009347,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 157617,
+              "peak": 101329,
+              "current": 1354,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 1153731,
+              "peak": 31012,
+              "current": 2793,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 1103309,
+              "peak": 31945,
+              "current": 2513,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 2138702,
+              "peak": 29252,
+              "current": 2739,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 94006,
+              "peak": 6550,
+              "current": 1659,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 252074,
+              "peak": 180660,
+              "current": 2479,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 30247,
+              "peak": 4210,
+              "current": 732,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 1065493,
+              "peak": 1002099,
+              "current": 1000975,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 28999,
+              "peak": 1877,
+              "current": 304,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 21512,
+              "peak": 1922,
+              "current": 299,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 44714,
+              "peak": 2708,
+              "current": 362,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 1029354,
+              "peak": 29865,
+              "current": 398,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 19744,
+              "peak": 1014,
+              "current": 183,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 15015,
+              "peak": 1220,
+              "current": 128,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 18520,
+              "peak": 1003,
+              "current": 107,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 21103,
+              "peak": 2599,
+              "current": 519,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 9867,
+              "peak": 529,
+              "current": 72,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 6167,
+              "peak": 480,
+              "current": 112,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 72300,
+              "peak": 3223,
+              "current": 94,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 4998,
+              "peak": 778,
+              "current": 124,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 2617,
+              "peak": 271,
+              "current": 43,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 974,
+              "peak": 77,
+              "current": 52,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 6442,
+              "peak": 1044,
+              "current": 44,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 1087,
+              "peak": 111,
+              "current": 77,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 906,
+              "peak": 79,
+              "current": 28,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 430,
+              "peak": 41,
+              "current": 21,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 2438596,
+              "peak": 251984,
+              "current": 251978,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 661,
+              "peak": 49,
+              "current": 23,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 268,
+              "peak": 20,
+              "current": 12,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 323,
+              "peak": 15,
+              "current": 8,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 234,
+              "peak": 11,
+              "current": 10,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 330,
+              "peak": 38,
+              "current": 10,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 112,
+              "peak": 8,
+              "current": 6,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 156,
+              "peak": 10,
+              "current": 4,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 17221,
+              "peak": 799,
+              "current": 1,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 34425,
+              "peak": 1283,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 76,
+              "peak": 5,
+              "current": 0,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 101,
+              "peak": 15,
+              "current": 10,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 58,
+              "peak": 6,
+              "current": 2,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 42,
+              "peak": 3,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 35,
+              "peak": 4,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 22,
+              "peak": 3,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 27,
+              "peak": 6,
+              "current": 3,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 22,
+              "peak": 4,
+              "current": 3,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 11,
+              "peak": 2,
+              "current": 0,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 11,
+              "peak": 3,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "page_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1282,
+              "peak": 20,
+              "current": 12,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1324,
+              "peak": 33,
+              "current": 25,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 2101,
+              "peak": 702,
+              "current": 173,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 1650,
+              "peak": 81,
+              "current": 41,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 3438,
+              "peak": 2184,
+              "current": 2184,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 881,
+              "peak": 545,
+              "current": 156,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 8416,
+              "peak": 7960,
+              "current": 7960,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 2269,
+              "peak": 478,
+              "current": 455,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 4733,
+              "peak": 191,
+              "current": 36,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 3725,
+              "peak": 2634,
+              "current": 2634,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 585,
+              "peak": 304,
+              "current": 17,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 2982,
+              "peak": 110,
+              "current": 23,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 3064,
+              "peak": 132,
+              "current": 29,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 511,
+              "peak": 153,
+              "current": 24,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 1579,
+              "peak": 22,
+              "current": 20,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 2418,
+              "peak": 1242,
+              "current": 27,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 157,
+              "peak": 16,
+              "current": 14,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 10404,
+              "peak": 9821,
+              "current": 9819,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 1577,
+              "peak": 18,
+              "current": 15,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 967,
+              "peak": 15,
+              "current": 14,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 578,
+              "peak": 37,
+              "current": 21,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 13170,
+              "peak": 588,
+              "current": 23,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 451,
+              "peak": 16,
+              "current": 12,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 515,
+              "peak": 27,
+              "current": 12,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 1030,
+              "peak": 25,
+              "current": 11,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 806,
+              "peak": 111,
+              "current": 30,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 448,
+              "peak": 32,
+              "current": 9,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 257,
+              "peak": 31,
+              "current": 13,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 1701,
+              "peak": 55,
+              "current": 12,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 409,
+              "peak": 68,
+              "current": 15,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 313,
+              "peak": 32,
+              "current": 7,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 190,
+              "peak": 11,
+              "current": 9,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 281,
+              "peak": 28,
+              "current": 10,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 149,
+              "peak": 18,
+              "current": 16,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 188,
+              "peak": 6,
+              "current": 5,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 98,
+              "peak": 6,
+              "current": 5,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 8158,
+              "peak": 7880,
+              "current": 7880,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 200,
+              "peak": 7,
+              "current": 6,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 159,
+              "peak": 6,
+              "current": 4,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 181,
+              "peak": 4,
+              "current": 4,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 158,
+              "peak": 7,
+              "current": 5,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 86,
+              "peak": 4,
+              "current": 1,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 73,
+              "peak": 5,
+              "current": 4,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 85,
+              "peak": 4,
+              "current": 1,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 399,
+              "peak": 100,
+              "current": 1,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 1178,
+              "peak": 213,
+              "current": 3,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 56,
+              "peak": 4,
+              "current": 0,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 51,
+              "peak": 3,
+              "current": 3,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 38,
+              "peak": 3,
+              "current": 1,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 30,
+              "peak": 3,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 22,
+              "peak": 3,
+              "current": 1,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 13,
+              "peak": 3,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 16,
+              "peak": 4,
+              "current": 2,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 19,
+              "peak": 3,
+              "current": 2,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 8,
+              "peak": 2,
+              "current": 0,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 6,
+              "peak": 2,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 328,
+              "peak": 98,
+              "current": 13,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "chunk_bins": [
+            {
+              "total": 140,
+              "peak": 125,
+              "current": 124,
+              "bin": "S"
+            },
+            {
+              "total": 15,
+              "peak": 15,
+              "current": 14,
+              "bin": "X"
+            },
+            {
+              "total": 36,
+              "peak": 33,
+              "current": 33,
+              "bin": "M"
+            },
+            {
+              "total": 7,
+              "peak": 1,
+              "current": 1,
+              "bin": "L"
+            },
+            {
+              "total": 4,
+              "peak": 4,
+              "current": 4,
+              "bin": "H"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": " "
+            }
+          ]
+        }
+      }
+    }
+  },
+  "verified": true
+}

@@ -1,0 +1,8 @@
+
+
+Sampling rate: 20000.000000 microseconds. Total samples: 7
+Top functions as <numSamples  'functionName#hash:sourceID'>
+     3    'add#A6fxNU:3'
+     2    'M#BSE4zt:3'
+     1    'invert#BbugyJ:3'
+     1    '#<nil>:2'

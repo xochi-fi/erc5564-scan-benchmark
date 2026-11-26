@@ -1,0 +1,3100 @@
+{
+  "schemaVersion": 1,
+  "options": {
+    "fixture": "~/stealth-scan-profile-20261119/results/smoke/fixtures/256-zero",
+    "output": "~/stealth-scan-profile-20261119/results/profiling-1m/linux-smoke",
+    "engine": "crypto",
+    "batchSize": 0,
+    "intervalUs": 20000,
+    "nativeSeconds": 0
+  },
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "fixtureSha256": "c6b4cb70404ee681fa1d940bf648048b3442a6ea2d2264085db18cef36ec6a28",
+  "scanInputSha256": "7d1e229e82dcdbb65cc107c610ecb6df245bb8682d3f3afb05824ed1d1df7f7e",
+  "retainedAnnouncements": 256,
+  "scannedAnnouncements": 256,
+  "matches": 0,
+  "scanMs": 556.0154,
+  "cpuUserMs": 618.731,
+  "cpuSystemMs": 21.545,
+  "resourcesBefore": {
+    "userCPUTime": 1044097,
+    "systemCPUTime": 168765,
+    "maxRSS": 92116,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 19818,
+    "majorPageFault": 0,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 8016,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 1033,
+    "involuntaryContextSwitches": 29
+  },
+  "resourcesAfter": {
+    "userCPUTime": 1662835,
+    "systemCPUTime": 190324,
+    "maxRSS": 95776,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 22256,
+    "majorPageFault": 0,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 8016,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 2503,
+    "involuntaryContextSwitches": 49
+  },
+  "gc": {
+    "events": 42,
+    "costRawSum": 37367.10175871849,
+    "types": {
+      "Scavenge": 42
+    }
+  },
+  "profiler": {
+    "intervalSeconds": 0.02,
+    "samples": 28,
+    "topSelf": [
+      {
+        "frame": "M [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:98]",
+        "samples": 10,
+        "sampleSharePct": 35.714285714285715
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:229]",
+        "samples": 2,
+        "sampleSharePct": 7.142857142857143
+      },
+      {
+        "frame": "profile [native:4294967295]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:240]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:228]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:241]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:233]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:231]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "get buffer [native:4294967295]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:251]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:260]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:266]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "lift_x [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:149]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "invert [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:110]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:258]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:253]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:236]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      },
+      {
+        "frame": "add [~/stealth-scan-profile-20261119/node_modules/@noble/secp256k1/index.js:239]",
+        "samples": 1,
+        "sampleSharePct": 3.5714285714285716
+      }
+    ]
+  },
+  "environment": {
+    "bun": "1.4.4",
+    "nodeCompatibility": "26.3.0",
+    "platform": "linux",
+    "arch": "arm64",
+    "osRelease": "5.10.160-rockchip",
+    "cpu": "unknown",
+    "totalMemoryBytes": 8058859520,
+    "sourceHashes": {
+      "bun.lock": "d17ecebbd04e00717b3316f8b9bb3cb6d35e755ba330978e4d220eefaff3c00e",
+      "src/profile.ts": "605bdf847e73df95a29cf4523eec56110024440bdb85b41af89af4d26ea78135",
+      "src/worker.ts": "5b98900afcbd07e3d350486d7dd059b977d8596ce28b611b2fc8d75163459a29",
+      "src/fixtures.ts": "7e4c95934081dcdc5fe9e72175bd3ce4a6af020816f75d49e8dd28275f787b82"
+    }
+  },
+  "phases": {
+    "beforeLoad": {
+      "epochMs": 1795077690231,
+      "monotonicMs": 431.800543,
+      "memory": {
+        "rss": 77504512,
+        "heapTotal": 15910912,
+        "heapUsed": 8638373,
+        "external": 2312597,
+        "arrayBuffers": 480
+      },
+      "resources": {
+        "userCPUTime": 668230,
+        "systemCPUTime": 126963,
+        "maxRSS": 75688,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 14415,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 7920,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 457,
+        "involuntaryContextSwitches": 14
+      },
+      "host": {
+        "memory": "MemTotal:        7869980 kB\nMemFree:         1168808 kB\nMemAvailable:    6876668 kB\nBuffers:          717564 kB\nCached:          4987248 kB\nSwapCached:          252 kB\nActive:          2378012 kB\nInactive:        3541020 kB\nActive(anon):       2208 kB\nInactive(anon):   222792 kB\nActive(file):    2375804 kB\nInactive(file):  3318228 kB\nUnevictable:       33580 kB\nMlocked:           33580 kB\nSwapTotal:       4983560 kB\nSwapFree:        4981256 kB\nDirty:            152844 kB\nWriteback:             0 kB\nAnonPages:        247756 kB\nMapped:           213512 kB\nShmem:              2780 kB\nKReclaimable:     553852 kB\nSlab:             644004 kB\nSReclaimable:     553852 kB\nSUnreclaim:        90152 kB\nKernelStack:        4896 kB\nPageTables:         4832 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     8918548 kB\nCommitted_AS:    1315196 kB\nVmallocTotal:   135290290112 kB\nVmallocUsed:       42592 kB\nVmallocChunk:          0 kB\nPercpu:            12896 kB\nCmaTotal:         262144 kB\nCmaAllocated:       4752 kB\nCmaReleased:      257392 kB\nCmaFree:          194056 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\n",
+        "vm": "nr_free_pages 292076\nnr_zone_inactive_anon 55698\nnr_zone_active_anon 552\nnr_zone_inactive_file 829557\nnr_zone_active_file 593951\nnr_zone_unevictable 8395\nnr_zone_write_pending 38234\nnr_mlock 8395\nnr_page_table_pages 1208\nnr_bounce 0\nnr_zspages 769\nnr_free_cma 48465\nnr_inactive_anon 55698\nnr_active_anon 552\nnr_inactive_file 829557\nnr_active_file 593951\nnr_unevictable 8395\nnr_slab_reclaimable 138463\nnr_slab_unreclaimable 22538\nnr_isolated_anon 0\nnr_isolated_file 0\nworkingset_nodes 122\nworkingset_refault_anon 75493\nworkingset_refault_file 64993\nworkingset_activate_anon 41559\nworkingset_activate_file 27985\nworkingset_restore_anon 20045\nworkingset_restore_file 12745\nworkingset_nodereclaim 32907\nnr_anon_pages 61939\nnr_mapped 53378\nnr_file_pages 1426266\nnr_dirty 38211\nnr_writeback 0\nnr_writeback_temp 0\nnr_shmem 695\nnr_shmem_hugepages 0\nnr_shmem_pmdmapped 0\nnr_file_hugepages 0\nnr_file_pmdmapped 0\nnr_anon_transparent_hugepages 0\nnr_vmscan_write 255457\nnr_vmscan_immediate_reclaim 2444\nnr_dirtied 28446155\nnr_written 26377813\nnr_kernel_misc_reclaimable 0\nnr_foll_pin_acquired 0\nnr_foll_pin_released 0\nnr_kernel_stack 4896\nnr_dirty_threshold 166005\nnr_dirty_background_threshold 82800\npgpgin 2869580\npgpgout 115733617\npswpin 75493\npswpout 255456\npgalloc_dma 54836022\npgalloc_dma32 0\npgalloc_normal 353358360\npgalloc_movable 0\nallocstall_dma 0\nallocstall_dma32 0\nallocstall_normal 0\nallocstall_movable 7\npgskip_dma 0\npgskip_dma32 0\npgskip_normal 0\npgskip_movable 0\npgfree 408493558\npgactivate 8056457\npgdeactivate 110249\npglazyfree 0\npgfault 153734959\npgmajfault 85545\npglazyfreed 0\npgrefill 64068\npgreuse 12997904\npgsteal_kswapd 251499\npgsteal_direct 2778\npgscan_kswapd 261855\npgscan_direct 2791\npgscan_direct_throttle 0\npgscan_anon 1091021\npgscan_file 953732\npgsteal_anon 256218\npgsteal_file 939025\npginodesteal 0\nslabs_scanned 217485\nkswapd_inodesteal 107\nkswapd_low_wmark_hit_quickly 4\nkswapd_high_wmark_hit_quickly 27\npageoutrun 89\npgrotated 2644\ndrop_pagecache 0\ndrop_slab 0\noom_kill 0\npgmigrate_success 0\npgmigrate_fail 0\nthp_migration_success 0\nthp_migration_fail 0\nthp_migration_split 0\nhtlb_buddy_alloc_success 0\nhtlb_buddy_alloc_fail 0\ncma_alloc_success 23\ncma_alloc_fail 0\nunevictable_pgs_culled 455418\nunevictable_pgs_scanned 0\nunevictable_pgs_rescued 434014\nunevictable_pgs_mlocked 483540\nunevictable_pgs_munlocked 434040\nunevictable_pgs_cleared 34\nunevictable_pgs_stranded 0\nswap_ra 4091\nswap_ra_hit 2916\nspeculative_pgfault 140698509\nspeculative_pgfault_file 0\nnr_unstable 0\n",
+        "memoryPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=4412433\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3534988\n",
+        "cpuPressure": "some avg10=7.19 avg60=5.05 avg300=1.41 total=22244887379\n",
+        "swap": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/swapfile                               file\t\t1048572\t\t0\t\t-2\n/dev/zram0                              partition\t3934988\t\t2304\t\t100\n",
+        "load": "1.38 0.33 0.11 1/298 714976\n",
+        "process": "Name:\tbun\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t714956\nNgid:\t0\nPid:\t714956\nPPid:\t714926\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1001\t1001\t1001\t1001\nFDSize:\t1024\nGroups:\t4 20 24 25 27 29 30 44 46 114 999 1000 1001 \nNStgid:\t714956\nNSpid:\t714956\nNSpgid:\t714909\nNSsid:\t714896\nVmPeak:\t10079488 kB\nVmSize:\t 6176896 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   76304 kB\nVmRSS:\t   74876 kB\nRssAnon:\t   44492 kB\nRssFile:\t   30384 kB\nRssShmem:\t       0 kB\nVmData:\t 5807100 kB\nVmStk:\t     132 kB\nVmExe:\t   81920 kB\nVmLib:\t    2288 kB\nVmPTE:\t     520 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t0\nThreads:\t14\nSigQ:\t0/29623\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t00000001600004f8\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nCpus_allowed:\tf0\nCpus_allowed_list:\t4-7\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t47\nnonvoluntary_ctxt_switches:\t2\n",
+        "/sys/class/thermal/thermal_zone2/type": "bigcore1-thermal\n",
+        "/sys/class/thermal/thermal_zone2/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone0/type": "soc-thermal\n",
+        "/sys/class/thermal/thermal_zone0/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone5/type": "gpu-thermal\n",
+        "/sys/class/thermal/thermal_zone5/temp": "68384\n",
+        "/sys/class/thermal/thermal_zone3/type": "littlecore-thermal\n",
+        "/sys/class/thermal/thermal_zone3/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone1/type": "bigcore0-thermal\n",
+        "/sys/class/thermal/thermal_zone1/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone6/type": "npu-thermal\n",
+        "/sys/class/thermal/thermal_zone6/temp": "69307\n",
+        "/sys/class/thermal/thermal_zone4/type": "center-thermal\n",
+        "/sys/class/thermal/thermal_zone4/temp": "68384\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_cur_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/affected_cpus": "6 7\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/affected_cpus": "4 5\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq": "1800000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq": "1800000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/affected_cpus": "0 1 2 3\n"
+      }
+    },
+    "beforeScan": {
+      "epochMs": 1795077690512,
+      "monotonicMs": 712.145692,
+      "memory": {
+        "rss": 91860992,
+        "heapTotal": 22173696,
+        "heapUsed": 11510039,
+        "external": 3760055,
+        "arrayBuffers": 704
+      },
+      "resources": {
+        "userCPUTime": 1017588,
+        "systemCPUTime": 166272,
+        "maxRSS": 92116,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 19765,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 7920,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 964,
+        "involuntaryContextSwitches": 25
+      },
+      "host": {
+        "memory": "MemTotal:        7869980 kB\nMemFree:         1157992 kB\nMemAvailable:    6865900 kB\nBuffers:          717564 kB\nCached:          4987280 kB\nSwapCached:          252 kB\nActive:          2378020 kB\nInactive:        3551676 kB\nActive(anon):       2212 kB\nInactive(anon):   233420 kB\nActive(file):    2375808 kB\nInactive(file):  3318256 kB\nUnevictable:       33580 kB\nMlocked:           33580 kB\nSwapTotal:       4983560 kB\nSwapFree:        4981256 kB\nDirty:            152848 kB\nWriteback:             0 kB\nAnonPages:        258232 kB\nMapped:           216764 kB\nShmem:              2780 kB\nKReclaimable:     553868 kB\nSlab:             644024 kB\nSReclaimable:     553868 kB\nSUnreclaim:        90156 kB\nKernelStack:        4912 kB\nPageTables:         4928 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     8918548 kB\nCommitted_AS:    1315196 kB\nVmallocTotal:   135290290112 kB\nVmallocUsed:       42640 kB\nVmallocChunk:          0 kB\nPercpu:            12896 kB\nCmaTotal:         262144 kB\nCmaAllocated:       4752 kB\nCmaReleased:      257392 kB\nCmaFree:          182408 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\n",
+        "vm": "nr_free_pages 289498\nnr_zone_inactive_anon 58355\nnr_zone_active_anon 553\nnr_zone_inactive_file 829564\nnr_zone_active_file 593952\nnr_zone_unevictable 8395\nnr_zone_write_pending 38235\nnr_mlock 8395\nnr_page_table_pages 1232\nnr_bounce 0\nnr_zspages 769\nnr_free_cma 45602\nnr_inactive_anon 58355\nnr_active_anon 553\nnr_inactive_file 829564\nnr_active_file 593952\nnr_unevictable 8395\nnr_slab_reclaimable 138467\nnr_slab_unreclaimable 22539\nnr_isolated_anon 0\nnr_isolated_file 0\nworkingset_nodes 122\nworkingset_refault_anon 75493\nworkingset_refault_file 64993\nworkingset_activate_anon 41559\nworkingset_activate_file 27985\nworkingset_restore_anon 20045\nworkingset_restore_file 12745\nworkingset_nodereclaim 32907\nnr_anon_pages 64558\nnr_mapped 54191\nnr_file_pages 1426274\nnr_dirty 38212\nnr_writeback 0\nnr_writeback_temp 0\nnr_shmem 695\nnr_shmem_hugepages 0\nnr_shmem_pmdmapped 0\nnr_file_hugepages 0\nnr_file_pmdmapped 0\nnr_anon_transparent_hugepages 0\nnr_vmscan_write 255457\nnr_vmscan_immediate_reclaim 2444\nnr_dirtied 28446156\nnr_written 26377813\nnr_kernel_misc_reclaimable 0\nnr_foll_pin_acquired 0\nnr_foll_pin_released 0\nnr_kernel_stack 4912\nnr_dirty_threshold 165749\nnr_dirty_background_threshold 82672\npgpgin 2869580\npgpgout 115733617\npswpin 75493\npswpout 255456\npgalloc_dma 54841721\npgalloc_dma32 0\npgalloc_normal 353358360\npgalloc_movable 0\nallocstall_dma 0\nallocstall_dma32 0\nallocstall_normal 0\nallocstall_movable 7\npgskip_dma 0\npgskip_dma32 0\npgskip_normal 0\npgskip_movable 0\npgfree 408496632\npgactivate 8056457\npgdeactivate 110249\npglazyfree 0\npgfault 153735471\npgmajfault 85545\npglazyfreed 0\npgrefill 64068\npgreuse 12997904\npgsteal_kswapd 251499\npgsteal_direct 2778\npgscan_kswapd 261855\npgscan_direct 2791\npgscan_direct_throttle 0\npgscan_anon 1091021\npgscan_file 953732\npgsteal_anon 256218\npgsteal_file 939025\npginodesteal 0\nslabs_scanned 217485\nkswapd_inodesteal 107\nkswapd_low_wmark_hit_quickly 4\nkswapd_high_wmark_hit_quickly 27\npageoutrun 89\npgrotated 2644\ndrop_pagecache 0\ndrop_slab 0\noom_kill 0\npgmigrate_success 0\npgmigrate_fail 0\nthp_migration_success 0\nthp_migration_fail 0\nthp_migration_split 0\nhtlb_buddy_alloc_success 0\nhtlb_buddy_alloc_fail 0\ncma_alloc_success 23\ncma_alloc_fail 0\nunevictable_pgs_culled 455418\nunevictable_pgs_scanned 0\nunevictable_pgs_rescued 434014\nunevictable_pgs_mlocked 483540\nunevictable_pgs_munlocked 434040\nunevictable_pgs_cleared 34\nunevictable_pgs_stranded 0\nswap_ra 4091\nswap_ra_hit 2916\nspeculative_pgfault 140703685\nspeculative_pgfault_file 0\nnr_unstable 0\n",
+        "memoryPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=4412433\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3534988\n",
+        "cpuPressure": "some avg10=7.19 avg60=5.05 avg300=1.41 total=22244891937\n",
+        "swap": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/swapfile                               file\t\t1048572\t\t0\t\t-2\n/dev/zram0                              partition\t3934988\t\t2304\t\t100\n",
+        "load": "1.38 0.33 0.11 1/298 714983\n",
+        "process": "Name:\tbun\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t714956\nNgid:\t0\nPid:\t714956\nPPid:\t714926\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1001\t1001\t1001\t1001\nFDSize:\t1024\nGroups:\t4 20 24 25 27 29 30 44 46 114 999 1000 1001 \nNStgid:\t714956\nNSpid:\t714956\nNSpgid:\t714909\nNSsid:\t714896\nVmPeak:\t10079488 kB\nVmSize:\t 6176896 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   92116 kB\nVmRSS:\t   86316 kB\nRssAnon:\t   52604 kB\nRssFile:\t   33712 kB\nRssShmem:\t       0 kB\nVmData:\t 5807100 kB\nVmStk:\t     132 kB\nVmExe:\t   81920 kB\nVmLib:\t    2288 kB\nVmPTE:\t     572 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t0\nThreads:\t14\nSigQ:\t0/29623\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t00000001600004f8\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nCpus_allowed:\tf0\nCpus_allowed_list:\t4-7\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t118\nnonvoluntary_ctxt_switches:\t5\n",
+        "/sys/class/thermal/thermal_zone2/type": "bigcore1-thermal\n",
+        "/sys/class/thermal/thermal_zone2/temp": "71153\n",
+        "/sys/class/thermal/thermal_zone0/type": "soc-thermal\n",
+        "/sys/class/thermal/thermal_zone0/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone5/type": "gpu-thermal\n",
+        "/sys/class/thermal/thermal_zone5/temp": "68384\n",
+        "/sys/class/thermal/thermal_zone3/type": "littlecore-thermal\n",
+        "/sys/class/thermal/thermal_zone3/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone1/type": "bigcore0-thermal\n",
+        "/sys/class/thermal/thermal_zone1/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone6/type": "npu-thermal\n",
+        "/sys/class/thermal/thermal_zone6/temp": "69307\n",
+        "/sys/class/thermal/thermal_zone4/type": "center-thermal\n",
+        "/sys/class/thermal/thermal_zone4/temp": "69307\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_cur_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/affected_cpus": "6 7\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/affected_cpus": "4 5\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq": "1800000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq": "1800000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/affected_cpus": "0 1 2 3\n"
+      },
+      "heap": {
+        "objectTypeCounts": {
+          "string": 17605,
+          "Object": 16592,
+          "BigInt": 13604,
+          "Function": 9838,
+          "UnlinkedFunctionExecutable": 5877,
+          "Structure": 5492,
+          "SymbolTable": 5385,
+          "Promise": 4299,
+          "Array": 4068,
+          "FunctionExecutable": 4047,
+          "JSLexicalEnvironment": 3545,
+          "JSModuleEnvironment": 1431,
+          "JSSourceCode": 1431,
+          "ModuleRecord": 1431,
+          "ModuleRegistryEntry": 1431,
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "GetterSetter": 1335,
+          "FunctionCodeBlock": 1332,
+          "Cell Butterfly": 1297,
+          "UnlinkedFunctionCodeBlock": 1188,
+          "NativeExecutable": 963,
+          "FunctionRareData": 716,
+          "ModuleProgramExecutable": 610,
+          "StructureRareData": 394,
+          "RegExp": 260,
+          "PropertyTable": 257,
+          "StructureChain": 201,
+          "AsyncFunction": 168,
+          "Module": 130,
+          "UnlinkedProgramCodeBlock": 129,
+          "ProgramExecutable": 123,
+          "Set": 113,
+          "SparseArrayValueMap": 100,
+          "symbol": 98,
+          "ModuleNamespaceObject": 97,
+          "CustomGetterSetter": 87,
+          "Arguments": 62,
+          "DOMAttributeGetterSetter": 52,
+          "Uint8Array": 47,
+          "Map": 43,
+          "Uint32Array": 21,
+          "WeakMap": 17,
+          "WeakSet": 15,
+          "JSPropertyNameEnumerator": 12,
+          "Sentinel": 11,
+          "ResourceUsage": 7,
+          "TextEncoder": 6,
+          "JSAsyncGeneratorFunction": 4,
+          "ArrayBuffer": 3,
+          "Callee": 3,
+          "Error": 3,
+          "Hash": 3,
+          "ImportMeta": 3,
+          "AsyncGeneratorFunction": 2,
+          "Cipher": 2,
+          "DataView": 2,
+          "DiffieHellman": 2,
+          "Dirent": 2,
+          "ECDH": 2,
+          "GeneratorFunction": 2,
+          "Hmac": 2,
+          "Iterator": 2,
+          "KeyObject": 2,
+          "MIMEParams": 2,
+          "MIMEType": 2,
+          "NodeJSFS": 2,
+          "Performance": 2,
+          "Sign": 2,
+          "Stats": 2,
+          "StringDecoder": 2,
+          "Subprocess": 2,
+          "SubtleCrypto": 2,
+          "TextDecoder": 2,
+          "URL": 2,
+          "Verify": 2,
+          "X509Certificate": 2,
+          "Array Iterator": 1,
+          "AsyncDisposableStack": 1,
+          "AsyncFromSyncIterator": 1,
+          "AsyncFunctionGenerator": 1,
+          "AsyncGenerator": 1,
+          "AsyncIterator": 1,
+          "BigInt64ArrayPrototype": 1,
+          "BigUint64ArrayPrototype": 1,
+          "Blob": 1,
+          "Boolean": 1,
+          "Buffer": 1,
+          "Bun": 1,
+          "Crypto": 1,
+          "DiffieHellmanGroup": 1,
+          "DisposableStack": 1,
+          "EventEmitter": 1,
+          "EventTarget": 1,
+          "Float16ArrayPrototype": 1,
+          "Float32ArrayPrototype": 1,
+          "Float64ArrayPrototype": 1,
+          "Generator": 1,
+          "GlobalObject": 1,
+          "Int16ArrayPrototype": 1,
+          "Int32ArrayPrototype": 1,
+          "Int8ArrayPrototype": 1,
+          "Int8Array": 1,
+          "InternalFieldTuple": 1,
+          "InternalModuleRegistry": 1,
+          "Intl": 1,
+          "Iterator Helper": 1,
+          "JSGlobalLexicalEnvironment": 1,
+          "JSGlobalProxy": 1,
+          "JSON": 1,
+          "Map Iterator": 1,
+          "Math": 1,
+          "ModuleLoader": 1,
+          "NextTickQueue": 1,
+          "Number": 1,
+          "ProcessBindingConstants": 1,
+          "ProcessEnv": 1,
+          "Process": 1,
+          "Prototype": 1,
+          "Reflect": 1,
+          "RegExp String Iterator": 1,
+          "Set Iterator": 1,
+          "ShadowRealm": 1,
+          "String Iterator": 1,
+          "String": 1,
+          "StrongRootBlock": 1,
+          "Symbol": 1,
+          "Temporal": 1,
+          "Uint16ArrayPrototype": 1,
+          "Uint32ArrayPrototype": 1,
+          "Uint8ArrayPrototype": 1,
+          "Uint8ClampedArrayPrototype": 1,
+          "console": 1,
+          "require": 1,
+          "resolve": 1
+        },
+        "protectedObjectTypeCounts": {
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "UnlinkedProgramCodeBlock": 129,
+          "UnlinkedFunctionExecutable": 4,
+          "GlobalObject": 1,
+          "Promise": 1,
+          "Subprocess": 1
+        },
+        "heapSize": 11515971,
+        "heapCapacity": 25965523,
+        "extraMemorySize": 3765987,
+        "objectCount": 113815,
+        "protectedObjectCount": 1555,
+        "globalObjectCount": 1,
+        "protectedGlobalObjectCount": 1,
+        "mimalloc": {
+          "stat_version": 5,
+          "mimalloc_version": 30503,
+          "process": {
+            "elapsed_msecs": 811,
+            "user_msecs": 1044,
+            "system_msecs": 166,
+            "page_faults": 0,
+            "rss_current": 88641536,
+            "rss_peak": 94326784,
+            "commit_current": 249298944,
+            "commit_peak": 249298944
+          },
+          "pages": {
+            "total": 29333,
+            "peak": 689,
+            "current": 688
+          },
+          "reserved": {
+            "total": 1078329344,
+            "peak": 1078329344,
+            "current": 1078329344
+          },
+          "committed": {
+            "total": 249298944,
+            "peak": 249298944,
+            "current": 249298944
+          },
+          "reset": 0,
+          "purged": 116637696,
+          "page_committed": {
+            "total": 335017024,
+            "peak": 335017024,
+            "current": 335017024
+          },
+          "pages_abandoned": {
+            "total": 463,
+            "peak": 128,
+            "current": 93
+          },
+          "threads": {
+            "total": 13,
+            "peak": 13,
+            "current": 13
+          },
+          "malloc_normal": {
+            "total": 311822040,
+            "peak": 48915296,
+            "current": 47936952
+          },
+          "malloc_huge": {
+            "total": 3211264,
+            "peak": 1572864,
+            "current": 1179648
+          },
+          "malloc_requested": 315033304,
+          "mmap_calls": 4,
+          "commit_calls": 4,
+          "reset_calls": 0,
+          "purge_calls": 624,
+          "arena_count": 2,
+          "malloc_normal_count": 1052825,
+          "malloc_huge_count": 4,
+          "malloc_guarded_count": 0,
+          "arena_rollback_count": 0,
+          "arena_purges": 16,
+          "pages_extended": 34434,
+          "pages_retire": 11080,
+          "page_searches": 11789,
+          "page_searches_count": 35303,
+          "segments": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_cache": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "_segments_reserved": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "heaps": {
+            "total": 1552,
+            "peak": 5,
+            "current": 4
+          },
+          "theaps": {
+            "total": 1563,
+            "peak": 15,
+            "current": 15
+          },
+          "pages_os_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_os_allocated": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_reclaim_on_alloc": 6,
+          "pages_reclaim_on_free": 297,
+          "pages_reabandon_full": 24,
+          "pages_unabandon_busy_wait": 0,
+          "heaps_delete_wait": 0,
+          "pages_stat_updates": 30631,
+          "pages_stat_update_count": 1998181,
+          "profile_samples": 0,
+          "malloc_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 76215,
+              "peak": 12388,
+              "current": 6099,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 68985,
+              "peak": 11430,
+              "current": 8924,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 133478,
+              "peak": 35194,
+              "current": 29374,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 224919,
+              "peak": 40725,
+              "current": 13694,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 134052,
+              "peak": 9178,
+              "current": 7326,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 25558,
+              "peak": 5928,
+              "current": 2152,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 27197,
+              "peak": 7193,
+              "current": 4805,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 42008,
+              "peak": 16485,
+              "current": 3932,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 84821,
+              "peak": 10697,
+              "current": 5503,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 42266,
+              "peak": 10990,
+              "current": 8084,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 12617,
+              "peak": 2716,
+              "current": 1287,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 17804,
+              "peak": 5058,
+              "current": 2751,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 18277,
+              "peak": 3924,
+              "current": 2617,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 15875,
+              "peak": 4730,
+              "current": 2747,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 30401,
+              "peak": 6398,
+              "current": 1659,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 24018,
+              "peak": 5816,
+              "current": 1559,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 12434,
+              "peak": 4032,
+              "current": 818,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 7372,
+              "peak": 2108,
+              "current": 1208,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 7798,
+              "peak": 814,
+              "current": 301,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 8287,
+              "peak": 1958,
+              "current": 270,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 3935,
+              "peak": 1082,
+              "current": 331,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 4548,
+              "peak": 863,
+              "current": 373,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 2567,
+              "peak": 574,
+              "current": 168,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 2819,
+              "peak": 497,
+              "current": 119,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 3409,
+              "peak": 777,
+              "current": 119,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 7564,
+              "peak": 1265,
+              "current": 168,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 2085,
+              "peak": 538,
+              "current": 71,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 1197,
+              "peak": 221,
+              "current": 107,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 1147,
+              "peak": 209,
+              "current": 89,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 584,
+              "peak": 134,
+              "current": 100,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 442,
+              "peak": 74,
+              "current": 40,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 337,
+              "peak": 68,
+              "current": 50,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 5660,
+              "peak": 1123,
+              "current": 44,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 300,
+              "peak": 71,
+              "current": 55,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 176,
+              "peak": 42,
+              "current": 26,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 161,
+              "peak": 26,
+              "current": 14,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 257,
+              "peak": 15,
+              "current": 12,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 177,
+              "peak": 33,
+              "current": 20,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 88,
+              "peak": 17,
+              "current": 11,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 76,
+              "peak": 14,
+              "current": 9,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 157,
+              "peak": 11,
+              "current": 9,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 60,
+              "peak": 12,
+              "current": 8,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 31,
+              "peak": 7,
+              "current": 6,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 30,
+              "peak": 5,
+              "current": 2,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 516,
+              "peak": 394,
+              "current": 393,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 27,
+              "peak": 9,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 18,
+              "peak": 2,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 18,
+              "peak": 7,
+              "current": 5,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 29,
+              "peak": 5,
+              "current": 2,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 9,
+              "peak": 3,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 3,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 7,
+              "peak": 3,
+              "current": 3,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "page_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1562,
+              "peak": 13,
+              "current": 13,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1564,
+              "peak": 14,
+              "current": 14,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 1577,
+              "peak": 27,
+              "current": 27,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 1470,
+              "peak": 38,
+              "current": 24,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 1571,
+              "peak": 19,
+              "current": 19,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 503,
+              "peak": 14,
+              "current": 14,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 760,
+              "peak": 21,
+              "current": 21,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 1576,
+              "peak": 23,
+              "current": 23,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 1585,
+              "peak": 23,
+              "current": 23,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 1312,
+              "peak": 38,
+              "current": 38,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 423,
+              "peak": 15,
+              "current": 15,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 592,
+              "peak": 21,
+              "current": 20,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 612,
+              "peak": 22,
+              "current": 22,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 509,
+              "peak": 23,
+              "current": 23,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 1581,
+              "peak": 25,
+              "current": 18,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 1464,
+              "peak": 20,
+              "current": 18,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 362,
+              "peak": 16,
+              "current": 16,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 739,
+              "peak": 21,
+              "current": 19,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 1568,
+              "peak": 13,
+              "current": 12,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 1174,
+              "peak": 13,
+              "current": 12,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 591,
+              "peak": 13,
+              "current": 12,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 431,
+              "peak": 15,
+              "current": 15,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 475,
+              "peak": 12,
+              "current": 11,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 550,
+              "peak": 11,
+              "current": 10,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 940,
+              "peak": 11,
+              "current": 11,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 1018,
+              "peak": 14,
+              "current": 13,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 280,
+              "peak": 10,
+              "current": 10,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 253,
+              "peak": 13,
+              "current": 13,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 360,
+              "peak": 14,
+              "current": 13,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 266,
+              "peak": 14,
+              "current": 14,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 185,
+              "peak": 9,
+              "current": 9,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 138,
+              "peak": 10,
+              "current": 10,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 273,
+              "peak": 34,
+              "current": 12,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 135,
+              "peak": 16,
+              "current": 16,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 95,
+              "peak": 8,
+              "current": 8,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 76,
+              "peak": 8,
+              "current": 7,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 183,
+              "peak": 5,
+              "current": 4,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 91,
+              "peak": 8,
+              "current": 7,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 53,
+              "peak": 6,
+              "current": 5,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 42,
+              "peak": 7,
+              "current": 6,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 113,
+              "peak": 5,
+              "current": 5,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 44,
+              "peak": 3,
+              "current": 2,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 21,
+              "peak": 5,
+              "current": 5,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 24,
+              "peak": 3,
+              "current": 2,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 100,
+              "peak": 60,
+              "current": 59,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 13,
+              "peak": 4,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 15,
+              "peak": 2,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 10,
+              "peak": 2,
+              "current": 2,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 25,
+              "peak": 2,
+              "current": 1,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 8,
+              "peak": 2,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 3,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 5,
+              "peak": 2,
+              "current": 2,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 4,
+              "peak": 2,
+              "current": 2,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "chunk_bins": [
+            {
+              "total": 10,
+              "peak": 3,
+              "current": 3,
+              "bin": "S"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": "X"
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 1,
+              "bin": "M"
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 1,
+              "bin": "L"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": "H"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": " "
+            }
+          ]
+        }
+      }
+    },
+    "scanEnd": {
+      "epochMs": 1795077691168,
+      "monotonicMs": 1367.92804,
+      "memory": {
+        "rss": 95551488,
+        "heapTotal": 27940864,
+        "heapUsed": 11744499,
+        "external": 3876667,
+        "arrayBuffers": 1516
+      },
+      "resources": {
+        "userCPUTime": 1662877,
+        "systemCPUTime": 190329,
+        "maxRSS": 95776,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 22256,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 8016,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 2503,
+        "involuntaryContextSwitches": 49
+      }
+    },
+    "afterScan": {
+      "epochMs": 1795077691171,
+      "monotonicMs": 1371.18358,
+      "memory": {
+        "rss": 96051200,
+        "heapTotal": 27940864,
+        "heapUsed": 11744499,
+        "external": 3876667,
+        "arrayBuffers": 1516
+      },
+      "resources": {
+        "userCPUTime": 1666256,
+        "systemCPUTime": 190333,
+        "maxRSS": 95776,
+        "sharedMemorySize": 0,
+        "unsharedDataSize": 0,
+        "unsharedStackSize": 0,
+        "minorPageFault": 22295,
+        "majorPageFault": 0,
+        "swappedOut": 0,
+        "fsRead": 0,
+        "fsWrite": 8016,
+        "ipcSent": 0,
+        "ipcReceived": 0,
+        "signalsCount": 0,
+        "voluntaryContextSwitches": 2505,
+        "involuntaryContextSwitches": 49
+      },
+      "host": {
+        "memory": "MemTotal:        7869980 kB\nMemFree:         1154732 kB\nMemAvailable:    6862980 kB\nBuffers:          717564 kB\nCached:          4987448 kB\nSwapCached:          252 kB\nActive:          2378056 kB\nInactive:        3553600 kB\nActive(anon):       2208 kB\nInactive(anon):   235216 kB\nActive(file):    2375848 kB\nInactive(file):  3318384 kB\nUnevictable:       33580 kB\nMlocked:           33580 kB\nSwapTotal:       4983560 kB\nSwapFree:        4981256 kB\nDirty:            153016 kB\nWriteback:             0 kB\nAnonPages:        259992 kB\nMapped:           218172 kB\nShmem:              2780 kB\nKReclaimable:     554040 kB\nSlab:             644180 kB\nSReclaimable:     554040 kB\nSUnreclaim:        90140 kB\nKernelStack:        4880 kB\nPageTables:         4828 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     8918548 kB\nCommitted_AS:    1315708 kB\nVmallocTotal:   135290290112 kB\nVmallocUsed:       42640 kB\nVmallocChunk:          0 kB\nPercpu:            12896 kB\nCmaTotal:         262144 kB\nCmaAllocated:       4752 kB\nCmaReleased:      257392 kB\nCmaFree:          178920 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\n",
+        "vm": "nr_free_pages 288683\nnr_zone_inactive_anon 58804\nnr_zone_active_anon 552\nnr_zone_inactive_file 829596\nnr_zone_active_file 593962\nnr_zone_unevictable 8395\nnr_zone_write_pending 38254\nnr_mlock 8395\nnr_page_table_pages 1207\nnr_bounce 0\nnr_zspages 769\nnr_free_cma 44730\nnr_inactive_anon 58804\nnr_active_anon 552\nnr_inactive_file 829596\nnr_active_file 593962\nnr_unevictable 8395\nnr_slab_reclaimable 138510\nnr_slab_unreclaimable 22535\nnr_isolated_anon 0\nnr_isolated_file 0\nworkingset_nodes 122\nworkingset_refault_anon 75493\nworkingset_refault_file 64993\nworkingset_activate_anon 41559\nworkingset_activate_file 27985\nworkingset_restore_anon 20045\nworkingset_restore_file 12745\nworkingset_nodereclaim 32907\nnr_anon_pages 64998\nnr_mapped 54543\nnr_file_pages 1426316\nnr_dirty 38254\nnr_writeback 0\nnr_writeback_temp 0\nnr_shmem 695\nnr_shmem_hugepages 0\nnr_shmem_pmdmapped 0\nnr_file_hugepages 0\nnr_file_pmdmapped 0\nnr_anon_transparent_hugepages 0\nnr_vmscan_write 255457\nnr_vmscan_immediate_reclaim 2444\nnr_dirtied 28446175\nnr_written 26377813\nnr_kernel_misc_reclaimable 0\nnr_foll_pin_acquired 0\nnr_foll_pin_released 0\nnr_kernel_stack 4880\nnr_dirty_threshold 165672\nnr_dirty_background_threshold 82633\npgpgin 2869580\npgpgout 115733617\npswpin 75493\npswpout 255456\npgalloc_dma 54844721\npgalloc_dma32 0\npgalloc_normal 353358360\npgalloc_movable 0\nallocstall_dma 0\nallocstall_dma32 0\nallocstall_normal 0\nallocstall_movable 7\npgskip_dma 0\npgskip_dma32 0\npgskip_normal 0\npgskip_movable 0\npgfree 408499155\npgactivate 8056457\npgdeactivate 110249\npglazyfree 0\npgfault 153735904\npgmajfault 85545\npglazyfreed 0\npgrefill 64068\npgreuse 12997904\npgsteal_kswapd 251499\npgsteal_direct 2778\npgscan_kswapd 261855\npgscan_direct 2791\npgscan_direct_throttle 0\npgscan_anon 1091021\npgscan_file 953732\npgsteal_anon 256218\npgsteal_file 939025\npginodesteal 0\nslabs_scanned 217485\nkswapd_inodesteal 107\nkswapd_low_wmark_hit_quickly 4\nkswapd_high_wmark_hit_quickly 27\npageoutrun 89\npgrotated 2644\ndrop_pagecache 0\ndrop_slab 0\noom_kill 0\npgmigrate_success 0\npgmigrate_fail 0\nthp_migration_success 0\nthp_migration_fail 0\nthp_migration_split 0\nhtlb_buddy_alloc_success 0\nhtlb_buddy_alloc_fail 0\ncma_alloc_success 23\ncma_alloc_fail 0\nunevictable_pgs_culled 455418\nunevictable_pgs_scanned 0\nunevictable_pgs_rescued 434014\nunevictable_pgs_mlocked 483540\nunevictable_pgs_munlocked 434040\nunevictable_pgs_cleared 34\nunevictable_pgs_stranded 0\nswap_ra 4091\nswap_ra_hit 2916\nspeculative_pgfault 140706190\nspeculative_pgfault_file 0\nnr_unstable 0\n",
+        "memoryPressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=4412433\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3534988\n",
+        "cpuPressure": "some avg10=7.19 avg60=5.05 avg300=1.41 total=22244892916\n",
+        "swap": "Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n/swapfile                               file\t\t1048572\t\t0\t\t-2\n/dev/zram0                              partition\t3934988\t\t2304\t\t100\n",
+        "load": "1.38 0.33 0.11 1/299 714991\n",
+        "process": "Name:\tbun\nUmask:\t0022\nState:\tS (sleeping)\nTgid:\t714956\nNgid:\t0\nPid:\t714956\nPPid:\t714926\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1001\t1001\t1001\t1001\nFDSize:\t1024\nGroups:\t4 20 24 25 27 29 30 44 46 114 999 1000 1001 \nNStgid:\t714956\nNSpid:\t714956\nNSpgid:\t714909\nNSsid:\t714896\nVmPeak:\t10079488 kB\nVmSize:\t 6177472 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t   95776 kB\nVmRSS:\t   93632 kB\nRssAnon:\t   58896 kB\nRssFile:\t   34736 kB\nRssShmem:\t       0 kB\nVmData:\t 5807612 kB\nVmStk:\t     132 kB\nVmExe:\t   81920 kB\nVmLib:\t    2288 kB\nVmPTE:\t     600 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t0\nThreads:\t15\nSigQ:\t0/29623\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t00000001600004f8\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t000001ffffffffff\nCapAmb:\t0000000000000000\nNoNewPrivs:\t0\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tthread vulnerable\nCpus_allowed:\tf0\nCpus_allowed_list:\t4-7\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t371\nnonvoluntary_ctxt_switches:\t12\n",
+        "/sys/class/thermal/thermal_zone2/type": "bigcore1-thermal\n",
+        "/sys/class/thermal/thermal_zone2/temp": "71153\n",
+        "/sys/class/thermal/thermal_zone0/type": "soc-thermal\n",
+        "/sys/class/thermal/thermal_zone0/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone5/type": "gpu-thermal\n",
+        "/sys/class/thermal/thermal_zone5/temp": "68384\n",
+        "/sys/class/thermal/thermal_zone3/type": "littlecore-thermal\n",
+        "/sys/class/thermal/thermal_zone3/temp": "70230\n",
+        "/sys/class/thermal/thermal_zone1/type": "bigcore0-thermal\n",
+        "/sys/class/thermal/thermal_zone1/temp": "71153\n",
+        "/sys/class/thermal/thermal_zone6/type": "npu-thermal\n",
+        "/sys/class/thermal/thermal_zone6/temp": "69307\n",
+        "/sys/class/thermal/thermal_zone4/type": "center-thermal\n",
+        "/sys/class/thermal/thermal_zone4/temp": "69307\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_cur_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy6/affected_cpus": "6 7\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq": "2256000\n",
+        "/sys/devices/system/cpu/cpufreq/policy4/affected_cpus": "4 5\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_governor": "performance\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq": "1800000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq": "1800000\n",
+        "/sys/devices/system/cpu/cpufreq/policy0/affected_cpus": "0 1 2 3\n"
+      },
+      "heap": {
+        "objectTypeCounts": {
+          "BigInt": 30232,
+          "Object": 17968,
+          "string": 17863,
+          "Function": 9855,
+          "UnlinkedFunctionExecutable": 5879,
+          "Structure": 5657,
+          "SymbolTable": 5400,
+          "Promise": 4303,
+          "Array": 4196,
+          "FunctionExecutable": 4057,
+          "JSLexicalEnvironment": 3551,
+          "JSModuleEnvironment": 1431,
+          "JSSourceCode": 1431,
+          "ModuleRecord": 1431,
+          "ModuleRegistryEntry": 1431,
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "FunctionCodeBlock": 1375,
+          "GetterSetter": 1335,
+          "Cell Butterfly": 1297,
+          "UnlinkedFunctionCodeBlock": 1206,
+          "NativeExecutable": 968,
+          "FunctionRareData": 738,
+          "ModuleProgramExecutable": 610,
+          "StructureRareData": 401,
+          "PropertyTable": 282,
+          "RegExp": 260,
+          "StructureChain": 201,
+          "AsyncFunction": 170,
+          "Uint8Array": 152,
+          "Module": 130,
+          "UnlinkedProgramCodeBlock": 129,
+          "ProgramExecutable": 123,
+          "Set": 113,
+          "SparseArrayValueMap": 100,
+          "symbol": 98,
+          "ModuleNamespaceObject": 97,
+          "CustomGetterSetter": 87,
+          "DOMAttributeGetterSetter": 52,
+          "Map": 43,
+          "Uint32Array": 23,
+          "WeakMap": 17,
+          "WeakSet": 15,
+          "JSPropertyNameEnumerator": 12,
+          "Sentinel": 11,
+          "ResourceUsage": 7,
+          "TextEncoder": 6,
+          "ArrayBuffer": 4,
+          "JSAsyncGeneratorFunction": 4,
+          "AsyncFunctionGenerator": 3,
+          "Callee": 3,
+          "Error": 3,
+          "Hash": 3,
+          "ImportMeta": 3,
+          "AsyncGeneratorFunction": 2,
+          "Cipher": 2,
+          "DataView": 2,
+          "DiffieHellman": 2,
+          "Dirent": 2,
+          "ECDH": 2,
+          "FinalizationRegistry": 2,
+          "GeneratorFunction": 2,
+          "Hmac": 2,
+          "Iterator": 2,
+          "KeyObject": 2,
+          "MIMEParams": 2,
+          "MIMEType": 2,
+          "NodeJSFS": 2,
+          "Performance": 2,
+          "Sign": 2,
+          "Stats": 2,
+          "StringDecoder": 2,
+          "Subprocess": 2,
+          "SubtleCrypto": 2,
+          "TextDecoder": 2,
+          "URL": 2,
+          "Verify": 2,
+          "X509Certificate": 2,
+          "Array Iterator": 1,
+          "AsyncDisposableStack": 1,
+          "AsyncFromSyncIterator": 1,
+          "AsyncGenerator": 1,
+          "AsyncIterator": 1,
+          "BigInt64ArrayPrototype": 1,
+          "BigUint64ArrayPrototype": 1,
+          "Blob": 1,
+          "Boolean": 1,
+          "Buffer": 1,
+          "Bun": 1,
+          "Crypto": 1,
+          "DiffieHellmanGroup": 1,
+          "DisposableStack": 1,
+          "EventEmitter": 1,
+          "EventTarget": 1,
+          "Float16ArrayPrototype": 1,
+          "Float32ArrayPrototype": 1,
+          "Float64ArrayPrototype": 1,
+          "FullPromiseReaction": 1,
+          "Generator": 1,
+          "GlobalObject": 1,
+          "Int16ArrayPrototype": 1,
+          "Int32ArrayPrototype": 1,
+          "Int8ArrayPrototype": 1,
+          "Int8Array": 1,
+          "InternalFieldTuple": 1,
+          "InternalModuleRegistry": 1,
+          "Intl": 1,
+          "Iterator Helper": 1,
+          "JSGlobalLexicalEnvironment": 1,
+          "JSGlobalProxy": 1,
+          "JSON": 1,
+          "Map Iterator": 1,
+          "Math": 1,
+          "ModuleLoader": 1,
+          "NextTickQueue": 1,
+          "Number": 1,
+          "ProcessBindingConstants": 1,
+          "ProcessEnv": 1,
+          "Process": 1,
+          "Prototype": 1,
+          "Reflect": 1,
+          "RegExp String Iterator": 1,
+          "Set Iterator": 1,
+          "ShadowRealm": 1,
+          "String Iterator": 1,
+          "String": 1,
+          "StrongRootBlock": 1,
+          "Symbol": 1,
+          "Temporal": 1,
+          "Uint16ArrayPrototype": 1,
+          "Uint32ArrayPrototype": 1,
+          "Uint8ArrayPrototype": 1,
+          "Uint8ClampedArrayPrototype": 1,
+          "console": 1,
+          "require": 1,
+          "resolve": 1
+        },
+        "protectedObjectTypeCounts": {
+          "UnlinkedModuleProgramCodeBlock": 1419,
+          "UnlinkedProgramCodeBlock": 129,
+          "UnlinkedFunctionExecutable": 4,
+          "GlobalObject": 1,
+          "Promise": 1,
+          "Subprocess": 1
+        },
+        "heapSize": 11750728,
+        "heapCapacity": 31783768,
+        "extraMemorySize": 3882600,
+        "objectCount": 115772,
+        "protectedObjectCount": 1555,
+        "globalObjectCount": 1,
+        "protectedGlobalObjectCount": 1,
+        "mimalloc": {
+          "stat_version": 5,
+          "mimalloc_version": 30503,
+          "process": {
+            "elapsed_msecs": 1466,
+            "user_msecs": 1682,
+            "system_msecs": 193,
+            "page_faults": 0,
+            "rss_current": 95879168,
+            "rss_peak": 98074624,
+            "commit_current": 274923520,
+            "commit_peak": 274923520
+          },
+          "pages": {
+            "total": 29355,
+            "peak": 689,
+            "current": 671
+          },
+          "reserved": {
+            "total": 1078329344,
+            "peak": 1078329344,
+            "current": 1078329344
+          },
+          "committed": {
+            "total": 274923520,
+            "peak": 274923520,
+            "current": 274923520
+          },
+          "reset": 0,
+          "purged": 152854528,
+          "page_committed": {
+            "total": 337707248,
+            "peak": 337707248,
+            "current": 337707248
+          },
+          "pages_abandoned": {
+            "total": 514,
+            "peak": 128,
+            "current": 100
+          },
+          "threads": {
+            "total": 14,
+            "peak": 14,
+            "current": 14
+          },
+          "malloc_normal": {
+            "total": 321596600,
+            "peak": 53448624,
+            "current": 52964088
+          },
+          "malloc_huge": {
+            "total": 3211264,
+            "peak": 1572864,
+            "current": 1179648
+          },
+          "malloc_requested": 324807864,
+          "mmap_calls": 4,
+          "commit_calls": 4,
+          "reset_calls": 0,
+          "purge_calls": 695,
+          "arena_count": 2,
+          "malloc_normal_count": 1092020,
+          "malloc_huge_count": 4,
+          "malloc_guarded_count": 0,
+          "arena_rollback_count": 0,
+          "arena_purges": 27,
+          "pages_extended": 34506,
+          "pages_retire": 11098,
+          "page_searches": 12050,
+          "page_searches_count": 35487,
+          "segments": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "segments_cache": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "_segments_reserved": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "heaps": {
+            "total": 1552,
+            "peak": 5,
+            "current": 4
+          },
+          "theaps": {
+            "total": 1563,
+            "peak": 15,
+            "current": 15
+          },
+          "pages_os_abandoned": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_os_allocated": {
+            "total": 0,
+            "peak": 0,
+            "current": 0
+          },
+          "pages_reclaim_on_alloc": 24,
+          "pages_reclaim_on_free": 323,
+          "pages_reabandon_full": 24,
+          "pages_unabandon_busy_wait": 0,
+          "heaps_delete_wait": 0,
+          "pages_stat_updates": 30916,
+          "pages_stat_update_count": 2074926,
+          "profile_samples": 0,
+          "malloc_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 77285,
+              "peak": 12388,
+              "current": 6245,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 69903,
+              "peak": 11430,
+              "current": 9017,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 158288,
+              "peak": 49468,
+              "current": 29730,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 227524,
+              "peak": 40725,
+              "current": 13931,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 134783,
+              "peak": 9178,
+              "current": 7434,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 25955,
+              "peak": 5928,
+              "current": 2208,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 29498,
+              "peak": 7193,
+              "current": 4939,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 43687,
+              "peak": 16485,
+              "current": 4103,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 86287,
+              "peak": 10697,
+              "current": 5574,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 43044,
+              "peak": 10990,
+              "current": 8133,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 12815,
+              "peak": 2716,
+              "current": 1318,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 18177,
+              "peak": 5058,
+              "current": 2767,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 18481,
+              "peak": 3924,
+              "current": 2639,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 16483,
+              "peak": 4730,
+              "current": 2767,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 30572,
+              "peak": 6398,
+              "current": 1667,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 24102,
+              "peak": 5816,
+              "current": 1565,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 12518,
+              "peak": 4032,
+              "current": 829,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 7473,
+              "peak": 2108,
+              "current": 1214,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 7861,
+              "peak": 814,
+              "current": 304,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 8323,
+              "peak": 1958,
+              "current": 271,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 4009,
+              "peak": 1082,
+              "current": 333,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 4682,
+              "peak": 863,
+              "current": 380,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 2629,
+              "peak": 574,
+              "current": 172,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 2845,
+              "peak": 497,
+              "current": 120,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 3431,
+              "peak": 777,
+              "current": 120,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 7602,
+              "peak": 1265,
+              "current": 170,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 2088,
+              "peak": 538,
+              "current": 71,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 1203,
+              "peak": 221,
+              "current": 107,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 1149,
+              "peak": 209,
+              "current": 89,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 593,
+              "peak": 134,
+              "current": 102,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 443,
+              "peak": 74,
+              "current": 40,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 341,
+              "peak": 68,
+              "current": 51,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 5681,
+              "peak": 1123,
+              "current": 44,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 309,
+              "peak": 71,
+              "current": 61,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 178,
+              "peak": 42,
+              "current": 26,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 162,
+              "peak": 26,
+              "current": 14,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 259,
+              "peak": 15,
+              "current": 12,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 185,
+              "peak": 33,
+              "current": 21,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 90,
+              "peak": 17,
+              "current": 11,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 77,
+              "peak": 14,
+              "current": 9,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 157,
+              "peak": 11,
+              "current": 9,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 61,
+              "peak": 12,
+              "current": 8,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 31,
+              "peak": 7,
+              "current": 6,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 31,
+              "peak": 5,
+              "current": 3,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 603,
+              "peak": 465,
+              "current": 465,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 28,
+              "peak": 9,
+              "current": 4,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 18,
+              "peak": 2,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 18,
+              "peak": 7,
+              "current": 5,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 29,
+              "peak": 5,
+              "current": 2,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 9,
+              "peak": 3,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 3,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 8,
+              "peak": 4,
+              "current": 3,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "page_bins": [
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1562,
+              "peak": 13,
+              "current": 11,
+              "block_size": 8,
+              "page_size": 65536
+            },
+            {
+              "total": 1564,
+              "peak": 14,
+              "current": 12,
+              "block_size": 16,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 24,
+              "page_size": 65536
+            },
+            {
+              "total": 1578,
+              "peak": 28,
+              "current": 28,
+              "block_size": 32,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 40,
+              "page_size": 65536
+            },
+            {
+              "total": 1470,
+              "peak": 38,
+              "current": 24,
+              "block_size": 48,
+              "page_size": 65536
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 56,
+              "page_size": 65536
+            },
+            {
+              "total": 1571,
+              "peak": 19,
+              "current": 19,
+              "block_size": 64,
+              "page_size": 65536
+            },
+            {
+              "total": 503,
+              "peak": 14,
+              "current": 13,
+              "block_size": 80,
+              "page_size": 65536
+            },
+            {
+              "total": 760,
+              "peak": 21,
+              "current": 21,
+              "block_size": 96,
+              "page_size": 65536
+            },
+            {
+              "total": 1576,
+              "peak": 23,
+              "current": 21,
+              "block_size": 112,
+              "page_size": 65536
+            },
+            {
+              "total": 1586,
+              "peak": 24,
+              "current": 23,
+              "block_size": 128,
+              "page_size": 65536
+            },
+            {
+              "total": 1312,
+              "peak": 38,
+              "current": 38,
+              "block_size": 160,
+              "page_size": 65536
+            },
+            {
+              "total": 423,
+              "peak": 15,
+              "current": 15,
+              "block_size": 192,
+              "page_size": 65536
+            },
+            {
+              "total": 592,
+              "peak": 21,
+              "current": 20,
+              "block_size": 224,
+              "page_size": 65536
+            },
+            {
+              "total": 612,
+              "peak": 22,
+              "current": 22,
+              "block_size": 256,
+              "page_size": 65536
+            },
+            {
+              "total": 510,
+              "peak": 24,
+              "current": 23,
+              "block_size": 320,
+              "page_size": 65536
+            },
+            {
+              "total": 1582,
+              "peak": 25,
+              "current": 19,
+              "block_size": 384,
+              "page_size": 65536
+            },
+            {
+              "total": 1464,
+              "peak": 20,
+              "current": 18,
+              "block_size": 448,
+              "page_size": 65536
+            },
+            {
+              "total": 362,
+              "peak": 16,
+              "current": 15,
+              "block_size": 512,
+              "page_size": 65536
+            },
+            {
+              "total": 739,
+              "peak": 21,
+              "current": 19,
+              "block_size": 640,
+              "page_size": 65536
+            },
+            {
+              "total": 1568,
+              "peak": 13,
+              "current": 12,
+              "block_size": 768,
+              "page_size": 65536
+            },
+            {
+              "total": 1174,
+              "peak": 13,
+              "current": 12,
+              "block_size": 896,
+              "page_size": 65536
+            },
+            {
+              "total": 591,
+              "peak": 13,
+              "current": 12,
+              "block_size": 1024,
+              "page_size": 65536
+            },
+            {
+              "total": 431,
+              "peak": 15,
+              "current": 15,
+              "block_size": 1280,
+              "page_size": 65536
+            },
+            {
+              "total": 475,
+              "peak": 12,
+              "current": 11,
+              "block_size": 1536,
+              "page_size": 65536
+            },
+            {
+              "total": 550,
+              "peak": 11,
+              "current": 10,
+              "block_size": 1792,
+              "page_size": 65536
+            },
+            {
+              "total": 940,
+              "peak": 11,
+              "current": 11,
+              "block_size": 2048,
+              "page_size": 65536
+            },
+            {
+              "total": 1018,
+              "peak": 14,
+              "current": 13,
+              "block_size": 2560,
+              "page_size": 65536
+            },
+            {
+              "total": 281,
+              "peak": 10,
+              "current": 8,
+              "block_size": 3072,
+              "page_size": 65536
+            },
+            {
+              "total": 255,
+              "peak": 13,
+              "current": 13,
+              "block_size": 3584,
+              "page_size": 65536
+            },
+            {
+              "total": 360,
+              "peak": 14,
+              "current": 13,
+              "block_size": 4096,
+              "page_size": 65536
+            },
+            {
+              "total": 269,
+              "peak": 14,
+              "current": 13,
+              "block_size": 5120,
+              "page_size": 65536
+            },
+            {
+              "total": 186,
+              "peak": 9,
+              "current": 8,
+              "block_size": 6144,
+              "page_size": 65536
+            },
+            {
+              "total": 139,
+              "peak": 10,
+              "current": 8,
+              "block_size": 7168,
+              "page_size": 65536
+            },
+            {
+              "total": 274,
+              "peak": 34,
+              "current": 12,
+              "block_size": 8192,
+              "page_size": 65536
+            },
+            {
+              "total": 135,
+              "peak": 16,
+              "current": 15,
+              "block_size": 10240,
+              "page_size": 65536
+            },
+            {
+              "total": 96,
+              "peak": 8,
+              "current": 7,
+              "block_size": 12288,
+              "page_size": 524288
+            },
+            {
+              "total": 77,
+              "peak": 8,
+              "current": 6,
+              "block_size": 14336,
+              "page_size": 524288
+            },
+            {
+              "total": 184,
+              "peak": 5,
+              "current": 3,
+              "block_size": 16384,
+              "page_size": 524288
+            },
+            {
+              "total": 91,
+              "peak": 8,
+              "current": 6,
+              "block_size": 20480,
+              "page_size": 524288
+            },
+            {
+              "total": 54,
+              "peak": 6,
+              "current": 5,
+              "block_size": 24576,
+              "page_size": 524288
+            },
+            {
+              "total": 42,
+              "peak": 7,
+              "current": 5,
+              "block_size": 28672,
+              "page_size": 524288
+            },
+            {
+              "total": 113,
+              "peak": 5,
+              "current": 4,
+              "block_size": 32768,
+              "page_size": 524288
+            },
+            {
+              "total": 44,
+              "peak": 3,
+              "current": 2,
+              "block_size": 40960,
+              "page_size": 524288
+            },
+            {
+              "total": 21,
+              "peak": 5,
+              "current": 4,
+              "block_size": 49152,
+              "page_size": 524288
+            },
+            {
+              "total": 24,
+              "peak": 3,
+              "current": 1,
+              "block_size": 57344,
+              "page_size": 524288
+            },
+            {
+              "total": 104,
+              "peak": 63,
+              "current": 63,
+              "block_size": 65536,
+              "page_size": 524288
+            },
+            {
+              "total": 13,
+              "peak": 4,
+              "current": 3,
+              "block_size": 81920,
+              "page_size": 524288
+            },
+            {
+              "total": 15,
+              "peak": 2,
+              "current": 1,
+              "block_size": 98304,
+              "page_size": 4194304
+            },
+            {
+              "total": 10,
+              "peak": 2,
+              "current": 2,
+              "block_size": 114688,
+              "page_size": 4194304
+            },
+            {
+              "total": 25,
+              "peak": 2,
+              "current": 1,
+              "block_size": 131072,
+              "page_size": 4194304
+            },
+            {
+              "total": 8,
+              "peak": 2,
+              "current": 1,
+              "block_size": 163840,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 3,
+              "current": 2,
+              "block_size": 196608,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 0,
+              "block_size": 229376,
+              "page_size": 4194304
+            },
+            {
+              "total": 6,
+              "peak": 3,
+              "current": 3,
+              "block_size": 262144,
+              "page_size": 4194304
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 1,
+              "block_size": 327680,
+              "page_size": 4194304
+            },
+            {
+              "total": 3,
+              "peak": 2,
+              "current": 1,
+              "block_size": 393216,
+              "page_size": 4194304
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 1,
+              "block_size": 458752,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 524288,
+              "page_size": 4194304
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 655360,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 786432,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 917504,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1048576,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1310720,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1572864,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 1835008,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2097152,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 2621440,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3145728,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 3670016,
+              "page_size": 0
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "block_size": 4194304,
+              "page_size": 0
+            },
+            {
+              "total": 4,
+              "peak": 2,
+              "current": 2,
+              "block_size": 524296,
+              "page_size": 0
+            }
+          ],
+          "chunk_bins": [
+            {
+              "total": 10,
+              "peak": 3,
+              "current": 3,
+              "bin": "S"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": "X"
+            },
+            {
+              "total": 1,
+              "peak": 1,
+              "current": 1,
+              "bin": "M"
+            },
+            {
+              "total": 4,
+              "peak": 1,
+              "current": 1,
+              "bin": "L"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": "H"
+            },
+            {
+              "total": 0,
+              "peak": 0,
+              "current": 0,
+              "bin": " "
+            }
+          ]
+        }
+      }
+    }
+  },
+  "verified": true
+}

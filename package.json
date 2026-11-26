@@ -1,0 +1,25 @@
+{
+  "name": "stealth-scan-benchmark",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.4",
+  "scripts": {
+    "bench": "bun run src/cli.ts",
+    "profile": "bun run src/profile.ts",
+    "check": "tsc --noEmit",
+    "test": "bun test",
+    "phase2": "bun run src/phase2/sweep.ts",
+    "phase2:mainnet": "bun run src/phase2/mainnet.ts"
+  },
+  "dependencies": {
+    "@noble/secp256k1": "2.3.0",
+    "@scopelift/stealth-address-sdk": "1.0.0-beta.5",
+    "viem": "2.58.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.4",
+    "typescript": "7.0.2"
+  }
+}

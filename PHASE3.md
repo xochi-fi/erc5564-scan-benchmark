@@ -213,7 +213,7 @@ Its deploy blocks were found by `eth_getCode` bisection and confirmed on two end
 | Chain | Umbra deploy block | Umbra announcements | First - last | Canonical ERC-5564 Announcer |
 | --- | ---: | ---: | --- | ---: |
 | Ethereum | 12,343,914 | 25,558 | 2021-05-18 - 2026-11-24 | 298 |
-| Base | UMBRA_BASE_DEPLOY | UMBRA_BASE | UMBRA_BASE_RANGE | BASE_COUNT |
+| Base | 10,761,374 | 7,955 | 2024-02-20 - 2026-11-20 | 679 |
 | Arbitrum One | 7,285,883 | 100,196 | 2022-03-18 - 2026-11-16 | 19 |
 | OP Mainnet | 4,069,556 | 72,277 | 2022-03-18 - 2026-11-06 | 2 |
 | Gnosis | 28,237,950 | 202 | 2023-06-08 - 2026-02-18 | 3 |

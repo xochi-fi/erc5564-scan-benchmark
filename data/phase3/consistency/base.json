@@ -1,20 +1,20 @@
 {
  "chain": "base",
- "measuredAt": "2026-11-26T17:38:01.271Z",
- "source": "announcements observed by partial keyless RPC runs",
+ "measuredAt": "2026-11-26T19:00:28.244Z",
+ "source": "keyless RPC retrieval (parallel)",
  "targets": [
   "16819551:257",
-  "22089048:242",
-  "32777752:22"
+  "22356541:308",
+  "62245129:76"
  ],
  "endpoints": [
   {
    "host": "base.public.blockpi.network",
    "url": "https://base.public.blockpi.network/v1/rpc/public",
    "window": 100,
-   "returned": 0,
+   "returned": 2,
    "empty": 0,
-   "errors": 6,
+   "errors": 4,
    "checks": [
     {
      "target": "16819551:257",
@@ -29,28 +29,28 @@
      "message": "pruned history unavailable: requested 16819501, earliest available 51000000"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 22088998, earliest available 51000000"
+     "message": "pruned history unavailable: requested 22356491, earliest available 51000000"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 22088998, earliest available 51000000"
+     "message": "pruned history unavailable: requested 22356491, earliest available 51000000"
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
-     "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 32777702, earliest available 51000000"
+     "outcome": "returned",
+     "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
-     "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 32777702, earliest available 51000000"
+     "outcome": "returned",
+     "message": null
     }
    ]
   },
@@ -58,9 +58,9 @@
    "host": "public.1rpc.io",
    "url": "https://public.1rpc.io/base",
    "window": 51,
-   "returned": 0,
+   "returned": 1,
    "empty": 0,
-   "errors": 6,
+   "errors": 5,
    "checks": [
     {
      "target": "16819551:257",
@@ -71,32 +71,32 @@
     {
      "target": "16819551:257",
      "attempt": 2,
-     "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 16819526, earliest available 52000000"
+     "outcome": "error: range-limit",
+     "message": "Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.ap"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 22089023, earliest available 52000000"
+     "message": "pruned history unavailable: requested 22356516, earliest available 52000000"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 22089023, earliest available 52000000"
+     "message": "pruned history unavailable: requested 22356516, earliest available 52000000"
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
-     "outcome": "error: archive-missing",
-     "message": "pruned history unavailable: requested 32777727, earliest available 52000000"
+     "outcome": "returned",
+     "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
-     "outcome": "error: http",
-     "message": "HTTP 410: invalid JSON-RPC envelope {\"error\":\"This endpoint has been discontinued.\",\"message\":\"For an up to date list of"
+     "outcome": "error: auth-required",
+     "message": "You've reached the usage limit for your current plan. To continue with higher limits and uninterrupted access, please up"
     }
    ]
   },
@@ -121,25 +121,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -167,25 +167,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -213,25 +213,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -259,25 +259,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -288,9 +288,9 @@
    "host": "base-rpc.publicnode.com",
    "url": "https://base-rpc.publicnode.com",
    "window": 100,
-   "returned": 0,
+   "returned": 2,
    "empty": 0,
-   "errors": 6,
+   "errors": 4,
    "checks": [
     {
      "target": "16819551:257",
@@ -305,28 +305,28 @@
      "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "error: archive-missing",
      "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "error: archive-missing",
      "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
-     "outcome": "error: archive-missing",
-     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+     "outcome": "returned",
+     "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
-     "outcome": "error: archive-missing",
-     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+     "outcome": "returned",
+     "message": null
     }
    ]
   },
@@ -351,25 +351,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -397,25 +397,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -443,25 +443,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "returned",
      "message": null
@@ -472,8 +472,8 @@
    "host": "rpc.degenprotocol.io",
    "url": "https://rpc.degenprotocol.io/base",
    "window": 100,
-   "returned": 3,
-   "empty": 3,
+   "returned": 4,
+   "empty": 2,
    "errors": 0,
    "checks": [
     {
@@ -489,27 +489,27 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "returned",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "62245129:76",
      "attempt": 2,
-     "outcome": "empty",
-     "message": null
-    },
-    {
-     "target": "32777752:22",
-     "attempt": 1,
-     "outcome": "empty",
-     "message": null
-    },
-    {
-     "target": "32777752:22",
-     "attempt": 2,
-     "outcome": "empty",
+     "outcome": "returned",
      "message": null
     }
    ]
@@ -535,25 +535,25 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "empty",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
      "outcome": "empty",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
      "outcome": "empty",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
      "outcome": "empty",
      "message": null
@@ -564,15 +564,15 @@
    "host": "rpc.baseazul.dev",
    "url": "https://rpc.baseazul.dev",
    "window": 100,
-   "returned": 0,
-   "empty": 5,
+   "returned": 2,
+   "empty": 3,
    "errors": 1,
    "checks": [
     {
      "target": "16819551:257",
      "attempt": 1,
-     "outcome": "empty",
-     "message": null
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 16819501, earliest available 62500000"
     },
     {
      "target": "16819551:257",
@@ -581,27 +581,27 @@
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
      "outcome": "empty",
      "message": null
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
-     "outcome": "error: range-limit",
-     "message": "Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.ap"
-    },
-    {
-     "target": "32777752:22",
-     "attempt": 1,
      "outcome": "empty",
      "message": null
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
      "attempt": 2,
-     "outcome": "empty",
+     "outcome": "returned",
      "message": null
     }
    ]
@@ -610,45 +610,45 @@
    "host": "8453.rpc.thirdweb.com",
    "url": "https://8453.rpc.thirdweb.com",
    "window": 100,
-   "returned": 6,
+   "returned": 0,
    "empty": 0,
-   "errors": 0,
+   "errors": 6,
    "checks": [
     {
      "target": "16819551:257",
      "attempt": 1,
-     "outcome": "returned",
-     "message": null
+     "outcome": "error: rate-limit",
+     "message": "Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
     },
     {
      "target": "16819551:257",
      "attempt": 2,
-     "outcome": "returned",
-     "message": null
+     "outcome": "error: rate-limit",
+     "message": "Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 1,
-     "outcome": "returned",
-     "message": null
+     "outcome": "error: rate-limit",
+     "message": "Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
     },
     {
-     "target": "22089048:242",
+     "target": "22356541:308",
      "attempt": 2,
-     "outcome": "returned",
-     "message": null
+     "outcome": "error: rate-limit",
+     "message": "Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 1,
-     "outcome": "returned",
-     "message": null
+     "outcome": "error: rate-limit",
+     "message": "Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
     },
     {
-     "target": "32777752:22",
+     "target": "62245129:76",
      "attempt": 2,
-     "outcome": "returned",
-     "message": null
+     "outcome": "error: rate-limit",
+     "message": "Rate limit exceeded. Upgrade your plan at https://thirdweb.com/pricing"
     }
    ]
   }

@@ -6,7 +6,7 @@
  * Live network, read-only, no keys, polite (<= 4 req/s per host, backoff on 429).
  */
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -16,7 +16,7 @@ import { PoliteHttp, USER_AGENT, type Transport } from './http.ts';
 import { blockscoutDeploy, blockscoutHead, blockscoutV2Logs, etherscanHead, etherscanLogs, type IndexerRun } from './indexers.ts';
 import { codeSchema, findDeployBlock, probeEndpoint, type EndpointProbe } from './probe.ts';
 import { percentile } from './range-search.ts';
-import { compareSets, formatKeyed, parseKeyed, retrieveHistory, type RetrieveResult } from './retrieve.ts';
+import { compareSets, formatKeyed, parseKeyed, retrieveHistory, type RetrieveOptions, type RetrieveResult } from './retrieve.ts';
 import { CANONICAL, UMBRA, getLogsParams, quantity, rpcLogsSchema, rpc, toHex, type LogFilter } from './rpc.ts';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -291,6 +291,43 @@ async function stageConsistency(transport: Transport, chain: ChainConfig, out: s
   await writeJson(join(out, 'consistency', `${chain.key}.json`), { chain: chain.key, measuredAt: new Date().toISOString(), source, targets: targets.map(t => t.key), endpoints: results });
 }
 
+// ---------- resumable state ----------
+/**
+ * Partial retrieval state, written at most every 15 s and at each segment end, under
+ * <output>/partial/ so a crash or kill loses at most a few windows. A rerun with the same
+ * chain/strategy/segment start resumes from the saved checkpoint. Delete the file to start over.
+ */
+const statePath = (out: string, tag: string, chain: string, strategy: string, segment: number) => join(out, 'partial', `${tag}-${chain}-${strategy}-${segment}.json`);
+
+async function loadState(out: string, tag: string, chain: string, strategy: string, segment: number, fromBlock: number): Promise<RetrieveOptions['resume'] | null> {
+  const path = statePath(out, tag, chain, strategy, segment);
+  if (!existsSync(path)) return null;
+  const state = await readJson<Json>(path);
+  if (state.fromBlock !== fromBlock) { log(`  ${path}: different fromBlock, ignoring`); return null; }
+  log(`  resuming ${chain} ${strategy} segment ${segment} at block ${state.checkpoint} (${state.logs.length} logs, ${state.requests} requests so far)`);
+  return { checkpoint: state.checkpoint, logs: state.logs, requests: state.requests, okRequests: state.okRequests, responseBytes: state.responseBytes, requestBytes: state.requestBytes, fetchMs: state.fetchMs, elapsedMs: state.elapsedMs };
+}
+
+function saver(out: string, tag: string, chain: string, strategy: string, segment: number, fromBlock: number, inner: (next: number, count: number) => void) {
+  let last = 0;
+  let writing: Promise<void> = Promise.resolve();
+  return (next: number, count: number, progress: RetrieveResult) => {
+    inner(next, count);
+    if (Date.now() - last < 15_000 && next <= progress.toBlock) return;
+    last = Date.now();
+    const snapshot = {
+      chain, tag, strategy, segment, fromBlock, toBlock: progress.toBlock, checkpoint: next, savedAt: new Date().toISOString(),
+      requests: progress.requests, okRequests: progress.okRequests, responseBytes: progress.responseBytes, requestBytes: progress.requestBytes,
+      fetchMs: progress.fetchMs, elapsedMs: progress.totalMs, logs: progress.logs,
+    };
+    writing = writing.then(async () => {
+      const path = statePath(out, tag, chain, strategy, segment);
+      await writeJson(`${path}.tmp`, snapshot);
+      await rename(`${path}.tmp`, path);
+    });
+  };
+}
+
 // ---------- stage: retrieve ----------
 export interface RetrieveFile {
   chain: string; measuredAt: string; filter: LogFilter; strategy: string; endpointOrder: string[]; initialSpan: number;
@@ -334,17 +371,28 @@ async function stageRetrieve(transport: Transport, chain: ChainConfig, out: stri
   const onCheckpoint = (next: number, count: number) => { if (Date.now() - lastLog > 30_000) { lastLog = Date.now(); log(`  ${chain.key} checkpoint ${next} (${(((next - deployBlock) / (head - deployBlock + 1)) * 100).toFixed(1)}%), ${count} logs`); } };
   let result: RetrieveResult;
   if (strategy !== 'parallel') {
-    result = await retrieveHistory(transport, { endpoints: order, filter, fromBlock: deployBlock, toBlock: head, initialSpan, maxRequests, maxMs: 90 * 60_000, log, onCheckpoint });
+    const state = await loadState(out, tag, chain.key, strategy, 0, deployBlock);
+    result = await retrieveHistory(transport, { endpoints: order, filter, fromBlock: deployBlock, toBlock: head, initialSpan, maxRequests, maxMs: 90 * 60_000, log, ...(state ? { resume: state } : {}), onCheckpoint: saver(out, tag, chain.key, strategy, 0, deployBlock, onCheckpoint) });
   } else {
     // Split the range into contiguous segments, one per endpoint on a distinct host, each with the full fallback list rotated.
     const hosts = [...new Map(order.map(url => [new URL(url).host, url])).values()];
-    const k = Math.min(4, hosts.length);
-    const size = Math.ceil((head - deployBlock + 1) / k);
+    // Reuse a saved segment plan so a resumed run lines up with its saved segment states.
+    const planPath = join(out, 'partial', `${tag}-${chain.key}-parallel-plan.json`);
+    const saved = existsSync(planPath) ? await readJson<Json>(planPath) : null;
+    const plan = saved?.deployBlock === deployBlock ? saved : { deployBlock, head, k: Math.min(4, hosts.length) };
+    if (saved !== plan) await writeJson(planPath, plan);
+    const k: number = plan.k;
+    const size = Math.ceil((plan.head - deployBlock + 1) / k);
     const started = performance.now();
-    const parts = await Promise.all(Array.from({ length: k }, (_, i) => retrieveHistory(transport, {
-      endpoints: [...hosts.slice(i), ...hosts.slice(0, i)], filter, fromBlock: deployBlock + i * size, toBlock: Math.min(head, deployBlock + (i + 1) * size - 1),
-      initialSpan, maxRequests: Math.ceil(maxRequests / k), maxMs: 90 * 60_000, log, onCheckpoint,
-    })));
+    const parts = await Promise.all(Array.from({ length: k }, async (_, i) => {
+      const fromBlock = deployBlock + i * size;
+      const state = await loadState(out, tag, chain.key, strategy, i, fromBlock);
+      return retrieveHistory(transport, {
+        endpoints: [...hosts.slice(i), ...hosts.slice(0, i)], filter, fromBlock, toBlock: i === k - 1 ? head : deployBlock + (i + 1) * size - 1,
+        initialSpan, maxRequests: Math.ceil(maxRequests / k), maxMs: 90 * 60_000, log, ...(state ? { resume: state } : {}),
+        onCheckpoint: saver(out, tag, chain.key, strategy, i, fromBlock, onCheckpoint),
+      });
+    }));
     const seen = new Set<string>();
     const merged = parts.flatMap(part => part.logs).filter(entry => { const key = `${entry.blockNumber}:${entry.logIndex}`; if (seen.has(key)) return false; seen.add(key); return true; });
     const histogram: Record<string, number> = {};

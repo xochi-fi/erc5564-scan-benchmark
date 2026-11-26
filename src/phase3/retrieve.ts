@@ -25,7 +25,9 @@ export interface RetrieveOptions {
   maxMs?: number;
   backoffMs?: number;
   sleep?: (ms: number) => Promise<void>;
-  onCheckpoint?: (nextBlock: number, logs: number) => void;
+  onCheckpoint?: (nextBlock: number, logs: number, progress: RetrieveResult) => void;
+  /** Resume from a saved checkpoint: logs already fetched below `checkpoint` and the counters so far. */
+  resume?: { checkpoint: number; logs: RpcLog[]; requests: number; okRequests: number; responseBytes: number; requestBytes: number; fetchMs: number; elapsedMs: number };
   log?: (line: string) => void;
 }
 
@@ -53,7 +55,7 @@ const SHRINK: ErrorKind[] = ['range-limit', 'result-limit', 'timeout'];
 const RETRY: ErrorKind[] = ['rate-limit', 'http', 'other', 'invalid-response', 'timeout'];
 
 export async function retrieveHistory(transport: Transport, options: RetrieveOptions): Promise<RetrieveResult> {
-  const started = performance.now();
+  const started = performance.now() - (options.resume?.elapsedMs ?? 0);
   const sleep = options.sleep ?? ((ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms)));
   const minSpan = options.minSpan ?? 1;
   const maxSpan = options.maxSpan ?? Number.MAX_SAFE_INTEGER;
@@ -74,6 +76,13 @@ export async function retrieveHistory(transport: Transport, options: RetrieveOpt
   let span = Math.min(options.initialSpan, maxSpan);
   let streak = 0;
   let cursor = options.fromBlock;
+  if (options.resume !== undefined) {
+    const r = options.resume;
+    cursor = Math.max(options.fromBlock, r.checkpoint);
+    result.checkpoint = cursor;
+    for (const log of r.logs) { const id = logKey(log); if (!seen.has(id)) { seen.add(id); result.logs.push(log); } }
+    Object.assign(result, { requests: r.requests, okRequests: r.okRequests, responseBytes: r.responseBytes, requestBytes: r.requestBytes, fetchMs: r.fetchMs });
+  }
 
   const nextEndpoint = (reason: string, abandon = true): boolean => {
     const current = uses[endpointIndex];
@@ -122,7 +131,8 @@ export async function retrieveHistory(transport: Transport, options: RetrieveOpt
       result.spanHistogram[bucket] = (result.spanHistogram[bucket] ?? 0) + 1;
       cursor = to + 1;
       result.checkpoint = cursor;
-      options.onCheckpoint?.(cursor, result.logs.length);
+      result.totalMs = performance.now() - started;
+      options.onCheckpoint?.(cursor, result.logs.length, result);
       attemptsHere = 0;
       if (++streak >= growAfter) {
         const cap = Math.min(maxSpan, use.learnedMaxSpan ?? Number.MAX_SAFE_INTEGER);

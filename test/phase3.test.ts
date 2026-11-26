@@ -182,6 +182,20 @@ describe('wallet retriever', () => {
     expect(comparison.exact).toBe(false);
     expect(comparison.missing.length).toBeGreaterThan(0);
   });
+  test('resumes from a saved checkpoint without gaps or duplicates', async () => {
+    const transport = new SimTransport({ 'https://a': { maxSpan: 1000, errorBody: rangeError } }, LOGS);
+    const base = { endpoints: ['https://a'], fromBlock: 999_000, toBlock: 1_300_000, initialSpan: 1000, sleep: async () => {} };
+    let saved: Parameters<NonNullable<Parameters<typeof retrieveHistory>[1]['onCheckpoint']>>[2] | null = null;
+    const first = await retrieveHistory(transport, { ...base, maxRequests: 120, onCheckpoint: (_n, _c, progress) => { saved = JSON.parse(JSON.stringify(progress)); } });
+    expect(first.success).toBe(false);
+    const state = saved as unknown as typeof first;
+    expect(state.checkpoint).toBeGreaterThan(base.fromBlock);
+    const second = await retrieveHistory(transport, { ...base, resume: { checkpoint: state.checkpoint, logs: state.logs, requests: state.requests, okRequests: state.okRequests, responseBytes: state.responseBytes, requestBytes: state.requestBytes, fetchMs: state.fetchMs, elapsedMs: 0 } });
+    expect(second.success).toBe(true);
+    expect(second.logs.length).toBe(296);
+    expect(new Set(second.logs.map(log => `${log.blockNumber}:${log.logIndex}`)).size).toBe(296);
+    expect(second.requests).toBeGreaterThan(state.requests);
+  });
   test('reports failure when every endpoint refuses', async () => {
     const transport = new SimTransport({ 'https://x': { maxSpan: 1e9, errorBody: rangeError, prunedBelow: 2_000_000 } }, LOGS);
     const result = await retrieveHistory(transport, { endpoints: ['https://x'], fromBlock: 999_000, toBlock: 1_300_000, initialSpan: 50_000, sleep: async () => {} });

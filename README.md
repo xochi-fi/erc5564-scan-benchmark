@@ -86,16 +86,17 @@ original single-run results (Appendix A) are in [FINDINGS.md](FINDINGS.md).
 ### Phase 3: keyless history retrieval ([PHASE3.md](PHASE3.md))
 
 Live, read-only, keyless, 2026-11-26. The canonical Announcer has 298 announcements on Ethereum,
-BASE_COUNT on Base, 19 on Arbitrum One, 2 on OP Mainnet, 3 on Gnosis, 9 on Polygon PoS and 1,039 on Sepolia.
+679 on Base, 19 on Arbitrum One, 2 on OP Mainnet, 3 on Gnosis, 9 on Polygon PoS and 1,039 on Sepolia.
 
 - A keyless cold start from the deploy block succeeded on every chain. With an endpoint
-  that accepts the whole history it took 8-17 s and 30-52 requests (except Base, where
-  no keyless endpoint takes more than about 10k blocks with history: BASE_BEST_SHORT). In chainlist order it took
-  17 s to 72 min, and on Base it ran out of an 8,000-request budget.
+  that accepts the whole history it took 8-17 s and 30-52 requests. Base has no such
+  endpoint: it took 16,296 requests and 28 min, spread over four hosts. In chainlist order it
+  took 17 s to 72 min, and on Base it ran out of an 8,000-request budget.
 - Per-request block-range caps on keyless endpoints that serve history ranged from 10
   blocks to the whole history. Many popular endpoints serve only recent blocks and say so
-  in their errors. One returned an empty result, with no error, for a window that holds a
-  real announcement.
+  in their errors. Four (one on OP Mainnet, three on Base) returned empty results, with
+  no error, for windows that hold real announcements. One of them silently dropped 48
+  Base announcements from a cold start.
 - Blockscout lacks 13 of 1,039 Sepolia announcements, and on Base, Arbitrum, Gnosis
   and Polygon it served our client a Cloudflare challenge.
 - Umbra's own pre-standard contract carries far more traffic (25,558 to 102,552

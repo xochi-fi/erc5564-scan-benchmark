@@ -1,6 +1,6 @@
 {
  "chain": "base",
- "measuredAt": "2026-11-26T15:00:51.144Z",
+ "measuredAt": "2026-11-26T18:17:03.236Z",
  "filter": {
   "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
   "topic0": "0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219"
@@ -24,21 +24,22 @@
    "pageSizeObserved": null,
    "requests": 1,
    "responseBytes": 5783,
-   "totalMs": 371.3359959999998,
+   "totalMs": 373.00620200000003,
    "latencyMs": [
-    52
+    51
    ],
    "indexedHead": null,
    "finalUrl": null,
    "rateLimitHits": 0,
+   "identities": [],
    "count": 0,
    "firstBlock": null,
    "lastBlock": null,
-   "latencyMedianMs": 52.03806700000041,
-   "latencyP95Ms": 52.03806700000041,
+   "latencyMedianMs": 51.339115000000106,
+   "latencyP95Ms": 51.339115000000106,
    "headLagBlocks": null
   }
  ],
  "reference": null,
- "rpcHead": 62574377
+ "rpcHead": 62633230
 }

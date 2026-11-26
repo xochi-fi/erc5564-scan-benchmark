@@ -1,0 +1,656 @@
+{
+ "chain": "base",
+ "measuredAt": "2026-11-26T17:38:01.271Z",
+ "source": "announcements observed by partial keyless RPC runs",
+ "targets": [
+  "16819551:257",
+  "22089048:242",
+  "32777752:22"
+ ],
+ "endpoints": [
+  {
+   "host": "base.public.blockpi.network",
+   "url": "https://base.public.blockpi.network/v1/rpc/public",
+   "window": 100,
+   "returned": 0,
+   "empty": 0,
+   "errors": 6,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 16819501, earliest available 51000000"
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 16819501, earliest available 51000000"
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 22088998, earliest available 51000000"
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 22088998, earliest available 51000000"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 32777702, earliest available 51000000"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 32777702, earliest available 51000000"
+    }
+   ]
+  },
+  {
+   "host": "public.1rpc.io",
+   "url": "https://public.1rpc.io/base",
+   "window": 51,
+   "returned": 0,
+   "empty": 0,
+   "errors": 6,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 16819526, earliest available 52000000"
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 16819526, earliest available 52000000"
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 22089023, earliest available 52000000"
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 22089023, earliest available 52000000"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "pruned history unavailable: requested 32777727, earliest available 52000000"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "error: http",
+     "message": "HTTP 410: invalid JSON-RPC envelope {\"error\":\"This endpoint has been discontinued.\",\"message\":\"For an up to date list of"
+    }
+   ]
+  },
+  {
+   "host": "base-public.nodies.app",
+   "url": "https://base-public.nodies.app",
+   "window": 50,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "base-mainnet.public.blastapi.io",
+   "url": "https://base-mainnet.public.blastapi.io",
+   "window": 10,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "base.gateway.tenderly.co",
+   "url": "https://base.gateway.tenderly.co",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "url": "https://gateway.tenderly.co/public/base",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "base-rpc.publicnode.com",
+   "url": "https://base-rpc.publicnode.com",
+   "window": 100,
+   "returned": 0,
+   "empty": 0,
+   "errors": 6,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "error: archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    }
+   ]
+  },
+  {
+   "host": "base.api.pocket.network",
+   "url": "https://base.api.pocket.network",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "base.drpc.org",
+   "url": "https://base.drpc.org",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "base.rpc.sentio.xyz",
+   "url": "https://base.rpc.sentio.xyz",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc.degenprotocol.io",
+   "url": "https://rpc.degenprotocol.io/base",
+   "window": 100,
+   "returned": 3,
+   "empty": 3,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "base.daybreak-rpc.network",
+   "url": "https://base.daybreak-rpc.network",
+   "window": 100,
+   "returned": 0,
+   "empty": 6,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "rpc.baseazul.dev",
+   "url": "https://rpc.baseazul.dev",
+   "window": 100,
+   "returned": 0,
+   "empty": 5,
+   "errors": 1,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "error: range-limit",
+     "message": "Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.ap"
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "empty",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "empty",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "8453.rpc.thirdweb.com",
+   "url": "https://8453.rpc.thirdweb.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "22089048:242",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "32777752:22",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

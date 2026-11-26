@@ -268,6 +268,17 @@ async function stageConsistency(transport: Transport, chain: ChainConfig, out: s
       const file = existsSync(r) ? await readJson<Json>(r) : null;
       if (file?.result?.success) { rows = file.identities ?? []; source = `keyless RPC retrieval (${strategy})`; break; }
     }
+    if (rows.length === 0) {
+      // No complete set yet: any announcement observed by any run is still a valid target.
+      const seen = new Map<string, string>();
+      for (const strategy of ['list-order', 'probe-informed', 'parallel']) {
+        const r = join(out, 'canonical', `retrieve-${chain.key}-${strategy}.json`);
+        const file = existsSync(r) ? await readJson<Json>(r) : null;
+        for (const row of file?.identities ?? []) seen.set(parseKeyed(row).key, row);
+      }
+      rows = [...seen.values()].sort((a, b) => parseKeyed(a).blockNumber - parseKeyed(b).blockNumber);
+      source = 'announcements observed by partial keyless RPC runs';
+    }
   }
   if (rows.length === 0) { log(`[${chain.key}] consistency: no known announcements`); return; }
   const parsed = rows.map(parseKeyed);
@@ -340,8 +351,15 @@ export interface RetrieveFile {
 
 type Strategy = 'list-order' | 'probe-informed' | 'parallel';
 
+/** Hosts that returned an empty result for a known announcement in the consistency check. */
+let silentHosts = new Set<string>();
+async function loadSilentHosts(out: string, chain: string): Promise<void> {
+  const path = join(out, 'consistency', `${chain}.json`);
+  silentHosts = new Set(existsSync(path) ? (await readJson<Json>(path)).endpoints.filter((e: Json) => e.empty > 0).map((e: Json) => e.host) : []);
+}
+
 function orderEndpoints(probe: ProbeFile, strategy: Strategy): string[] {
-  const healthy = probe.endpoints.filter(entry => entry.status === 'usable');
+  const healthy = probe.endpoints.filter(entry => entry.status === 'usable' && (strategy === 'list-order' || !silentHosts.has(entry.host)));
   if (strategy === 'list-order') return healthy.map(entry => entry.url);
   const span = (entry: EndpointProbe) => (entry.range?.unbounded ? Number.MAX_SAFE_INTEGER : entry.range?.maxOk ?? 0);
   return healthy
@@ -352,6 +370,8 @@ function orderEndpoints(probe: ProbeFile, strategy: Strategy): string[] {
 
 async function stageRetrieve(transport: Transport, chain: ChainConfig, out: string, strategy: Strategy, filter: LogFilter, tag: string, maxRequests: number): Promise<void> {
   const probe = await readJson<ProbeFile>(join(out, 'probe', `${chain.key}.json`));
+  await loadSilentHosts(out, chain.key);
+  if (silentHosts.size > 0 && strategy !== 'list-order') log(`  excluding silent hosts: ${[...silentHosts].join(', ')}`);
   const order = orderEndpoints(probe, strategy).slice(0, 8);
   let deployBlock = probe.deployBlock;
   let deploySource: string | null = probe.deploySource;

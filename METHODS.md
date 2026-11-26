@@ -1,6 +1,6 @@
 # Methods
 
-How the harness generates inputs, what each timer covers, and what it writes. Headline results are in the [README](README.md); details in [PHASE1.md](PHASE1.md) and [FINDINGS.md](FINDINGS.md).
+How the harness generates inputs, what each timer covers, and what it writes. Headline results are in the [README](README.md); details in [PHASE1.md](PHASE1.md), [FINDINGS.md](FINDINGS.md) and [PHASE3.md](PHASE3.md). The last section has the full reproduce commands, repository layout and cross-phase caveats.
 
 # Phase 1: local scanning
 
@@ -183,3 +183,102 @@ Phase 2 measures what a wallet pays to discover its payments when it pages throu
   browser/mobile runtimes, and adoption-realistic announcement volumes or match
   rates (1 in 1000 here).
 
+# Reproducing, layout and scope
+
+## Software
+
+ScopeLift's [`@scopelift/stealth-address-sdk`](https://github.com/ScopeLift/stealth-address-sdk)
+`1.0.0-beta.5` (npm `gitHead`
+[`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2)),
+unmodified, on [Bun](https://bun.sh) **1.4.4** (the `packageManager` version; other
+versions run but are recorded as a different environment). Phases 1 and 2 use
+deterministic synthetic announcements generated from a seed and need no RPC provider,
+indexer, account, funded wallet or credentials. Synthetic announcement metadata
+describes a fixed ETH amount; no transfer or transaction is ever executed.
+
+## Commands
+
+```sh
+bun install --frozen-lockfile
+bun run check          # tsc --noEmit
+bun test               # unit and integration tests, no network, no mocks
+
+# Phase 1: small end-to-end check of all eight scenarios
+bun run bench --sizes 256 --match-every 16 --batch-size 37 --repetitions 1
+
+# Phase 1: scale sweep (1m fixtures need several GB of RAM and disk, and hours)
+bun run bench --sizes 10000,100000,1000000
+
+# Phase 1: profiled crypto scan of an existing fixture (macOS or Linux)
+bun run profile --fixture results/<run>/fixtures/100000-zero --output results/profile-100k \
+  --engine crypto --batch-size 0
+
+# Phase 2: regenerate fixtures and check them against the pinned digests
+bun run src/phase2/prepare-fixtures.ts --output work/fixtures \
+  --fixtures 100000-zero,10000-sparse,100000-sparse,1000000-sparse
+
+# Phase 2: one sweep
+bun run phase2 --fixtures work/fixtures/100000-sparse --pages 1,16,64,256 \
+  --profiles none,public --scenarios cold,catchup \
+  --control-fixture work/fixtures/100000-zero --output results/phase2-my-run
+
+# Phase 2: whole host plans used for the recorded results
+scripts/phase2-run.sh repeat-smoke      # a few minutes, end-to-end check of the repeat path
+scripts/run-bazzite.sh repeat-bazzite   # i7 pinning defaults, host-gated, about 5.2 h
+scripts/phase2-run.sh repeat-turing     # per Pi node; see FINDINGS.md "Reproduce" for the env
+
+# Phase 2: optional read-only mainnet fetch probe (off by default, never mixed into the results)
+bun run phase2:mainnet --rpc <public RPC> --output results/mainnet-probe
+
+# Phase 3 (live network, read-only, keyless; all stages in PHASE3.md)
+bun test test/phase3.test.ts                 # offline: recorded error bodies, simulated endpoints
+bun run phase3 --stage endpoints,reference,probe,retrieve,consistency,report
+```
+
+Run output goes to `results/` and `work/` (both git-ignored). Output directories must
+not already exist. Every sample checks its discovered payments against an oracle taken
+from the fixture's sender-side schedule; a run exits nonzero if any sample does not
+match. Do not put the large workloads in ordinary CI.
+
+Fixtures are deterministic: the default seed `erc5564-scan-v1` and the fixture options
+produce byte-identical `announcements.jsonl` files, and their SHA256 digests are pinned
+in [`data/phase1/*/fixtures/*/manifest.json`](data/phase1/) and in
+`src/phase2/prepare-fixtures.ts`, which refuses a fixture whose bytes differ.
+
+## Hosts
+
+Host labels are listed in the README. Phase 2 used Turing node 1 for the single run (FINDINGS.md Appendix A) and nodes 1-3 for the repeats. None of the hosts were reserved for benchmarking. Host state (load, memory, swap,
+thermals, CPU frequency) is recorded with every phase-2 sample. The three RK1 nodes
+differ by up to 17% because of cooling (see FINDINGS.md, Controls).
+
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| `src/` | phase-1 fixture generator, scan engines, CLI and profiler |
+| `src/phase2/` | local JSON-RPC chain server, link emulator, wallet, sweep and report tools |
+| `src/phase3/` | keyless endpoint probe, adaptive history retriever, indexer clients, report |
+| `test/` | `bun test` suites |
+| `scripts/` | host run plans (`phase2-run.sh`), Bazzite wrapper, repeat matrices |
+| `data/` | recorded results: summary CSVs and per-run JSON/JSONL ([data/README.md](data/README.md)) |
+| `PHASE1.md` | phase 1 findings |
+| `FINDINGS.md` | phase 2 findings, verdicts, full tables, Appendix A single run |
+| `PHASE3.md` | phase 3 findings: keyless log retrieval per chain, guidance for wallets |
+| `METHODS.md` | workloads, measurement boundaries, artifacts, phase-2 components, this section |
+
+## Caveats for phases 1 and 2
+
+- The chain and the match rate are synthetic: 128 announcements per block and 1
+  payment per 1000 announcements are far above real usage. A keyless mainnet probe saw
+  14 real announcements in about 10k recent blocks.
+- The link model omits TLS, compression, provider query time and limits, rate limiting,
+  jitter and loss. Its near-zero network spread is a property of the emulator. Treat
+  `public` as a controlled what-if, not a provider measurement.
+- Fetching, scanning and verifying run sequentially, with no prefetch, so each cost is
+  separable. A pipelined wallet could hide up to min(network, scan).
+- n = 3 separates the findings from run noise but does not support confidence
+  intervals. The Pi's three samples per setting come from three nodes, so its spread is
+  mostly node-to-node.
+- Peak RSS is the process lifetime high-water mark, including Bun and SDK imports.
+- These are CLI measurements of a reference implementation, not browser or mobile
+  wallet performance, and not a comparison with OMR, PIR, TEE or FHE schemes.

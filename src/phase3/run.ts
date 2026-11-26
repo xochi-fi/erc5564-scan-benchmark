@@ -304,6 +304,26 @@ async function stageConsistency(transport: Transport, chain: ChainConfig, out: s
 
 let maxMinutes = 90;
 
+function retrieveStub(fromBlock: number, toBlock: number): RetrieveResult {
+  return { success: false, failure: null, fromBlock, toBlock, checkpoint: fromBlock, logs: [], requests: 0, okRequests: 0, responseBytes: 0, requestBytes: 0, totalMs: 0, fetchMs: 0, endpointSwitches: 0, spanHistogram: {}, endpoints: [] };
+}
+
+/** Sums per-endpoint usage across chunks. */
+function mergeUses(parts: RetrieveResult[]): RetrieveResult['endpoints'] {
+  const byUrl = new Map<string, RetrieveResult['endpoints'][number]>();
+  for (const use of parts.flatMap(part => part.endpoints)) {
+    const prev = byUrl.get(use.url);
+    if (prev === undefined) { byUrl.set(use.url, { ...use, errors: { ...use.errors }, errorSamples: { ...use.errorSamples } }); continue; }
+    prev.requests += use.requests;
+    prev.ok += use.ok;
+    for (const [kind, n] of Object.entries(use.errors)) prev.errors[kind as keyof typeof prev.errors] = (prev.errors[kind as keyof typeof prev.errors] ?? 0) + (n ?? 0);
+    Object.assign(prev.errorSamples, { ...use.errorSamples, ...prev.errorSamples });
+    if (use.abandonReason) { prev.abandonedAt ??= use.abandonedAt; prev.abandonReason ??= use.abandonReason; }
+    if (use.learnedMaxSpan !== null) prev.learnedMaxSpan = Math.min(prev.learnedMaxSpan ?? use.learnedMaxSpan, use.learnedMaxSpan);
+  }
+  return [...byUrl.values()];
+}
+
 // ---------- resumable state ----------
 /**
  * Partial retrieval state, written at most every 15 s and at each segment end, under
@@ -396,36 +416,53 @@ async function stageRetrieve(transport: Transport, chain: ChainConfig, out: stri
     const state = await loadState(out, tag, chain.key, strategy, 0, deployBlock);
     result = await retrieveHistory(transport, { endpoints: order, filter, fromBlock: deployBlock, toBlock: head, initialSpan, maxRequests, maxMs: maxMinutes * 60_000, log, ...(state ? { resume: state } : {}), onCheckpoint: saver(out, tag, chain.key, strategy, 0, deployBlock, onCheckpoint) });
   } else {
-    // Split the range into contiguous segments, one per endpoint on a distinct host, each with the full fallback list rotated.
+    // Work queue: the range is cut into CHUNKS contiguous chunks; one worker per distinct host
+    // (up to 4), each with the full fallback list rotated, pulls the next unfinished chunk. Fast
+    // endpoints therefore do most of the work. Each chunk's state is saved as it goes, so a rerun
+    // skips finished chunks and resumes partial ones. The plan (head, chunk size) is saved too.
+    const CHUNKS = 64;
     const hosts = [...new Map(order.map(url => [new URL(url).host, url])).values()];
-    // Reuse a saved segment plan so a resumed run lines up with its saved segment states.
     const planPath = join(out, 'partial', `${tag}-${chain.key}-parallel-plan.json`);
     const saved = existsSync(planPath) ? await readJson<Json>(planPath) : null;
-    const plan = saved?.deployBlock === deployBlock ? saved : { deployBlock, head, k: Math.min(4, hosts.length) };
+    const plan = saved?.deployBlock === deployBlock && saved?.chunks === CHUNKS ? saved : { deployBlock, head, chunks: CHUNKS, workers: Math.min(4, hosts.length) };
     if (saved !== plan) await writeJson(planPath, plan);
-    const k: number = plan.k;
-    const size = Math.ceil((plan.head - deployBlock + 1) / k);
+    const size = Math.ceil((plan.head - deployBlock + 1) / plan.chunks);
+    const bounds = Array.from({ length: plan.chunks }, (_, i) => ({ i, from: deployBlock + i * size, to: i === plan.chunks - 1 ? head : deployBlock + (i + 1) * size - 1 }));
     const started = performance.now();
-    const parts = await Promise.all(Array.from({ length: k }, async (_, i) => {
-      const fromBlock = deployBlock + i * size;
-      const state = await loadState(out, tag, chain.key, strategy, i, fromBlock);
-      return retrieveHistory(transport, {
-        endpoints: [...hosts.slice(i), ...hosts.slice(0, i)], filter, fromBlock, toBlock: i === k - 1 ? head : deployBlock + (i + 1) * size - 1,
-        initialSpan, maxRequests: Math.ceil(maxRequests / k), maxMs: maxMinutes * 60_000, log, ...(state ? { resume: state } : {}),
-        onCheckpoint: saver(out, tag, chain.key, strategy, i, fromBlock, onCheckpoint),
-      });
+    const parts: RetrieveResult[] = [];
+    let next = 0;
+    let spent = 0;
+    await Promise.all(Array.from({ length: plan.workers as number }, async (_, w) => {
+      const endpoints = [...hosts.slice(w), ...hosts.slice(0, w)];
+      let span = initialSpan;
+      while (next < bounds.length && spent < maxRequests && performance.now() - started < maxMinutes * 60_000) {
+        const chunk = bounds[next++]!;
+        const state = await loadState(out, tag, chain.key, strategy, chunk.i, chunk.from);
+        const part = await retrieveHistory(transport, {
+          endpoints, filter, fromBlock: chunk.from, toBlock: chunk.to, initialSpan: span, maxRequests: maxRequests - spent,
+          maxMs: maxMinutes * 60_000 - (performance.now() - started), log, ...(state ? { resume: state } : {}),
+          onCheckpoint: saver(out, tag, chain.key, strategy, chunk.i, chunk.from, onCheckpoint),
+        });
+        spent += part.requests - (state?.requests ?? 0);
+        parts[chunk.i] = part;
+        const learned = part.endpoints.find(use => use.abandonedAt === null)?.learnedMaxSpan;
+        if (learned) span = Math.min(initialSpan, learned);
+        if (!part.success) { log(`  worker ${w}: chunk ${chunk.i} failed (${part.failure}); worker stops`); break; }
+      }
     }));
+    const missing = bounds.filter(chunk => parts[chunk.i] === undefined).length;
+    if (missing > 0) parts.push({ ...retrieveStub(deployBlock, head), failure: `${missing} chunks not fetched (budget or workers exhausted)` });
     const seen = new Set<string>();
-    const merged = parts.flatMap(part => part.logs).filter(entry => { const key = `${entry.blockNumber}:${entry.logIndex}`; if (seen.has(key)) return false; seen.add(key); return true; });
+    const merged = parts.filter(Boolean).flatMap(part => part.logs).filter(entry => { const key = `${entry.blockNumber}:${entry.logIndex}`; if (seen.has(key)) return false; seen.add(key); return true; });
     const histogram: Record<string, number> = {};
-    for (const part of parts) for (const [bucket, n] of Object.entries(part.spanHistogram)) histogram[bucket] = (histogram[bucket] ?? 0) + n;
-    const sum = (f: (p: RetrieveResult) => number) => parts.reduce((total, part) => total + f(part), 0);
+    for (const part of parts.filter(Boolean)) for (const [bucket, n] of Object.entries(part.spanHistogram)) histogram[bucket] = (histogram[bucket] ?? 0) + n;
+    const sum = (f: (p: RetrieveResult) => number) => parts.filter(Boolean).reduce((total, part) => total + f(part), 0);
     result = {
-      success: parts.every(part => part.success), failure: parts.map(part => part.failure).filter(Boolean).join(' | ') || null,
-      fromBlock: deployBlock, toBlock: head, checkpoint: Math.min(...parts.map(part => (part.success ? head + 1 : part.checkpoint))),
+      success: missing === 0 && parts.every(part => part.success), failure: [...new Set(parts.map(part => part.failure).filter(Boolean))].join(' | ') || null,
+      fromBlock: deployBlock, toBlock: head, checkpoint: Math.min(...bounds.map(chunk => (parts[chunk.i]?.success ? head + 1 : parts[chunk.i]?.checkpoint ?? chunk.from))),
       logs: merged, requests: sum(p => p.requests), okRequests: sum(p => p.okRequests), responseBytes: sum(p => p.responseBytes), requestBytes: sum(p => p.requestBytes),
       totalMs: performance.now() - started, fetchMs: sum(p => p.fetchMs), endpointSwitches: sum(p => p.endpointSwitches), spanHistogram: histogram,
-      endpoints: parts.flatMap((part, i) => part.endpoints.map(use => ({ ...use, url: `segment ${i}: ${use.url}` }))),
+      endpoints: mergeUses(parts.filter(Boolean)),
     };
   }
   const refPath = join(out, tag, `reference-${chain.key}.json`);

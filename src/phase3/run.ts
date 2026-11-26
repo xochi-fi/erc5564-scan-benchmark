@@ -291,6 +291,8 @@ async function stageConsistency(transport: Transport, chain: ChainConfig, out: s
   await writeJson(join(out, 'consistency', `${chain.key}.json`), { chain: chain.key, measuredAt: new Date().toISOString(), source, targets: targets.map(t => t.key), endpoints: results });
 }
 
+let maxMinutes = 90;
+
 // ---------- resumable state ----------
 /**
  * Partial retrieval state, written at most every 15 s and at each segment end, under
@@ -372,7 +374,7 @@ async function stageRetrieve(transport: Transport, chain: ChainConfig, out: stri
   let result: RetrieveResult;
   if (strategy !== 'parallel') {
     const state = await loadState(out, tag, chain.key, strategy, 0, deployBlock);
-    result = await retrieveHistory(transport, { endpoints: order, filter, fromBlock: deployBlock, toBlock: head, initialSpan, maxRequests, maxMs: 90 * 60_000, log, ...(state ? { resume: state } : {}), onCheckpoint: saver(out, tag, chain.key, strategy, 0, deployBlock, onCheckpoint) });
+    result = await retrieveHistory(transport, { endpoints: order, filter, fromBlock: deployBlock, toBlock: head, initialSpan, maxRequests, maxMs: maxMinutes * 60_000, log, ...(state ? { resume: state } : {}), onCheckpoint: saver(out, tag, chain.key, strategy, 0, deployBlock, onCheckpoint) });
   } else {
     // Split the range into contiguous segments, one per endpoint on a distinct host, each with the full fallback list rotated.
     const hosts = [...new Map(order.map(url => [new URL(url).host, url])).values()];
@@ -389,7 +391,7 @@ async function stageRetrieve(transport: Transport, chain: ChainConfig, out: stri
       const state = await loadState(out, tag, chain.key, strategy, i, fromBlock);
       return retrieveHistory(transport, {
         endpoints: [...hosts.slice(i), ...hosts.slice(0, i)], filter, fromBlock, toBlock: i === k - 1 ? head : deployBlock + (i + 1) * size - 1,
-        initialSpan, maxRequests: Math.ceil(maxRequests / k), maxMs: 90 * 60_000, log, ...(state ? { resume: state } : {}),
+        initialSpan, maxRequests: Math.ceil(maxRequests / k), maxMs: maxMinutes * 60_000, log, ...(state ? { resume: state } : {}),
         onCheckpoint: saver(out, tag, chain.key, strategy, i, fromBlock, onCheckpoint),
       });
     }));
@@ -454,6 +456,7 @@ async function main(): Promise<void> {
       strategy: { type: 'string', default: 'list-order,probe-informed' },
       'max-requests': { type: 'string', default: '8000' },
       'umbra-strategy': { type: 'string', default: 'probe-informed' },
+      'max-minutes': { type: 'string', default: '90' },
       help: { type: 'boolean', default: false },
     },
   });
@@ -468,6 +471,7 @@ async function main(): Promise<void> {
   const stages = values.stage === 'all' ? ['endpoints', 'reference', 'probe', 'retrieve', 'umbra', 'report'] : values.stage.split(',');
   const strategies = values.strategy.split(',') as Strategy[];
   const maxRequests = Number(values['max-requests']);
+  maxMinutes = Number(values['max-minutes']);
   log(`User-Agent: ${USER_AGENT}`);
   for (const stage of stages) {
     if (stage === 'endpoints') await stageEndpoints(transport, out);

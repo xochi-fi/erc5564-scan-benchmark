@@ -317,7 +317,7 @@ bun run phase3 --stage endpoints                  # fetch chainlist rpcs.json an
 bun run phase3 --stage reference                  # Blockscout / Routescan counts and deploy blocks
 bun run phase3 --stage probe                      # per-endpoint limits, archive depth, latency (~10-25 min per chain)
 bun run phase3 --stage retrieve                   # full history, list-order and probe-informed
-bun run phase3 --stage retrieve --chains base --strategy parallel --max-requests 60000
+bun run phase3 --stage retrieve --chains base --strategy parallel --max-requests 60000 --max-minutes 300   # resumable: rerun to continue
 bun run phase3 --stage consistency,verify-deploy  # silent-miss check, deploy block recheck
 bun run phase3 --stage umbra-reference,umbra-retrieve,umbra-verify-deploy
 bun run phase3 --stage report                     # summary.md/csv, endpoints.csv, cross-source.csv

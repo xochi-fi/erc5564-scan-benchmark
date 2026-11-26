@@ -1,0 +1,1417 @@
+{
+ "source": "https://chainlist.org/rpcs.json",
+ "fetchedAt": "2026-11-26T14:02:35.525Z",
+ "lastModified": "Mon, 23 Nov 2026 11:43:44 GMT",
+ "sha256": "bd7786b2d26148bcbe7cef7414e56dfad54df52274c26df91e0a563ee1e0996a",
+ "chains": {
+  "ethereum": [
+   {
+    "url": "https://eth.backrun.io",
+    "tracking": "limited",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://xrpc.cl/eth",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.hostdefi.com/api/rpc/ethereum",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/1",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://one.valve.city/rpc/vk_demo/evm/1",
+    "tracking": "none",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "wss://one.valve.city/rpc/vk_demo/evm/1",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.nodeflare.app/eth/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7",
+    "tracking": "yes",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://ethereum-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://ethereum-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://public.1rpc.io/eth",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.mevblocker.io",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://rpc.flashbots.net",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://virginia.rpc.blxrbdn.com",
+    "tracking": "yes",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://uk.rpc.blxrbdn.com",
+    "tracking": "yes",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://singapore.rpc.blxrbdn.com",
+    "tracking": "yes",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://eth.rpc.blxrbdn.com",
+    "tracking": "yes",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://cloudflare-eth.com",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://eth-mainnet.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum.public.blockpi.network/v1/rpc/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://eth-mainnet.g.alchemy.com/v2/demo",
+    "tracking": "yes",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://mainnet.eth.cloud.ava.do",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://ethereumnodelight.app.runonflux.io",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://eth-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf",
+    "tracking": null,
+    "excluded": "key in query string"
+   },
+   {
+    "url": "https://rpc.eth.gateway.fm",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.chain49.com/ethereum?api_key=14d1a8b86d8a4b4797938332394203dc",
+    "tracking": "yes",
+    "excluded": "key in query string"
+   },
+   {
+    "url": "https://eth.meowrpc.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://eth.drpc.org",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://eth.drpc.org",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://mainnet.gateway.tenderly.co",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://virtual.mainnet.rpc.tenderly.co/5804dcf7-70e6-4988-b2b0-3672193e0c91",
+    "tracking": "yes",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/mainnet",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://api.zan.top/eth-mainnet",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://eth.merkle.io",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://services.tokenview.io/vipapi/nodeservice/eth?apikey=qVHq2o6jpaakcw3lRstl",
+    "tracking": "yes",
+    "excluded": "key in query string"
+   },
+   {
+    "url": "https://rpc.polysplit.cloud/v1/chain/1",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://public-eth.nownodes.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "wss://eth-mainnet.4everland.org/ws/v1/37fa9972c1b1cd5fab542c7bdd4cde2f",
+    "tracking": "limited",
+    "excluded": "websocket"
+   },
+   {
+    "url": "wss://ws-rpc.graffiti.farm",
+    "tracking": "limited",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://eth.blockrazor.xyz",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://eth.blockrazor.xyz/fullprivacy",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://eth.blockrazor.xyz/maxbackrun",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://0xrpc.io/eth",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://0xrpc.io/eth",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.owlracle.info/eth/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://eth.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum-json-rpc.stakely.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://eth.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://api-ethereum-mainnet-reth.n.dwellir.com/2ccf18bf-2916-4198-8856-42172854353c",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://rpc.fullsend.to",
+    "tracking": "none",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://mainnet.rpc.sentio.xyz",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/eth",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc-eth.blockmachine.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://eth.api.pocket.network",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.driftguard.live/eth",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://eth.blocktailor.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum-mainnet.rpc.thyme.sh/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://ethras.org/public/ethereum",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://api.mycryptoapi.com/eth",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "wss://mainnet.gateway.tenderly.co",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.blocknative.com/boost",
+    "tracking": null,
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://rpc.flashbots.net/fast",
+    "tracking": null,
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://rpc.mevblocker.io/fast",
+    "tracking": null,
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://rpc.mevblocker.io/noreverts",
+    "tracking": null,
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://rpc.mevblocker.io/fullprivacy",
+    "tracking": null,
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://api.securerpc.com/v1",
+    "tracking": null,
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://ethereum-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/eth?key=${SWIFTNODES_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://api.blockvectra.com/v1/eth_mainnet/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://1.rpc.thirdweb.com",
+    "tracking": "yes",
+    "excluded": null
+   }
+  ],
+  "base": [
+   {
+    "url": "https://xrpc.cl/base",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.hostdefi.com/api/rpc/base",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/8453",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.nodeflare.app/base/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://mainnet.base.org",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://developer-access-mainnet.base.org",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://li-fi-base.intustechno.workers.dev/rpc",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://base.public.blockpi.network/v1/rpc/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://public.1rpc.io/base",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://base-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://base.meowrpc.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://base-mainnet.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://base.gateway.tenderly.co",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/base",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://base-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://base-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://base.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://base-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://api.zan.top/base-mainnet",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.numa.network/base",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.owlracle.info/base/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://base.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://base.rpc.blxrbdn.com",
+    "tracking": "yes",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://api-base-mainnet-archive.n.dwellir.com/2ccf18bf-2916-4198-8856-42172854353c",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://base.drpc.org",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://base.drpc.org",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://base.rpc.sentio.xyz",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/base",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpcfree.com/base-rpc",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.degenprotocol.io/base",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://base.api.pocket.network",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc-base.blockmachine.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://base.daybreak-rpc.network",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.driftguard.live/base",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://base.gateway.tenderly.co",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.baseazul.dev",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.satelink.network/rpc/base",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://base-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/base?key=${SWIFTNODES_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://api.blockvectra.com/v1/base_mainnet/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://8453.rpc.thirdweb.com",
+    "tracking": "yes",
+    "excluded": null
+   }
+  ],
+  "arbitrum": [
+   {
+    "url": "https://xrpc.cl/arbitrum",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.hostdefi.com/api/rpc/arbitrum",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/42161",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.nodeflare.app/arb/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://arb1.arbitrum.io/rpc",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://public.1rpc.io/arb",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://arbitrum-one-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://arb-mainnet.g.alchemy.com/v2/demo",
+    "tracking": "yes",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://arbitrum-one.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://arbitrum-one-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://arbitrum-one-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://arbitrum.meowrpc.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://api.zan.top/arb-one",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://arbitrum.drpc.org",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://api.stateless.solutions/arbitrum-one/v1/demo",
+    "tracking": "none",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://arbitrum.gateway.tenderly.co",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.owlracle.info/arb/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://arbitrum.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://arb-one-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://arb-one.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://public-arb-mainnet.fastnode.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://api-arbitrum-mainnet-archive.n.dwellir.com/2ccf18bf-2916-4198-8856-42172854353c",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "wss://arbitrum.drpc.org",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://arbitrum-one.rpc.sentio.xyz",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/arbitrum",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpcfree.com/arbitrum-rpc",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://arbitrum-one-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc-arbitrum.blockmachine.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.driftguard.live/arb",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://arb-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://rpc.satelink.network/rpc/arbitrum",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://arbitrum-one-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/arbitrum?key=${SWIFTNODES_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://api.blockvectra.com/v1/arb_mainnet/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://42161.rpc.thirdweb.com",
+    "tracking": "yes",
+    "excluded": null
+   }
+  ],
+  "optimism": [
+   {
+    "url": "https://xrpc.cl/optimism",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.hostdefi.com/api/rpc/optimism",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/10",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.nodeflare.app/op/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://mainnet.optimism.io",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://optimism-mainnet.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://public.1rpc.io/op",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://optimism-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://opt-mainnet.g.alchemy.com/v2/demo",
+    "tracking": "yes",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://optimism.public.blockpi.network/v1/rpc/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://optimism.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://optimism-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://optimism-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://api.zan.top/opt-mainnet",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://optimism.drpc.org",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://optimism.gateway.tenderly.co",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/optimism",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://api.stateless.solutions/optimism/v1/demo",
+    "tracking": "none",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://optimism-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "wss://opt-mainnet.4everland.org/ws/v1/37fa9972c1b1cd5fab542c7bdd4cde2f",
+    "tracking": "limited",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.buildbear.io/esquivelfabian",
+    "tracking": "yes",
+    "excluded": "private sandbox fork"
+   },
+   {
+    "url": "https://rpc.owlracle.info/opt/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://op.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://public-op-mainnet.fastnode.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://api-optimism-mainnet-archive.n.dwellir.com/2ccf18bf-2916-4198-8856-42172854353c",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://optimism.rpc.sentio.xyz",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/optimism",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "wss://op.api.pocket.network",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc-optimism.blockmachine.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://optimism-mainnet.rpc.thyme.sh/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.driftguard.live/op",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://optimism.gateway.tenderly.co",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "wss://optimism.drpc.org",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://optimism-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/optimism?key=${SWIFTNODES_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://10.rpc.thirdweb.com",
+    "tracking": "yes",
+    "excluded": null
+   }
+  ],
+  "gnosis": [
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/100",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.gnosischain.com",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://xdai-archive.blockscout.com",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.gnosis.gateway.fm",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis-mainnet.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.ap-southeast-1.gateway.fm/v4/gnosis/non-archival/mainnet",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis.drpc.org",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://endpoints.omniatech.io/v1/gnosis/mainnet/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://gnosis-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://public.1rpc.io/gnosis",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://gno-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://gnosis.drpc.org",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/gnosis",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "wss://gnosis.api.pocket.network",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.ankr.com/gnosis",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis.blockpi.network/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://gnosis.oat.farm",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "wss://rpc.gnosischain.com/wss",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://gnosis-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/gnosis?key=${SWIFTNODES_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://100.rpc.thirdweb.com",
+    "tracking": "yes",
+    "excluded": null
+   }
+  ],
+  "polygon": [
+   {
+    "url": "https://xrpc.cl/polygon",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.hostdefi.com/api/rpc/polygon",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/137",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://public.blazingnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.nodeflare.app/polygon/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.ankr.com/polygon",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc-mainnet.matic.quiknode.pro",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon-mainnet.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://public.1rpc.io/matic",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf",
+    "tracking": null,
+    "excluded": "key in query string"
+   },
+   {
+    "url": "https://polygon-bor-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://polygon-bor-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://polygon-mainnet.g.alchemy.com/v2/demo",
+    "tracking": "yes",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://polygon.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon.drpc.org",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon.gateway.tenderly.co",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/polygon",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://api.zan.top/polygon-mainnet",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon-mainnet.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "wss://polygon-mainnet.4everland.org/ws/v1/37fa9972c1b1cd5fab542c7bdd4cde2f",
+    "tracking": "limited",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.owlracle.info/poly/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://poly.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://api-polygon-mainnet-full.n.dwellir.com/2ccf18bf-2916-4198-8856-42172854353c",
+    "tracking": "yes",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/polygon",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.private.mev-x.com/polygon",
+    "tracking": "limited",
+    "excluded": "transaction relay / MEV endpoint"
+   },
+   {
+    "url": "https://matic.rpc.sentio.xyz",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpcfree.com/polygon-rpc",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.satelink.network/rpc/polygon",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://poly.api.pocket.network",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc-polygon.blockmachine.io",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://polygon-mainnet.rpc.thyme.sh/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.driftguard.live/pol",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://polygon.drpc.org",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "wss://polygon.gateway.tenderly.co",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "wss://rpc.satelink.network/rpc/ws/polygon",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://polygon-bor-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.swiftnodes.io/rpc/polygon?key=${SWIFTNODES_API_KEY}",
+    "tracking": null,
+    "excluded": "template needs a key"
+   },
+   {
+    "url": "https://api.blockvectra.com/v1/polygon_mainnet/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://137.rpc.thirdweb.com",
+    "tracking": "yes",
+    "excluded": null
+   }
+  ],
+  "sepolia": [
+   {
+    "url": "https://xrpc.cl/sepolia",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/11155111",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://eth-sepolia.g.alchemy.com/v2/demo",
+    "tracking": "yes",
+    "excluded": "demo key in path"
+   },
+   {
+    "url": "https://eth-sepolia.public.blastapi.io",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://sepolia.gateway.tenderly.co",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/sepolia",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://api.zan.top/eth-sepolia",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum-sepolia-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://ethereum-sepolia-rpc.publicnode.com",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://public.1rpc.io/sepolia",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://eth-sepolia.api.onfinality.io/public",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "https://ethereum-sepolia-public.nodies.app",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "wss://eth-testnet.4everland.org/ws/v1/37fa9972c1b1cd5fab542c7bdd4cde2f",
+    "tracking": "limited",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://0xrpc.io/sep",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "wss://0xrpc.io/sep",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://rpc.owlracle.info/sepolia/70d38ce1826c4a60bb2a8e05a6c8b20f",
+    "tracking": "limited",
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://ethereum-sepolia.gateway.tatum.io",
+    "tracking": "yes",
+    "excluded": null
+   },
+   {
+    "url": "https://eth-sepolia-testnet.api.pocket.network",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://sepolia.rpc.sentio.xyz",
+    "tracking": "limited",
+    "excluded": null
+   },
+   {
+    "url": "wss://eth-sepolia-testnet.api.pocket.network",
+    "tracking": "none",
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://ethereum-sepolia.rpc.thyme.sh/public",
+    "tracking": "none",
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.sepolia.org",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc2.sepolia.org",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://rpc.sepolia.ethpandaops.io",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "wss://sepolia.gateway.tenderly.co",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://sepolia.drpc.org",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "wss://sepolia.drpc.org",
+    "tracking": null,
+    "excluded": "websocket"
+   },
+   {
+    "url": "https://eth-sepolia.g.alchemy.com/v2/WddzdzI2o9S3COdT73d5w6AIogbKq4X-",
+    "tracking": null,
+    "excluded": "key-shaped path segment"
+   },
+   {
+    "url": "https://ethereum-sepolia-rpc.blockreq.com/v1/rpc/public",
+    "tracking": null,
+    "excluded": null
+   },
+   {
+    "url": "https://api.blockvectra.com/v1/eth_sepolia/public",
+    "tracking": null,
+    "excluded": null
+   }
+  ]
+ }
+}

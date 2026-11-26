@@ -9,6 +9,10 @@ address payments. It measures two things:
    JSON-RPC (`eth_getLogs`), scans each page, and verifies each candidate payment, with
    network, scanning and verification timed separately.
 
+3. **Phase 3, keyless log retrieval:** whether a wallet with no account or API key can
+   fetch the full real `Announcement` history from public RPC endpoints and indexers on
+   seven chains ([PHASE3.md](PHASE3.md)).
+
 It uses ScopeLift's [`@scopelift/stealth-address-sdk`](https://github.com/ScopeLift/stealth-address-sdk)
 `1.0.0-beta.5` (npm `gitHead`
 [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2)),
@@ -79,6 +83,24 @@ All five findings held after three repetitions:
 The full tables, the repeat design, per-finding verdicts, host activity and the
 original single-run results (Appendix A) are in [FINDINGS.md](FINDINGS.md).
 
+### Phase 3: keyless history retrieval ([PHASE3.md](PHASE3.md))
+
+Live, read-only, keyless, 2026-11-26. The canonical Announcer has 298 announcements on Ethereum,
+BASE_COUNT on Base, 19 on Arbitrum One, 2 on OP Mainnet, 3 on Gnosis, 9 on Polygon PoS and 1,039 on Sepolia.
+
+- A keyless cold start from the deploy block succeeded on every chain. With an endpoint
+  that accepts the whole history it took 8-17 s and 30-52 requests (except Base, where
+  no keyless endpoint takes more than about 10k blocks with history: BASE_BEST_SHORT). In chainlist order it took
+  17 s to 72 min, and on Base it ran out of an 8,000-request budget.
+- Per-request block-range caps on keyless endpoints that serve history ranged from 10
+  blocks to the whole history. Many popular endpoints serve only recent blocks and say so
+  in their errors. One returned an empty result, with no error, for a window that holds a
+  real announcement.
+- Blockscout lacks 13 of 1,039 Sepolia announcements, and on Base, Arbitrum, Gnosis
+  and Polygon it served our client a Cloudflare challenge.
+- Umbra's own pre-standard contract carries far more traffic (25,558 to 102,552
+  announcements per chain on its four busiest chains). The ~300 figure counts only the canonical singleton.
+
 ## Hardware
 
 | Label in data | Hardware | Used for |
@@ -136,6 +158,13 @@ produce byte-identical `announcements.jsonl` files, and their SHA256 digests are
 in [`data/phase1/*/fixtures/*/manifest.json`](data/phase1/) and in
 `src/phase2/prepare-fixtures.ts`, which refuses a fixture whose bytes differ.
 
+Phase 3 (live network, read-only, keyless; see [PHASE3.md](PHASE3.md) for all stages):
+
+```sh
+bun test test/phase3.test.ts                 # offline: recorded error bodies, simulated endpoints
+bun run phase3 --stage endpoints,reference,probe,retrieve,consistency,report
+```
+
 An optional, read-only mainnet probe (`bun run phase2:mainnet --rpc <public RPC>`)
 records the fetch cost of real Announcer logs. It is off by default and never mixed
 into the deterministic results.
@@ -148,11 +177,13 @@ How the inputs are built and what each timer covers: [METHODS.md](METHODS.md).
 | --- | --- |
 | `src/` | phase-1 fixture generator, scan engines, CLI and profiler |
 | `src/phase2/` | local JSON-RPC chain server, link emulator, wallet, sweep and report tools |
+| `src/phase3/` | keyless endpoint probe, adaptive history retriever, indexer clients, report |
 | `test/` | `bun test` suites |
 | `scripts/` | host run plans (`phase2-run.sh`), Bazzite wrapper, repeat matrices |
 | `data/` | recorded results: summary CSVs and per-run JSON/JSONL ([data/README.md](data/README.md)) |
 | `FINDINGS.md` | phase 2 findings, verdicts, full tables, Appendix A single run |
 | `PHASE1.md` | phase 1 findings |
+| `PHASE3.md` | phase 3 findings: keyless log retrieval per chain, guidance for wallets |
 | `METHODS.md` | workloads, measurement boundaries, artifacts, phase-2 components |
 
 ## Caveats

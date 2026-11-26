@@ -1,0 +1,149 @@
+{
+ "chain": "optimism",
+ "measuredAt": "2026-11-26T15:08:22.174Z",
+ "filter": {
+  "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7"
+ },
+ "strategy": "list-order",
+ "endpointOrder": [
+  "xrpc.cl",
+  "lb.routeme.sh",
+  "mainnet.optimism.io",
+  "public.1rpc.io",
+  "optimism-public.nodies.app",
+  "optimism.public.blockpi.network",
+  "optimism-rpc.publicnode.com",
+  "optimism.drpc.org"
+ ],
+ "initialSpan": 10000,
+ "result": {
+  "success": true,
+  "failure": null,
+  "fromBlock": 121097390,
+  "toBlock": 160052907,
+  "checkpoint": 160052908,
+  "requests": 3930,
+  "okRequests": 3896,
+  "responseBytes": 159954,
+  "requestBytes": 953264,
+  "totalMs": 1104879.837448,
+  "fetchMs": 426435.50289299764,
+  "endpointSwitches": 2,
+  "spanHistogram": {
+   "4096": 1,
+   "8192": 3895
+  },
+  "endpoints": [
+   {
+    "url": "https://xrpc.cl/optimism",
+    "requests": 6,
+    "ok": 1,
+    "errors": {
+     "http": 5
+    },
+    "learnedMaxSpan": null,
+    "abandonedAt": 121107390,
+    "abandonReason": "http: XRPC Cluster: Backend optimism node currently syncing and fallbacks busy",
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/10",
+    "requests": 34,
+    "ok": 6,
+    "errors": {
+     "rate-limit": 6
+    },
+    "learnedMaxSpan": null,
+    "abandonedAt": 121167390,
+    "abandonReason": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at comp",
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://mainnet.optimism.io",
+    "requests": 3890,
+    "ok": 3889,
+    "errors": {
+     "range-limit": 1
+    },
+    "learnedMaxSpan": 10000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://public.1rpc.io/op",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism-public.nodies.app",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism.public.blockpi.network/v1/rpc/public",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism-rpc.publicnode.com",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://optimism.drpc.org",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   }
+  ],
+  "count": 2,
+  "firstBlock": 154353397,
+  "lastBlock": 154455081,
+  "firstTime": "2026-07-17T16:26:11.000Z",
+  "lastTime": "2026-07-20T00:55:39.000Z"
+ },
+ "identities": [
+  "154353397:112:0x2d2dba56e84fa736eddf4d6f4fff9c8ef66fe5d2b405ad0c58c6c8fba2ce278f",
+  "154455081:74:0xbe234b0309342a2ba32be07209a441fca8094e8de49e363024af322e93463b59"
+ ],
+ "comparison": {
+  "reference": 2,
+  "candidate": 2,
+  "matched": 2,
+  "missing": [],
+  "extra": [],
+  "txMismatch": [],
+  "referenceTxMissing": 0,
+  "exact": true,
+  "exactOnTxHash": true
+ },
+ "referenceSource": "blockscout-v2 https://explorer.optimism.io",
+ "deployBlock": 121097390,
+ "deploySource": "https://explorer.optimism.io creation transaction; bisection agrees (eth_getCode bisection on mainnet.optimism.io (28 requests))"
+}

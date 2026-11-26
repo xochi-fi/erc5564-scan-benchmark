@@ -1,0 +1,975 @@
+[
+ {
+  "provider": "base xrpc.cl",
+  "httpStatus": 503,
+  "body": "XRPC Cluster: Backend base node currently syncing and fallbacks busy",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "base lb.routeme.sh",
+  "httpStatus": 429,
+  "body": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "base rpc.nodeflare.app",
+  "httpStatus": 403,
+  "body": "invalid JSON-RPC envelope {\"error\":\"method_not_supported\",\"message\":\"eth_getLogs needs a key or payment. Your 17 free heavy calls/day (no key) are",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "base mainnet.base.org",
+  "httpStatus": 429,
+  "body": "request limit reached",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "base li-fi-base.intustechno.workers.dev",
+  "httpStatus": 429,
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/\",\"title\":\"Error 1027: This website has been tempora",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "base base.public.blockpi.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference\"}}",
+  "kind": "range-limit",
+  "limitHint": 5000
+ },
+ {
+  "provider": "base base.public.blockpi.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":4444,\"message\":\"pruned history unavailable: requested 15502414, earliest available 51000000\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "base public.1rpc.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs is limited to 0 - 50 blocks range\"}}",
+  "kind": "range-limit",
+  "limitHint": 50
+ },
+ {
+  "provider": "base public.1rpc.io",
+  "httpStatus": 410,
+  "body": "invalid JSON-RPC envelope {\"error\":\"This endpoint has been discontinued.\",\"message\":\"For an up to date list of available endpoints, visit https://",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "base public.1rpc.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":4444,\"message\":\"pruned history unavailable: requested 15502414, earliest available 52000000\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "base base-public.nodies.app",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32001,\"message\":\"Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.\"}}",
+  "kind": "range-limit",
+  "limitHint": 50
+ },
+ {
+  "provider": "base base.meowrpc.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"The method eth_getLogs is not supported.\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "base base-mainnet.public.blastapi.io",
+  "httpStatus": 400,
+  "body": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9073, 0x3ba907c]",
+  "kind": "range-limit",
+  "limitHint": 10
+ },
+ {
+  "provider": "base base.gateway.tenderly.co",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba84bb, 0x3ba88a3], or use an access key for larger ranges.)\"}}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "base gateway.tenderly.co",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba84bc, 0x3ba88a4], or use an access key for larger ranges.)\"}}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "base base-rpc.publicnode.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32701,\"message\":\"exceed maximum block range: 50000\"}}",
+  "kind": "range-limit",
+  "limitHint": 50000
+ },
+ {
+  "provider": "base base-rpc.publicnode.com",
+  "httpStatus": 403,
+  "body": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "base base.api.onfinality.io",
+  "httpStatus": 429,
+  "body": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "base base-mainnet.gateway.tatum.io",
+  "httpStatus": 429,
+  "body": "{\"statusCode\": 429, \"message\": \"You have exceeded your limit of 5 requests per minute. To increase this limit, upgrade to a Paid plan with 200 requests per seco",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "base api.zan.top",
+  "httpStatus": 403,
+  "body": "Method \"eth_getLogs\" is not available for unregistered accounts. Please visit https://zan.top/ and register to unlock more.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "base rpc.numa.network",
+  "httpStatus": 522,
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/\",\"title\":\"Error 522: Connection timed out\"",
+  "kind": "timeout",
+  "limitHint": null
+ },
+ {
+  "provider": "base base.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs block range too large (max 10001 blocks)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10001
+ },
+ {
+  "provider": "base base.drpc.org",
+  "httpStatus": 400,
+  "body": "ranges over 100 blocks are not supported on free plan",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "base base.rpc.sentio.xyz",
+  "httpStatus": 429,
+  "body": "{\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "base rpc.swiftnodes.io",
+  "httpStatus": 403,
+  "body": "eth_getLogs requires an API key. Get a free key at https://swiftnodes.io and retry.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "base rpc.degenprotocol.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"block range exceeds limit of 1000 blocks\"}}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "base rpc-base.blockmachine.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32002,\"message\":\"keyless requests are served for the most recent 100 blocks only; block 62558465 is older than that; use an API key for older blocks\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "base base.daybreak-rpc.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"query exceeds max block range 2000\"}}",
+  "kind": "range-limit",
+  "limitHint": 2000
+ },
+ {
+  "provider": "base rpc.driftguard.live",
+  "httpStatus": 403,
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1000/\",\"title\":\"Error 1000: DNS points to proh",
+  "kind": "blocked",
+  "limitHint": null
+ },
+ {
+  "provider": "base rpc.baseazul.dev",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"block range exceeds limit of 1000 blocks\"}}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "base rpc.baseazul.dev",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":4444,\"message\":\"pruned history unavailable: requested 52559495, earliest available 61000000\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "base rpc.satelink.network",
+  "httpStatus": 404,
+  "body": "{\"status\":\"error\",\"code\":404,\"message\":\"Application not found\",\"request_id\":\"1qWQmcawRi2dfZG1EuroCg\"}",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "base base-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "base api.blockvectra.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"method is not available on the public endpoint\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "base 8453.rpc.thirdweb.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"Log response size exceeded. Maximum allowed number of requested blocks is 1000\"}}",
+  "kind": "result-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis lb.routeme.sh",
+  "httpStatus": 400,
+  "body": "block range too large; try a block range of at most 10000 blocks",
+  "kind": "range-limit",
+  "limitHint": 10000
+ },
+ {
+  "provider": "gnosis xdai-archive.blockscout.com",
+  "httpStatus": 404,
+  "body": "default backend - 404",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis-public.nodies.app",
+  "httpStatus": 403,
+  "body": "The network of this endpoint requires a paid subscription plan. Subscribe at https://nodies.app to get access.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis-mainnet.public.blastapi.io",
+  "httpStatus": 403,
+  "body": "Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis.api.onfinality.io",
+  "httpStatus": 429,
+  "body": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis.drpc.org",
+  "httpStatus": 400,
+  "body": "ranges over 100 blocks are not supported on free plan",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "gnosis endpoints.omniatech.io",
+  "httpStatus": 521,
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-521/\",\"title\":\"Error 521: Web server is down\",\"",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis-rpc.publicnode.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"Logs request reads 16000 blocks without the log index, over the maximum of 10000 per request. Use a narrower fromBlock/toBlock range or increase Receipt.MaxBlockDepth. (System.ArgumentException: Logs request reads 16000 blocks without the log index, over the maximum of 10000 per request. Use a narro\"}}",
+  "kind": "range-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis public.1rpc.io",
+  "httpStatus": 403,
+  "body": "The network of this endpoint requires a paid subscription plan. Subscribe at https://nodies.app to get access.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gno-mainnet.gateway.tatum.io",
+  "httpStatus": 429,
+  "body": "{\"statusCode\": 429, \"message\": \"You have exceeded your limit of 5 requests per minute. To increase this limit, upgrade to a Paid plan with 200 requests per seco",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs block range too large (max 10001 blocks)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10001
+ },
+ {
+  "provider": "gnosis rpc.ankr.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.\"}}",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis.blockpi.network",
+  "httpStatus": 503,
+  "body": "Apikey not found",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis.oat.farm",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"Block range 16000 exceeds the maximum of 10000 blocks per logs request. Use a narrower fromBlock/toBlock range or increase Receipt.MaxBlockDepth.\"}}",
+  "kind": "range-limit",
+  "limitHint": 10000
+ },
+ {
+  "provider": "gnosis gnosis-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "gnosis gnosis-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"query block range exceeds server limit, narrow your filter: 1000\"}}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "gnosis 100.rpc.thirdweb.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"Log response size exceeded. Maximum allowed number of requested blocks is 1000\"}}",
+  "kind": "result-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arb1.arbitrum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"query spans 16383994 blocks (511362117 to 527746110), but only 10000000 are allowed for this request; narrow the block range\"}}",
+  "kind": "range-limit",
+  "limitHint": 10000000
+ },
+ {
+  "provider": "arbitrum public.1rpc.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"The method eth_getLogs is not supported.\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arbitrum-one-public.nodies.app",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32001,\"message\":\"Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.\"}}",
+  "kind": "range-limit",
+  "limitHint": 50
+ },
+ {
+  "provider": "arbitrum arbitrum-one.public.blastapi.io",
+  "httpStatus": 400,
+  "body": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x1f74c063, 0x1f74c06c]",
+  "kind": "range-limit",
+  "limitHint": 10
+ },
+ {
+  "provider": "arbitrum arbitrum-one-rpc.publicnode.com",
+  "httpStatus": 403,
+  "body": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arbitrum.meowrpc.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"The method eth_getLogs is not supported.\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arbitrum.drpc.org",
+  "httpStatus": 400,
+  "body": "ranges over 100 blocks are not supported on free plan",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "arbitrum arbitrum.api.onfinality.io",
+  "httpStatus": 429,
+  "body": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arb-one-mainnet.gateway.tatum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-16412,\"message\":\"Requested range is over limit of 100\"}}",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "arbitrum arb-one.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs block range too large (max 10001 blocks)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10001
+ },
+ {
+  "provider": "arbitrum public-arb-mainnet.fastnode.io",
+  "httpStatus": 504,
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-504/\",\"title\":\"Error 504: Gateway time-out\",\"st",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arbitrum-one.rpc.sentio.xyz",
+  "httpStatus": 429,
+  "body": "{\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "arbitrum arbitrum-one-mainnet.gateway.tatum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-16412,\"message\":\"Requested range is over limit of 100\"}}",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "arbitrum rpc-arbitrum.blockmachine.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32002,\"message\":\"keyless requests are served for the most recent 100 blocks only; block 527745196 is older than that; use an API key for older blocks\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum arbitrum-one-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "arbitrum 42161.rpc.thirdweb.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"Log response size exceeded. Maximum allowed number of requested blocks is 1000\"}}",
+  "kind": "result-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon public.blazingnode.com",
+  "httpStatus": 400,
+  "body": "Public tier max block range is 128 blocks. Unlock wider eth_getLogs & 300 RPS burst with a free trial key at https://blazingnode.com",
+  "kind": "range-limit",
+  "limitHint": 128
+ },
+ {
+  "provider": "polygon public.blazingnode.com",
+  "httpStatus": 403,
+  "body": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazingnode.com/pricing",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon rpc-mainnet.matic.quiknode.pro",
+  "httpStatus": 413,
+  "body": "eth_getLogs is limited to a 10,000 range",
+  "kind": "range-limit",
+  "limitHint": 10000
+ },
+ {
+  "provider": "polygon polygon-public.nodies.app",
+  "httpStatus": 403,
+  "body": "The network of this endpoint requires a paid subscription plan. Subscribe at https://nodies.app to get access.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon polygon-mainnet.public.blastapi.io",
+  "httpStatus": 403,
+  "body": "Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon polygon-bor-rpc.publicnode.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32701,\"message\":\"exceed maximum block range: 10000\"}}",
+  "kind": "range-limit",
+  "limitHint": 10000
+ },
+ {
+  "provider": "polygon polygon-bor-rpc.publicnode.com",
+  "httpStatus": 403,
+  "body": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon polygon.api.onfinality.io",
+  "httpStatus": 429,
+  "body": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon polygon.drpc.org",
+  "httpStatus": 400,
+  "body": "ranges over 100 blocks are not supported on free plan",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "polygon polygon-mainnet.gateway.tatum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-16412,\"message\":\"Requested range is over limit of 100\"}}",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "polygon poly.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs block range too large (max 10001 blocks)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10001
+ },
+ {
+  "provider": "polygon matic.rpc.sentio.xyz",
+  "httpStatus": 429,
+  "body": "{\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "polygon rpc-polygon.blockmachine.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32002,\"message\":\"keyless requests are served for the most recent 250 blocks only; block 97997034 is older than that; use an API key for older blocks\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon polygon-mainnet.rpc.thyme.sh",
+  "httpStatus": 403,
+  "body": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon polygon-bor-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon api.blockvectra.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32010,\"message\":\"node is syncing; calls are temporarily unavailable\"}}",
+  "kind": "other",
+  "limitHint": null
+ },
+ {
+  "provider": "polygon 137.rpc.thirdweb.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"Log response size exceeded. Maximum allowed number of requested blocks is 1000\"}}",
+  "kind": "result-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism mainnet.optimism.io",
+  "httpStatus": 413,
+  "body": "eth_getLogs is limited to a 10,000 range",
+  "kind": "range-limit",
+  "limitHint": 10000
+ },
+ {
+  "provider": "optimism optimism-mainnet.public.blastapi.io",
+  "httpStatus": 403,
+  "body": "Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism optimism-public.nodies.app",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32001,\"message\":\"Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.\"}}",
+  "kind": "range-limit",
+  "limitHint": 50
+ },
+ {
+  "provider": "optimism optimism.public.blockpi.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference\"}}",
+  "kind": "range-limit",
+  "limitHint": 5000
+ },
+ {
+  "provider": "optimism optimism.api.onfinality.io",
+  "httpStatus": 429,
+  "body": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism optimism-rpc.publicnode.com",
+  "httpStatus": 403,
+  "body": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism api.zan.top",
+  "httpStatus": 403,
+  "body": "Method \"eth_getLogs\" is not available for unregistered accounts. Please visit https://zan.top/ and register to unlock more.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism optimism.drpc.org",
+  "httpStatus": 400,
+  "body": "ranges over 100 blocks are not supported on free plan",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "optimism optimism-mainnet.gateway.tatum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-16412,\"message\":\"Requested range is over limit of 100\"}}",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "optimism op.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"invalid argument 0: block range exceeds maximum 2000\"}}",
+  "kind": "range-limit",
+  "limitHint": 2000
+ },
+ {
+  "provider": "optimism op.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":4444,\"message\":\"pruned history unavailable\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism public-op-mainnet.fastnode.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":4444,\"message\":\"pruned history unavailable\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism optimism.rpc.sentio.xyz",
+  "httpStatus": 429,
+  "body": "{\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "optimism rpc-optimism.blockmachine.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32002,\"message\":\"keyless requests are served for the most recent 100 blocks only; block 160051243 is older than that; use an API key for older blocks\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism optimism-mainnet.rpc.thyme.sh",
+  "httpStatus": 403,
+  "body": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism optimism-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "optimism 10.rpc.thirdweb.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"Log response size exceeded. Maximum allowed number of requested blocks is 1000\"}}",
+  "kind": "result-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum ethereum-rpc.publicnode.com",
+  "httpStatus": 403,
+  "body": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum cloudflare-eth.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32046,\"message\":\"Cannot fulfill request\"}}",
+  "kind": "other",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum eth-mainnet.public.blastapi.io",
+  "httpStatus": 400,
+  "body": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x1945797, 0x19457a0]",
+  "kind": "range-limit",
+  "limitHint": 10
+ },
+ {
+  "provider": "ethereum ethereum-public.nodies.app",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32001,\"message\":\"Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.\"}}",
+  "kind": "range-limit",
+  "limitHint": 50
+ },
+ {
+  "provider": "ethereum ethereum.public.blockpi.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference\"}}",
+  "kind": "range-limit",
+  "limitHint": 5000
+ },
+ {
+  "provider": "ethereum rpc.eth.gateway.fm",
+  "httpStatus": 402,
+  "body": "This endpoint is no longer available. Contact sales@gateway.fm for Ethereum RPC access.",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum eth.meowrpc.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"The method eth_getLogs is not supported.\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum eth.drpc.org",
+  "httpStatus": 400,
+  "body": "ranges over 100 blocks are not supported on free plan",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "ethereum api.zan.top",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"HTTP 200: invalid JSON-RPC envelope {\\\"timestamp\\\":\\\"2026-11-26T14:27:29.162934816Z\\\",\\\"status\\\":200,\\\"error\\\":\\\"Method \\\\\\\"eth_getLogs\\\\\\\" is not available for unregist\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum ethereum-mainnet.gateway.tatum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-16412,\"message\":\"Requested range is over limit of 100\"}}",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "ethereum ethereum-mainnet.gateway.tatum.io",
+  "httpStatus": 429,
+  "body": "{\"statusCode\": 429, \"message\": \"You have exceeded your limit of 5 requests per minute. To increase this limit, upgrade to a Paid plan with 200 requests per seco",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum eth.api.onfinality.io",
+  "httpStatus": 429,
+  "body": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+  "kind": "rate-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum ethereum-json-rpc.stakely.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"method not available\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum eth.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs block range too large (max 10001 blocks)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10001
+ },
+ {
+  "provider": "ethereum mainnet.rpc.sentio.xyz",
+  "httpStatus": 429,
+  "body": "{\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "ethereum rpc-eth.blockmachine.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"block range exceeds maximum allowed (max=10000, requested=16000) — the range is INCLUSIVE, so page with to = from + 9999 (a 10000-block span means to - from = 9999, not 10000)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10000
+ },
+ {
+  "provider": "ethereum rpc-eth.blockmachine.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32002,\"message\":\"keyless requests are served for the most recent 10000 blocks only; block 26399970 is older than that; use an API key for older blocks\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum rpc.driftguard.live",
+  "httpStatus": 403,
+  "body": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1000/\",\"title\":\"Error 1000: DNS points to proh",
+  "kind": "blocked",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum eth.blocktailor.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"block range extends beyond current head block\"}}",
+  "kind": "other",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum ethereum-mainnet.rpc.thyme.sh",
+  "httpStatus": 403,
+  "body": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum ethras.org",
+  "httpStatus": 503,
+  "body": "Public RPC unavailable",
+  "kind": "http",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum api.mycryptoapi.com",
+  "httpStatus": 403,
+  "body": "{\"message\":\"Forbidden\"}",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum ethereum-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum api.blockvectra.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"method is not available on the public endpoint\"}}",
+  "kind": "unsupported",
+  "limitHint": null
+ },
+ {
+  "provider": "ethereum 1.rpc.thirdweb.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"Log response size exceeded. Maximum allowed number of requested blocks is 1000\"}}",
+  "kind": "result-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia eth-sepolia.public.blastapi.io",
+  "httpStatus": 403,
+  "body": "Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia ethereum-sepolia-rpc.publicnode.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"block range extends beyond current head block: requested 12217140, head 12217139\"}}",
+  "kind": "other",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia ethereum-sepolia-public.nodies.app",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32001,\"message\":\"Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.\"}}",
+  "kind": "range-limit",
+  "limitHint": 50
+ },
+ {
+  "provider": "sepolia 0xrpc.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"Request contains invalid block params\"}}",
+  "kind": "other",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia ethereum-sepolia.gateway.tatum.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-16412,\"message\":\"Requested range is over limit of 100\"}}",
+  "kind": "range-limit",
+  "limitHint": 100
+ },
+ {
+  "provider": "sepolia eth-sepolia-testnet.api.pocket.network",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32602,\"message\":\"eth_getLogs block range too large (max 10001 blocks)\"}}",
+  "kind": "range-limit",
+  "limitHint": 10001
+ },
+ {
+  "provider": "sepolia sepolia.rpc.sentio.xyz",
+  "httpStatus": 429,
+  "body": "{\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "sepolia ethereum-sepolia.rpc.thyme.sh",
+  "httpStatus": 403,
+  "body": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io",
+  "kind": "archive-missing",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia rpc.sepolia.ethpandaops.io",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32012,\"message\":\"getLogs request exceeded max allowed range\"}}",
+  "kind": "range-limit",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia sepolia.drpc.org",
+  "httpStatus": 400,
+  "body": "chain is not available on free plan, please upgrade to paid plan",
+  "kind": "auth-required",
+  "limitHint": null
+ },
+ {
+  "provider": "sepolia ethereum-sepolia-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32005,\"message\":\"eth_getLogs range of 1000 blocks exceeds the 500-block limit for this plan; split the request into ranges of at most 500 blocks\"}}",
+  "kind": "range-limit",
+  "limitHint": 1000
+ },
+ {
+  "provider": "sepolia ethereum-sepolia-rpc.blockreq.com",
+  "httpStatus": 200,
+  "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32601,\"message\":\"public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.\"}}",
+  "kind": "archive-missing",
+  "limitHint": null
+ }
+]

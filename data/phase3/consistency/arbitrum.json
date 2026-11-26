@@ -1,0 +1,564 @@
+{
+ "chain": "arbitrum",
+ "measuredAt": "2026-11-26T15:26:35.350Z",
+ "source": "keyless RPC retrieval (probe-informed)",
+ "targets": [
+  "434497958:1",
+  "485817023:1",
+  "522929374:4"
+ ],
+ "endpoints": [
+  {
+   "host": "arb1.arbitrum.io",
+   "url": "https://arb1.arbitrum.io/rpc",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "public.1rpc.io",
+   "url": "https://public.1rpc.io/arb",
+   "window": 51,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arbitrum-one-public.nodies.app",
+   "url": "https://arbitrum-one-public.nodies.app",
+   "window": 50,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arbitrum-one.public.blastapi.io",
+   "url": "https://arbitrum-one.public.blastapi.io",
+   "window": 10,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arbitrum.drpc.org",
+   "url": "https://arbitrum.drpc.org",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arbitrum.gateway.tenderly.co",
+   "url": "https://arbitrum.gateway.tenderly.co",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arb-one-mainnet.gateway.tatum.io",
+   "url": "https://arb-one-mainnet.gateway.tatum.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arb-one.api.pocket.network",
+   "url": "https://arb-one.api.pocket.network",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "public-arb-mainnet.fastnode.io",
+   "url": "https://public-arb-mainnet.fastnode.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arbitrum-one.rpc.sentio.xyz",
+   "url": "https://arbitrum-one.rpc.sentio.xyz",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "arbitrum-one-mainnet.gateway.tatum.io",
+   "url": "https://arbitrum-one-mainnet.gateway.tatum.io",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  },
+  {
+   "host": "42161.rpc.thirdweb.com",
+   "url": "https://42161.rpc.thirdweb.com",
+   "window": 100,
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "checks": [
+    {
+     "target": "434497958:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "434497958:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "485817023:1",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 1,
+     "outcome": "returned",
+     "message": null
+    },
+    {
+     "target": "522929374:4",
+     "attempt": 2,
+     "outcome": "returned",
+     "message": null
+    }
+   ]
+  }
+ ]
+}

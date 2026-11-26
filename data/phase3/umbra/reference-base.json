@@ -1,0 +1,44 @@
+{
+ "chain": "base",
+ "measuredAt": "2026-11-26T15:00:51.144Z",
+ "filter": {
+  "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
+  "topic0": "0x29877766fa2bfe3b90008d6d92f965eca91cbc5757ed775740e460799fb92219"
+ },
+ "deploy": {
+  "block": null,
+  "creationTx": null,
+  "source": null,
+  "notes": [
+   "https://base.blockscout.com: blocked: Cloudflare challenge"
+  ]
+ },
+ "indexers": [
+  {
+   "source": "blockscout-v2",
+   "base": "https://base.blockscout.com",
+   "ok": false,
+   "blocked": true,
+   "failure": "blocked: Cloudflare challenge",
+   "pages": 0,
+   "pageSizeObserved": null,
+   "requests": 1,
+   "responseBytes": 5783,
+   "totalMs": 371.3359959999998,
+   "latencyMs": [
+    52
+   ],
+   "indexedHead": null,
+   "finalUrl": null,
+   "rateLimitHits": 0,
+   "count": 0,
+   "firstBlock": null,
+   "lastBlock": null,
+   "latencyMedianMs": 52.03806700000041,
+   "latencyP95Ms": 52.03806700000041,
+   "headLagBlocks": null
+  }
+ ],
+ "reference": null,
+ "rpcHead": 62574377
+}

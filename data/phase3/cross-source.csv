@@ -1,0 +1,26 @@
+chain,a,b,countA,countB,cutoffBlock,onlyInA,onlyInB,txMismatch,exact
+ethereum,blockscout-v2 (tx filled),routescan-etherscan-api,298,298,26500081,0,0,0,true
+ethereum,blockscout-v2 (tx filled),rpc list-order (mostly ethereum.public.blockpi.network),298,298,26500081,0,0,0,true
+ethereum,blockscout-v2 (tx filled),rpc probe-informed (mostly gateway.tenderly.co),298,298,26500081,0,0,0,true
+ethereum,routescan-etherscan-api,rpc list-order (mostly ethereum.public.blockpi.network),298,298,26500081,0,0,0,true
+ethereum,routescan-etherscan-api,rpc probe-informed (mostly gateway.tenderly.co),298,298,26500081,0,0,0,true
+ethereum,rpc list-order (mostly ethereum.public.blockpi.network),rpc probe-informed (mostly gateway.tenderly.co),298,298,26500081,0,0,0,true
+arbitrum,rpc list-order (mostly arb1.arbitrum.io),rpc probe-informed (mostly arbitrum.gateway.tenderly.co),19,19,527754682,0,0,0,true
+optimism,blockscout-v2 (tx filled),blockscout-etherscan-api,2,2,160052907,0,0,0,true
+optimism,blockscout-v2 (tx filled),rpc list-order (mostly mainnet.optimism.io),2,2,160052907,0,0,0,true
+optimism,blockscout-v2 (tx filled),rpc probe-informed (mostly optimism.gateway.tenderly.co),2,2,160052907,0,0,0,true
+optimism,blockscout-etherscan-api,rpc list-order (mostly mainnet.optimism.io),2,2,160052907,0,0,0,true
+optimism,blockscout-etherscan-api,rpc probe-informed (mostly optimism.gateway.tenderly.co),2,2,160052907,0,0,0,true
+optimism,rpc list-order (mostly mainnet.optimism.io),rpc probe-informed (mostly optimism.gateway.tenderly.co),2,2,160052907,0,0,0,true
+gnosis,rpc list-order (mostly lb.routeme.sh),rpc probe-informed (mostly rpc.gnosischain.com),3,3,49480404,0,0,0,true
+polygon,rpc list-order (mostly rpc-mainnet.matic.quiknode.pro),rpc probe-informed (mostly polygon.gateway.tenderly.co),9,9,97999406,0,0,0,true
+sepolia,blockscout-v2 (tx filled),blockscout-etherscan-api,1026,1026,12217228,0,0,0,true
+sepolia,blockscout-v2 (tx filled),routescan-etherscan-api,1026,1039,12217228,0,13,0,false
+sepolia,blockscout-v2 (tx filled),rpc list-order (mostly sepolia.gateway.tenderly.co),1026,1039,12217228,0,13,0,false
+sepolia,blockscout-v2 (tx filled),rpc probe-informed (mostly gateway.tenderly.co),1026,1039,12217228,0,13,0,false
+sepolia,blockscout-etherscan-api,routescan-etherscan-api,1026,1039,12217228,0,13,0,false
+sepolia,blockscout-etherscan-api,rpc list-order (mostly sepolia.gateway.tenderly.co),1026,1039,12217228,0,13,0,false
+sepolia,blockscout-etherscan-api,rpc probe-informed (mostly gateway.tenderly.co),1026,1039,12217228,0,13,0,false
+sepolia,routescan-etherscan-api,rpc list-order (mostly sepolia.gateway.tenderly.co),1039,1039,12217228,0,0,0,true
+sepolia,routescan-etherscan-api,rpc probe-informed (mostly gateway.tenderly.co),1039,1039,12217228,0,0,0,true
+sepolia,rpc list-order (mostly sepolia.gateway.tenderly.co),rpc probe-informed (mostly gateway.tenderly.co),1039,1039,12217228,0,0,0,true

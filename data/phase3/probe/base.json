@@ -1,0 +1,3297 @@
+{
+ "chain": "base",
+ "measuredAt": "2026-11-26T14:12:31.234Z",
+ "deployBlock": 15502414,
+ "deploySource": "eth_getCode bisection on mainnet.base.org (27 requests)",
+ "deployNotes": [
+  "https://base.blockscout.com: blocked: Cloudflare challenge",
+  "xrpc.cl: no archive state at block 1",
+  "rpc.hostdefi.com: no archive state at block 1",
+  "lb.routeme.sh: eth_getCode failed at block 15517582 (no archive state?)",
+  "rpc.nodeflare.app: no archive state at block 1"
+ ],
+ "firstLog": null,
+ "endpoints": [
+  {
+   "url": "https://xrpc.cl/base",
+   "host": "xrpc.cl",
+   "chainIdOk": true,
+   "head": 62559269,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): http: XRPC Cluster: Backend base node currently syncing and fallbacks busy",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 353,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [
+    "1"
+   ],
+   "errors": [
+    {
+     "kind": "http",
+     "code": -32000,
+     "message": "XRPC Cluster: Backend base node currently syncing and fallbacks busy",
+     "httpStatus": 503,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 3264.221277000004
+  },
+  {
+   "url": "https://rpc.hostdefi.com/api/rpc/base",
+   "host": "rpc.hostdefi.com",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: HTTP 403: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]> <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 4547,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": null,
+     "message": "HTTP 403: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]> <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 19.404311999998754
+  },
+  {
+   "url": "https://lb.routeme.sh/rpc/evm/8453",
+   "host": "lb.routeme.sh",
+   "chainIdOk": true,
+   "head": 62559293,
+   "status": "unusable",
+   "unusableReason": "no eth_getLogs span accepted",
+   "range": {
+    "maxOk": 0,
+    "minFail": 1,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "rate-limit: public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at "
+     },
+     {
+      "blocks": 15,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 3,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 1,
+      "verdict": "fail",
+      "note": "rate-limit: public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at "
+     }
+    ]
+   },
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 57,
+   "responseBytes": 2558,
+   "rateLimitHits": 54,
+   "retryAfterSeen": [
+    "1"
+   ],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": -32029,
+     "message": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 1000
+    },
+    {
+     "kind": "rate-limit",
+     "code": -32030,
+     "message": "public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 62
+    }
+   ],
+   "probeMs": 64162.505855
+  },
+  {
+   "url": "https://rpc.nodeflare.app/base/public",
+   "host": "rpc.nodeflare.app",
+   "chainIdOk": true,
+   "head": 62559274,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): auth-required: HTTP 403: invalid JSON-RPC envelope {\"error\":\"method_not_supported\",\"message\":\"eth_getLogs needs a key or payment. Your 17 free heavy calls/day (no key) are",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 427,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": null,
+     "message": "HTTP 403: invalid JSON-RPC envelope {\"error\":\"method_not_supported\",\"message\":\"eth_getLogs needs a key or payment. Your 17 free heavy calls/day (no key) are",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 582.4925330000042
+  },
+  {
+   "url": "https://mainnet.base.org",
+   "host": "mainnet.base.org",
+   "chainIdOk": true,
+   "head": 62559275,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): rate-limit: request limit reached",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 10,
+   "responseBytes": 259,
+   "rateLimitHits": 8,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": -32011,
+     "message": "request limit reached",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 17856.105453000004
+  },
+  {
+   "url": "https://developer-access-mainnet.base.org",
+   "host": "developer-access-mainnet.base.org",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: http: TypeError: getaddrinfo ENOTFOUND developer-access-mainnet.base.org",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 0,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "http",
+     "code": null,
+     "message": "TypeError: getaddrinfo ENOTFOUND developer-access-mainnet.base.org",
+     "httpStatus": 0,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 0.8563110000031884
+  },
+  {
+   "url": "https://li-fi-base.intustechno.workers.dev/rpc",
+   "host": "li-fi-base.intustechno.workers.dev",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: rate-limit: HTTP 429: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/\",\"title\":\"Error 1027: This website has been tempora",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 827,
+   "rateLimitHits": 4,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": null,
+     "message": "HTTP 429: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/\",\"title\":\"Error 1027: This website has been tempora",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 7767.313104999994
+  },
+  {
+   "url": "https://base.public.blockpi.network/v1/rpc/public",
+   "host": "base.public.blockpi.network",
+   "chainIdOk": true,
+   "head": 62559274,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 5001,
+    "minFail": 5002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 80 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 109 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 96 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5001,
+      "verdict": "ok",
+      "note": "0 logs, 84 ms"
+     },
+     {
+      "blocks": 7500,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 6250,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5625,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5313,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5157,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5079,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5040,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5020,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5010,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5005,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5003,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     },
+     {
+      "blocks": 5002,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549274,
+     "toBlock": 62550273,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459274,
+     "toBlock": 62460273,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559274,
+     "toBlock": 61560273,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559274,
+     "toBlock": 52560273,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056860,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "pruned history unavailable: requested 15502414, earliest available 51000000"
+    }
+   ],
+   "archiveDepthServed": 10000000,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 78.19519299999956,
+    "p95Ms": 90.36005600000499,
+    "maxMs": 90.36005600000499
+   },
+   "requests": 36,
+   "responseBytes": 3791,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs is limited to 5000 block range. Please check the parameter requirements at https://docs.blockpi.io/documentations/api-reference",
+     "httpStatus": 200,
+     "limitHint": 5000,
+     "span": 16000
+    },
+    {
+     "kind": "archive-missing",
+     "code": 4444,
+     "message": "pruned history unavailable: requested 15502414, earliest available 51000000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 9645.774744000002
+  },
+  {
+   "url": "https://public.1rpc.io/base",
+   "host": "public.1rpc.io",
+   "chainIdOk": true,
+   "head": 62559280,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 51,
+    "minFail": 52,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 15,
+      "verdict": "ok",
+      "note": "0 logs, 503 ms"
+     },
+     {
+      "blocks": 38,
+      "verdict": "ok",
+      "note": "0 logs, 246 ms"
+     },
+     {
+      "blocks": 50,
+      "verdict": "ok",
+      "note": "0 logs, 163 ms"
+     },
+     {
+      "blocks": 56,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 53,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 51,
+      "verdict": "ok",
+      "note": "0 logs, 776 ms"
+     },
+     {
+      "blocks": 52,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549280,
+     "toBlock": 62549330,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459280,
+     "toBlock": 62459330,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559280,
+     "toBlock": 61559330,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559280,
+     "toBlock": 52559330,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056866,
+     "fromBlock": 15502414,
+     "toBlock": 15502464,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "pruned history unavailable: requested 15502414, earliest available 52000000"
+    }
+   ],
+   "archiveDepthServed": 10000000,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 51,
+    "samples": 10,
+    "okSamples": 8,
+    "medianMs": 229.12753599999996,
+    "p95Ms": 497.59750399999757,
+    "maxMs": 497.59750399999757
+   },
+   "requests": 31,
+   "responseBytes": 2085,
+   "rateLimitHits": 1,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs is limited to 0 - 50 blocks range",
+     "httpStatus": 200,
+     "limitHint": 50,
+     "span": 1000
+    },
+    {
+     "kind": "http",
+     "code": null,
+     "message": "HTTP 410: invalid JSON-RPC envelope {\"error\":\"This endpoint has been discontinued.\",\"message\":\"For an up to date list of available endpoints, visit https://",
+     "httpStatus": 410,
+     "limitHint": null,
+     "span": 51
+    },
+    {
+     "kind": "archive-missing",
+     "code": 4444,
+     "message": "pruned history unavailable: requested 15502414, earliest available 52000000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 51
+    }
+   ],
+   "probeMs": 20131.133453000002
+  },
+  {
+   "url": "https://base-public.nodies.app",
+   "host": "base-public.nodies.app",
+   "chainIdOk": true,
+   "head": 62559290,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 50,
+    "minFail": 51,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 15,
+      "verdict": "ok",
+      "note": "0 logs, 145 ms"
+     },
+     {
+      "blocks": 38,
+      "verdict": "ok",
+      "note": "0 logs, 149 ms"
+     },
+     {
+      "blocks": 50,
+      "verdict": "ok",
+      "note": "0 logs, 144 ms"
+     },
+     {
+      "blocks": 56,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 53,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     },
+     {
+      "blocks": 51,
+      "verdict": "fail",
+      "note": "range-limit: Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549290,
+     "toBlock": 62549339,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459290,
+     "toBlock": 62459339,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559290,
+     "toBlock": 61559339,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559290,
+     "toBlock": 52559339,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056876,
+     "fromBlock": 15502414,
+     "toBlock": 15502463,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47056876,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 50,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 143.1904399999985,
+    "p95Ms": 150.37038700000267,
+    "maxMs": 150.37038700000267
+   },
+   "requests": 27,
+   "responseBytes": 2079,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32001,
+     "message": "Block range too large: maximum allowed is 50 blocks on your current plan. Upgrade your subscription at https://nodies.app/pricing for larger ranges.",
+     "httpStatus": 200,
+     "limitHint": 50,
+     "span": 1000
+    }
+   ],
+   "probeMs": 6640.152802999997
+  },
+  {
+   "url": "https://base.meowrpc.com",
+   "host": "base.meowrpc.com",
+   "chainIdOk": true,
+   "head": 62559313,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): unsupported: The method eth_getLogs is not supported.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 194,
+   "rateLimitHits": 1,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "unsupported",
+     "code": -32000,
+     "message": "The method eth_getLogs is not supported.",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 1815.6474569999991
+  },
+  {
+   "url": "https://base-mainnet.public.blastapi.io",
+   "host": "base-mainnet.public.blastapi.io",
+   "chainIdOk": true,
+   "head": 62559322,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10,
+    "minFail": 11,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9073, 0x3ba907c"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9361, 0x3ba936a"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba941d, 0x3ba9426"
+     },
+     {
+      "blocks": 15,
+      "verdict": "fail",
+      "note": "range-limit: You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba944c, 0x3ba9455"
+     },
+     {
+      "blocks": 3,
+      "verdict": "ok",
+      "note": "0 logs, 133 ms"
+     },
+     {
+      "blocks": 9,
+      "verdict": "ok",
+      "note": "0 logs, 129 ms"
+     },
+     {
+      "blocks": 12,
+      "verdict": "fail",
+      "note": "range-limit: You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba944f, 0x3ba9458"
+     },
+     {
+      "blocks": 10,
+      "verdict": "ok",
+      "note": "0 logs, 135 ms"
+     },
+     {
+      "blocks": 11,
+      "verdict": "fail",
+      "note": "range-limit: You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9450, 0x3ba9459"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549322,
+     "toBlock": 62549331,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459322,
+     "toBlock": 62459331,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559322,
+     "toBlock": 61559331,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559322,
+     "toBlock": 52559331,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056908,
+     "fromBlock": 15502414,
+     "toBlock": 15502423,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47056908,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 10,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 127.39348800000153,
+    "p95Ms": 132.78768500000297,
+    "maxMs": 132.78768500000297
+   },
+   "requests": 27,
+   "responseBytes": 2037,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32600,
+     "message": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9073, 0x3ba907c]",
+     "httpStatus": 400,
+     "limitHint": 10,
+     "span": 1000
+    },
+    {
+     "kind": "range-limit",
+     "code": -32600,
+     "message": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9361, 0x3ba936a]",
+     "httpStatus": 400,
+     "limitHint": 10,
+     "span": 250
+    },
+    {
+     "kind": "range-limit",
+     "code": -32600,
+     "message": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba941d, 0x3ba9426]",
+     "httpStatus": 400,
+     "limitHint": 10,
+     "span": 62
+    },
+    {
+     "kind": "range-limit",
+     "code": -32600,
+     "message": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba944c, 0x3ba9455]",
+     "httpStatus": 400,
+     "limitHint": 10,
+     "span": 15
+    },
+    {
+     "kind": "range-limit",
+     "code": -32600,
+     "message": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba944f, 0x3ba9458]",
+     "httpStatus": 400,
+     "limitHint": 10,
+     "span": 12
+    },
+    {
+     "kind": "range-limit",
+     "code": -32600,
+     "message": "You can make eth_getLogs requests with up to a 10 block range. Based on your parameters, this block range should work: [0x3ba9450, 0x3ba9459]",
+     "httpStatus": 400,
+     "limitHint": 10,
+     "span": 11
+    }
+   ],
+   "probeMs": 6627.305261000001
+  },
+  {
+   "url": "https://base.gateway.tenderly.co",
+   "host": "base.gateway.tenderly.co",
+   "chainIdOk": true,
+   "head": 62559322,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1001,
+    "minFail": 1002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 81 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba84bb, 0x3ba88a3], or use an access key for large"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8c8b, 0x3ba9073], or use an access key for large"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 161 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8e7f, 0x3ba9267], or use an access key for large"
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8f79, 0x3ba9361], or use an access key for large"
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8ff6, 0x3ba93de], or use an access key for large"
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9034, 0x3ba941c], or use an access key for large"
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9053, 0x3ba943b], or use an access key for large"
+     },
+     {
+      "blocks": 1016,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9063, 0x3ba944b], or use an access key for large"
+     },
+     {
+      "blocks": 1008,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba906b, 0x3ba9453], or use an access key for large"
+     },
+     {
+      "blocks": 1004,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba906f, 0x3ba9457], or use an access key for large"
+     },
+     {
+      "blocks": 1002,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9071, 0x3ba9459], or use an access key for large"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549322,
+     "toBlock": 62550321,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459322,
+     "toBlock": 62460321,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559322,
+     "toBlock": 61560321,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559322,
+     "toBlock": 52560321,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056908,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47056908,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 79.51842799999577,
+    "p95Ms": 106.75991700000304,
+    "maxMs": 106.75991700000304
+   },
+   "requests": 31,
+   "responseBytes": 3195,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba84bb, 0x3ba88a3], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 4000
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8c8b, 0x3ba9073], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 2000
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8e7f, 0x3ba9267], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1500
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8f79, 0x3ba9361], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1250
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8ff6, 0x3ba93de], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1125
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9034, 0x3ba941c], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1063
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9053, 0x3ba943b], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1032
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba906b, 0x3ba9453], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1008
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba906f, 0x3ba9457], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1004
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9071, 0x3ba9459], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1002
+    }
+   ],
+   "probeMs": 7576.735101999999
+  },
+  {
+   "url": "https://gateway.tenderly.co/public/base",
+   "host": "gateway.tenderly.co",
+   "chainIdOk": true,
+   "head": 62559323,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1001,
+    "minFail": 1002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 78 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba84bc, 0x3ba88a4], or use an access key for large"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8c8c, 0x3ba9074], or use an access key for large"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 163 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8e80, 0x3ba9268], or use an access key for large"
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8f7a, 0x3ba9362], or use an access key for large"
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8ff7, 0x3ba93df], or use an access key for large"
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9035, 0x3ba941d], or use an access key for large"
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9054, 0x3ba943c], or use an access key for large"
+     },
+     {
+      "blocks": 1016,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9064, 0x3ba944c], or use an access key for large"
+     },
+     {
+      "blocks": 1008,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba906c, 0x3ba9454], or use an access key for large"
+     },
+     {
+      "blocks": 1004,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9070, 0x3ba9458], or use an access key for large"
+     },
+     {
+      "blocks": 1002,
+      "verdict": "fail",
+      "note": "range-limit: invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9072, 0x3ba945a], or use an access key for large"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549323,
+     "toBlock": 62550322,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459323,
+     "toBlock": 62460322,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559323,
+     "toBlock": 61560322,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559323,
+     "toBlock": 52560322,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056909,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47056909,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 80.98499300000549,
+    "p95Ms": 120.62212,
+    "maxMs": 120.62212
+   },
+   "requests": 31,
+   "responseBytes": 3195,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba84bc, 0x3ba88a4], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 4000
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8c8c, 0x3ba9074], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 2000
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8e80, 0x3ba9268], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1500
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8f7a, 0x3ba9362], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1250
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba8ff7, 0x3ba93df], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1125
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9035, 0x3ba941d], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1063
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9054, 0x3ba943c], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1032
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba906c, 0x3ba9454], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1008
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9070, 0x3ba9458], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1004
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid params (Block range too large: maximum 1000 blocks without an access key. Try [0x3ba9072, 0x3ba945a], or use an access key for larger ranges.)",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 1002
+    }
+   ],
+   "probeMs": 7611.107235999996
+  },
+  {
+   "url": "https://base-rpc.publicnode.com",
+   "host": "base-rpc.publicnode.com",
+   "chainIdOk": true,
+   "head": 62559355,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 50001,
+    "minFail": 50002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 73 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 62 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 84 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 20000,
+      "verdict": "ok",
+      "note": "0 logs, 75 ms"
+     },
+     {
+      "blocks": 50000,
+      "verdict": "ok",
+      "note": "0 logs, 93 ms"
+     },
+     {
+      "blocks": 50001,
+      "verdict": "ok",
+      "note": "0 logs, 101 ms"
+     },
+     {
+      "blocks": 57000,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 53500,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 51750,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50875,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50438,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50219,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50110,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50055,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50028,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50014,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50007,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50004,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     },
+     {
+      "blocks": 50002,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 50000"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549355,
+     "toBlock": 62550354,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459355,
+     "toBlock": 62460354,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559355,
+     "toBlock": 61560354,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559355,
+     "toBlock": 52560354,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056941,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    }
+   ],
+   "archiveDepthServed": 10000000,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 65.70357099999092,
+    "p95Ms": 82.69589200000337,
+    "maxMs": 82.69589200000337
+   },
+   "requests": 38,
+   "responseBytes": 2424,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32701,
+     "message": "exceed maximum block range: 50000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 64000
+    },
+    {
+     "kind": "archive-missing",
+     "code": -32602,
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 9315.453384000008
+  },
+  {
+   "url": "https://base.api.onfinality.io/public",
+   "host": "base.api.onfinality.io",
+   "chainIdOk": true,
+   "head": 62559405,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): rate-limit: Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 14,
+   "responseBytes": 413,
+   "rateLimitHits": 12,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": -32029,
+     "message": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 26761.618357999992
+  },
+  {
+   "url": "https://base-mainnet.gateway.tatum.io",
+   "host": "base-mainnet.gateway.tatum.io",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: rate-limit: HTTP 429: {\"statusCode\": 429, \"message\": \"You have exceeded your limit of 5 requests per minute. To increase this limit, upgrade to a Paid plan with 200 requests per seco",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 195,
+   "rateLimitHits": 4,
+   "retryAfterSeen": [
+    "60"
+   ],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": null,
+     "message": "HTTP 429: {\"statusCode\": 429, \"message\": \"You have exceeded your limit of 5 requests per minute. To increase this limit, upgrade to a Paid plan with 200 requests per seco",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 90785.330279
+  },
+  {
+   "url": "https://api.zan.top/base-mainnet",
+   "host": "api.zan.top",
+   "chainIdOk": true,
+   "head": 62559361,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): archive-missing: Method \"eth_getLogs\" is not available for unregistered accounts. Please visit https://zan.top/ and register to unlock more.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 317,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32012,
+     "message": "Method \"eth_getLogs\" is not available for unregistered accounts. Please visit https://zan.top/ and register to unlock more.",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 548.7860930000024
+  },
+  {
+   "url": "https://rpc.numa.network/base",
+   "host": "rpc.numa.network",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: timeout: HTTP 522: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/\",\"title\":\"Error 522: Connection timed out\"",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 977,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [
+    "120"
+   ],
+   "errors": [
+    {
+     "kind": "timeout",
+     "code": null,
+     "message": "HTTP 522: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/\",\"title\":\"Error 522: Connection timed out\"",
+     "httpStatus": 522,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 19657.20338900001
+  },
+  {
+   "url": "https://base.api.pocket.network",
+   "host": "base.api.pocket.network",
+   "chainIdOk": true,
+   "head": 62559377,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 63752,
+    "minFail": 63753,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 78 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 67 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 82 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 20000,
+      "verdict": "ok",
+      "note": "0 logs, 90 ms"
+     },
+     {
+      "blocks": 50000,
+      "verdict": "ok",
+      "note": "0 logs, 96 ms"
+     },
+     {
+      "blocks": 50001,
+      "verdict": "ok",
+      "note": "0 logs, 105 ms"
+     },
+     {
+      "blocks": 57000,
+      "verdict": "ok",
+      "note": "0 logs, 103 ms"
+     },
+     {
+      "blocks": 60500,
+      "verdict": "ok",
+      "note": "0 logs, 95 ms"
+     },
+     {
+      "blocks": 62250,
+      "verdict": "ok",
+      "note": "0 logs, 97 ms"
+     },
+     {
+      "blocks": 63125,
+      "verdict": "ok",
+      "note": "0 logs, 95 ms"
+     },
+     {
+      "blocks": 63562,
+      "verdict": "ok",
+      "note": "0 logs, 85 ms"
+     },
+     {
+      "blocks": 63781,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 63671,
+      "verdict": "ok",
+      "note": "0 logs, 81 ms"
+     },
+     {
+      "blocks": 63726,
+      "verdict": "ok",
+      "note": "0 logs, 94 ms"
+     },
+     {
+      "blocks": 63753,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 63739,
+      "verdict": "ok",
+      "note": "0 logs, 85 ms"
+     },
+     {
+      "blocks": 63746,
+      "verdict": "ok",
+      "note": "0 logs, 102 ms"
+     },
+     {
+      "blocks": 63749,
+      "verdict": "ok",
+      "note": "0 logs, 97 ms"
+     },
+     {
+      "blocks": 63751,
+      "verdict": "ok",
+      "note": "0 logs, 99 ms"
+     },
+     {
+      "blocks": 63752,
+      "verdict": "ok",
+      "note": "0 logs, 104 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549377,
+     "toBlock": 62550376,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459377,
+     "toBlock": 62460376,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559377,
+     "toBlock": 61560376,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559377,
+     "toBlock": 52560376,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056963,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47056963,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 61.65974699999788,
+    "p95Ms": 77.93598900000507,
+    "maxMs": 77.93598900000507
+   },
+   "requests": 39,
+   "responseBytes": 1729,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs block range too large (max 10001 blocks)",
+     "httpStatus": 200,
+     "limitHint": 10001,
+     "span": 64000
+    }
+   ],
+   "probeMs": 9559.427919999987
+  },
+  {
+   "url": "https://base.drpc.org",
+   "host": "base.drpc.org",
+   "chainIdOk": true,
+   "head": 62559401,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 101,
+    "minFail": 102,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 216 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 172 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 177 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 119,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 110,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 105,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 103,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 102,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549401,
+     "toBlock": 62549501,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459401,
+     "toBlock": 62459501,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559401,
+     "toBlock": 61559501,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559401,
+     "toBlock": 52559501,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47056987,
+     "fromBlock": 15502414,
+     "toBlock": 15502514,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47056987,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 101,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 170.0005000000092,
+    "p95Ms": 223.87097899999935,
+    "maxMs": 223.87097899999935
+   },
+   "requests": 30,
+   "responseBytes": 1821,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "unsupported",
+     "code": 35,
+     "message": "ranges over 100 blocks are not supported on free plan",
+     "httpStatus": 400,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 7474.289350000006
+  },
+  {
+   "url": "https://base.rpc.sentio.xyz",
+   "host": "base.rpc.sentio.xyz",
+   "chainIdOk": true,
+   "head": 62559424,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1000,
+    "minFail": 1001,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 181 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549424,
+     "toBlock": 62550423,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459424,
+     "toBlock": 62460423,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559424,
+     "toBlock": 61560423,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559424,
+     "toBlock": 52560423,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47057010,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47057010,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 182.05478200002108,
+    "p95Ms": 188.75399800000014,
+    "maxMs": 188.75399800000014
+   },
+   "requests": 43,
+   "responseBytes": 1173,
+   "rateLimitHits": 24,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": null,
+     "message": "HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 57031.61905799998
+  },
+  {
+   "url": "https://rpc.swiftnodes.io/rpc/base",
+   "host": "rpc.swiftnodes.io",
+   "chainIdOk": true,
+   "head": 62559438,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): auth-required: eth_getLogs requires an API key. Get a free key at https://swiftnodes.io and retry.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 237,
+   "rateLimitHits": 1,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32001,
+     "message": "eth_getLogs requires an API key. Get a free key at https://swiftnodes.io and retry.",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 1909.225654000009
+  },
+  {
+   "url": "https://rpcfree.com/base-rpc",
+   "host": "rpcfree.com",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: other: non-JSON body: <!doctype html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <meta name=\"viewport\" content=\"width=device-wid",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 22025,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "other",
+     "code": null,
+     "message": "non-JSON body: <!doctype html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <meta name=\"viewport\" content=\"width=device-wid",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 207.56648199999472
+  },
+  {
+   "url": "https://rpc.degenprotocol.io/base",
+   "host": "rpc.degenprotocol.io",
+   "chainIdOk": true,
+   "head": 62559447,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1857,
+    "minFail": 1858,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 163 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 218 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "ok",
+      "note": "0 logs, 223 ms"
+     },
+     {
+      "blocks": 1750,
+      "verdict": "ok",
+      "note": "0 logs, 274 ms"
+     },
+     {
+      "blocks": 1875,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1812,
+      "verdict": "ok",
+      "note": "0 logs, 213 ms"
+     },
+     {
+      "blocks": 1843,
+      "verdict": "ok",
+      "note": "0 logs, 261 ms"
+     },
+     {
+      "blocks": 1859,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1851,
+      "verdict": "ok",
+      "note": "0 logs, 194 ms"
+     },
+     {
+      "blocks": 1855,
+      "verdict": "ok",
+      "note": "0 logs, 253 ms"
+     },
+     {
+      "blocks": 1857,
+      "verdict": "ok",
+      "note": "0 logs, 199 ms"
+     },
+     {
+      "blocks": 1858,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549447,
+     "toBlock": 62550446,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459447,
+     "toBlock": 62460446,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559447,
+     "toBlock": 61560446,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559447,
+     "toBlock": 52560446,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47057033,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47057033,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 219.00940699999046,
+    "p95Ms": 315.1123210000078,
+    "maxMs": 315.1123210000078
+   },
+   "requests": 32,
+   "responseBytes": 1586,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "block range exceeds limit of 1000 blocks",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 4000
+    }
+   ],
+   "probeMs": 8331.045761000001
+  },
+  {
+   "url": "https://rpc-base.blockmachine.io",
+   "host": "rpc-base.blockmachine.io",
+   "chainIdOk": true,
+   "head": 62559464,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 90,
+    "minFail": 91,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 100 blocks only; block 62558465 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 100 blocks only; block 62559215 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 53 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 100 blocks only; block 62559365 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 81,
+      "verdict": "ok",
+      "note": "0 logs, 48 ms"
+     },
+     {
+      "blocks": 90,
+      "verdict": "ok",
+      "note": "0 logs, 55 ms"
+     },
+     {
+      "blocks": 95,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 100 blocks only; block 62559370 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 92,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 100 blocks only; block 62559373 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 91,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 100 blocks only; block 62559374 is older than that; use an API key for older blocks"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549464,
+     "toBlock": 62549553,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 100 blocks only; block 62549464 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459464,
+     "toBlock": 62459553,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 100 blocks only; block 62459464 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559464,
+     "toBlock": 61559553,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 100 blocks only; block 61559464 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559464,
+     "toBlock": 52559553,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 100 blocks only; block 52559464 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 47057050,
+     "fromBlock": 15502414,
+     "toBlock": 15502503,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 100 blocks only; block 15502414 is older than that; use an API key for older blocks"
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 90,
+    "samples": 10,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 27,
+   "responseBytes": 4317,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32002,
+     "message": "keyless requests are served for the most recent 100 blocks only; block 62558465 is older than that; use an API key for older blocks",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 6545.840526999993
+  },
+  {
+   "url": "https://base.daybreak-rpc.network",
+   "host": "base.daybreak-rpc.network",
+   "chainIdOk": true,
+   "head": 62559491,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 2000,
+    "minFail": 2001,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 59 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "range-limit: query exceeds max block range 2000"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "ok",
+      "note": "0 logs, 64 ms"
+     },
+     {
+      "blocks": 3000,
+      "verdict": "fail",
+      "note": "range-limit: query exceeds max block range 2000"
+     },
+     {
+      "blocks": 2001,
+      "verdict": "fail",
+      "note": "range-limit: query exceeds max block range 2000"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549491,
+     "toBlock": 62550490,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459491,
+     "toBlock": 62460490,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559491,
+     "toBlock": 61560490,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559491,
+     "toBlock": 52560490,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47057077,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47057077,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 60.12289499999315,
+    "p95Ms": 75.5779770000081,
+    "maxMs": 75.5779770000081
+   },
+   "requests": 23,
+   "responseBytes": 1066,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "query exceeds max block range 2000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 5560.639037000001
+  },
+  {
+   "url": "https://rpc.driftguard.live/base",
+   "host": "rpc.driftguard.live",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: HTTP 403: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1000/\",\"title\":\"Error 1000: DNS points to proh",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 760,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": null,
+     "message": "HTTP 403: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1000/\",\"title\":\"Error 1000: DNS points to proh",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 168.58237600000575
+  },
+  {
+   "url": "https://rpc.baseazul.dev",
+   "host": "rpc.baseazul.dev",
+   "chainIdOk": true,
+   "head": 62559495,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1001,
+    "minFail": 1002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 100 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 100 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1016,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1008,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1004,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     },
+     {
+      "blocks": 1002,
+      "verdict": "fail",
+      "note": "range-limit: block range exceeds limit of 1000 blocks"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549495,
+     "toBlock": 62550494,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459495,
+     "toBlock": 62460494,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559495,
+     "toBlock": 61560494,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559495,
+     "toBlock": 52560494,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "pruned history unavailable: requested 52559495, earliest available 61000000"
+    },
+    {
+     "depthBlocks": 47057081,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47057081,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 102.86158100000466,
+    "p95Ms": 108.04649900000368,
+    "maxMs": 108.04649900000368
+   },
+   "requests": 31,
+   "responseBytes": 2017,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "block range exceeds limit of 1000 blocks",
+     "httpStatus": 200,
+     "limitHint": 1000,
+     "span": 4000
+    },
+    {
+     "kind": "archive-missing",
+     "code": 4444,
+     "message": "pruned history unavailable: requested 52559495, earliest available 61000000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 7683.122243999998
+  },
+  {
+   "url": "https://rpc.satelink.network/rpc/base",
+   "host": "rpc.satelink.network",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: http: HTTP 404: {\"status\":\"error\",\"code\":404,\"message\":\"Application not found\",\"request_id\":\"1qWQmcawRi2dfZG1EuroCg\"}",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 101,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "http",
+     "code": null,
+     "message": "HTTP 404: {\"status\":\"error\",\"code\":404,\"message\":\"Application not found\",\"request_id\":\"1qWQmcawRi2dfZG1EuroCg\"}",
+     "httpStatus": 404,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 80.30049799999688
+  },
+  {
+   "url": "https://base-rpc.blockreq.com/v1/rpc/public",
+   "host": "base-rpc.blockreq.com",
+   "chainIdOk": true,
+   "head": 62559498,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1010,
+    "minFail": 1011,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 143 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 169 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1016,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1008,
+      "verdict": "ok",
+      "note": "0 logs, 148 ms"
+     },
+     {
+      "blocks": 1012,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1010,
+      "verdict": "ok",
+      "note": "0 logs, 144 ms"
+     },
+     {
+      "blocks": 1011,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549498,
+     "toBlock": 62550497,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459498,
+     "toBlock": 62460497,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559498,
+     "toBlock": 61560497,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559498,
+     "toBlock": 52560497,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 47057084,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 32,
+   "responseBytes": 4671,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32601,
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 8088.3868809999985
+  },
+  {
+   "url": "https://api.blockvectra.com/v1/base_mainnet/public",
+   "host": "api.blockvectra.com",
+   "chainIdOk": true,
+   "head": 62559519,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): archive-missing: method is not available on the public endpoint",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 382,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32601,
+     "message": "method is not available on the public endpoint",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 549.6101019999915
+  },
+  {
+   "url": "https://8453.rpc.thirdweb.com",
+   "host": "8453.rpc.thirdweb.com",
+   "chainIdOk": true,
+   "head": 62559528,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1001,
+    "minFail": 1002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 272 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 280 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1016,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1008,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1004,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1002,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 62549528,
+     "toBlock": 62550527,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 62459528,
+     "toBlock": 62460527,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 61559528,
+     "toBlock": 61560527,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 52559528,
+     "toBlock": 52560527,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 47057114,
+     "fromBlock": 15502414,
+     "toBlock": 15503413,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 47057114,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 288.4758589999983,
+    "p95Ms": 294.6961210000154,
+    "maxMs": 294.6961210000154
+   },
+   "requests": 39,
+   "responseBytes": 2388,
+   "rateLimitHits": 8,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "result-limit",
+     "code": -32005,
+     "message": "Log response size exceeded. Maximum allowed number of requested blocks is 1000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 71554.56466499998
+  }
+ ]
+}

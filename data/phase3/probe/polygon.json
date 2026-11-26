@@ -1,0 +1,2757 @@
+{
+ "chain": "polygon",
+ "measuredAt": "2026-11-26T14:26:15.664Z",
+ "deployBlock": 57888814,
+ "deploySource": "eth_getCode bisection on rpc-mainnet.matic.quiknode.pro (28 requests)",
+ "deployNotes": [
+  "https://polygon.blockscout.com: blocked: Cloudflare challenge",
+  "xrpc.cl: no archive state at block 1",
+  "rpc.hostdefi.com: no archive state at block 1",
+  "lb.routeme.sh: eth_getCode failed at block 73498503 (no archive state?)",
+  "public.blazingnode.com: no archive state at block 1",
+  "rpc.nodeflare.app: no archive state at block 1",
+  "rpc.ankr.com: no archive state at block 1"
+ ],
+ "firstLog": null,
+ "endpoints": [
+  {
+   "url": "https://xrpc.cl/polygon",
+   "host": "xrpc.cl",
+   "chainIdOk": true,
+   "head": 97998020,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): http: XRPC Cluster: Backend polygon node currently syncing and fallbacks busy",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 361,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [
+    "1"
+   ],
+   "errors": [
+    {
+     "kind": "http",
+     "code": -32000,
+     "message": "XRPC Cluster: Backend polygon node currently syncing and fallbacks busy",
+     "httpStatus": 503,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 3636.8836369999917
+  },
+  {
+   "url": "https://rpc.hostdefi.com/api/rpc/polygon",
+   "host": "rpc.hostdefi.com",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: HTTP 403: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]> <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 4547,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": null,
+     "message": "HTTP 403: <!DOCTYPE html> <!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]--> <!--[if IE 7]> <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 28.156552999978885
+  },
+  {
+   "url": "https://lb.routeme.sh/rpc/evm/137",
+   "host": "lb.routeme.sh",
+   "chainIdOk": true,
+   "head": 97998025,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 985,
+    "minFail": 986,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 250,
+      "verdict": "ok",
+      "note": "0 logs, 65 ms"
+     },
+     {
+      "blocks": 500,
+      "verdict": "ok",
+      "note": "0 logs, 83 ms"
+     },
+     {
+      "blocks": 501,
+      "verdict": "ok",
+      "note": "0 logs, 120 ms"
+     },
+     {
+      "blocks": 750,
+      "verdict": "ok",
+      "note": "0 logs, 110 ms"
+     },
+     {
+      "blocks": 875,
+      "verdict": "ok",
+      "note": "0 logs, 129 ms"
+     },
+     {
+      "blocks": 937,
+      "verdict": "ok",
+      "note": "0 logs, 105 ms"
+     },
+     {
+      "blocks": 968,
+      "verdict": "ok",
+      "note": "0 logs, 107 ms"
+     },
+     {
+      "blocks": 984,
+      "verdict": "ok",
+      "note": "0 logs, 102 ms"
+     },
+     {
+      "blocks": 992,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 988,
+      "verdict": "fail",
+      "note": "rate-limit: public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+     },
+     {
+      "blocks": 986,
+      "verdict": "fail",
+      "note": "rate-limit: public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at "
+     },
+     {
+      "blocks": 985,
+      "verdict": "ok",
+      "note": "0 logs, 104 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988025,
+     "toBlock": 97989009,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898025,
+     "toBlock": 97899009,
+     "ok": false,
+     "logs": 0,
+     "kind": "rate-limit",
+     "message": "public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998025,
+     "toBlock": 96999009,
+     "ok": false,
+     "logs": 0,
+     "kind": "rate-limit",
+     "message": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998025,
+     "toBlock": 87999009,
+     "ok": false,
+     "logs": 0,
+     "kind": "rate-limit",
+     "message": "public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)"
+    },
+    {
+     "depthBlocks": 40109211,
+     "fromBlock": 57888814,
+     "toBlock": 57889798,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109211,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 985,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 109.15990800003055,
+    "p95Ms": 202.8276659999974,
+    "maxMs": 202.8276659999974
+   },
+   "requests": 145,
+   "responseBytes": 4306,
+   "rateLimitHits": 121,
+   "retryAfterSeen": [
+    "1"
+   ],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": -32030,
+     "message": "public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 1000
+    },
+    {
+     "kind": "rate-limit",
+     "code": -32029,
+     "message": "public rate limit exceeded — sign up for free at https://routeme.sh to continue (economy and performance routing at competitive prices)",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 152827.262612
+  },
+  {
+   "url": "https://public.blazingnode.com",
+   "host": "public.blazingnode.com",
+   "chainIdOk": true,
+   "head": 97998020,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 126,
+    "minFail": 127,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: Public tier max block range is 128 blocks. Unlock wider eth_getLogs & 300 RPS burst with a free trial key at https://blazingnode.com"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: Public tier max block range is 128 blocks. Unlock wider eth_getLogs & 300 RPS burst with a free trial key at https://blazingnode.com"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 112 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 110 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 109 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "range-limit: Public tier max block range is 128 blocks. Unlock wider eth_getLogs & 300 RPS burst with a free trial key at https://blazingnode.com"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "range-limit: Public tier max block range is 128 blocks. Unlock wider eth_getLogs & 300 RPS burst with a free trial key at https://blazingnode.com"
+     },
+     {
+      "blocks": 119,
+      "verdict": "ok",
+      "note": "0 logs, 110 ms"
+     },
+     {
+      "blocks": 128,
+      "verdict": "fail",
+      "note": "archive-missing: Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at"
+     },
+     {
+      "blocks": 123,
+      "verdict": "ok",
+      "note": "0 logs, 109 ms"
+     },
+     {
+      "blocks": 125,
+      "verdict": "ok",
+      "note": "0 logs, 502 ms"
+     },
+     {
+      "blocks": 126,
+      "verdict": "ok",
+      "note": "0 logs, 109 ms"
+     },
+     {
+      "blocks": 127,
+      "verdict": "fail",
+      "note": "archive-missing: Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988020,
+     "toBlock": 97988145,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazing"
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898020,
+     "toBlock": 97898145,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazing"
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998020,
+     "toBlock": 96998145,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazing"
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998020,
+     "toBlock": 87998145,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazing"
+    },
+    {
+     "depthBlocks": 40109206,
+     "fromBlock": 57888814,
+     "toBlock": 57888939,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazing"
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 126,
+    "samples": 10,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 31,
+   "responseBytes": 6319,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32005,
+     "message": "Public tier max block range is 128 blocks. Unlock wider eth_getLogs & 300 RPS burst with a free trial key at https://blazingnode.com",
+     "httpStatus": 400,
+     "limitHint": 128,
+     "span": 1000
+    },
+    {
+     "kind": "archive-missing",
+     "code": -32005,
+     "message": "Deep Historical Archive queries (>128 blocks) are disabled on the public tier. Move to a paid Builder subscription starting at 49 USDC/mo at https://www.blazingnode.com/pricing",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 128
+    }
+   ],
+   "probeMs": 8216.48447799997
+  },
+  {
+   "url": "https://rpc.nodeflare.app/polygon/public",
+   "host": "rpc.nodeflare.app",
+   "chainIdOk": true,
+   "head": 97998020,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): auth-required: HTTP 403: invalid JSON-RPC envelope {\"error\":\"method_not_supported\",\"message\":\"eth_getLogs needs a key or payment. Your 17 free heavy calls/day (no key) are",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 432,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": null,
+     "message": "HTTP 403: invalid JSON-RPC envelope {\"error\":\"method_not_supported\",\"message\":\"eth_getLogs needs a key or payment. Your 17 free heavy calls/day (no key) are",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 558.9713289999636
+  },
+  {
+   "url": "https://rpc.ankr.com/polygon",
+   "host": "rpc.ankr.com",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 229,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32000,
+     "message": "Unauthorized: You must authenticate your request with an API key. Create an account on https://www.ankr.com/rpc/ and generate your personal API key for free.",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 40.30426599999191
+  },
+  {
+   "url": "https://rpc-mainnet.matic.quiknode.pro",
+   "host": "rpc-mainnet.matic.quiknode.pro",
+   "chainIdOk": true,
+   "head": 97998020,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10001,
+    "minFail": 10002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 45 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 25 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 25 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "ok",
+      "note": "0 logs, 25 ms"
+     },
+     {
+      "blocks": 10001,
+      "verdict": "ok",
+      "note": "0 logs, 25 ms"
+     },
+     {
+      "blocks": 13000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 11500,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10750,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10375,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10188,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10094,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10047,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10024,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10012,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10006,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10003,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     },
+     {
+      "blocks": 10002,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to a 10,000 range"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988020,
+     "toBlock": 97989019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898020,
+     "toBlock": 97899019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998020,
+     "toBlock": 96999019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998020,
+     "toBlock": 87999019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109206,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109206,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 41.98251800000435,
+    "p95Ms": 46.00108899996849,
+    "maxMs": 46.00108899996849
+   },
+   "requests": 36,
+   "responseBytes": 2283,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32614,
+     "message": "eth_getLogs is limited to a 10,000 range",
+     "httpStatus": 413,
+     "limitHint": null,
+     "span": 16000
+    }
+   ],
+   "probeMs": 8791.622054999985
+  },
+  {
+   "url": "https://polygon-public.nodies.app",
+   "host": "polygon-public.nodies.app",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: HTTP 403: The network of this endpoint requires a paid subscription plan. Subscribe at https://nodies.app to get access.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 110,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": null,
+     "message": "HTTP 403: The network of this endpoint requires a paid subscription plan. Subscribe at https://nodies.app to get access.",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 110.91666200000327
+  },
+  {
+   "url": "https://polygon-mainnet.public.blastapi.io",
+   "host": "polygon-mainnet.public.blastapi.io",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: auth-required: Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 207,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32000,
+     "message": "Blast API is no longer available. Please update your integration to use Alchemy's API instead: https://alchemy.com",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 76.38155799999367
+  },
+  {
+   "url": "https://public.1rpc.io/matic",
+   "host": "public.1rpc.io",
+   "chainIdOk": true,
+   "head": 97998021,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 51,
+    "minFail": 52,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 62,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 15,
+      "verdict": "ok",
+      "note": "0 logs, 1458 ms"
+     },
+     {
+      "blocks": 38,
+      "verdict": "ok",
+      "note": "0 logs, 1058 ms"
+     },
+     {
+      "blocks": 50,
+      "verdict": "ok",
+      "note": "0 logs, 538 ms"
+     },
+     {
+      "blocks": 56,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 53,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     },
+     {
+      "blocks": 51,
+      "verdict": "ok",
+      "note": "0 logs, 217 ms"
+     },
+     {
+      "blocks": 52,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs is limited to 0 - 50 blocks range"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988021,
+     "toBlock": 97988071,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898021,
+     "toBlock": 97898071,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998021,
+     "toBlock": 96998071,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998021,
+     "toBlock": 87998071,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109207,
+     "fromBlock": 57888814,
+     "toBlock": 57888864,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109207,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 51,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 254.96600299997954,
+    "p95Ms": 1495.4598640000331,
+    "maxMs": 1495.4598640000331
+   },
+   "requests": 31,
+   "responseBytes": 1644,
+   "rateLimitHits": 2,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs is limited to 0 - 50 blocks range",
+     "httpStatus": 200,
+     "limitHint": 50,
+     "span": 1000
+    },
+    {
+     "kind": "http",
+     "code": null,
+     "message": "HTTP 404: {\"status\":\"error\",\"code\":404,\"message\":\"Application not found\",\"request_id\":\"zCP67w3vSIO6HsQc55So4g\"}",
+     "httpStatus": 404,
+     "limitHint": null,
+     "span": 38
+    }
+   ],
+   "probeMs": 27767.469566999993
+  },
+  {
+   "url": "https://polygon-bor-rpc.publicnode.com",
+   "host": "polygon-bor-rpc.publicnode.com",
+   "chainIdOk": true,
+   "head": 97998020,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10001,
+    "minFail": 10002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 61 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 66 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 69 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "ok",
+      "note": "0 logs, 143 ms"
+     },
+     {
+      "blocks": 10001,
+      "verdict": "ok",
+      "note": "0 logs, 77 ms"
+     },
+     {
+      "blocks": 13000,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 11500,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10750,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10375,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10188,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10094,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10047,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10024,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10012,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10006,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10003,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     },
+     {
+      "blocks": 10002,
+      "verdict": "fail",
+      "note": "range-limit: exceed maximum block range: 10000"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988020,
+     "toBlock": 97989019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898020,
+     "toBlock": 97899019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998020,
+     "toBlock": 96999019,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998020,
+     "toBlock": 87999019,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    },
+    {
+     "depthBlocks": 40109206,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode"
+    }
+   ],
+   "archiveDepthServed": 1000000,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 62.085034999996424,
+    "p95Ms": 368.10198999999557,
+    "maxMs": 368.10198999999557
+   },
+   "requests": 36,
+   "responseBytes": 2437,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32701,
+     "message": "exceed maximum block range: 10000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 16000
+    },
+    {
+     "kind": "archive-missing",
+     "code": -32602,
+     "message": "Archive requests require a personal token. Get one at: https://www.allnodes.com/publicnode",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 8945.006261999952
+  },
+  {
+   "url": "https://polygon.api.onfinality.io/public",
+   "host": "polygon.api.onfinality.io",
+   "chainIdOk": true,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_blockNumber: rate-limit: Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 6,
+   "responseBytes": 206,
+   "rateLimitHits": 5,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": -32029,
+     "message": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 9419.787538999983
+  },
+  {
+   "url": "https://polygon.drpc.org",
+   "host": "polygon.drpc.org",
+   "chainIdOk": true,
+   "head": 97998026,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 101,
+    "minFail": 102,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 96 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 108 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 93 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 119,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 110,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 105,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 103,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     },
+     {
+      "blocks": 102,
+      "verdict": "fail",
+      "note": "unsupported: ranges over 100 blocks are not supported on free plan"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988026,
+     "toBlock": 97988126,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898026,
+     "toBlock": 97898126,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998026,
+     "toBlock": 96998126,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998026,
+     "toBlock": 87998126,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109212,
+     "fromBlock": 57888814,
+     "toBlock": 57888914,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109212,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 101,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 113.19693500001449,
+    "p95Ms": 249.94141799997305,
+    "maxMs": 249.94141799997305
+   },
+   "requests": 30,
+   "responseBytes": 1849,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "unsupported",
+     "code": 35,
+     "message": "ranges over 100 blocks are not supported on free plan",
+     "httpStatus": 400,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 7374.387332000013
+  },
+  {
+   "url": "https://polygon.gateway.tenderly.co",
+   "host": "polygon.gateway.tenderly.co",
+   "chainIdOk": true,
+   "head": 97998026,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 40109213,
+    "minFail": null,
+    "unbounded": true,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 90 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 102 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 99 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "ok",
+      "note": "0 logs, 122 ms"
+     },
+     {
+      "blocks": 256000,
+      "verdict": "ok",
+      "note": "0 logs, 121 ms"
+     },
+     {
+      "blocks": 1024000,
+      "verdict": "ok",
+      "note": "0 logs, 308 ms"
+     },
+     {
+      "blocks": 4096000,
+      "verdict": "ok",
+      "note": "3 logs, 247 ms"
+     },
+     {
+      "blocks": 16384000,
+      "verdict": "ok",
+      "note": "9 logs, 177 ms"
+     },
+     {
+      "blocks": 40109213,
+      "verdict": "ok",
+      "note": "9 logs, 2226 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988026,
+     "toBlock": 97989025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898026,
+     "toBlock": 97899025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998026,
+     "toBlock": 96999025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998026,
+     "toBlock": 87999025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109212,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109212,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 97.09779199998593,
+    "p95Ms": 261.19429399998626,
+    "maxMs": 261.19429399998626
+   },
+   "requests": 27,
+   "responseBytes": 26228,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [],
+   "probeMs": 8643.091816
+  },
+  {
+   "url": "https://gateway.tenderly.co/public/polygon",
+   "host": "gateway.tenderly.co",
+   "chainIdOk": true,
+   "head": 97998026,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 40109213,
+    "minFail": null,
+    "unbounded": true,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 103 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 125 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "ok",
+      "note": "0 logs, 124 ms"
+     },
+     {
+      "blocks": 64000,
+      "verdict": "ok",
+      "note": "0 logs, 248 ms"
+     },
+     {
+      "blocks": 256000,
+      "verdict": "ok",
+      "note": "0 logs, 523 ms"
+     },
+     {
+      "blocks": 1024000,
+      "verdict": "ok",
+      "note": "0 logs, 115 ms"
+     },
+     {
+      "blocks": 4096000,
+      "verdict": "ok",
+      "note": "3 logs, 133 ms"
+     },
+     {
+      "blocks": 16384000,
+      "verdict": "ok",
+      "note": "9 logs, 2097 ms"
+     },
+     {
+      "blocks": 40109213,
+      "verdict": "ok",
+      "note": "9 logs, 1203 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988026,
+     "toBlock": 97989025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898026,
+     "toBlock": 97899025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998026,
+     "toBlock": 96999025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998026,
+     "toBlock": 87999025,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109212,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109212,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 111.01033600000665,
+    "p95Ms": 202.43954200000735,
+    "maxMs": 202.43954200000735
+   },
+   "requests": 27,
+   "responseBytes": 26228,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [],
+   "probeMs": 9678.87421400001
+  },
+  {
+   "url": "https://api.zan.top/polygon-mainnet",
+   "host": "api.zan.top",
+   "chainIdOk": true,
+   "head": 97998028,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): archive-missing: Method \"eth_getLogs\" is not available for unregistered accounts. Please visit https://zan.top/ and register to unlock more.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 3,
+   "responseBytes": 319,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32012,
+     "message": "Method \"eth_getLogs\" is not available for unregistered accounts. Please visit https://zan.top/ and register to unlock more.",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 617.1840429999866
+  },
+  {
+   "url": "https://polygon-mainnet.gateway.tatum.io",
+   "host": "polygon-mainnet.gateway.tatum.io",
+   "chainIdOk": true,
+   "head": 97998130,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 101,
+    "minFail": 102,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 47 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 48 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 48 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 119,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 110,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 105,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 103,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     },
+     {
+      "blocks": 102,
+      "verdict": "fail",
+      "note": "other: Requested range is over limit of 100"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988130,
+     "toBlock": 97988230,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898130,
+     "toBlock": 97898230,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998130,
+     "toBlock": 96998230,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998130,
+     "toBlock": 87998230,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109316,
+     "fromBlock": 57888814,
+     "toBlock": 57888914,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109316,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 101,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 51.43429899995681,
+    "p95Ms": 301.0061289999867,
+    "maxMs": 301.0061289999867
+   },
+   "requests": 60,
+   "responseBytes": 2632,
+   "rateLimitHits": 21,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "other",
+     "code": -16412,
+     "message": "Requested range is over limit of 100",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 656652.5416110001
+  },
+  {
+   "url": "https://poly.api.pocket.network",
+   "host": "poly.api.pocket.network",
+   "chainIdOk": true,
+   "head": 97998030,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 10438,
+    "minFail": 10439,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 49 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "ok",
+      "note": "0 logs, 46 ms"
+     },
+     {
+      "blocks": 16000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 5000,
+      "verdict": "ok",
+      "note": "0 logs, 283 ms"
+     },
+     {
+      "blocks": 10000,
+      "verdict": "ok",
+      "note": "0 logs, 277 ms"
+     },
+     {
+      "blocks": 10001,
+      "verdict": "ok",
+      "note": "0 logs, 80 ms"
+     },
+     {
+      "blocks": 13000,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 11500,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10750,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10375,
+      "verdict": "ok",
+      "note": "0 logs, 78 ms"
+     },
+     {
+      "blocks": 10562,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10468,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10421,
+      "verdict": "ok",
+      "note": "0 logs, 274 ms"
+     },
+     {
+      "blocks": 10444,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10432,
+      "verdict": "ok",
+      "note": "0 logs, 283 ms"
+     },
+     {
+      "blocks": 10438,
+      "verdict": "ok",
+      "note": "0 logs, 276 ms"
+     },
+     {
+      "blocks": 10441,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     },
+     {
+      "blocks": 10439,
+      "verdict": "fail",
+      "note": "range-limit: eth_getLogs block range too large (max 10001 blocks)"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988030,
+     "toBlock": 97989029,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898030,
+     "toBlock": 97899029,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998030,
+     "toBlock": 96999029,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998030,
+     "toBlock": 87999029,
+     "ok": false,
+     "logs": 0,
+     "kind": "range-limit",
+     "message": "invalid argument 0: block range exceeds maximum 500"
+    },
+    {
+     "depthBlocks": 40109216,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109216,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 9,
+    "medianMs": 77.44095700001344,
+    "p95Ms": 279.78243999998085,
+    "maxMs": 279.78243999998085
+   },
+   "requests": 36,
+   "responseBytes": 2281,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "eth_getLogs block range too large (max 10001 blocks)",
+     "httpStatus": 200,
+     "limitHint": 10001,
+     "span": 16000
+    },
+    {
+     "kind": "range-limit",
+     "code": -32602,
+     "message": "invalid argument 0: block range exceeds maximum 500",
+     "httpStatus": 200,
+     "limitHint": 500,
+     "span": 1000
+    }
+   ],
+   "probeMs": 9107.153091999993
+  },
+  {
+   "url": "https://rpc.swiftnodes.io/rpc/polygon",
+   "host": "rpc.swiftnodes.io",
+   "chainIdOk": true,
+   "head": 97998031,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): auth-required: eth_getLogs requires an API key. Get a free key at https://swiftnodes.io and retry.",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 238,
+   "rateLimitHits": 1,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32001,
+     "message": "eth_getLogs requires an API key. Get a free key at https://swiftnodes.io and retry.",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 1779.9551520000095
+  },
+  {
+   "url": "https://matic.rpc.sentio.xyz",
+   "host": "matic.rpc.sentio.xyz",
+   "chainIdOk": true,
+   "head": 97998032,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1000,
+    "minFail": 1001,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 184 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "fail",
+      "note": "rate-limit: HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988032,
+     "toBlock": 97989031,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898032,
+     "toBlock": 97899031,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998032,
+     "toBlock": 96999031,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998032,
+     "toBlock": 87999031,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109218,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109218,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 182.28054999996675,
+    "p95Ms": 186.64028099999996,
+    "maxMs": 186.64028099999996
+   },
+   "requests": 43,
+   "responseBytes": 1175,
+   "rateLimitHits": 24,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "rate-limit",
+     "code": null,
+     "message": "HTTP 429: {\"code\":8,\"message\":\"public eth_getLogs is limited to 1000 blocks\"}",
+     "httpStatus": 429,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 56979.39569799998
+  },
+  {
+   "url": "https://rpcfree.com/polygon-rpc",
+   "host": "rpcfree.com",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: other: non-JSON body: <!doctype html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <meta name=\"viewport\" content=\"width=device-wid",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 22279,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "other",
+     "code": null,
+     "message": "non-JSON body: <!doctype html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <meta name=\"viewport\" content=\"width=device-wid",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 188.81221499998355
+  },
+  {
+   "url": "https://rpc.satelink.network/rpc/polygon",
+   "host": "rpc.satelink.network",
+   "chainIdOk": null,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_chainId: http: HTTP 404: {\"status\":\"error\",\"code\":404,\"message\":\"Application not found\",\"request_id\":\"9ADi4RsoQe6CfLawss7a6g\"}",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 1,
+   "responseBytes": 101,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "http",
+     "code": null,
+     "message": "HTTP 404: {\"status\":\"error\",\"code\":404,\"message\":\"Application not found\",\"request_id\":\"9ADi4RsoQe6CfLawss7a6g\"}",
+     "httpStatus": 404,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 120.44406299997354
+  },
+  {
+   "url": "https://rpc-polygon.blockmachine.io",
+   "host": "rpc-polygon.blockmachine.io",
+   "chainIdOk": true,
+   "head": 97998033,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 250,
+    "minFail": 251,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997034 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 250,
+      "verdict": "ok",
+      "note": "0 logs, 51 ms"
+     },
+     {
+      "blocks": 500,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997534 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 375,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997659 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 312,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997722 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 281,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997753 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 265,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997769 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 257,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997777 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 253,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997781 is older than that; use an API key for older blocks"
+     },
+     {
+      "blocks": 251,
+      "verdict": "fail",
+      "note": "archive-missing: keyless requests are served for the most recent 250 blocks only; block 97997783 is older than that; use an API key for older blocks"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988033,
+     "toBlock": 97988282,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 250 blocks only; block 97988033 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898033,
+     "toBlock": 97898282,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 250 blocks only; block 97898033 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998033,
+     "toBlock": 96998282,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 250 blocks only; block 96998033 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998033,
+     "toBlock": 87998282,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 250 blocks only; block 87998033 is older than that; use an API key for older blocks"
+    },
+    {
+     "depthBlocks": 40109219,
+     "fromBlock": 57888814,
+     "toBlock": 57889063,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "keyless requests are served for the most recent 250 blocks only; block 57888814 is older than that; use an API key for older blocks"
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 250,
+    "samples": 10,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 28,
+   "responseBytes": 4851,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32002,
+     "message": "keyless requests are served for the most recent 250 blocks only; block 97997034 is older than that; use an API key for older blocks",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 6797.768012000015
+  },
+  {
+   "url": "https://polygon-mainnet.rpc.thyme.sh/public",
+   "host": "polygon-mainnet.rpc.thyme.sh",
+   "chainIdOk": true,
+   "head": 97998036,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 119,
+    "minFail": 120,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 250,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 62,
+      "verdict": "ok",
+      "note": "0 logs, 2083 ms"
+     },
+     {
+      "blocks": 100,
+      "verdict": "ok",
+      "note": "0 logs, 34 ms"
+     },
+     {
+      "blocks": 101,
+      "verdict": "ok",
+      "note": "0 logs, 33 ms"
+     },
+     {
+      "blocks": 175,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 138,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 119,
+      "verdict": "ok",
+      "note": "0 logs, 34 ms"
+     },
+     {
+      "blocks": 128,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 123,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 121,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     },
+     {
+      "blocks": 120,
+      "verdict": "fail",
+      "note": "auth-required: Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988036,
+     "toBlock": 97988154,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898036,
+     "toBlock": 97898154,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998036,
+     "toBlock": 96998154,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998036,
+     "toBlock": 87998154,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    },
+    {
+     "depthBlocks": 40109222,
+     "fromBlock": 57888814,
+     "toBlock": 57888932,
+     "ok": false,
+     "logs": 0,
+     "kind": "auth-required",
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io"
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 119,
+    "samples": 10,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 56,
+   "responseBytes": 4012,
+   "rateLimitHits": 26,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32001,
+     "message": "Historical queries outside the latest 128 blocks require an API key from https://gate.thymelabs.io",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 1000
+    }
+   ],
+   "probeMs": 41605.807195
+  },
+  {
+   "url": "https://rpc.driftguard.live/pol",
+   "host": "rpc.driftguard.live",
+   "chainIdOk": true,
+   "head": 97998063,
+   "status": "unusable",
+   "unusableReason": "eth_getLogs (10 recent blocks): auth-required: Heavy indexing, filter, debug, and trace methods disabled on public tier. Auto-mint a Pro key via HTTP 402 USDC at POST https://rpc.driftguard.live/v1/x402/mint or claim tx_hash at https://rpc.driftguard.live",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 4,
+   "responseBytes": 363,
+   "rateLimitHits": 1,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "auth-required",
+     "code": -32600,
+     "message": "Heavy indexing, filter, debug, and trace methods disabled on public tier. Auto-mint a Pro key via HTTP 402 USDC at POST https://rpc.driftguard.live/v1/x402/mint or claim tx_hash at https://rpc.driftguard.live",
+     "httpStatus": 403,
+     "limitHint": null,
+     "span": 10
+    }
+   ],
+   "probeMs": 37807.36704099999
+  },
+  {
+   "url": "https://polygon-bor-rpc.blockreq.com/v1/rpc/public",
+   "host": "polygon-bor-rpc.blockreq.com",
+   "chainIdOk": true,
+   "head": 97998038,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1021,
+    "minFail": 1022,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 513 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 398 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1016,
+      "verdict": "ok",
+      "note": "0 logs, 460 ms"
+     },
+     {
+      "blocks": 1024,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1020,
+      "verdict": "ok",
+      "note": "0 logs, 496 ms"
+     },
+     {
+      "blocks": 1022,
+      "verdict": "fail",
+      "note": "archive-missing: public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+     },
+     {
+      "blocks": 1021,
+      "verdict": "ok",
+      "note": "0 logs, 404 ms"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988038,
+     "toBlock": 97989037,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898038,
+     "toBlock": 97899037,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998038,
+     "toBlock": 96999037,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998038,
+     "toBlock": 87999037,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    },
+    {
+     "depthBlocks": 40109224,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": false,
+     "logs": 0,
+     "kind": "archive-missing",
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access."
+    }
+   ],
+   "archiveDepthServed": null,
+   "servesDeployBlock": false,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 1,
+    "medianMs": 598.7982720000437,
+    "p95Ms": 598.7982720000437,
+    "maxMs": 598.7982720000437
+   },
+   "requests": 32,
+   "responseBytes": 4412,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "archive-missing",
+     "code": -32601,
+     "message": "public endpoint only serves recent blocks (last 1024). Register at blockreq.com for historical / archive access.",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 9856.701436000003
+  },
+  {
+   "url": "https://api.blockvectra.com/v1/polygon_mainnet/public",
+   "host": "api.blockvectra.com",
+   "chainIdOk": true,
+   "head": null,
+   "status": "unusable",
+   "unusableReason": "eth_blockNumber: other: node is syncing; calls are temporarily unavailable",
+   "range": null,
+   "archive": [],
+   "archiveDepthServed": null,
+   "servesDeployBlock": null,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 0,
+    "samples": 0,
+    "okSamples": 0,
+    "medianMs": null,
+    "p95Ms": null,
+    "maxMs": null
+   },
+   "requests": 2,
+   "responseBytes": 325,
+   "rateLimitHits": 0,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "other",
+     "code": -32010,
+     "message": "node is syncing; calls are temporarily unavailable",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": null
+    }
+   ],
+   "probeMs": 308.0595949999988
+  },
+  {
+   "url": "https://137.rpc.thirdweb.com",
+   "host": "137.rpc.thirdweb.com",
+   "chainIdOk": true,
+   "head": 97998046,
+   "status": "usable",
+   "unusableReason": null,
+   "range": {
+    "maxOk": 1001,
+    "minFail": 1002,
+    "unbounded": false,
+    "steps": [
+     {
+      "blocks": 1000,
+      "verdict": "ok",
+      "note": "0 logs, 324 ms"
+     },
+     {
+      "blocks": 4000,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 2000,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1001,
+      "verdict": "ok",
+      "note": "0 logs, 289 ms"
+     },
+     {
+      "blocks": 1500,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1250,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1125,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1063,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1032,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1016,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1008,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1004,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     },
+     {
+      "blocks": 1002,
+      "verdict": "fail",
+      "note": "result-limit: Log response size exceeded. Maximum allowed number of requested blocks is 1000"
+     }
+    ]
+   },
+   "archive": [
+    {
+     "depthBlocks": 10000,
+     "fromBlock": 97988046,
+     "toBlock": 97989045,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 100000,
+     "fromBlock": 97898046,
+     "toBlock": 97899045,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 1000000,
+     "fromBlock": 96998046,
+     "toBlock": 96999045,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 10000000,
+     "fromBlock": 87998046,
+     "toBlock": 87999045,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    },
+    {
+     "depthBlocks": 40109232,
+     "fromBlock": 57888814,
+     "toBlock": 57889813,
+     "ok": true,
+     "logs": 0,
+     "kind": null,
+     "message": null
+    }
+   ],
+   "archiveDepthServed": 40109232,
+   "servesDeployBlock": true,
+   "firstLogReturned": null,
+   "latency": {
+    "span": 1000,
+    "samples": 10,
+    "okSamples": 10,
+    "medianMs": 276.43387900001835,
+    "p95Ms": 288.0563030000194,
+    "maxMs": 288.0563030000194
+   },
+   "requests": 36,
+   "responseBytes": 2386,
+   "rateLimitHits": 5,
+   "retryAfterSeen": [],
+   "errors": [
+    {
+     "kind": "result-limit",
+     "code": -32005,
+     "message": "Log response size exceeded. Maximum allowed number of requested blocks is 1000",
+     "httpStatus": 200,
+     "limitHint": null,
+     "span": 4000
+    }
+   ],
+   "probeMs": 48662.844955999986
+  }
+ ]
+}

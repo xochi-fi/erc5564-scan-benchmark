@@ -1,0 +1,18 @@
+{
+ "chain": "polygon",
+ "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+ "deployBlock": 57888814,
+ "confirmed": 2,
+ "checks": [
+  {
+   "host": "polygon.gateway.tenderly.co",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  }
+ ]
+}

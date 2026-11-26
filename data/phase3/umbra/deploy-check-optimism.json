@@ -1,0 +1,28 @@
+{
+ "chain": "optimism",
+ "address": "0xfb2dc580eed955b528407b4d36ffafe3da685401",
+ "deployBlock": 4069556,
+ "confirmed": 2,
+ "checks": [
+  {
+   "host": "optimism.gateway.tenderly.co",
+   "codeAtDeploy": null,
+   "codeBefore": null
+  },
+  {
+   "host": "gateway.tenderly.co",
+   "codeAtDeploy": null,
+   "codeBefore": null
+  },
+  {
+   "host": "mainnet.optimism.io",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  },
+  {
+   "host": "lb.routeme.sh",
+   "codeAtDeploy": true,
+   "codeBefore": false
+  }
+ ]
+}

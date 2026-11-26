@@ -1,0 +1,146 @@
+{
+ "chain": "polygon",
+ "measuredAt": "2026-11-26T15:07:05.110Z",
+ "filter": {
+  "address": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+  "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7"
+ },
+ "strategy": "list-order",
+ "endpointOrder": [
+  "lb.routeme.sh",
+  "public.blazingnode.com",
+  "rpc-mainnet.matic.quiknode.pro",
+  "public.1rpc.io",
+  "polygon-bor-rpc.publicnode.com",
+  "polygon.drpc.org",
+  "polygon.gateway.tenderly.co",
+  "gateway.tenderly.co"
+ ],
+ "initialSpan": 10000,
+ "result": {
+  "success": true,
+  "failure": null,
+  "fromBlock": 57888814,
+  "toBlock": 97999406,
+  "checkpoint": 97999407,
+  "requests": 4026,
+  "okRequests": 4012,
+  "responseBytes": 171577,
+  "requestBytes": 979695,
+  "totalMs": 1034674.204086,
+  "fetchMs": 189437.35134699842,
+  "endpointSwitches": 2,
+  "spanHistogram": {
+   "512": 1,
+   "8192": 4011
+  },
+  "endpoints": [
+   {
+    "url": "https://lb.routeme.sh/rpc/evm/137",
+    "requests": 12,
+    "ok": 0,
+    "errors": {
+     "rate-limit": 3
+    },
+    "learnedMaxSpan": null,
+    "abandonedAt": 57888814,
+    "abandonReason": "rate-limit: public free-tier capacity is temporarily exhausted — sign up for free at https://routeme.sh to continue (economy and per",
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://public.blazingnode.com",
+    "requests": 1,
+    "ok": 0,
+    "errors": {
+     "range-limit": 1
+    },
+    "learnedMaxSpan": 128,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": 57888814
+   },
+   {
+    "url": "https://rpc-mainnet.matic.quiknode.pro",
+    "requests": 4013,
+    "ok": 4012,
+    "errors": {
+     "range-limit": 1
+    },
+    "learnedMaxSpan": 10000,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://public.1rpc.io/matic",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://polygon-bor-rpc.publicnode.com",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://polygon.drpc.org",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://polygon.gateway.tenderly.co",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   },
+   {
+    "url": "https://gateway.tenderly.co/public/polygon",
+    "requests": 0,
+    "ok": 0,
+    "errors": {},
+    "learnedMaxSpan": null,
+    "abandonedAt": null,
+    "abandonReason": null,
+    "deprioritizedAt": null
+   }
+  ],
+  "count": 9,
+  "firstBlock": 85999710,
+  "lastBlock": 95895782,
+  "firstTime": "2026-04-25T12:17:44.000Z",
+  "lastTime": "2026-10-21T02:17:21.000Z"
+ },
+ "identities": [
+  "85999710:2473:0xa34c44b27259826db4ccc5e0bf1231bdcceff4b1534967ddd1d8df3d14d7c518",
+  "87524792:1180:0x82ff9475021bc5b3934a5560e50807fd6a8b3f6c69ad75540128fa947d817a20",
+  "87525246:1902:0xbb4902a577498cc76e78892b60f6e1984076b60acf855151bfb05e854e9d1d6c",
+  "87525522:252:0xb363405f5b75ce16f25b1c6c4a23e7937079ed672da95ef3975831b8f64d9cd4",
+  "87526204:1540:0x9ba97cc433cf28b6c1fdbcc613667bd526c5c87ebc368fae5991172147c23b80",
+  "89620603:1109:0x5168e21b439f68522e13d4bcbede7d50e74fd6763a9df82ce1c6c3250fb66700",
+  "95490246:388:0x810b8ae41058c290d684a33b84a38b689a2a0a5c85fb19c8ac2954ab22a85944",
+  "95646643:49:0x0d7c79885ece3ba09e17219060c5473478854758f9b20f39a6ccd85fa0eaf595",
+  "95895782:2537:0xa2626795e9c6d458c7d3781a640360f855a4b287bda739a4559eaa10b226d48c"
+ ],
+ "comparison": null,
+ "referenceSource": null,
+ "deployBlock": 57888814,
+ "deploySource": "eth_getCode bisection on rpc-mainnet.matic.quiknode.pro (28 requests)"
+}

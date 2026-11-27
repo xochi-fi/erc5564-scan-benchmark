@@ -2,6 +2,7 @@
 
 Can a browser wallet catch and recover logs that a public RPC silently drops? In the Base windows tested, yes. Daybreak alone returned 0 of 48 logs. Daybreak cross-checked against Tenderly, with Sentio as tiebreaker, returned all 48 for 111 more POSTs and 12.55 s more.
 
+<!-- generated:recovery-live -->
 | Live strategy | Accepted / expected logs | RPC POSTs | Third-provider pages | Wall time |
 | --- | ---: | ---: | ---: | ---: |
 | Daybreak, original-width diagnostic | 0 / 48 observed | 36 | 0 | 9.52 s to probe 34 pages |
@@ -9,6 +10,7 @@ Can a browser wallet catch and recover logs that a public RPC silently drops? In
 | Daybreak + Tenderly, Sentio fallback | 48 / 48 | 181 | 39 | 31.25 s |
 | Tenderly single | 48 / 48 | 70 | 0 | 18.82 s |
 | Tenderly + Sentio, Pocket on standby | 48 / 48 | 142 | 0 | 28.76 s |
+<!-- /generated:recovery-live -->
 
 One run per row, 2026-11-26, about 20:00–20:02 UTC. No extra or duplicate identities and no fetch, HTTP or JSON-RPC errors. The cross-check accepted 29 empty agreements and called Sentio on 39 mismatches. A healthy pair cost 72 POSTs and 9.94 s more than Tenderly alone.
 
@@ -16,6 +18,7 @@ One run per row, 2026-11-26, about 20:00–20:02 UTC. No extra or duplicate iden
 
 Loopback fixtures replay real raw logs from the frozen reference, with injected omissions, different partial subsets, HTTP 503 and an HTTP 200 JSON-RPC error. Separate loopback paths stand in for separate sources.
 
+<!-- generated:recovery-faults -->
 | Fixture | Committed windows | Missed in committed windows | Expected in pending windows | RPC POSTs | Third-provider pages | Elapsed |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Silent omission, single | 68 | 48 | 0 | 70 | 0 | 145.6 ms |
@@ -26,6 +29,7 @@ Loopback fixtures replay real raw logs from the frozen reference, with injected 
 | HTTP 503, cross-check | 68 | 0 | 0 | 143 | 1 | 210.7 ms |
 | Mismatch with JSON-RPC error on fallback | 7 | 0 | 48 | 23 | 1 | 30.6 ms to stop |
 | Resume after fallback recovers | 68 | 0 | 0 | 167 | 39 | 254.1 ms after resume |
+<!-- /generated:recovery-faults -->
 
 The equal-count run stopped on two different one-log subsets once the third source returned both. The mismatch-plus-error run stopped before blocks 41,623,282–41,624,281. Resume kept the seven committed windows and recovered all 48. Stop plus resume took 190 POSTs and 284.7 ms, three page calls and six startup calls more than uninterrupted recovery.
 

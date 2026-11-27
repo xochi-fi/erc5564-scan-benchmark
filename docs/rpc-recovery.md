@@ -31,7 +31,7 @@ Loopback fixtures replay real raw logs from the frozen reference, with injected 
 | Resume after fallback recovers | 68 | 0 | 0 | 167 | 39 | 254.1 ms after resume |
 <!-- /generated:recovery-faults -->
 
-The equal-count run stopped on two different one-log subsets once the third source returned both. The mismatch-plus-error run stopped before blocks 41,623,282–41,624,281. Resume kept the seven committed windows and recovered all 48. Stop plus resume took 190 POSTs and 284.7 ms, three page calls and six startup calls more than uninterrupted recovery.
+The equal-count run stopped on two different one-log subsets once the third source returned both. The mismatch-plus-error run stopped before blocks 41,623,282–41,624,281. Stop plus resume took 190 POSTs and 284.7 ms, three page calls and six startup calls more than uninterrupted recovery.
 
 ## Scope
 
@@ -50,6 +50,7 @@ Chromium 150.0.7871.250 in Orca Electron 43.8.10 on Bazzite 45, one isolated pro
 - One localStorage value holds accepted identities and the next window. Resume retries the first uncommitted window.
 - Scoring against the frozen reference happens after the scan.
 - Live requests per provider start ≥270 ms apart. Fixtures run on loopback without pacing.
+- A window's commit time is when its last log request ended.
 - Wall time covers chain and head checks, pacing, body reads, comparison and cursor writes. POST counts include startup calls to every configured provider, standby included. Connection and preflight caches can persist.
 
 ## Limits

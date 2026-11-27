@@ -12,12 +12,10 @@ Medians [min–max] of three repetitions on 2026-11-25/26. Each fresh wallet pro
 2. **On a public link, page size decides whether the network matters.** With 1-block pages at 1M, the Bazzite network term (983 s) exceeds the scan (542 s). From 64 blocks per page the network sits at the bandwidth floor: 18.7–19.7 s per 100k on Bazzite and 19.0–20.0 s on the Pi, about 1.1 KB per announcement uncompressed. 16-block pages take 23.5–23.7 s. Network terms vary by under 1%, so the spread in totals comes from the scan.
 
    ![Network, scan and verify time for a 1M cold rescan](figures/paged-breakdown.svg)
-   <sub>Bazzite i7-13700K, synthetic 1M announcements with 1,000 payments, oldest-first cold rescan, median of 3. The link is emulated on loopback: none = no delay, public = 100 ms RTT, 50/20 Mbit/s. Totals also include decode and checkpoints. Data: `data/paged-discovery/repeat.csv`.</sub>
-3. **Verification is a fixed tax per payment.** Two calls per candidate cost 0.2052–0.2082 s at 100 ms RTT for every page size, history, host and node. That is 20.53–20.82 s per 100 payments and 205.2–205.8 s for 1,000. It is 23.4% of the best public-link total on Bazzite (100k and 1M) and 9.8% on the Pi. No number in the study is less noisy.
+   <sub>Bazzite, synthetic 1M cold rescan with 1,000 payments, median of 3. Totals also include decode and checkpoints.</sub>
+3. **Verification is a fixed tax per payment.** Two calls per candidate cost 0.2052–0.2082 s at 100 ms RTT for every page size, history, host and node. That is 20.53–20.82 s per 100 payments and 205.2–205.8 s for 1,000. It is 23.4% of the best public-link total on Bazzite (100k and 1M) and 9.8% on the Pi.
 4. **Bigger pages delay the first match and raise memory.** First-match time is about one page's fetch and scan. Peak RSS is 103–283 MiB up to 64 blocks and 498–749 MiB for cold rescans at 256 blocks (32,768 logs, ~28 MiB per response). History size adds little, except +11% at 256 blocks (726 against 654 MiB, matching the single run's 723 against 654). Scan cost held the whole fixture and needed ~3.9 GiB at 1M.
 5. **Catch-up depends on the new blocks, not the history.** On `public`, 1-block pages mean 64 round trips and double the cost. Small pages also scan slower through the SDK wrapper, 1-block against 256-block: 8% (100k) and 6% (1M) on Bazzite, 11% on every Pi node. The single run showed ~10%. The cause was not isolated.
-
-All five single-run findings (Appendix A) held in the repeats, with finding 4's history effect and finding 5's slowdown refined.
 
 ## Cold rescans (median [min–max], n = 3)
 
@@ -139,9 +137,11 @@ One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, [canon
 All rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one Google Compute Cloud n4-standard-8 (32 GB) with SEAL HEXL / AVX512-IFMA52, prior schemes rebenchmarked on the same instance. Detector runtime is per scanned message, amortized over N, for one recipient's digest. Table 2 gives DoS-PerfOMR's amortized runtime as 4.95 ms/msg. The original OMR paper ([2021/1256](https://eprint.iacr.org/2021/1256)) puts server cost at ~$1 per million messages scanned. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4x faster than PerfOMR.
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
-<sub>Solid lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain's canonical Announcer rate, first announcement to 2026-11-26, 0.006–1.2 per day per chain; A76 CPU at the busiest is 2.1 ms/day. Dashed lines are literature values, not measured here: detector runtime per scanned message, amortized over N = 2^19, for one recipient's digest, from eprint 2024/510 Table 1 (GCP n4-standard-8 with AVX512 (HEXL), 1 thread): PerfOMR2 21.5 ms/message (not DoS-resistant), DoS-PerfOMR 4.9 ms/message (DoS-resistant). The flat line is DoS-PerfOMR's 20 ms recipient runtime from the same table; the A76 scan-cost rate passes it at ~12/day. The ~100k/day budget is an assumption, not derived from OMR; there the A76 needs 2.9 min CPU/day, and 29 min at 1M/day. Lines compare a cloud x86 core with AVX512 to one A76 core. Data: `data/scan-cost/results.csv`, `data/chain-volume/canonical/retrieve-*.json`. Details: [Scan cost](scan-cost.md).</sub>
+<sub>CPU per day against announcement rate. Dashed OMR lines are single-thread literature values on cloud AVX512, not measured here.</sub>
 
-The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Drafts EIP-7745, EIP-8304 (log indexes with proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). I found no published design for signed or Merkle-committed ERC-5564 feed pages.
+Solid lines scale the [scan-cost](scan-cost.md) 100k controls linearly. Each chain's canonical Announcer averaged 0.006–1.2 announcements per day from its first announcement to 2026-11-26; the busiest costs the A76 2.1 ms CPU per day. The A76 passes DoS-PerfOMR's 20 ms recipient runtime at ~12/day. The ~100k/day budget is an assumption, not derived from OMR; there the A76 needs 2.9 min CPU per day, and 29 min at 1M/day. The OMR lines come from one cloud x86 core with AVX512, the scan lines from one A76 core.
+
+The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Drafts EIP-7745, EIP-8304 (log indexes with proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). No published design for signed or Merkle-committed ERC-5564 feed pages turned up.
 
 ## Reproduce
 
@@ -223,13 +223,7 @@ Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 
 
 ## A. Findings
 
-| Topic | Single-run result |
-| --- | --- |
-| Scanning | ECDH and view-tag checks took 89–97% of cold rescans on `none`/`lan`. Fetching 107 MiB per 100k cost 0.2–3.9 s. Bazzite scaled ~10x from 100k to 1M. The Pi took 3.6–3.9x as long as the i7. |
-| Network | At 1M with 1-block pages, Bazzite spent 979 s fetching and 520 s scanning, 1731 s total. At 16–64 blocks per page the network approached 18–19 s per 100k. Fastest 100k totals: 88 s (Bazzite), 219 s (Pi). |
-| Verification | ~0.205 s per payment at 100 ms RTT: 23% (Bazzite) and 9% (Pi) of the best public-link totals. |
-| First match and memory | At 1 against 256 blocks per page: Bazzite 0.09 against 16–22 s, Pi 0.4 against 61–66 s. Peak RSS 110–280 MiB up to 64 blocks, 470–720 MiB at 256. History size had little effect at smaller pages. |
-| Catch-up | Bazzite took 4.1–4.5 s for 64 blocks on both histories. On `public`, 14.7 s at 1 block against 7.4 s at larger pages. The 1M scan took 532.6 s at 1 block against 478.7 s at 256. |
+The repeats confirmed all five findings and refined finding 4's history effect and finding 5's slowdown. The single run covered `lan` too: fetching 107 MiB per 100k took 0.2–3.9 s across `none` and `lan`, and the Pi took 3.6–3.9x as long as the i7.
 
 ## A. Caveats
 

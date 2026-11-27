@@ -1,6 +1,6 @@
 # Recorded data
 
-One directory per experiment. Home-directory prefixes in recorded paths are replaced with `~`. Host labels (`bazzite`, `turing-node-N`) match the findings. Recorded JSON is unchanged from the runs, so it still names the old `phaseN` paths and kinds ([Names in recorded data](../METHODS.md#names-in-recorded-data)).
+One directory per experiment. Home-directory prefixes in recorded paths are replaced with `~`. Host labels (`bazzite`, `turing-node-N`) match the findings. Recorded JSON keeps the old `phaseN` paths and kinds ([Names in recorded data](../METHODS.md#names-in-recorded-data)).
 
 | Directory | Contents |
 | --- | --- |

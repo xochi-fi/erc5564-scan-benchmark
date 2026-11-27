@@ -9,7 +9,9 @@ How long does a local ERC-5564 scan take? About 0.5 ms per announcement on an i7
 | Turing node 1, Cortex-A76 cores 4–7 | 168.457–181.946 | 1804.305 | 9.92–10.71 |
 <!-- /generated:scan-cost -->
 
-[Hardware](../METHODS.md#hardware). Crypto engine, zero-match fixtures, unprofiled. Two 100k controls bracket the other runs. All 12 Linux runs matched the fixture oracle. Data: [`results.csv`](../data/scan-cost/results.csv), [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/), [`profiling-turing/`](../data/scan-cost/profiling-turing/).
+[Hardware](../METHODS.md#hardware). Crypto engine, zero-match fixtures, unprofiled. Two 100k controls bracket the other runs. All 12 Linux runs matched the fixture oracle. At this rate the largest chain history, Polygon's 102,552 Umbra announcements, takes about 180 s on the A76.
+
+Scan-time estimates elsewhere use these 100k controls (i7 48.5–52.0 s), not the paged-discovery controls (i7 47.3–47.6 s). Data: [`results.csv`](../data/scan-cost/results.csv), [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/), [`profiling-turing/`](../data/scan-cost/profiling-turing/).
 
 ## Retained working set
 
@@ -21,7 +23,7 @@ Each profile scans the same 100k prefix with the same keys and retains either 10
 | Bazzite | 48.226 | 47.157 | 0.98 |
 | Turing node 1 | 180.607 | 180.927 | 1.00 |
 
-The M1 run recorded more page faults and system swap. Paging, compression, CPU placement, thermals or competing work could explain it. Scaling estimates use the Linux controls.
+The M1 run recorded more page faults and system swap; the cause was not isolated.
 
 ## Initial sweep (Apple M1)
 
@@ -36,14 +38,14 @@ Ranges span engines, modes and match cases. RSS includes loading and validation.
 
 ## Where the time goes
 
-- Point addition and modular reduction (noble `add` and `M`) take 83–85% of sampled self hits in the Linux 1M profiles. See `functions.txt` under `data/scan-cost/profiling-*/`.
+- Point addition and modular reduction (noble `add` and `M`) take 83–85% of sampled self hits in the Linux 1M profiles (`functions.txt` under `data/scan-cost/profiling-*/`).
 - GC spans sum to about 0.1% of wall time, concurrent phases included.
 
 ## Limits
 
 - Linux snapshots showed no swap for the benchmark process. Bazzite ran other workloads and had host-wide swap. Both hosts used shared cores.
 - Incremental mode retains the whole fixture.
-- This is local CLI scanning only. Browser and mobile performance, first-contact bootstrap, gas, recovery, private follow-up queries and spendable-balance checks are out of scope.
+- Local CLI scanning only. Browser and mobile performance, first-contact bootstrap, gas, recovery, private follow-up queries and spendable-balance checks are out of scope.
 
 Method: [workloads, timers and engines](../METHODS.md#scan-cost). [Shared caveats](../METHODS.md#caveats-for-synthetic-experiments).
 

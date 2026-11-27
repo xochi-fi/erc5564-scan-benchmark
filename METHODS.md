@@ -8,7 +8,7 @@ Versions are pinned in `package.json`: the SDK in `dependencies` and Bun in `pac
 
 ## Discovery pipeline
 
-What every experiment measures one stage of, and where each failure mode bites. Orange stages failed in the recorded runs; green ones are where the fix sits.
+Each experiment measures one stage. Orange stages failed in the recorded runs; green is the fix.
 
 ```mermaid
 flowchart LR
@@ -55,7 +55,7 @@ The experiments were first numbered as phases. Code, docs and `data/` directorie
 | `phase4-checkpoint`, `phase5:<name>` | Browser discovery, RPC recovery | localStorage keys during the recorded runs (not stored in `data/`) | Renamed: the code now uses `browser-discovery-checkpoint` and `rpc-recovery:<name>`, which does not change any result |
 | `phase6:base:v1` | Shared feed | Synthetic fixture seed in `src/shared-feed/run.ts` and `tune.ts` | Reproduces the recorded synthetic matches |
 
-Recorded JSON is unchanged from the runs, so it may also name old `phaseN` paths.
+Recorded JSON is unchanged from the runs and may also name old `phaseN` paths.
 
 ## Synthetic fixtures
 

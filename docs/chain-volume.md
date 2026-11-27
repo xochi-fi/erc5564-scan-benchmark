@@ -1,6 +1,6 @@
 # Chain volume
 
-How many ERC-5564 announcements exist per chain, and can a keyless client fetch them all? Seven chains hold 1 to 1,039 each, and keyless scans reached head on all seven. With a whole-history endpoint, a cold start took 8–17 s and 30–52 requests. On Base, one endpoint silently skipped 48 logs. A parallel run reached head in 28 minutes and 16,296 requests, with four workers and five hostnames across four providers. Of 190 endpoints probed, 105 answered `eth_getLogs` and 77 accepted the deploy-block query.
+How many ERC-5564 announcements exist per chain, and can a keyless client fetch them all? Seven chains hold 1 to 1,039 each, and keyless scans reached head on all seven. Of 190 endpoints probed, 105 answered `eth_getLogs` and 77 accepted the deploy-block query.
 
 Read-only run from Bazzite on 2026-11-26, canonical Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`, deployment to measured head. Residential IP, ≤4 requests/s per host, HTTP 429 backoff with Retry-After, User-Agent `erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)` ([why `phase3`](../METHODS.md#names-in-recorded-data)).
 
@@ -22,15 +22,15 @@ Sources agree on `(block, logIndex)`, and on transaction hash where present. "Fu
 | Sepolia | 5,486,597 | **1,039**: Routescan = RPC (2 endpoint sets); **Blockscout has 1,026** | 6,241,244 (2024-07-04) - 12,186,737 (2026-11-22) | 36.1 | 30 / 21 / 14 / 11 | 10,001 [50 - whole history]; 2 took the whole history (one 3-block value excluded: a head-lag artifact, see caveats) | OK: 8 s, 30 requests, 1,227 KiB | OK: 66 s, 80 requests | Blockscout v2 and etherscan-API: 13 missing; Routescan OK |
 <!-- /generated:chain-volume -->
 
-Probe-informed runs rank deploy-block-capable endpoints by span. List-order runs take Chainlist order among endpoints that answered a 10-block query. Both start at 10,000 blocks, adapt, and use up to eight endpoints. The parallel strategy splits the range into 64 resumable chunks. Deploy blocks come from Blockscout creation transactions (Ethereum, OP Mainnet, Sepolia) or `eth_getCode` bisection. Two more endpoints showed code at each deploy block and none at the block before.
+Probe-informed runs rank deploy-block-capable endpoints by span. List-order runs take Chainlist order among endpoints that answered a 10-block query. Both start at 10,000 blocks, adapt, and use up to eight endpoints. The parallel strategy splits the range into 64 resumable chunks and ran on Base only, the one chain that needed it. Deploy blocks come from Blockscout creation transactions (Ethereum, OP Mainnet, Sepolia) or `eth_getCode` bisection. Two more endpoints showed code at each deploy block and none at the block before.
 
 [Full run metrics](../data/chain-volume/summary.md) · [Endpoint results](../data/chain-volume/endpoints.csv) · [Source comparisons](../data/chain-volume/cross-source.csv)
 
 ## Findings
 
-1. **Whole-history queries work on six chains.** Tenderly served them on Ethereum, Arbitrum, OP Mainnet, Polygon and Sepolia, and rpc.gnosischain.com and gateway.fm on Gnosis. Base needed Pocket, two Tenderly hostnames, thirdweb and Sentio. At 1,000 blocks per request and 4 requests/s, a Base backfill takes ~47,000 calls and over three hours. [Parallel run](../data/chain-volume/canonical/retrieve-base-parallel.json)
+1. **Whole-history queries work on six chains.** Tenderly served them on Ethereum, Arbitrum, OP Mainnet, Polygon and Sepolia, and rpc.gnosischain.com and gateway.fm on Gnosis. Base needed four parallel workers over Pocket, two Tenderly hostnames, thirdweb and Sentio. At 1,000 blocks per request and 4 requests/s, a Base backfill takes ~47,000 calls and over three hours. [Parallel run](../data/chain-volume/canonical/retrieve-base-parallel.json)
 2. **Recent access can hide archive limits.** publicnode wanted a token for history on five chains. blockreq served the last 1,024 blocks, blockmachine 100–10,000, thyme and blazingnode 128. Per chain, 28–53% of probed endpoints failed `eth_getLogs`.
-3. **Successful responses can omit logs.** Base's `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev`, and OP's `public.1rpc.io`, passed the deploy-block probe but returned `[]` for known announcements. OP had four misses in 50-block windows. The Base probe-informed run switched to Daybreak at block 34,304,282, found nothing more, and ran out of its 8,000 requests at block 46,544,282, 66% through history. The parallel run recovered the logs. Pocket's OP response succeeded once, then reported pruned history. Its spans ranged 10,438–70,538 blocks despite a 10,001-block error. [Consistency checks](../data/chain-volume/consistency/) · [Sequential run](../data/chain-volume/canonical/retrieve-base-probe-informed.json)
+3. **Successful responses can omit logs.** Base's `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev`, and OP's `public.1rpc.io`, passed the deploy-block probe but returned `[]` for known announcements. OP had four misses in 50-block windows. The Base probe-informed run switched to Daybreak at block 34,304,282, found nothing more, and ran out of its 8,000 requests at block 46,544,282, 66% through history. The parallel run recovered the 48 skipped logs. Pocket's OP response succeeded once, then reported pruned history. Its spans ranged 10,438–70,538 blocks despite a 10,001-block error. [Consistency checks](../data/chain-volume/consistency/) · [Sequential run](../data/chain-volume/canonical/retrieve-base-probe-informed.json)
 4. **Indexers miss logs too.** Blockscout v2 matched Ethereum and OP but missed 13 Sepolia logs in blocks 11,909,881–11,926,046, with 0–2 blocks of head lag. It had the transactions, but `/transactions/{hash}/logs` returned HTTP 500. Routescan and both RPC runs had them. The first Ethereum Blockscout v2 fetch lacked transaction hashes on 263 of 296 rows, so that comparison used block and log index. Routescan lagged 51–471 blocks on Ethereum and Sepolia. Etherscan v2 needs a key, and its free tier excludes Base.
 
 ## Wallet guidance
@@ -79,7 +79,7 @@ Endpoints come from chainlist.org [`rpcs.json`](https://chainlist.org/rpcs.json)
 4. Where a reference exists, the window holding the first known announcement.
 5. 10 latency samples at ≤1,000 blocks.
 
-The [consistency check](../data/chain-volume/consistency/) then asked each full-history endpoint twice for 100-block windows around the first, middle and last known announcement.
+The [consistency check](../data/chain-volume/consistency/) then asked each full-history endpoint twice for 100-block windows around the first, middle and last known announcement. 65 of 87 endpoints returned every known log; the rest errored on at least one check or answered `[]` without an error.
 
 Errors are stored verbatim (first 300 characters) and classed as range-limit, result-limit, rate-limit, archive-missing, auth-required, unsupported, timeout, blocked or other. The classifier is tested on 139 recorded messages ([`rpc-errors.json`](../test/fixtures/chain-volume/rpc-errors.json)).
 

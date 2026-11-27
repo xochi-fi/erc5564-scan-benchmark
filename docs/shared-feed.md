@@ -4,7 +4,7 @@
 
 Clients fetch every finalized feed page, scan locally with view tags, resume from a checkpoint, and retry a range when two independent feeds disagree; signed page commitments stay optional until [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745) or [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) can prove completeness ([summary](../README.md)).
 
-[OMR](paged-discovery.md#prior-work-and-omr-crossover) servers spend 4.1–59.8 ms per message per recipient on cloud AVX512 with 583–2,181 B clues and no DoS-resistant variant in production, and its ~20 ms decode beats the A76's 1.75 ms per announcement only above ~12/day, while the dual feed here recovered 48/48 and caught up cold in 38.8 ms (Bazzite) and 129–140 ms (Pi).
+[OMR](paged-discovery.md#prior-work-and-omr-crossover) servers spend 4.1–59.8 ms per message per recipient on cloud AVX512, clues take 583–2,181 B, and no DoS-resistant variant runs in production. Its ~20 ms decode beats the A76's 1.75 ms per announcement only above ~12/day. The dual feed recovered 48/48 and caught up cold in 38.8 ms (Bazzite) and 129–140 ms (Pi).
 
 | Revisit when | Assumed budget | Breaks at |
 | --- | --- | ---: |
@@ -29,7 +29,7 @@ Bazzite 45, Intel i7-13700K, Bun 1.4.4, 2026-11-27. Live Tenderly over the Inter
 - RPC samples check chain ID, finalized block and pinned block, with request starts ≥275 ms apart. Feed samples make one manifest GET per source and two concurrent GETs per page.
 - Catch-up includes parsing, pacing, discovery and checkpoint I/O. Page verification is log validation plus, for the dual feed, source agreement. First match is timed after the needed responses and the scan of its page group. No canonical log matched the synthetic recipient.
 
-Response bytes for each path are compared in the [byte chart](#feed-format-search). Feed latency here is loopback. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
+Live RPC here is the Bun client (71 POSTs); the same Tenderly windows took 70 POSTs in a browser ([RPC recovery](rpc-recovery.md)). Feed latency is loopback. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
 
 ## Omission and resume controls
 
@@ -86,9 +86,9 @@ Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts) with the
 | Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](../data/shared-feed/autoresearch/warm-time.params.json) |
 
 ![Response bytes for feed pages and RPC payloads, with the format search](figures/feed-bytes.svg)
-<sub>Decoded body bytes without headers or framing, median of three samples. RPC is live Tenderly; feeds are two loopback origins built from the RPC-recovery captures. Optimized is the search's best kept params, 65.8% smaller raw and 23.8% smaller under gzip; RPC gzip was not measured. Lower panel: one source's cold pages per keep/revert iteration (13 iterations); step names are in the bytes log below. Data: `data/shared-feed/summary.json`, `evidence.json`, `autoresearch/feed-bytes.jsonl`.</sub>
+<sub>Decoded body bytes per path, median of three. Lower panel: one source's cold pages per search iteration.</sub>
 
-The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4.
+The best kept params are 65.8% smaller raw and 23.8% smaller under gzip; RPC gzip was not measured. Step names are in the bytes log. The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4.
 
 Warm time: the loop kept only larger pages (8, 16, then 32 windows). An interleaved check (5 rounds × 9 samples) gave medians of 70.51 ms (baseline), 71.40 ms (32-window) and 75.02 ms (byte-optimized), with more spread between rounds than between params. Local scan dominates A76 warm catch-up.
 

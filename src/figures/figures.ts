@@ -455,19 +455,21 @@ function feedBytes(): string {
 
 // ---- 8. daily scan budget -----------------------------------------------------
 
-// Literature constants and one assumption, not measurements from this repo. Only values the papers'
-// abstracts state are used; the evaluation tables could not be fetched (eprint returns 403 to automated
-// clients). They mirror the scheme table in docs/paged-discovery.md.
+// Literature constants and one assumption, not measurements from this repo. The OMR-family values all
+// come from one table so they are comparable: eprint 2024/510 Table 1 ("Comparison with prior OMR
+// constructions for N = 2^19, γ = γ̄ = 50"), detector runtime in ms per scanned message, amortized over
+// N, 1 thread, on a Google Compute Cloud n4-standard-8 (32 GB) with SEAL HEXL / AVX512-IFMA52. Table 2
+// gives the same DoS-PerfOMR quantity as 4.95 ms/msg "amortized runtime" at N = 2^19, γ̄ = 50. They
+// mirror the scheme table in docs/paged-discovery.md.
 // Assumption, not derived from any OMR figure: the daily announcement volume at which a phone-class
 // feed budget runs out.
 const PHONE_BUDGET_PER_DAY = 1e5;
-// OMR, eprint 2021/1256 abstract: "the resulting digests can be decoded by recipients in ~20ms".
+// DoS-PerfOMR recipient runtime, eprint 2024/510 Table 1: 20 ms.
 const OMR_CLIENT_S = 0.02;
-// PerfOMR2, eprint 2024/204 abstract: "~40.0ms per message". Not DoS-resistant. The abstract does not
-// say per recipient or give the hardware.
-const PERFOMR2_SERVER_S_PER_MESSAGE = 0.04;
-// DoS-resistant OMR, eprint 2024/510: its abstract gives only relative speed (12x faster than OMRp2
-// from 2021/1256), so it is named in the caption and not drawn.
+// DoS-PerfOMR detector runtime, eprint 2024/510 Table 1: 4.9 ms/msg, 1 thread. DoS-resistant (Theorem 5.3).
+const DOS_PERFOMR_DETECTOR_S_PER_MESSAGE = 0.0049;
+// PerfOMR2 detector runtime, eprint 2024/510 Table 1: 21.5 ms/msg, 1 thread. Not DoS-resistant (Section 5.1).
+const PERFOMR2_DETECTOR_S_PER_MESSAGE = 0.0215;
 
 function scanBudget(): string {
   const W = 760, L = 78, R = 724, T = 58, B = 300;
@@ -499,14 +501,18 @@ function scanBudget(): string {
   });
   // Cited OMR costs for comparison.
   out.push(line(x.scale(1e-3), y.scale(OMR_CLIENT_S), x.scale(1e7), y.scale(OMR_CLIENT_S), 'axis', ' stroke-width="1.5" stroke-dasharray="6 4"'));
-  out.push(text(R - 4, y.scale(OMR_CLIENT_S) + 15, `OMR client decode, flat ~${OMR_CLIENT_S * 1000} ms (cited)`, 'small muted', 'end'));
+  out.push(text(R - 4, y.scale(OMR_CLIENT_S) + 15, `DoS-PerfOMR recipient runtime, flat ${OMR_CLIENT_S * 1000} ms`, 'small muted', 'end'));
   const a76 = rates[1]!;
   const cross = OMR_CLIENT_S / a76;
-  out.push(circle(x.scale(cross), y.scale(OMR_CLIENT_S), 3.5, 's2', `A76 scan passes OMR client decode at ${fmt(cross, 1)} announcements`));
+  out.push(circle(x.scale(cross), y.scale(OMR_CLIENT_S), 3.5, 's2', `A76 scan passes DoS-PerfOMR recipient runtime at ${fmt(cross, 1)} announcements`));
   out.push(text(x.scale(cross) - 8, y.scale(OMR_CLIENT_S) - 8, `A76 scan passes it at ~${fmt(Math.ceil(cross))}/day`, 'small muted', 'end'));
-  const sx = Math.min(1e7, 1e6 / PERFOMR2_SERVER_S_PER_MESSAGE);
-  out.push(line(x.scale(1e-3), y.scale(1e-3 * PERFOMR2_SERVER_S_PER_MESSAGE), x.scale(sx), y.scale(sx * PERFOMR2_SERVER_S_PER_MESSAGE), 'axis', ' stroke-width="1.5" stroke-dasharray="2 3"'));
-  out.push(text(x.scale(3e4), y.scale(3e4 * PERFOMR2_SERVER_S_PER_MESSAGE) - 10, `PerfOMR2 server, ~${PERFOMR2_SERVER_S_PER_MESSAGE * 1000} ms/message (cited, not DoS-resistant): ${fmt(PERFOMR2_SERVER_S_PER_MESSAGE / a76, 0)}x the A76 scan`, 'small muted', 'end'));
+  const detector = (perMessage: number, dash: string, label: string, at: number) => {
+    const end = Math.min(1e7, 1e6 / perMessage);
+    out.push(line(x.scale(1e-3), y.scale(1e-3 * perMessage), x.scale(end), y.scale(end * perMessage), 'axis', ` stroke-width="1.5" stroke-dasharray="${dash}"`));
+    out.push(text(x.scale(at), y.scale(at * perMessage) - 10, label, 'small muted', 'end'));
+  };
+  detector(PERFOMR2_DETECTOR_S_PER_MESSAGE, '2 3', `PerfOMR2 detector, ${fmt(PERFOMR2_DETECTOR_S_PER_MESSAGE * 1000, 1)} ms/message (not DoS-resistant)`, 3e4);
+  detector(DOS_PERFOMR_DETECTOR_S_PER_MESSAGE, '8 3', `DoS-PerfOMR detector, ${fmt(DOS_PERFOMR_DETECTOR_S_PER_MESSAGE * 1000, 1)} ms/message (DoS-resistant)`, 3e3);
   // Budget line.
   const bx = x.scale(PHONE_BUDGET_PER_DAY);
   out.push(line(bx, T, bx, B, 'axis', ' stroke-width="1.5" stroke-dasharray="4 3"'));
@@ -523,8 +529,8 @@ function scanBudget(): string {
   out.push(text(L - 6, rowY + 4, 'ERC-5564', 'small ink', 'end'));
   out.push(text(x.scale(hi) + 8, rowY + 4, `${fmt(lo, 3)}–${fmt(hi, 1)} per day per chain; A76 CPU at the busiest: ${fmt(hi * a76 * 1000, 1)} ms/day`, 'small muted'));
   const notes = caption(20, B + 86, W - 40, [
-    'Lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain\'s canonical Announcer rate, first announcement to 2026-11-26. Dashed lines are literature constants from the papers\' abstracts, not measured here: OMR recipient decode, ~20 ms (eprint 2021/1256), and PerfOMR2 server time, ~40 ms per message (eprint 2024/204, not DoS-resistant). The ~12/day crossover uses the OMR decode; the PerfOMR2 ratio uses PerfOMR2. The ~100k/day budget is an assumption, not derived from OMR.',
-    'DoS-resistant OMR (eprint 2024/510) reports 12x faster than OMRp2 and near state-of-the-art non-DoS-resistant OMR; per-message figure not verified (evaluation tables not accessible).',
+    'Lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain\'s canonical Announcer rate, first announcement to 2026-11-26.',
+    'Dashed lines are literature values, not measured here: detector runtime per scanned message, amortized over N = 2^19, for one recipient\'s digest; eprint 2024/510 Table 1, GCP n4-standard-8 with AVX512 (HEXL), 1 thread. The flat line is DoS-PerfOMR\'s recipient runtime from the same table. The ~12/day crossover compares that recipient runtime with the A76 scan-cost rate. The ~100k/day budget is an assumption, not derived from OMR. Lines compare a cloud x86 core with AVX512 to one A76 core.',
     'Sources: data/scan-cost/results.csv, data/chain-volume/canonical/retrieve-*.json. Details: docs/paged-discovery.md (prior work), docs/scan-cost.md.',
   ]);
   out.push(...notes.elements);

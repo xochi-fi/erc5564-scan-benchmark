@@ -23,6 +23,8 @@ Offline tests use the real implementations. They cover determinism, matches and 
 
 Results: [docs/scan-cost.md](docs/scan-cost.md).
 
+### Measurement boundary
+
 Each engine, mode and repetition runs in a fresh Bun process. Engine order is fixed, so power, thermals and competing load can shift timings. Each process:
 
 1. Read provenance, collect garbage, snapshot memory.
@@ -64,7 +66,7 @@ Outputs: `scan.cpuprofile`, `scan.collapsed`, `stacks.json`, function and byteco
 
 ## Paged discovery
 
-Results: [FINDINGS.md](FINDINGS.md). The wallet reuses the scan-cost fixtures (SHA256-checked) and engines (`scanAnnouncements` in `src/shared/worker.ts`).
+Results: [docs/paged-discovery.md](docs/paged-discovery.md). The wallet reuses the scan-cost fixtures (SHA256-checked) and engines (`scanAnnouncements` in `src/shared/worker.ts`).
 
 | File | Role |
 | --- | --- |
@@ -81,7 +83,7 @@ Files are in `src/paged-discovery/`.
 | `lan` | 1 ms | 1 Gbit/s | 1 Gbit/s |
 | `public` | 100 ms | 50 Mbit/s | 20 Mbit/s |
 
-### Timers
+### Measurement boundaries
 
 | Field | Covers |
 | --- | --- |
@@ -104,7 +106,7 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 | Setting | Use |
 | --- | --- |
-| Plan | `bazzite`, `turing`, `smoke` or a repeat plan in [scripts/matrix/](scripts/matrix/) |
+| Plan | `bazzite`, `turing`, `smoke` or a repeat plan in [src/paged-discovery/matrix/](src/paged-discovery/matrix/) |
 | `BUN` | Bun override. Defaults to PATH, then `./.runtime/*/bun`. |
 | `REUSE_NODE_MODULES`, `REUSE_FIXTURES` | Project with the same lockfile; comma-separated fixture directories, SHA256-checked |
 | `HOST_LABEL`, `WALLET_CPUS`, `CHAIN_CPUS`, `CONTROL_CPUS` | Output label (default short hostname) and Linux CPU lists |
@@ -128,17 +130,17 @@ Each experiment doc ends with its own commands. Scan cost and paged discovery wr
 
 | Path | Contents |
 | --- | --- |
-| `src/shared/` | Fixture generator, scan engines and types used by several experiments |
+| `src/shared/` | Fixture generator, scan engines, types, Announcer constants, raw-log decoding and the pinned Base windows, used by several experiments |
 | `src/scan-cost/` | Benchmark CLI and profiler |
-| `src/paged-discovery/` | Local chain, link emulator, wallet, sweep, reports, host runner |
+| `src/paged-discovery/` | Local chain, link emulator, wallet, sweep, reports, host runner and repeat matrices |
 | `src/chain-volume/` | Keyless endpoint probe, adaptive retriever, indexer clients, report |
 | `src/browser-discovery/`, `src/rpc-recovery/` | Browser harnesses |
 | `src/shared-feed/` | Feed builder, benchmark, verifier and format search |
-| `scripts/` | Host runner and repeat matrices |
+| `scripts/` | Bazzite host runner |
 | `test/` | `bun test` suites and recorded fixtures |
 | `data/<experiment>/` | Recorded results ([data/README.md](data/README.md)) |
 | `docs/<experiment>.md` | Results per experiment |
-| `FINDINGS.md` | Paged-discovery results |
+| `FINDINGS.md`, `PHASE*.md` | Redirects to the old paths |
 
 ## Caveats for synthetic experiments
 

@@ -1,9 +1,10 @@
 import { mkdir, readdir, readFile, rename } from 'node:fs/promises';
 import { hostname, release } from 'node:os';
 import { generateFixture } from '../shared/fixtures.ts';
-import { decodeAnnouncements, type RawLog } from '../paged-discovery/wallet.ts';
+import { decodeAnnouncements, type RawLog } from '../shared/raw-logs.ts';
 import { getAnnouncementsForUser } from '@scopelift/stealth-address-sdk';
-import { filter, hex, rpc, scope } from '../rpc-recovery/config.ts';
+import { filter, hex } from '../shared/announcer.ts';
+import { rpc, scope } from '../shared/base-windows.ts';
 import { compact, digest, endpoint, expand, loadReference, warmPage, type Feed } from './feed.ts';
 
 const [output] = Bun.argv.slice(2);
@@ -107,6 +108,7 @@ const omit = host(feed.primary, 'omit');
 const altered = host(feed.primary, 'payload');
 
 const fixtureDir = `${output}/synthetic`;
+// kept: recorded evidence depends on it
 const synthetic = await generateFixture(fixtureDir, { seed: 'phase6:base:v1', count: 4, matchEvery: 2 });
 const fixtures = (await Bun.file(`${fixtureDir}/announcements.jsonl`).text()).trim().split('\n')
   .map(line => JSON.parse(line) as RawLog);

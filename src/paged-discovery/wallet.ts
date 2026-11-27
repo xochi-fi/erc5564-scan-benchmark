@@ -1,12 +1,14 @@
 import { createHash } from 'node:crypto';
 import { readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { cpus, release, totalmem } from 'node:os';
-import { ERC5564AnnouncerAbi, type AnnouncementLog } from '@scopelift/stealth-address-sdk';
-import { decodeEventLog, type Hex } from 'viem';
+import type { AnnouncementLog } from '@scopelift/stealth-address-sdk';
+import type { Hex } from 'viem';
 import { z } from 'zod';
 import { SDK_COMMIT, SDK_VERSION, type Engine, type MemorySnapshot, type Recipient } from '../shared/model.ts';
 import { announcementIdentity, scanAnnouncements } from '../shared/worker.ts';
-import { ANNOUNCEMENT_TOPIC, ANNOUNCER, readManifest } from './chain.ts';
+import { ANNOUNCEMENT_TOPIC, ANNOUNCER } from '../shared/announcer.ts';
+import { decodeAnnouncements, hexString, rawLogSchema, rawLogsSchema } from '../shared/raw-logs.ts';
+import { readManifest } from './chain.ts';
 import {
   SCHEMA_VERSION,
   expectedFileSchema,
@@ -66,20 +68,6 @@ export class RpcClient {
   }
 }
 
-const hexString = z.string().regex(/^0x[0-9a-fA-F]*$/);
-export const rawLogSchema = z.object({
-  address: hexString,
-  blockHash: hexString,
-  blockNumber: hexString,
-  data: hexString,
-  logIndex: hexString,
-  removed: z.boolean().optional(),
-  topics: z.array(hexString),
-  transactionHash: hexString,
-  transactionIndex: hexString,
-}).passthrough();
-export type RawLog = z.infer<typeof rawLogSchema>;
-export const rawLogsSchema = z.array(rawLogSchema);
 const quantitySchema = z.string().regex(/^0x[0-9a-fA-F]+$/);
 const receiptSchema = z.object({
   status: z.string(),
@@ -88,35 +76,6 @@ const receiptSchema = z.object({
   transactionHash: hexString,
   logs: z.array(rawLogSchema),
 }).passthrough().nullable();
-
-/** Decodes raw RPC logs into the SDK's AnnouncementLog shape (as the SDK's own getAnnouncements does). */
-export function decodeAnnouncements(logs: RawLog[]): AnnouncementLog[] {
-  return logs.map((log) => {
-    const decoded = decodeEventLog({
-      abi: ERC5564AnnouncerAbi,
-      eventName: 'Announcement',
-      data: log.data as Hex,
-      topics: log.topics as [Hex, ...Hex[]],
-      strict: true,
-    });
-    return {
-      address: log.address as Hex,
-      blockHash: log.blockHash as Hex,
-      blockNumber: BigInt(log.blockNumber),
-      data: log.data as Hex,
-      logIndex: Number(BigInt(log.logIndex)),
-      removed: log.removed ?? false,
-      topics: log.topics as [Hex, ...Hex[]],
-      transactionHash: log.transactionHash as Hex,
-      transactionIndex: Number(BigInt(log.transactionIndex)),
-      caller: decoded.args.caller,
-      ephemeralPubKey: decoded.args.ephemeralPubKey,
-      metadata: decoded.args.metadata,
-      schemeId: decoded.args.schemeId,
-      stealthAddress: decoded.args.stealthAddress,
-    };
-  });
-}
 
 /** ETH metadata: viewTag(1) | 0xeeeeeeee(4) | 0xeeee...(20) | amount(32). */
 export function ethAmountFromMetadata(metadata: Hex): bigint {
@@ -362,10 +321,12 @@ export async function environmentProvenance(): Promise<Record<string, unknown>> 
     totalMemoryBytes: totalmem(),
     lockfileSha256: await sha('../../bun.lock'),
     sourceSha256: {
-      'src/worker.ts': await sha('../shared/worker.ts'),
+      'src/shared/worker.ts': await sha('../shared/worker.ts'),
       'src/paged-discovery/wallet.ts': await sha('./wallet.ts'),
       'src/paged-discovery/chain.ts': await sha('./chain.ts'),
       'src/paged-discovery/link.ts': await sha('./link.ts'),
+      'src/shared/announcer.ts': await sha('../shared/announcer.ts'),
+      'src/shared/raw-logs.ts': await sha('../shared/raw-logs.ts'),
     },
     dependencies,
   };
@@ -424,6 +385,7 @@ export async function runWallet(options: WalletOptions): Promise<WalletSample> {
   const fetchTimes = result.pages.map(page => page.fetchMs);
   return {
     schemaVersion: SCHEMA_VERSION,
+    // kept: recorded evidence depends on it
     kind: 'phase2-wallet',
     scenario: options.scenario,
     engine: options.engine,

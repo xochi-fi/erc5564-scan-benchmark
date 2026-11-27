@@ -7,8 +7,8 @@ import { z } from 'zod';
 /** Constants of the fixture format (src/shared/fixtures.ts). */
 export const ENTRIES_PER_BLOCK = 128;
 export const FIRST_BLOCK = 20_000_000;
-export const ANNOUNCER = '0x55649e01b5df198d18d95b5cc5051630cfd45564';
-export const ANNOUNCEMENT_TOPIC = '0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7';
+import { ANNOUNCEMENT_TOPIC, ANNOUNCER } from '../shared/announcer.ts';
+export { ANNOUNCEMENT_TOPIC, ANNOUNCER };
 export const SYNTHETIC_CALLER = '0x0000000000000000000000000000000000000001';
 export const CHAIN_ID = '0x1';
 

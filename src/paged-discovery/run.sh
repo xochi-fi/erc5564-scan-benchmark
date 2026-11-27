@@ -131,8 +131,8 @@ printf 'plan=%s label=%s bun=%s (%s)\n' "$PLAN" "$LABEL" "$("$BUN_BIN" --version
 if [[ "$("$BUN_BIN" --version)" != "1.4.4" ]]; then
   printf 'WARNING: bun is not 1.4.4; this is a different benchmark environment\n'
 fi
-sha256sum package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts src/paged-discovery/*.sh test/*.ts scripts/*.sh scripts/matrix/*.json 2>/dev/null \
-  || shasum -a 256 package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts src/paged-discovery/*.sh test/*.ts scripts/*.sh scripts/matrix/*.json
+sha256sum package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts src/paged-discovery/*.sh test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json 2>/dev/null \
+  || shasum -a 256 package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts src/paged-discovery/*.sh test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json
 host_state "$RESULTS/host-before.txt"
 case "$PLAN" in
   repeat-bazzite*) GATE_DEFAULT=1 ;;
@@ -217,7 +217,8 @@ case "$PLAN" in
     fi
     control=()
     [[ "$PLAN" == "repeat-smoke" ]] || control=(--control-fixture "$FIXTURES/100000-zero")
-    sweep repeat --matrix "$ROOT/scripts/matrix/$PLAN.json" --fixtures-root "$FIXTURES" \
+    # kept: recorded evidence depends on the phase2-repeat-v1 seed
+    sweep repeat --matrix "$ROOT/src/paged-discovery/matrix/$PLAN.json" --fixtures-root "$FIXTURES" \
       --repetitions "${REPETITIONS:-3}" --first-repetition "$first_rep" \
       --order shuffled --seed "${SEED:-phase2-repeat-v1}-${LABEL}-r${first_rep}" \
       "${cooldown[@]}" "${control[@]}"

@@ -82,7 +82,7 @@ Warm time: the loop kept only larger pages (8, 16, then 32 windows). Prefetch an
 - Both paths use the paged-discovery ABI decoder and the ScopeLift SDK locally. The SDK checks the view tag before the full stealth-address check. Two synthetic matches and two decoys are scanned apart from canonical logs. Keys stay on the client. Scanning makes no transfers, receipt lookups or balance checks.
 - Feed sources must agree on exact identity (block, block hash, transaction hash, log index) and payload. A mismatch retries the pair once, then holds the checkpoint. Each accepted group commits block, next page and result together by file rename. Direct RPC accepts any valid page unchecked. The offline verifier scores both paths against the saved reference.
 
-Prior work, OMR crossover and feed integrity: [FINDINGS.md](../FINDINGS.md#prior-work-and-omr-crossover).
+Prior work, OMR crossover and feed integrity: [Paged discovery](paged-discovery.md#prior-work-and-omr-crossover).
 
 ## Reproduce
 

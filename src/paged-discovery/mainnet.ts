@@ -4,7 +4,8 @@ import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { z } from 'zod';
 import { ANNOUNCEMENT_TOPIC, ANNOUNCER } from './chain.ts';
-import { decodeAnnouncements, environmentProvenance, rawLogsSchema } from './wallet.ts';
+import { decodeAnnouncements, rawLogsSchema } from '../shared/raw-logs.ts';
+import { environmentProvenance } from './wallet.ts';
 
 const help = `Optional mainnet fetch-only run (network cost only; off by default)
 
@@ -104,6 +105,7 @@ async function main(): Promise<void> {
     });
   }
   await writeFile(join(output, 'mainnet-fetch.json'), `${JSON.stringify({
+    // kept: recorded evidence depends on it
     kind: 'phase2-mainnet-fetch-only',
     rpcHost: new URL(rpc).host,
     announcer: ANNOUNCER,

@@ -47,6 +47,7 @@ Bun.serve({
     }
     const genuine = reference.logs.filter(log => Number(log.blockNumber) >= from && Number(log.blockNumber) <= to);
     if (from === firstPositive.from && (variant === 'http-error' || variant === 'rpc-error')) {
+      // kept: recorded evidence depends on it
       const error = { code: -32000, message: 'Injected Phase 5 fixture error' };
       return Response.json({ jsonrpc: '2.0', id, error }, { headers, status: variant === 'http-error' ? 503 : 200 });
     }

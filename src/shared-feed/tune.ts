@@ -3,8 +3,9 @@ import { hostname, tmpdir } from 'node:os';
 import { getAnnouncementsForUser } from '@scopelift/stealth-address-sdk';
 import { z } from 'zod';
 import { generateFixture } from '../shared/fixtures.ts';
-import { decodeAnnouncements, type RawLog } from '../paged-discovery/wallet.ts';
-import { identity, rpc, scope, type Window } from '../rpc-recovery/config.ts';
+import { identity } from '../shared/announcer.ts';
+import { rpc, scope, type Window } from '../shared/base-windows.ts';
+import { decodeAnnouncements, type RawLog } from '../shared/raw-logs.ts';
 import { compact, digest, expand, referencePath } from './feed.ts';
 
 const paramsSchema = z.strictObject({
@@ -149,6 +150,7 @@ const servers = [serve(primary.bodies), serve(secondary.bodies)];
 const urls = servers.map(server => server.url);
 
 const work = await mkdtemp(`${tmpdir()}/shared-feed-tune-`);
+// kept: recorded evidence depends on it
 const synthetic = await generateFixture(`${work}/synthetic`, { seed: 'phase6:base:v1', count: 4, matchEvery: 2 });
 const fixtures = (await Bun.file(`${work}/synthetic/announcements.jsonl`).text()).trim().split('\n')
   .map(line => JSON.parse(line) as RawLog);

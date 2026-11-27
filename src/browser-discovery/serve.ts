@@ -12,6 +12,7 @@ const [artifact] = build.outputs;
 if (!build.success || !artifact) throw new Error(build.logs.join('\n'));
 const bundle = await artifact.text();
 const fixtureBlocks = [scope.saved + 750, scope.start + 50, scope.saved + 1750, scope.saved + 100];
+// kept: recorded evidence depends on it
 const manifest = await generateFixture(dir, { seed: 'phase4:base:browser:v1', count: 4, matchEvery: 2 });
 const raw = (await Bun.file(`${dir}/announcements.jsonl`).text()).trim().split('\n')
   .map(line => JSON.parse(line) as RawLog);

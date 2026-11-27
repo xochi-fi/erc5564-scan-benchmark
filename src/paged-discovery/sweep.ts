@@ -68,6 +68,7 @@ function parseOptions() {
       repetitions: { type: 'string', default: '1' },
       'first-repetition': { type: 'string', default: '1' },
       order: { type: 'string', default: 'grouped' },
+      // kept: recorded evidence depends on it
       seed: { type: 'string', default: 'phase2-repeat-v1' },
       matrix: { type: 'string' },
       'fixtures-root': { type: 'string' },
@@ -472,6 +473,7 @@ async function main(): Promise<void> {
   const out = (name: string): string => join(options.output, name);
   await writeFile(out('run.json'), `${JSON.stringify({
     schemaVersion: 1,
+    // kept: recorded evidence depends on it
     kind: 'phase2-paged-discovery',
     sdkVersion: SDK_VERSION,
     sdkCommit: SDK_COMMIT,

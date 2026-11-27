@@ -10,7 +10,7 @@ Measures stealth payment discovery and keyless announcement retrieval with Scope
 | Experiment | Question | Answer |
 | --- | --- | --- |
 | [Scan cost](docs/scan-cost.md) | How long does a local scan take? | i7: 48.5–52.0 s per 100k announcements. RK1: 168.5–181.9 s. |
-| [Paged discovery](FINDINGS.md) | What does a wallet pay to page through history over RPC? | CPU scanning took 94–97% of a cold loopback rescan. |
+| [Paged discovery](docs/paged-discovery.md) | What does a wallet pay to page through history over RPC? | CPU scanning took 94–97% of a cold loopback rescan. |
 | [Chain volume](docs/chain-volume.md) | How many announcements exist, and can a keyless client fetch them? | Keyless retrieval reached head on seven chains. Base needed parallel backfill. |
 | [Browser discovery](docs/browser-discovery.md) | Can a browser wallet discover from public RPCs? | A saved cursor cut POSTs from 12 to 6 on each completing Base RPC. |
 | [RPC recovery](docs/rpc-recovery.md) | Can a wallet recover logs an RPC silently omits? | Daybreak missed 48 logs in selected Base windows. Cross-checking recovered all 48. |

@@ -1,5 +1,6 @@
 // Pace each host, honor Retry-After, and record Cloudflare challenges as blocked.
 
+// kept: recorded evidence depends on it
 export const USER_AGENT = 'erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)';
 
 export interface HttpResult {

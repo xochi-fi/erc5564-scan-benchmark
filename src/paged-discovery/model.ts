@@ -122,6 +122,7 @@ export interface PageRecord {
 
 export interface WalletSample {
   schemaVersion: typeof SCHEMA_VERSION;
+  // kept: recorded evidence depends on it
   kind: 'phase2-wallet';
   scenario: WalletOptions['scenario'];
   engine: WalletOptions['engine'];

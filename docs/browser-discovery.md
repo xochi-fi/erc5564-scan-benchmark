@@ -21,6 +21,7 @@ Medians, fresh / resume, three of each per endpoint, 2026-11-26 19:33–19:34 UT
 ## Method
 
 - Base blocks 62,241,130–62,246,129 in 500-block windows. Resume starts at 62,244,130 from a preseeded localStorage cursor. Both modes check chain ID and the pinned head, and stop on the first error.
+- The localStorage keys are now `browser-discovery-checkpoint` here and `rpc-recovery:<name>` in RPC recovery. The recorded runs used `phase4-checkpoint` and `phase5:<name>`.
 - PublicNode and Tenderly scanned independently in 200- and 173-block windows and agreed on the [pinned head and both canonical logs](../data/browser-discovery/reference.json). Receipts corroborated the logs, which both fall in the resume range. Comparison uses block number, block hash, transaction hash and log index, and checks for missing, extra and duplicate logs.
 - Seed `phase4:base:browser:v1`, kept so the fixture reproduces, places two matches and two decoys in separate local arrays, in blocks 62,244,879 and 62,245,879. The SDK checks ownership locally. No canonical log matched the synthetic recipient. No receipt or balance checks, no transactions.
 - Catch-up runs from cursor read to final write. Browser fetch runs from fetch to body read, preflight wait included, without JSON parse or scan. Counts are attempted POSTs. Resource timings are kept when Chromium exposes them.

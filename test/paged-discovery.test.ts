@@ -15,12 +15,11 @@ import { buildPlan, matrixSettings, spread, type Setting } from '../src/paged-di
 import {
   RpcClient,
   assertMatchIdentities,
-  decodeAnnouncements,
-  rawLogsSchema,
   readCache,
   syncWallet,
   verifyCandidate,
 } from '../src/paged-discovery/wallet.ts';
+import { decodeAnnouncements, rawLogsSchema } from '../src/shared/raw-logs.ts';
 import { z } from 'zod';
 
 // 300 announcements = 3 blocks (128, 128, 44); matches at 0, 7, 14, ... (43 matches).

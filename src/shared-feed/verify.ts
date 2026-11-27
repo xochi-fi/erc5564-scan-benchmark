@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { scope } from '../rpc-recovery/config.ts';
+import { scope } from '../shared/base-windows.ts';
 import { digest, loadReference, warmPage } from './feed.ts';
 
 type Sample = {

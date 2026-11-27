@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
-import { filter, hex, identity, rpc, scope, type Window } from '../rpc-recovery/config.ts';
-import { rawLogsSchema, type RawLog } from '../paged-discovery/wallet.ts';
+import { filter, hex, identity } from '../shared/announcer.ts';
+import { rpc, scope, type Window } from '../shared/base-windows.ts';
+import { rawLogsSchema, type RawLog } from '../shared/raw-logs.ts';
 
 export const pageWindows = 4;
 export const warmPage = 8;

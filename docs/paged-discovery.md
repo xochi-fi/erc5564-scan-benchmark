@@ -95,7 +95,7 @@ Cooling separates the Turing nodes by up to 17%.
 | Check | Result |
 | --- | --- |
 | Setting order | Shuffled per repetition ([matrix](../src/paged-discovery/matrix/)) |
-| Turing temperature wait | Up to 281 s for zones below 70 °C |
+| Turing temperature wait | Up to 281 s for the [`COOLDOWN_C` gate](../METHODS.md#host-runner) |
 | Bazzite [host gate](../METHODS.md#host-runner) | 18.2 GiB available, 1.8 swap pages/s, PSI 0.00 |
 | Lockfile, tests | `d17ecebb...`, 88/88 per host |
 

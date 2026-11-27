@@ -12,7 +12,7 @@ type Sample = {
   thermal?: { maxC: number | null; waitMs: number };
 };
 const path = Bun.argv[2];
-if (!path) throw new Error('Usage: bun src/shared-feed/verify.ts EVIDENCE_JSON');
+if (!path) throw new Error('Usage: bun run shared-feed:verify EVIDENCE_JSON');
 const { host, bun, cpus, cooldownC, manifest, feedId, samples, validation, buildMs } = await Bun.file(path).json() as {
   host: string; bun: string; cpus?: { allowed: string | null; models: Record<string, string> }; cooldownC?: number;
   manifest: unknown; feedId: string; samples: Record<string, Sample>;

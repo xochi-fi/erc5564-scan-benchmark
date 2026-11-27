@@ -1,10 +1,36 @@
 # Methods
 
-[Overview](README.md) · [Commands](#commands) · [Layout](#repository-layout)
+[Overview](README.md) · [Hardware](#hardware) · [Names in recorded data](#names-in-recorded-data) · [Commands](#commands) · [Layout](#repository-layout)
 
 ## Software
 
 Versions are pinned in `package.json`: the SDK in `dependencies` and Bun in `packageManager`. The [SDK](https://github.com/ScopeLift/stealth-address-sdk) is unmodified, npm `gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2). Other Bun versions run but are recorded as a different environment.
+
+## Hardware
+
+| Label in data | Hardware | Used for |
+| --- | --- | --- |
+| `bazzite` | Desktop, Intel i7-13700K, 32 GB RAM, Bazzite Linux; wallet pinned to P-core threads 0,2,4,6 | Scan-cost controls and profiles, all later experiments |
+| `turing-node-1..3` | Turing Pi RK1 modules (Rockchip RK3588, Cortex-A76 cores used), 8 GB (node 1) / 16 GB (nodes 2-3) | Scan-cost controls and profiles (node 1), paged discovery, shared feed |
+| Apple M1 | MacBook, Apple M1, 8 GiB RAM | Scan-cost initial sweep and retained-set control only |
+
+Experiments ran in this order, each reusing data or code from earlier ones: scan cost, paged discovery, chain volume, browser discovery, RPC recovery, shared feed.
+
+## Names in recorded data
+
+The experiments were first numbered as phases. Code, docs and `data/` directories now use experiment names, but a few `phaseN` strings remain because recorded fixtures, seeds or evidence depend on them. Renaming them would change fixture bytes or break the match with recorded JSON.
+
+| String | Experiment | Where | Why it stays |
+| --- | --- | --- | --- |
+| `phase2-repeat-v1` | Paged discovery | Default `--seed` of `sweep.ts` and `scripts/paged-discovery.sh` | Prefix of the recorded shuffle seeds in `repeat/<host>/run.json`, which reproduce each `plan.json` order |
+| `phase2-wallet`, `phase2-paged-discovery`, `phase2-mainnet-fetch-only` | Paged discovery | `kind` of wallet results, sweep runs and the mainnet probe | Recorded `samples.jsonl` and `run.json` carry these kinds |
+| `phase2-test`, `phase2-test-zero` | Paged discovery | Seeds in `test/paged-discovery.test.ts` | Test fixtures only |
+| `erc5564-scan-benchmark/phase3 (…)` | Chain volume | User-Agent in `src/chain-volume/http.ts` | Unchanged from the recorded run, so providers saw the same client |
+| `phase4:base:browser:v1` | Browser discovery | Synthetic fixture seed in `src/browser-discovery/serve.ts` | Reproduces the two recorded matches and decoys |
+| `phase4-checkpoint`, `phase5:<name>` | Browser discovery, RPC recovery | localStorage keys during the recorded runs (not stored in `data/`) | Renamed: the code now uses `browser-discovery-checkpoint` and `rpc-recovery:<name>`, which does not change any result |
+| `phase6:base:v1` | Shared feed | Synthetic fixture seed in `src/shared-feed/run.ts` and `tune.ts` | Reproduces the recorded synthetic matches |
+
+Recorded JSON is unchanged from the runs, so it may also name old `phaseN` paths.
 
 ## Synthetic fixtures
 
@@ -102,14 +128,14 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 ### Host runner
 
-`src/paged-discovery/run.sh PLAN` runs the check, tests, fixtures and a sweep, then archives the run. `scripts/run-bazzite.sh` sets i7 pinning and calls it.
+`scripts/paged-discovery.sh PLAN` (or `bun run paged-discovery:host PLAN`) runs the check, tests, fixtures and a sweep, then archives the run under `results/paged-discovery/`. The `bazzite` and `repeat-bazzite*` plans default to the i7 pinning below; other plans take the CPU lists from the environment.
 
 | Setting | Use |
 | --- | --- |
 | Plan | `bazzite`, `turing`, `smoke` or a repeat plan in [src/paged-discovery/matrix/](src/paged-discovery/matrix/) |
 | `BUN` | Bun override. Defaults to PATH, then `./.runtime/*/bun`. |
 | `REUSE_NODE_MODULES`, `REUSE_FIXTURES` | Project with the same lockfile; comma-separated fixture directories, SHA256-checked |
-| `HOST_LABEL`, `WALLET_CPUS`, `CHAIN_CPUS`, `CONTROL_CPUS` | Output label (default short hostname) and Linux CPU lists |
+| `HOST_LABEL`, `WALLET_CPUS`, `CHAIN_CPUS`, `CONTROL_CPUS` | Output label and Linux CPU lists. Bazzite plans default to `bazzite`, `0,2,4,6`, `8,10`, `0,2,4,6`; other plans to the short hostname and no pinning. |
 | `MAINNET_RPC` | Optional read-only public RPC probe |
 | `REPETITIONS`, `FIRST_REPETITION`, `SEED` | Repeat count, first repeat number, shuffle seed prefix |
 | `COOLDOWN_C` | Max thermal zone temperature before each sample. Default 70 °C for `repeat-turing`. |
@@ -120,7 +146,7 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 Setup, type check and tests: [Quickstart](README.md#quickstart). After changing anything under `data/`, run `bun run figures` and `bun run tables`. CI fails if the checked-in output is stale.
 
-Each experiment doc ends with its own commands. Scan cost and paged discovery write new directories under ignored `results/` or `work/`. Chain volume overwrites recorded data by default ([Reproduce](docs/chain-volume.md#reproduce)). A run exits nonzero if any sample misses the fixture oracle. Keep the large workloads out of ordinary CI.
+Each experiment doc ends with its own commands, all exposed as `bun run` scripts in `package.json`. Runs write under ignored `results/` or `work/`, never over `data/`, unless you pass a `data/` path. A run exits nonzero if any sample misses the fixture oracle. Keep the large workloads out of ordinary CI.
 
 ## Repository layout
 
@@ -128,12 +154,12 @@ Each experiment doc ends with its own commands. Scan cost and paged discovery wr
 | --- | --- |
 | `src/shared/` | Fixture generator, scan engines, types, Announcer constants, raw-log decoding and the pinned Base windows, used by several experiments |
 | `src/scan-cost/` | Benchmark CLI and profiler |
-| `src/paged-discovery/` | Local chain, link emulator, wallet, sweep, reports, host runner and repeat matrices |
+| `src/paged-discovery/` | Local chain, link emulator, wallet, sweep, reports and repeat matrices |
 | `src/chain-volume/` | Keyless endpoint probe, adaptive retriever, indexer clients, report |
 | `src/browser-discovery/`, `src/rpc-recovery/` | Browser harnesses |
 | `src/shared-feed/` | Feed builder, benchmark, verifier and format search |
 | `src/figures/` | `bun run figures` and `bun run tables`: README figures and the generated result tables, from `data/` |
-| `scripts/` | Bazzite host runner |
+| `scripts/` | `paged-discovery.sh`, the paged-discovery host runner |
 | `test/` | `bun test` suites and recorded fixtures |
 | `data/<experiment>/` | Recorded results ([data/README.md](data/README.md)) |
 | `docs/<experiment>.md` | Results per experiment. Tables between `<!-- generated:… -->` markers come from `bun run tables`. |
@@ -143,7 +169,7 @@ Each experiment doc ends with its own commands. Scan cost and paged discovery wr
 
 These apply to scan cost and paged discovery.
 
-- The chain and match rate are synthetic. 128 announcements per block and one payment per 1,000 announcements far exceed real use. A keyless mainnet probe saw 14 real announcements in about 10k recent blocks.
+- The chain and match rate are synthetic. 128 announcements per block and one payment per 1,000 announcements far exceed real use. See the [mainnet fetch-only probe](docs/paged-discovery.md#mainnet-fetch-only-probe) for real density.
 - The link model has no TLS, compression, provider query time, limits, rate limiting, jitter or loss. Its near-zero network spread comes from the emulator. `public` is a controlled what-if, not a provider measurement.
 - Fetch, scan and verify run sequentially with no prefetch, so each cost is separable. A pipelined wallet could hide up to min(network, scan).
 - n = 3 separates findings from run noise but is too small for confidence intervals. The Pi's three samples per setting come from three nodes, so its spread is mostly between nodes.

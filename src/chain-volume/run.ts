@@ -482,7 +482,7 @@ async function main(): Promise<void> {
     options: {
       stage: { type: 'string', default: 'all' },
       chains: { type: 'string', default: CHAINS.map(chain => chain.key).join(',') },
-      output: { type: 'string', default: 'data/chain-volume' },
+      output: { type: 'string', default: 'results/chain-volume' },
       strategy: { type: 'string', default: 'list-order,probe-informed' },
       'max-requests': { type: 'string', default: '8000' },
       'umbra-strategy': { type: 'string', default: 'probe-informed' },
@@ -491,7 +491,7 @@ async function main(): Promise<void> {
     },
   });
   if (values.help) {
-    process.stdout.write('bun run chain-volume --stage endpoints|reference|probe|retrieve|umbra|report|all [--chains a,b] [--output data/chain-volume] [--strategy list-order,probe-informed] [--max-requests 8000]\n');
+    process.stdout.write('bun run chain-volume --stage endpoints|reference|probe|retrieve|umbra|report|all [--chains a,b] [--output results/chain-volume] [--strategy list-order,probe-informed] [--max-requests 8000]\n');
     return;
   }
   const out = resolve(values.output);

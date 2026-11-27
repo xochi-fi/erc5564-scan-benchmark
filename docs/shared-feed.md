@@ -21,12 +21,14 @@ One compact source's cold pages took 43,719 response bytes against 57,605 for th
 
 ## Omission and resume controls
 
+<!-- generated:shared-feed-controls -->
 | Control | Committed groups | Missed / recovered logs | GETs | Elapsed (ms) |
 | --- | ---: | --- | ---: | ---: |
 | Empty feed alone | 17/17 | 48 missed | 18 | 9.2 |
 | Empty feed plus independent source | 1/17 | 48 pending | 8 | 0.7 |
 | Resume with corrected source | 17/17 | 48 recovered | 34 | 36.8 |
 | Same identities, altered ABI data | 1/17 | 48 pending | 8 | 1.1 |
+<!-- /generated:shared-feed-controls -->
 
 Both disagreement controls retried feed page 1 and held block 37,364,281. The omission resume reread the checkpoint, retried page 1 and skipped page 0. These omissions are injected into the frozen feed; the live one is in [RPC recovery](rpc-recovery.md). Shared upstream omissions can still agree falsely. Completeness covers the selected Base windows only.
 
@@ -92,14 +94,14 @@ Prior work, OMR crossover and feed integrity: [Paged discovery](paged-discovery.
 
 ```sh
 mkdir -p results
-bun src/shared-feed/run.ts results/shared-feed-replay
-bun src/shared-feed/verify.ts results/shared-feed-replay/evidence.json
-bun src/shared-feed/verify.ts data/shared-feed/evidence.json
+bun run shared-feed results/shared-feed-replay
+bun run shared-feed:verify results/shared-feed-replay/evidence.json
+bun run shared-feed:verify data/shared-feed/evidence.json
 # Turing node N, host name turing-node-N
-taskset -c 4-7 bun src/shared-feed/run.ts results/shared-feed-replay
-bun src/shared-feed/verify.ts data/shared-feed/turing-node-N/evidence.json
+taskset -c 4-7 bun run shared-feed results/shared-feed-replay
+bun run shared-feed:verify data/shared-feed/turing-node-N/evidence.json
 # feed format search, Turing node, no RPC
-taskset -c 4-7 bun src/shared-feed/tune.ts data/shared-feed/autoresearch/feed-bytes.params.json 9
+taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9
 ```
 
 Use a fresh run directory. `COOLDOWN_C` overrides the 70 °C gate. The verifier prints medians, minima and maxima in that order. Recorded evidence holds public range metadata, page digests and timings. [Evidence](../data/shared-feed/evidence.json) · [Verified summary](../data/shared-feed/summary.json)

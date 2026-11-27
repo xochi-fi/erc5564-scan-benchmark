@@ -3,7 +3,7 @@ import type { RawLog } from './browser.ts';
 import { hex, identity, scope, type Window } from './config.ts';
 
 const [referencePath, output] = Bun.argv.slice(2);
-if (!referencePath || !output) throw new Error('Usage: bun src/rpc-recovery/verify.ts REFERENCE_JSON OUTPUT_DIR');
+if (!referencePath || !output) throw new Error('Usage: bun run rpc-recovery:verify REFERENCE_JSON OUTPUT_DIR');
 interface Captured {
   request: { method: string; params: unknown[] };
   body: string;

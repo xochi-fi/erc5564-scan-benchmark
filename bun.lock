@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "stealth-scan-benchmark",
+      "name": "erc5564-scan-benchmark",
       "dependencies": {
         "@noble/secp256k1": "2.3.0",
         "@scopelift/stealth-address-sdk": "1.0.0-beta.5",

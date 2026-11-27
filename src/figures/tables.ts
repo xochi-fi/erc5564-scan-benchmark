@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { scope as browserScope } from '../browser-discovery/config.ts';
 import {
-  CHAIN_LABELS, ROOT, browserSamples, chainVolume, feedSummary, num, pagedRepeat, pagedSingle, readJson,
+  CHAIN_LABELS, ROOT, browserSamples, chainVolume, feedSummary, num, pagedRepeat, pagedSingle, readCsv, readJson,
   recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
@@ -81,6 +81,112 @@ function pagedCatchupTable() {
     ['l', 'r', 'l', 'r', 'r', 'r', 'r'],
     rows.map(r => [PAGED_HOST_LABELS[r.host!]!, fixed(Number(r.count), 0), r.profile!, r.pageBlocks!,
       repeatSpread(r, 'totalS', 2), repeatSpread(r, 'verifyS', 2), singleTotal(r, 2)]));
+}
+
+// Appendix A: the original single run. Plain toFixed, no thousands separators, as recorded.
+const SINGLE_LABELS: Record<string, string> = { bazzite: 'Bazzite i7-13700K', 'turing-node-1': 'Turing Pi A76' };
+function pagedSingleControlsTable() {
+  const control = (dir: string) => {
+    const rows = readFileSync(`${ROOT}data/paged-discovery/single-run/${dir}/controls.jsonl`, 'utf8').trim().split('\n').map(line => JSON.parse(line));
+    const get = (label: string) => (rows.find(r => r.label === label).scanMs / 1000).toFixed(3);
+    return [get('control_before'), get('control_after')];
+  };
+  const scan = (host: string) => {
+    const h = scanCost().find(x => x.host === host)!;
+    return range(Math.min(h.before, h.after).toFixed(3), Math.max(h.before, h.after).toFixed(3));
+  };
+  return table(['Host', 'Before s', 'After s', 'Scan-cost range s'], ['l', 'r', 'r', 'l'], [
+    ['Bazzite', ...control('bazzite/sweep'), scan('Bazzite')],
+    ['Turing node 1 (10k/100k sweep)', ...control('turing-node-1/sweep'), scan('Turing Pi')],
+    ['Turing node 1 (1M run)', ...control('turing-node-1/million'), ''],
+  ]);
+}
+function pagedSingleColdTable() {
+  const rows = pagedSingle().filter(r => r.scenario === 'cold' && Number(r.count) >= 100_000 && r.profile !== 'lan'
+    && (r.count === '1000000' && r.host !== 'bazzite' ? true : ['1', '16', '256'].includes(r.pageBlocks!)))
+    .sort((a, b) => (a.host === b.host ? Number(a.count) - Number(b.count) : 0));
+  const f = (value: string | undefined, digits: number) => (value ? Number(value).toFixed(digits) : '-');
+  return table(['Host', 'Size', 'Profile', 'Page blocks', 'Network s', 'Scan s', 'Verify s', 'Total s', 'First match s', 'Wire down MiB', 'Wallet peak RSS MiB'],
+    ['l', 'r', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'],
+    rows.map(r => [SINGLE_LABELS[r.host!]!, `${fixed(Number(r.count), 0)}${r.matches === '0' ? ' (zero-match)' : ''}`, r.profile!, r.pageBlocks!,
+      f(r.networkS, 1), f(r.scanS, 1), f(r.verifyS, 1), f(r.totalS, 1), f(r.firstMatchS, 2), f(r.wireDownMiB, 0), f(r.peakRssMiB, 0)]));
+}
+function pagedSingleCatchupTable() {
+  const rows = pagedSingle().filter(r => r.scenario === 'catchup');
+  const cell = (host: string, counts: string[], profile: string, pages?: (p: number) => boolean) => {
+    const totals = rows.filter(r => r.host === host && counts.includes(r.count!) && r.profile === profile && (!pages || pages(Number(r.pageBlocks))))
+      .map(r => Number(r.totalS));
+    const [low, high] = [Math.min(...totals).toFixed(1), Math.max(...totals).toFixed(1)];
+    return low === high ? low : range(low, high);
+  };
+  const line = (label: string, host: string, counts: string[]) => [label, cell(host, counts, 'none'), cell(host, counts, 'lan'),
+    cell(host, counts, 'public', p => p === 1), cell(host, counts, 'public', p => p >= 16)];
+  return table(['Host', 'none', 'lan', 'public, 1-block pages', 'public, 16-256-block pages'], ['l', 'l', 'l', 'l', 'l'], [
+    line('Bazzite (100k and 1M histories)', 'bazzite', ['100000', '1000000']),
+    line('Turing node 1 (100k history)', 'turing-node-1', ['100000']),
+  ]);
+}
+
+// ---- chain volume -------------------------------------------------------------
+
+// Curated text the recorded files do not carry: sources compared, dates, indexer notes.
+const CHAIN_NOTES: Record<string, { sources: string; perMonth?: string; endpoints?: string; span?: string; indexers: string }> = {
+  ethereum: { sources: 'Blockscout v2 = Routescan = RPC (2 endpoint sets)', perMonth: '30-36 in each of the last 3 months',
+    indexers: 'Blockscout v2 OK (50/page); Routescan OK (100/page, ~441 blocks behind head); Blockscout etherscan-API timed out (90 s) or 429' },
+  base: { sources: 'RPC only (matches both partial runs on their silent-free prefixes)', endpoints: '3 of the 11 return silent empty results',
+    indexers: 'Blockscout: Cloudflare challenge (blocked); Basescan/Etherscan: key required' },
+  arbitrum: { sources: 'RPC (2 endpoint sets agree)', indexers: 'Blockscout: Cloudflare challenge (blocked)' },
+  optimism: { sources: 'Blockscout v2 = Blockscout etherscan-API = RPC', indexers: 'Blockscout (explorer.optimism.io) OK' },
+  gnosis: { sources: 'RPC (2 endpoint sets agree)', indexers: 'Blockscout: Cloudflare challenge (blocked)' },
+  polygon: { sources: 'RPC (2 endpoint sets agree)', indexers: 'Blockscout: Cloudflare challenge (blocked)' },
+  sepolia: { sources: 'Routescan = RPC (2 endpoint sets); **Blockscout has 1,026**', span: 'ethereum-sepolia-rpc.publicnode.com',
+    indexers: 'Blockscout v2 and etherscan-API: 13 missing; Routescan OK' },
+};
+function chainVolumeTable() {
+  const summary = readCsv('data/chain-volume/summary.csv');
+  const n = (value: number) => fixed(value, 0);
+  // Rate of the counted announcements, first one to measurement, in 30.44-day months as in report.ts.
+  const perMonth = (r: any) => r.result.count / ((Date.parse(r.measuredAt) - Date.parse(r.result.firstTime)) / (30.44 * 86400_000));
+  const duration = (ms: number) => (ms < 100_000 ? `${Math.round(ms / 1000)} s` : `${Math.round(ms / 60_000)} min`);
+  return table(['Chain', 'Deploy block', 'Announcements', 'First - last announcement', 'Per month (since first)',
+    'Keyless endpoints: listed / probed / answered getLogs / full history', 'Max span of full-history endpoints, blocks: median [min-max]',
+    'Best keyless cold start', 'Naive cold start (chainlist order)', 'Keyless indexers'],
+  ['l', 'r', 'l', 'l', 'r', 'l', 'l', 'l', 'l', 'l'],
+  summary.map(row => {
+    const chain = row.chain!;
+    const notes = CHAIN_NOTES[chain]!;
+    const retrieve = (strategy: string) => {
+      try { return readJson(`data/chain-volume/canonical/retrieve-${chain}-${strategy}.json`); } catch { return null; }
+    };
+    const parallel = retrieve('parallel');
+    const best = parallel?.result.success ? parallel : retrieve('probe-informed');
+    const naive = retrieve('list-order');
+    const date = (time: string | null) => (time ? ` (${time.slice(0, 10)})` : '');
+    // Span over endpoints that served the deploy block, as in report.ts; a flagged host is left out of the minimum only.
+    const probes = readJson(`data/chain-volume/probe/${chain}.json`).endpoints.filter((p: any) => p.status === 'usable' && p.servesDeployBlock === true);
+    const finite = probes.filter((p: any) => !p.range?.unbounded).map((p: any) => ({ host: p.host as string, span: p.range?.maxOk ?? 0 }));
+    const whole = probes.length - finite.length;
+    const min = Math.min(...finite.filter((p: any) => p.host !== notes.span).map((p: any) => p.span));
+    const excluded = finite.find((p: any) => p.host === notes.span);
+    const median = row.spanMedianFullArchive === 'whole history' ? 'whole history' : n(Number(row.spanMedianFullArchive));
+    const span = `${median} [${n(min)} - ${whole ? 'whole history' : n(Math.max(...finite.map((p: any) => p.span)))}]`
+      + (whole ? `; ${whole} took the whole history` : ' (none took the whole history)')
+      + (excluded ? ` (one ${excluded.span}-block value excluded: a head-lag artifact, see caveats)` : '');
+    const ok = (r: any) => `OK${parallel?.result.success && r === parallel ? ', parallel' : r.comparison?.exact ? ', exact' : ''}`;
+    const bestCell = `${ok(best)}: ${duration(best.result.totalMs)}, ${n(best.result.requests)} requests, ${n(best.result.responseBytes / 1024)} KiB`;
+    const naiveCell = naive.result.success
+      ? `${ok(naive)}: ${duration(naive.result.totalMs)}, ${n(naive.result.requests)} requests`
+      : (() => {
+        const stopped = Number(/at block (\d+)/.exec(naive.result.failure)![1]);
+        const share = (stopped - naive.result.fromBlock) / (naive.result.toBlock - naive.result.fromBlock);
+        return `FAILED: ${n(naive.result.requests)}-request budget spent at ${Math.round(share * 100)}% of history (${duration(naive.result.totalMs)}, ${n(naive.result.count)} announcements so far)`;
+      })();
+    return [CHAIN_LABELS[chain]!, n(Number(row.deployBlock)), `**${n(best.result.count)}**: ${notes.sources}`,
+      `${n(best.result.firstBlock)}${date(best.result.firstTime)} - ${n(best.result.lastBlock)}${date(best.result.lastTime)}`,
+      `${perMonth(best).toFixed(1)}${notes.perMonth ? ` (${notes.perMonth})` : ''}`,
+      `${row.endpointsListed} / ${row.endpointsProbed} / ${row.endpointsUsable} / ${row.endpointsFullArchive}${notes.endpoints ? ` (${notes.endpoints})` : ''}`,
+      span, bestCell, naiveCell, notes.indexers];
+  }));
 }
 
 // ---- browser discovery --------------------------------------------------------
@@ -205,33 +311,20 @@ function feedHostsTable() {
     ['l', 'l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
 }
 
-// ---- README summary tables ----------------------------------------------------
-
-function recoveryMatrix() {
-  const { windows, pageBlocks, expected } = recoveryReference();
-  const scope = `Base, ${windows} pinned windows × ${fixed(pageBlocks, 0)} blocks`;
-  const feed = feedSummary();
+function feedControlsTable() {
   const controls = readJson('data/shared-feed/summary.json').controls;
-  const live = (name: string, mode: string) => recoveryRun(name, mode);
-  const s = (value: number) => `${(value / 1000).toFixed(2)} s`;
-  const rows: string[][] = [
-    ['Daybreak alone', '[RPC recovery](docs/rpc-recovery.md)', `${scope}, live, browser`,
-      `${live('live-daybreak-single', 'single').observed}/${expected} ✗`, `${live('live-daybreak-single', 'single').requests} POST`, s(live('live-daybreak-single', 'single').elapsedMs)],
-    ['Daybreak cross-checked with Tenderly, Sentio as tiebreaker', '[RPC recovery](docs/rpc-recovery.md)', `${scope}, live, browser`,
-      `${live('live-daybreak-cross', 'cross').observed}/${expected} ✓`, `${live('live-daybreak-cross', 'cross').requests} POST`, s(live('live-daybreak-cross', 'cross').elapsedMs)],
-    ['Tenderly alone', '[RPC recovery](docs/rpc-recovery.md)', `${scope}, live, browser`,
-      `${live('live-healthy-single', 'single').observed}/${expected} ✓`, `${live('live-healthy-single', 'single').requests} POST`, s(live('live-healthy-single', 'single').elapsedMs)],
-    ['Live RPC, Bun client', '[Shared feed](docs/shared-feed.md)', `${scope}, live`,
-      `${one(feed['rpc-cold'].observed, 'observed')}/${expected} ✓`, `${one(feed['rpc-cold'].posts, 'posts')} POST`, `${s(median(feed['rpc-cold'].elapsedMs)!)} (median of 3)`],
-    ['Two independent static feeds', '[Shared feed](docs/shared-feed.md)', `${scope}, **loopback**`,
-      `${one(feed['dual-cold'].observed, 'observed')}/${expected} ✓`, `${one(feed['dual-cold'].gets, 'gets')} GET`, `${ms(median(feed['dual-cold'].elapsedMs)!)} ms (median of 3, loopback)`],
-    ['One feed that dropped every log', '[Shared feed](docs/shared-feed.md)', `${scope}, **loopback**`,
-      `${controls.omit.observed}/${controls.omit.expected} ✗`, `${controls.omit.gets} GET`, `${ms(controls.omit.elapsedMs)} ms (loopback)`],
-    ['Same feed plus an independent feed, then resume with a corrected source', '[Shared feed](docs/shared-feed.md)', `${scope}, **loopback**`,
-      `held, then ${controls.resume.observed}/${controls.resume.expected} ✓`, `${controls.hold.gets} + ${controls.resume.gets} GET`, `${ms(controls.resume.elapsedMs)} ms after resume (loopback)`],
-  ];
-  return table(['Strategy', 'Experiment', 'Scope', 'Logs found', 'Requests', 'Time'], ['l', 'l', 'l', 'r', 'r', 'r'], rows);
+  const { expected } = recoveryReference();
+  const samples = readJson('data/shared-feed/evidence.json').samples;
+  const committed = (key: string) => `${samples[key].next}/${samples[key].limit}`;
+  return table(['Control', 'Committed groups', 'Missed / recovered logs', 'GETs', 'Elapsed (ms)'], ['l', 'r', 'l', 'r', 'r'], [
+    ['Empty feed alone', committed('omission-single'), `${controls.omit.expected - controls.omit.observed} missed`, String(controls.omit.gets), ms(controls.omit.elapsedMs)],
+    ['Empty feed plus independent source', committed('omission-hold'), `${expected - controls.hold.expected} pending`, String(controls.hold.gets), ms(controls.hold.elapsedMs)],
+    ['Resume with corrected source', committed('omission-resume'), `${controls.resume.observed} recovered`, String(controls.resume.gets), ms(controls.resume.elapsedMs)],
+    ['Same identities, altered ABI data', committed('payload-hold'), `${expected - controls.altered.expected} pending`, String(controls.altered.gets), ms(controls.altered.elapsedMs)],
+  ]);
 }
+
+// ---- README summary tables ----------------------------------------------------
 
 function approachTable() {
   const scan = scanCost();
@@ -275,7 +368,10 @@ function approachTable() {
     ['Two static feeds', '[Shared feed](docs/shared-feed.md)', `${windowScope}, **loopback**`, `${one(feed.gets, 'gets')} GET`,
       `${ms(median(feed.elapsedMs)!)} ms (loopback)`, `✓ ${one(feed.observed, 'observed')}/${expected}`, 'No (Bun client)'],
   ];
-  return table(['Approach', 'Experiment', 'Scope', 'Requests', 'Time', 'Complete', 'In a browser'], ['l', 'l', 'l', 'r', 'r', 'l', 'l'], rows);
+  // Compact for the README: the approach links its experiment, and browser runs say so in the scope.
+  return table(['Approach', 'Scope', 'Requests', 'Time', 'Complete'], ['l', 'l', 'r', 'r', 'l'],
+    rows.map(([approach, experiment, scope, requests, time, complete, browser]) =>
+      [`[${approach}](${/\]\((.+)\)$/.exec(experiment!)![1]})`, browser === 'Yes' ? `${scope}, browser` : scope!, requests!, time!, complete!]));
 }
 
 // ---- writer -------------------------------------------------------------------
@@ -284,12 +380,16 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-cost': ['docs/scan-cost.md', scanCostTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
   'paged-catchup': ['docs/paged-discovery.md', pagedCatchupTable],
+  'paged-single-controls': ['docs/paged-discovery.md', pagedSingleControlsTable],
+  'paged-single-cold': ['docs/paged-discovery.md', pagedSingleColdTable],
+  'paged-single-catchup': ['docs/paged-discovery.md', pagedSingleCatchupTable],
+  'chain-volume': ['docs/chain-volume.md', chainVolumeTable],
   'browser-discovery': ['docs/browser-discovery.md', browserTable],
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
   'shared-feed-hosts': ['docs/shared-feed.md', feedHostsTable],
-  'recovery-matrix': ['README.md', recoveryMatrix],
+  'shared-feed-controls': ['docs/shared-feed.md', feedControlsTable],
   'approaches': ['README.md', approachTable],
 };
 

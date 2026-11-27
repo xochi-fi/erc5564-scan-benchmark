@@ -1,20 +1,12 @@
 # Phase 1: local scanning baseline
 
-**Finding:** local cryptographic scanning scaled roughly linearly on both tested Linux
-hosts. Ten times more announcements took roughly ten times longer, and elliptic-curve
-arithmetic dominated CPU cost. An earlier slowdown on the Apple M1 is not evidence of
-intrinsically superlinear scanning.
+Local cryptographic scanning scaled roughly linearly on both Linux hosts, with elliptic-curve arithmetic dominating CPU cost. The Apple M1 slowed down with a larger retained fixture.
 
-ScopeLift SDK `1.0.0-beta.5`, Bun 1.4.4, frozen dependencies, deterministic synthetic
-announcements, fresh processes. Generation, loading/decoding, setup GC and verification
-are excluded from the timer; allocation and automatic GC during scanning are included.
-Fetching was not timed (that is [phase 2](FINDINGS.md)). Methods: [METHODS.md](METHODS.md).
+Fresh Bun 1.4.4 processes scanned deterministic fixtures with ScopeLift SDK 1.0.0-beta.5 and frozen dependencies. Timings cover allocation and automatic GC during the scan. [Measurement boundaries](METHODS.md#measurement-boundary) · [Paged discovery](FINDINGS.md)
 
 ## Unprofiled scaling controls (crypto engine, zero-match)
 
-These controls use the lower-level crypto path, not the full SDK wrapper. The 100k
-controls bracketed the other measurements. Ranges are those two observations, not
-confidence intervals. All twelve Linux runs verified their fixture oracle.
+The 100k crypto controls bracket the other measurements. Ranges span two observations. All 12 Linux runs matched the fixture oracle.
 
 | Host and CPU affinity | 100k before/after, s | 1m, s | 1m / 100k |
 | --- | --- | --- | --- |
@@ -37,11 +29,7 @@ either 100k or 1m decoded announcements. The scanned-input digest is
 | Bazzite | 48.226 | 47.157 | 0.98 |
 | Turing node 1 | 180.607 | 180.927 | 1.00 |
 
-The large M1 penalty did not reproduce on either Linux host. The M1's larger
-retained-data run also recorded many more process page faults and increased system swap
-use. Those observations do not isolate memory compression, paging, CPU placement,
-thermals, or competing development work as the cause. The M1's 1m baseline runs
-(1013-1482 s, below) are therefore not used for scaling.
+The larger M1 run recorded more page faults and system swap. Paging, compression, CPU placement, thermals and competing work remain possible causes. Scaling estimates use the Linux controls.
 
 ## Initial scale sweep (Apple M1, 8 GiB)
 
@@ -54,9 +42,7 @@ incremental batches, no explicit scan warmup.
 | 100,000 | 48.9-80.4 s | 464-487 MiB |
 | 1,000,000 | 1013.4-1482.5 s | 3879-4099 MiB |
 
-These ranges mix engines, modes and match cases; they are not confidence intervals or
-evidence of an engine winner. RSS includes fixture loading and validation, not just
-scanning. Data: [`data/phase1/baseline-100k-1m/`](data/phase1/baseline-100k-1m/).
+Ranges span engines, modes and match cases. RSS includes loading and validation. [`data/phase1/baseline-100k-1m/`](data/phase1/baseline-100k-1m/).
 
 ## Attribution and limits
 
@@ -75,8 +61,4 @@ scanning. Data: [`data/phase1/baseline-100k-1m/`](data/phase1/baseline-100k-1m/)
 
 ## Scope
 
-Use this as a local-scanning reference for matched private-discovery experiments, not
-as evidence that any OMR architecture wins. It does not measure first-contact
-bootstrap, on-chain overhead, recovery, private follow-up queries, or time to a
-verified spendable balance. Phase 2 measures bounded-residency paged discovery in a
-wallet, with fetching, cryptography and verification timed separately.
+This local baseline supports matched private-discovery experiments. It leaves first-contact bootstrap, gas, recovery, private follow-up queries and spendable-balance checks unmeasured.

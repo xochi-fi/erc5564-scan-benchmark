@@ -1,16 +1,36 @@
 # Shared feed
 
+Should wallets use a shared static feed or OMR?
+
+A shared feed. Two feeds recover every announcement in milliseconds, and OMR costs servers per message per recipient.
+
 ## Decision
 
-Clients fetch every finalized feed page, scan locally with view tags, resume from a checkpoint, and retry a range when two independent feeds disagree; signed page commitments stay optional until [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745) or [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) can prove completeness ([summary](../README.md)).
+Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. No published design signs ERC-5564 feed pages. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
 
-[OMR](paged-discovery.md#prior-work-and-omr-crossover) servers spend 4.1–59.8 ms per message per recipient on cloud AVX512 with 583–2,181 B clues and no DoS-resistant variant in production, and its ~20 ms decode beats the A76's 1.75 ms per announcement only above ~12/day, while the dual feed here recovered 48/48 and caught up cold in 38.8 ms (Bazzite) and 129–140 ms (Pi).
+No DoS-resistant OMR variant runs in production.
+
+| Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
+| --- | ---: | ---: | ---: | --- |
+| [OMRp2](https://eprint.iacr.org/2021/1256) | 59.8 / 30.1 | 11 | 956 | Yes (proven in 2024/510, Lemma 4.3) |
+| [PerfOMR1](https://eprint.iacr.org/2024/204) | 4.1 / 2.1 | 21 | 2,181 | No (attacks in 2024/510, Section 5.1) |
+| [PerfOMR2](https://eprint.iacr.org/2024/204) | 21.5 / 11.3 | 11 | 583 | No |
+| [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (Theorem 5.3) |
+
+Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one GCP n4-standard-8 with SEAL HEXL / AVX512-IFMA52. Detector time is per scanned message, for one recipient's digest. Table 2 gives DoS-PerfOMR 4.95 ms/msg amortized. [2021/1256](https://eprint.iacr.org/2021/1256) puts server cost at ~$1 per million messages. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4× the speed of PerfOMR.
+
+![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
+<sub>Solid lines scale the scan-cost controls. Dashed OMR lines are single-thread literature values on one cloud AVX512 core.</sub>
+
+Each chain averaged 0.006–1.2 announcements per day to 2026-11-26, at most 2.1 ms CPU per day on Turing. The Turing scan passes DoS-PerfOMR's 20 ms recipient time at ~12/day.
 
 | Revisit when | Assumed budget | Breaks at |
 | --- | --- | ---: |
-| Daily A76 scan time | 3 min CPU at 1.75 ms each | ~100k/day |
+| Daily Turing scan time | 3 min CPU at 1.75 ms each | ~100k/day |
 | Daily feed bytes | 60 MB at ~620 B (2 × best format) | ~100k/day |
 | Wallets cover Umbra-scale streams | — | ~100k per chain |
+
+The budgets are assumptions. At 1M/day, Turing needs 29 min.
 
 ## Feed against live RPC
 
@@ -23,13 +43,7 @@ Clients fetch every finalized feed page, scan locally with view tags, resume fro
 | Dual feed, loopback | Warm | 28/28 | 0 / 20 | 0 / 55,492 | 2.7 | 20.6 | 1.0 | 6.0 | 25.4 [25.1–30.9] |
 <!-- /generated:shared-feed -->
 
-Bazzite 45, Intel i7-13700K, Bun 1.4.4, 2026-11-27. Live Tenderly over the Internet against two prebuilt loopback HTTP feeds. Medians of three samples per arm and mode in one process, alternating arm order. Cold has no checkpoint. Warm reloads one written after eight pages (block 44,788,281) and excludes that prefix. Connections and runtime state can persist.
-
-- Fetch sums request start to body read, overlapping GETs included. Body bytes are decoded, without headers or framing.
-- RPC samples check chain ID, finalized block and pinned block, with request starts ≥275 ms apart. Feed samples make one manifest GET per source and two concurrent GETs per page.
-- Catch-up includes parsing, pacing, discovery and checkpoint I/O. Page verification is log validation plus, for the dual feed, source agreement. First match is timed after the needed responses and the scan of its page group. No canonical log matched the synthetic recipient.
-
-Response bytes for each path are compared in the [byte chart](#feed-format-search). Feed latency here is loopback. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
+Bazzite, 2026-11-27: live Tenderly from the Bun client against two loopback feeds, medians of three. The browser client takes 70 POSTs for the same windows ([RPC recovery](rpc-recovery.md)). Feed times exclude remote hosting, caching and compression. Bytes are decoded bodies without headers.
 
 ## Omission and resume controls
 
@@ -42,11 +56,11 @@ Response bytes for each path are compared in the [byte chart](#feed-format-searc
 | Same identities, altered ABI data | 1/17 | 48 pending | 8 | 1.1 |
 <!-- /generated:shared-feed-controls -->
 
-Both disagreement controls retried feed page 1 and held block 37,364,281. The omission resume reread the checkpoint, retried page 1 and skipped page 0. These omissions are injected into the frozen feed; the live one is in [RPC recovery](rpc-recovery.md). Shared upstream omissions can still agree falsely. Completeness covers the selected Base windows only.
+The omissions are injected. Both disagreement controls hold block 37,364,281. Shared upstreams can agree falsely ([RPC recovery](rpc-recovery.md#injected-faults)).
 
 ## Turing nodes
 
-Turing Pi RK1 nodes 1–3 (RK3588), Bun 1.4.4, 2026-11-27 17:20–17:36 UTC, one run per node in sequence, `taskset -c 4-7` on the four A76 cores. Kernels 5.10.160-rockchip (node 1), 6.1.0-1012-rockchip (node 2), 6.1.0-1025-rockchip (node 3). Feeds run on each node's loopback. Live RPC reaches Tenderly over the same home uplink as Bazzite. A sample started only once the hottest zone was ≤70 °C. None waited. Peaks were 62.8, 67.5 and 49.9 °C. The Bazzite run predates the gate and has no temperatures.
+Nodes 1–3 ran in sequence, 2026-11-27 17:20–17:36 UTC. Each sample starts below 70 °C. Peaks were 62.8, 67.5 and 49.9 °C.
 
 <!-- generated:shared-feed-hosts -->
 | Path | Mode | Host | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
@@ -69,51 +83,53 @@ Turing Pi RK1 nodes 1–3 (RK3588), Bun 1.4.4, 2026-11-27 17:20–17:36 UTC, one
 | Dual feed, loopback | Warm | node 3 | 6.1 | 61.3 | 1.7 | 16.4 | 70.5 [66.2–71.7] |
 <!-- /generated:shared-feed-hosts -->
 
-- Every host matched 48/48 cold and 28/28 warm with identical requests: 71 / 39 POSTs, 36 / 20 GETs, 16,679 / 8,935 request bytes, identical feed and log page bytes. RPC response bytes differ by up to 2,416, only in the latest finalized block reply.
-- Controls matched Bazzite: 48 missed, 48 pending, 48 recovered, 48 pending, with 18 / 8 / 34 / 8 GETs. Omission-resume took 113–119 ms against 36.8 ms.
-- The A76 scan took 2.9–3.7× as long. Feed catch-up took 3.3–3.6× as long cold and 2.7–2.8× warm.
-- Live RPC catch-up stayed within 3.8% of Bazzite, since 275 ms spacing and provider latency dominate.
+| Turing against Bazzite | Value |
+| --- | --- |
+| Requests and page bytes | Identical |
+| RPC response bytes | Up to 2,416 B apart, in the finalized-block reply only |
+| Omission-resume control | 113–119 ms |
+| Scan time | 2.9–3.7× |
+| Feed cold rescan / catch-up | 3.3–3.6× / 2.7–2.8× |
+| Live RPC | Within 3.8%; pacing and provider latency dominate |
 
 [Node 1](../data/shared-feed/turing-node-1/summary.json) · [Node 2](../data/shared-feed/turing-node-2/summary.json) · [Node 3](../data/shared-feed/turing-node-3/summary.json)
 
 ## Feed format search
 
-Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts) with the autoresearch keep/revert protocol, one params field per iteration. A Claude Code session on a Mac ran the loop and git bookkeeping without API calls. Every verify ran on turing-node-1 over ssh (`taskset -c 4-7`, Bun 1.4.4, 70 °C gate); Bazzite had no sshd. The wrapper serves both feeds on loopback from the two RPC-recovery captures, with no RPC. It fails unless every page round-trips losslessly, both sources agree, and the scan finds 48/48 cold, 28/28 warm and the synthetic matches. Warm resumes after window 32 (block 44,788,281).
+A Claude Code session ran two keep/revert searches over [`tune.ts`](../src/shared-feed/tune.ts), one params field per iteration. Each verify ran on Turing node 1 and fails on any lossy page or missed match.
 
 | Search | Metric | Baseline | Best | Iterations | Best params |
 | --- | --- | ---: | ---: | ---: | --- |
-| Cold page bytes, one source | decoded body bytes | 43,719 | 14,953 (−65.8%) | 13 | [feed-bytes](../data/shared-feed/autoresearch/feed-bytes.params.json) |
+| Cold page bytes, one feed | decoded body bytes | 43,719 | 14,953 (−65.8%) | 13 | [feed-bytes](../data/shared-feed/autoresearch/feed-bytes.params.json) |
 | Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](../data/shared-feed/autoresearch/warm-time.params.json) |
 
 ![Response bytes for feed pages and RPC payloads, with the format search](figures/feed-bytes.svg)
-<sub>Decoded body bytes without headers or framing, median of three samples. RPC is live Tenderly; feeds are two loopback origins built from the RPC-recovery captures. Optimized is the search's best kept params, 65.8% smaller raw and 23.8% smaller under gzip; RPC gzip was not measured. Lower panel: one source's cold pages per keep/revert iteration (13 iterations); step names are in the bytes log below. Data: `data/shared-feed/summary.json`, `evidence.json`, `autoresearch/feed-bytes.jsonl`.</sub>
+<sub>Lower panel: one feed's cold pages per iteration.</sub>
 
-The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4.
+The best bytes params are 23.8% smaller under gzip. RPC gzip is not measured. The manifest is about 2.5 kB. The warm-time loop keeps only larger pages (8, 16, then 32 windows). An interleaved check of 5 rounds × 9 samples finds more spread between rounds than between params:
 
-Warm time: the loop kept only larger pages (8, 16, then 32 windows). An interleaved check (5 rounds × 9 samples) gave medians of 70.51 ms (baseline), 71.40 ms (32-window) and 75.02 ms (byte-optimized), with more spread between rounds than between params. Local scan dominates A76 warm catch-up.
+| Params | Median, ms |
+| --- | ---: |
+| Baseline | 70.51 |
+| 32-window pages | 71.40 |
+| Byte-optimized | 75.02 |
 
 [Bytes log](../data/shared-feed/autoresearch/feed-bytes.jsonl) · [Warm log](../data/shared-feed/autoresearch/warm-time.jsonl) · [Interleaved check](../data/shared-feed/autoresearch/confirm.txt) · [Baseline params](../data/shared-feed/autoresearch/baseline.params.json)
 
 ## Method
 
-- Windows, logs and head come from the [RPC-recovery reference](../data/rpc-recovery/reference.json): 68 windows of 1,000 blocks (68,000 blocks with gaps, covering all 48 known Daybreak omissions), 48 logs, head 46,544,281. Both paths scan them in 17 groups of four.
-- The two origins serve pages built separately from the receipt-corroborated Tenderly and Sentio captures. Both providers confirmed chain, pinned hash and a finalized block above the pin. Client timings exclude setup (745 ms, six live POSTs) and the original capture (304 POSTs).
-- The manifest lists ranges and head. A page URL holds only the manifest hash and page index, so identical requests get identical public bytes, with no recipient parameters, cookies or keys. Rows drop the repeated announcer address and event signature and keep block and transaction hashes, block number, log and transaction indexes, indexed topics and ABI data.
-- Both paths use the paged-discovery ABI decoder and the ScopeLift SDK locally. The SDK checks the view tag before the full stealth-address check. Two synthetic matches and two decoys are scanned apart from canonical logs. Keys stay on the client. Scanning makes no transfers, receipt lookups or balance checks.
-- Feed sources must agree on exact identity (block, block hash, transaction hash, log index) and payload. A mismatch retries the pair once, then holds the checkpoint. Each accepted group commits block, next page and result together by file rename. Direct RPC accepts any valid page unchecked. The offline verifier scores both paths against the saved reference.
+Both paths scan the [RPC-recovery windows](rpc-recovery.md#windows) in 17 groups of four. Warm catch-up starts after window 32 (block 44,788,281). The feeds serve pages built separately from the Tenderly and Sentio captures. Timings exclude setup (745 ms, six POSTs) and the capture (304 POSTs). Page URLs carry only the manifest hash and page index. The feeds must agree on identity and payload. A mismatch retries once, then holds the checkpoint.
 
-## Reproduce
+Use a fresh run directory. `COOLDOWN_C` overrides the temperature gate.
 
 ```sh
 mkdir -p results
 bun run shared-feed results/shared-feed-replay
 bun run shared-feed:verify results/shared-feed-replay/evidence.json
 bun run shared-feed:verify data/shared-feed/evidence.json
-# Turing node N, host name turing-node-N
-taskset -c 4-7 bun run shared-feed results/shared-feed-replay
+taskset -c 4-7 bun run shared-feed results/shared-feed-replay                # Turing node N, host name turing-node-N
 bun run shared-feed:verify data/shared-feed/turing-node-N/evidence.json
-# feed format search, Turing node, no RPC
-taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9
+taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9   # format search, no RPC
 ```
 
-Use a fresh run directory. `COOLDOWN_C` overrides the 70 °C gate. Recorded evidence holds public range metadata, page digests and timings. [Evidence](../data/shared-feed/evidence.json) · [Verified summary](../data/shared-feed/summary.json)
+[Evidence](../data/shared-feed/evidence.json) · [Verified summary](../data/shared-feed/summary.json)

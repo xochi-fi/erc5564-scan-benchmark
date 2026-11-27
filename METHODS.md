@@ -1,14 +1,28 @@
 # Methods
 
-[Overview](README.md) · [Pipeline](#discovery-pipeline) · [Hardware](#hardware) · [Names in recorded data](#names-in-recorded-data) · [Commands](#commands) · [Layout](#repository-layout)
+## Test keys
 
-## Software
+**Every key and address in this repository is public, deterministic test material. Never fund them.**
 
-Versions are pinned in `package.json`: the SDK in `dependencies` and Bun in `packageManager`. The [SDK](https://github.com/ScopeLift/stealth-address-sdk) is unmodified, npm `gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2). Other Bun versions run but are recorded as a different environment.
+## Terms and units
+
+| Term | Meaning |
+| --- | --- |
+| announcement | One ERC-5564 `Announcement` event. Generated tables call it a log. |
+| page | One `eth_getLogs` response or one feed file |
+| window | A block range committed as one unit |
+| feed | A prebuilt static set of pages, served over HTTP |
+| provider | An RPC operator |
+| endpoint | One RPC URL of a provider |
+| catch-up | Scan from a checkpoint to head |
+| cold rescan | Scan from the first block with no checkpoint |
+| Bazzite, Turing node 1–3, M1 | The [hosts](#hosts-and-software) |
+
+Time is in ms, s, min or h. Transfer sizes are in B, kB or MB, memory in MiB or GiB. Ratios use ×.
 
 ## Discovery pipeline
 
-What every experiment measures one stage of, and where each failure mode bites. Orange stages failed in the recorded runs; green ones are where the fix sits.
+Orange stages failed in the recorded runs. Green is the fix.
 
 ```mermaid
 flowchart LR
@@ -16,7 +30,7 @@ flowchart LR
   page -->|"range caps, archive limits,<br/>request budgets"| retrieval{{"Retrieval<br/>(chain volume, paged discovery)"}}
   page -->|"HTTP 429, CORS"| browser{{"Browser access<br/>(browser discovery)"}}
   page -->|"successful [] for real logs"| silent{{"Silent omission<br/>(chain volume, RPC recovery)"}}
-  retrieval --> check["Cross-check two sources<br/>or two static feeds"]
+  retrieval --> check["Cross-check two providers<br/>or two feeds"]
   browser --> check
   silent --> check
   check -->|"disagree: hold checkpoint"| page
@@ -29,104 +43,98 @@ flowchart LR
   class check fix
 ```
 
-Results per stage: [Chain volume](docs/chain-volume.md), [Paged discovery](docs/paged-discovery.md), [Browser discovery](docs/browser-discovery.md), [RPC recovery](docs/rpc-recovery.md), [Shared feed](docs/shared-feed.md), [Scan cost](docs/scan-cost.md).
+## Hosts and software
 
-## Hardware
+| Label in data | Hardware and OS | Pinning | Used for |
+| --- | --- | --- | --- |
+| `bazzite` | Desktop, Intel i7-13700K, 32 GB RAM, Bazzite 45 | Wallet on P-core threads 0,2,4,6; paged-discovery chain server on 8,10 | Scan-cost controls and profiles, all later experiments |
+| `turing-node-1..3` | Turing Pi RK1 modules (Rockchip RK3588, Cortex-A76 cores 4–7), 8 GB (node 1) / 16 GB (nodes 2–3); kernels 5.10.160-rockchip (node 1), 6.1.0-1012-rockchip (node 2), 6.1.0-1025-rockchip (node 3) | `taskset -c 4-7`; paged-discovery wallet on 4–6, server on 7 | Scan cost (node 1), paged discovery, shared feed |
+| Apple M1 | MacBook, Apple M1, 8 GiB RAM | none | Scan-cost initial sweep and retained-set control |
 
-| Label in data | Hardware | Used for |
-| --- | --- | --- |
-| `bazzite` | Desktop, Intel i7-13700K, 32 GB RAM, Bazzite Linux; wallet pinned to P-core threads 0,2,4,6 | Scan-cost controls and profiles, all later experiments |
-| `turing-node-1..3` | Turing Pi RK1 modules (Rockchip RK3588, Cortex-A76 cores used), 8 GB (node 1) / 16 GB (nodes 2-3) | Scan-cost controls and profiles (node 1), paged discovery, shared feed |
-| Apple M1 | MacBook, Apple M1, 8 GiB RAM | Scan-cost initial sweep and retained-set control only |
+Bun 1.4.4 and the unmodified [`@scopelift/stealth-address-sdk`](https://github.com/ScopeLift/stealth-address-sdk) 1.0.0-beta.5 (`gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2)). Browser runs use Chromium 150.0.7871.250 in Orca Electron 43.8.10 on `bazzite`.
 
-Experiments ran in this order, each reusing data or code from earlier ones: scan cost, paged discovery, chain volume, browser discovery, RPC recovery, shared feed.
+## Live RPC
+
+Live runs are read-only and keyless, from a residential IP in Europe.
+
+| Experiment | Pacing per provider |
+| --- | --- |
+| Chain volume | ≤4 requests/s |
+| RPC recovery | ≥270 ms between request starts |
+| Browser-discovery reference, shared feed | ≥275 ms between request starts |
+
+## Browser runs
+
+From the Orca worktree, start the experiment's server, then create a profile and a tab. Each command prints the next one's ID.
+
+```sh
+ORCA_CLI="${ORCA_CLI_COMMAND:-orca-ide}"
+"$ORCA_CLI" tab profile create --label 'LABEL' --scope isolated --json
+"$ORCA_CLI" tab create --url http://127.0.0.1:PORT/ --worktree current --profile PROFILE_ID --headless --json
+```
+
+Pass `"$ORCA_CLI"` and the tab's page ID to the runner, with a fresh output directory. Chromium calls providers directly under normal CORS, without credentials. All samples share one profile, so connection and preflight caches can shorten later timings.
 
 ## Names in recorded data
 
-The experiments were first numbered as phases. Code, docs and `data/` directories now use experiment names, but a few `phaseN` strings remain because recorded fixtures, seeds or evidence depend on them. Renaming them would change fixture bytes or break the match with recorded JSON.
+Recorded fixtures, seeds and evidence use these phase strings.
 
 | String | Experiment | Where | Why it stays |
 | --- | --- | --- | --- |
 | `phase2-repeat-v1` | Paged discovery | Default `--seed` of `sweep.ts` and `scripts/paged-discovery.sh` | Prefix of the recorded shuffle seeds in `repeat/<host>/run.json`, which reproduce each `plan.json` order |
 | `phase2-wallet`, `phase2-paged-discovery`, `phase2-mainnet-fetch-only` | Paged discovery | `kind` of wallet results, sweep runs and the mainnet probe | Recorded `samples.jsonl` and `run.json` carry these kinds |
 | `phase2-test`, `phase2-test-zero` | Paged discovery | Seeds in `test/paged-discovery.test.ts` | Test fixtures only |
-| `erc5564-scan-benchmark/phase3 (…)` | Chain volume | User-Agent in `src/chain-volume/http.ts` | Unchanged from the recorded run, so providers saw the same client |
+| `erc5564-scan-benchmark/phase3 (…)` | Chain volume | User-Agent in `src/chain-volume/http.ts` | Matches the client string providers saw in the recorded run |
 | `phase4:base:browser:v1` | Browser discovery | Synthetic fixture seed in `src/browser-discovery/serve.ts` | Reproduces the two recorded matches and decoys |
-| `phase4-checkpoint`, `phase5:<name>` | Browser discovery, RPC recovery | localStorage keys during the recorded runs (not stored in `data/`) | Renamed: the code now uses `browser-discovery-checkpoint` and `rpc-recovery:<name>`, which does not change any result |
+| `phase4-checkpoint`, `phase5:<name>` | Browser discovery, RPC recovery | localStorage keys during the recorded runs (not stored in `data/`) | Recorded runs only; the code uses `browser-discovery-checkpoint` and `rpc-recovery:<name>` |
 | `phase6:base:v1` | Shared feed | Synthetic fixture seed in `src/shared-feed/run.ts` and `tune.ts` | Reproduces the recorded synthetic matches |
-
-Recorded JSON is unchanged from the runs, so it may also name old `phaseN` paths.
 
 ## Synthetic fixtures
 
-Scan cost and paged discovery use seeded synthetic announcements. They need no RPC provider, indexer, account, funded wallet or credentials. Metadata states a fixed ETH amount. No transfer is ever made.
+Scan cost and paged discovery use seeded synthetic announcements, 128 per block and one per transaction.
 
-- `zero` targets a decoy throughout. `sparse` targets the recipient at indices divisible by `matchEvery` (default 1000) and the decoy elsewhere.
-- Ephemeral keys come from domain-separated SHA256 with rejection sampling. A fixed seed and options reproduce keys, event identities, ETH metadata, JSONL and manifest bytes.
-- Logs are ABI-encoded at 128 announcements per block, one per transaction. Generation counts view-tag hits for the target key, natural nonmatch hits included.
-- The sender schedule gives `expectedIndices`. Verification checks ordered `(blockHash, transactionHash, logIndex)` with multiplicity, so a dropped SDK rejection cannot pass as a missing match.
-- Before timing, the loader checks schema, scalar and point validity, decoding, identities and order, row count, SHA256 and byte counts. It reads tag-hit counts from the manifest so it does not warm ECDH.
-- The default seed `erc5564-scan-v1` gives byte-identical `announcements.jsonl`. Digests are pinned in [`data/scan-cost/*/fixtures/*/manifest.json`](data/scan-cost/) and in `src/paged-discovery/prepare-fixtures.ts`, which rejects a fixture whose bytes differ.
+| Fixture | Recipient |
+| --- | --- |
+| `zero` | None. Every announcement targets a decoy. |
+| `sparse` | Every `matchEvery`-th announcement (default 1,000) |
 
-Offline tests use the real implementations. They cover determinism, matches and nonmatches, independent tag calculation, stealth private keys, input corruption, manifest errors, incremental equivalence and duplicates.
+Verification compares ordered `(blockHash, transactionHash, logIndex)` with multiplicity against the sender schedule. The loader validates every row before timing. It reads view-tag counts from the manifest, so it does not warm ECDH. Seed `erc5564-scan-v1` gives byte-identical `announcements.jsonl`, pinned in [`manifest.json`](data/scan-cost/) and `src/paged-discovery/prepare-fixtures.ts`.
 
 ## Scan cost
 
-Results: [docs/scan-cost.md](docs/scan-cost.md).
-
-### Measurement boundary
-
-Each engine, mode and repetition runs in a fresh Bun process. Engine order is fixed, so power, thermals and competing load can shift timings. Each process:
-
-1. Read provenance, collect garbage, snapshot memory.
-2. Load, validate and decode. Collect garbage, snapshot memory.
-3. Prepare expected identities. Optionally scan the first `--warmup` entries.
-4. Collect garbage, snapshot memory, time one complete scan.
-5. Snapshot CPU and memory, lifetime peak RSS included. Verify the returned identities.
-
-`scanMs` includes scan allocation and automatic GC. `--warmup 0` skips explicit warmup. Imports, ABI decoding, key validation and recipient derivation have already run by then.
+Each engine, mode and repetition runs in a fresh Bun process, in fixed order. `scanMs` times one complete scan, including allocation and GC, after loading, decoding and key setup.
 
 | Engine or mode | What it does |
 | --- | --- |
 | `sdk` | Unmodified `getAnnouncementsForUser`, no sender filter or client, eager promises and result allocation included. |
 | `crypto` | `checkStealthAddress`: ECDH and hash per entry, then the view-tag check. |
-| `full` | Scans the whole array once. Models a lost scan cursor with retained viewing keys. |
+| `full` | Scans the whole array once. Models a lost scan checkpoint with retained viewing keys. |
 | `incremental` | Scans contiguous batches of retained history, batch and result overhead included. |
 
-Seed-only and StOMR recovery, provider completeness, spendability, network streaming, checkpoints, new heads and reorgs are out of scope.
-
-Memory snapshots record RSS, JS heap and external memory at the four points above. Deltas are approximate. `processLifetimePeakRssBytes` includes imports, loading, validation and warmup. `fixtureBytes` is the JSONL size on disk. `syntheticRpcResponseBytes` is the uncompressed UTF-8 size of `{"jsonrpc":"2.0","id":1,"result":[...rawLogs]}`. Generation keeps key-uniqueness sets. Loading keeps decoded data and validation sets. Full SDK scans allocate one promise per entry. Million-entry runs need several GB of RAM.
-
-A run directory holds:
+`processLifetimePeakRssBytes` includes imports and loading. `syntheticRpcResponseBytes` is the uncompressed size of `{"jsonrpc":"2.0","id":1,"result":[...rawLogs]}`.
 
 | File | Contents |
 | --- | --- |
 | `run.json` | Options, SDK revision, start time |
-| `fixtures/<count>-<case>/announcements.jsonl` | Raw event logs |
+| `fixtures/<count>-<case>/announcements.jsonl` | Raw announcements |
 | `fixtures/<count>-<case>/manifest.json` | Test viewing keys, destination schedule, tag counts, file digest, synthetic response size |
 | `samples.jsonl` | Unrounded verified timings, throughput, CPU time, memory, fixture and lockfile digests, dependency versions, Bun version, OS, CPU and RAM |
 | `summary.json` | Per-scenario median/min/max ms, throughput at the median, max lifetime RSS. A single-sample summary is a smoke observation. |
 
 ### Profiling
 
-`bun run profile` uses the same loader and engines on an existing fixture. JavaScriptCore sampling (20 ms default) and `node:v8` GC events cover the scan only. On macOS a 10 s native `sample` starts at scan entry and `vm_stat 1` records system counters. On Linux pass `--native-seconds 0`. The driver then records `vmstat -w 1`, `/proc` memory and CPU pressure, process status, swap counters and sysfs thermal and frequency data. Linux `perf` is not implemented. System counters include other processes.
-
-Outputs: `scan.cpuprofile`, `scan.collapsed`, `stacks.json`, function and bytecode summaries, `gc.json`, `phases.json`, native stacks, VM telemetry and a verified `result.json` with source and lockfile hashes. GC durations are in microseconds in the pinned Bun ([native observer](https://github.com/oven-sh/bun/blob/38afee6c84fc/src/jsc/bindings/NodeV8.h)). They run from collection prologue to epilogue, concurrent phases included, so their sum is not stop-the-world time. Profiles are diagnostics, not baseline samples.
-
-`--scan-count 100000` scans a prefix while retaining the full fixture. Comparing it with a separate 100k fixture separates retained-set effects from extra scan work. The result records both counts and a digest of the scanned inputs.
+`bun run profile` samples the scan with JavaScriptCore every 20 ms and records `node:v8` GC events. On Linux, pass `--native-seconds 0`. GC durations run from prologue to epilogue in microseconds and include concurrent phases ([native observer](https://github.com/oven-sh/bun/blob/38afee6c84fc/src/jsc/bindings/NodeV8.h)). Their sum is not stop-the-world time. `--scan-count 100000` scans a prefix of a larger retained fixture.
 
 ## Paged discovery
 
-Results: [docs/paged-discovery.md](docs/paged-discovery.md). The wallet reuses the scan-cost fixtures (SHA256-checked) and engines (`scanAnnouncements` in `src/shared/worker.ts`).
+The wallet uses the scan-cost fixtures and engines. Files are in `src/paged-discovery/`.
 
 | File | Role |
 | --- | --- |
-| `chain.ts`, `chain-server.ts` | Local JSON-RPC server. Indexes a fixture after checking SHA256 and block order, keeps line offsets and hash indexes in memory, reads log bodies from disk. Serves `eth_blockNumber`, `eth_chainId`, `eth_getLogs` (address and topic0, capped at head), `eth_getTransactionReceipt` and `eth_getBalance`. Receipts and balances are synthetic. A control port off the measured path moves the head and reports counters. |
+| `chain.ts`, `chain-server.ts` | Local JSON-RPC server. Indexes a fixture after checking SHA256 and block order, keeps line offsets and hash indexes in memory, reads announcement bodies from disk. Serves `eth_blockNumber`, `eth_chainId`, `eth_getLogs` (address and topic0, capped at head), `eth_getTransactionReceipt` and `eth_getBalance`. Receipts and balances are synthetic. A control port off the measured path moves the head and reports counters. |
 | `link.ts` | TCP link emulator. Counts payload bytes each way, HTTP headers included. Each direction is one FIFO link: delivery = max(arrival, link free) + bytes/bandwidth + one-way latency. |
-| `wallet.ts` | One fresh Bun process per sample. Reads the head, then per page: `eth_getLogs`, viem `decodeEventLog` (as the SDK's `getAnnouncements` does), scan, verify each candidate, checkpoint. Verification needs receipt status 1, the announced block, this exact log, and a stealth balance covering the announced amount. The checkpoint (`lastScannedBlock` plus matches) is written by atomic rename. One page is resident at a time. |
-| `sweep.ts` | Starts one chain per fixture and profile. Per page size it runs a catch-up (prefix sync to head minus `--catchup-blocks`, then sync to head) and a cold rescan (cache deleted, scan from the first block). Records load, memory, swap, `pswpin/out`, thermal zones, CPU MHz and memory PSI around every sample. |
-
-Files are in `src/paged-discovery/`.
+| `wallet.ts` | One fresh Bun process per sample. Reads the head, then per page: `eth_getLogs`, viem `decodeEventLog` (as the SDK's `getAnnouncements` does), scan, verify each candidate, checkpoint. Verification needs receipt status 1, the announced block, this exact announcement, and a stealth balance covering the announced amount. The checkpoint (`lastScannedBlock` plus matches) is written by atomic rename. One page is resident at a time. |
+| `sweep.ts` | Starts one chain per fixture and profile. Per page size it runs a catch-up (scan to head minus `--catchup-blocks`, then to head) and a cold rescan. Records load, memory, swap, `pswpin/out`, thermal zones, CPU MHz and memory PSI around every sample. |
 
 | Profile | RTT | Down | Up |
 | --- | --- | --- | --- |
@@ -134,33 +142,29 @@ Files are in `src/paged-discovery/`.
 | `lan` | 1 ms | 1 Gbit/s | 1 Gbit/s |
 | `public` | 100 ms | 50 Mbit/s | 20 Mbit/s |
 
-### Measurement boundaries
-
 | Field | Covers |
 | --- | --- |
 | `networkS` | `eth_blockNumber` and every `eth_getLogs`, send to last body byte, server time and link included. No JSON parsing. |
-| `decodeS` | JSON.parse of log bodies and ABI decoding |
+| `decodeS` | JSON.parse of announcement bodies and ABI decoding |
 | `scanS` | The unmodified engine per page (`batchSize 0`, one SDK call per page) |
 | `verifyS` | Receipt and balance round trips (`verifyNetworkS`) plus local checks |
 | `otherS` | Checkpoints and loop overhead. Parts run sequentially and sum to `totalS`. |
-| `firstMatchS` | Sync start to the first verified candidate |
+| `firstMatchS` | Scan start to the first verified candidate |
 | `wireDownMiB`, `wireUpMiB` | TCP payload through the emulator, HTTP headers included, no TCP/IP framing or TLS. `bodyMiB` is JSON-RPC bodies. |
 | `peakRssMiB`, `chainRssMiB` | Wallet lifetime peak RSS with imports; server RSS at sample end |
 
-After the timers stop, each sample checks exact ordered identities against an oracle read straight from the fixture at the manifest's schedule. The check covers the in-memory result, matches found since the checkpoint, and the persisted cache.
-
-Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-20 payments, spending nonce and gas, sweep key derivation and query privacy. Every log, receipt and balance lookup reveals interest to the RPC. Oldest-first order with a match at index 0 makes `firstMatchS` a first-page metric.
+After the timers stop, each sample checks its result and persisted cache against the fixture oracle. Every `eth_getLogs`, receipt and balance call reveals interest to the provider.
 
 ### Host runner
 
-`scripts/paged-discovery.sh PLAN` (or `bun run paged-discovery:host PLAN`) runs the check, tests, fixtures and a sweep, then archives the run under `results/paged-discovery/`. The `bazzite` and `repeat-bazzite*` plans default to the i7 pinning below; other plans take the CPU lists from the environment.
+`scripts/paged-discovery.sh PLAN` runs the check, tests, fixtures and a sweep, and archives the run under `results/paged-discovery/`.
 
 | Setting | Use |
 | --- | --- |
 | Plan | `bazzite`, `turing`, `smoke` or a repeat plan in [src/paged-discovery/matrix/](src/paged-discovery/matrix/) |
 | `BUN` | Bun override. Defaults to PATH, then `./.runtime/*/bun`. |
 | `REUSE_NODE_MODULES`, `REUSE_FIXTURES` | Project with the same lockfile; comma-separated fixture directories, SHA256-checked |
-| `HOST_LABEL`, `WALLET_CPUS`, `CHAIN_CPUS`, `CONTROL_CPUS` | Output label and Linux CPU lists. Bazzite plans default to `bazzite`, `0,2,4,6`, `8,10`, `0,2,4,6`; other plans to the short hostname and no pinning. |
+| `HOST_LABEL`, `WALLET_CPUS`, `CHAIN_CPUS`, `CONTROL_CPUS` | Output label and Linux CPU lists. `bazzite` and `repeat-bazzite*` plans default to `bazzite` and the [Bazzite pinning](#hosts-and-software); other plans to the short hostname and no pinning. |
 | `MAINNET_RPC` | Optional read-only public RPC probe |
 | `REPETITIONS`, `FIRST_REPETITION`, `SEED` | Repeat count, first repeat number, shuffle seed prefix |
 | `COOLDOWN_C` | Max thermal zone temperature before each sample. Default 70 °C for `repeat-turing`. |
@@ -169,9 +173,12 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 ## Commands
 
-Setup, type check and tests: [Quickstart](README.md#quickstart). After changing anything under `data/`, run `bun run figures` and `bun run tables`. CI fails if the checked-in output is stale.
+Runs write under ignored `results/` or `work/` and exit nonzero on an oracle miss. After changing `data/`, regenerate figures and tables. CI fails on stale output.
 
-Each experiment doc ends with its own commands, all exposed as `bun run` scripts in `package.json`. Runs write under ignored `results/` or `work/`, never over `data/`, unless you pass a `data/` path. A run exits nonzero if any sample misses the fixture oracle. Keep the large workloads out of ordinary CI.
+```sh
+bun run figures
+bun run tables
+```
 
 ## Repository layout
 
@@ -192,11 +199,8 @@ Each experiment doc ends with its own commands, all exposed as `bun run` scripts
 
 ## Caveats for synthetic experiments
 
-These apply to scan cost and paged discovery.
-
-- The chain and match rate are synthetic. 128 announcements per block and one payment per 1,000 announcements far exceed real use. See the [mainnet fetch-only probe](docs/paged-discovery.md#mainnet-fetch-only-probe) for real density.
-- The link model has no TLS, compression, provider query time, limits, rate limiting, jitter or loss. Its near-zero network spread comes from the emulator. `public` is a controlled what-if, not a provider measurement.
-- Fetch, scan and verify run sequentially with no prefetch, so each cost is separable. A pipelined wallet could hide up to min(network, scan).
-- n = 3 separates findings from run noise but is too small for confidence intervals. The Pi's three samples per setting come from three nodes, so its spread is mostly between nodes.
-- Peak RSS is the process high-water mark, Bun and SDK imports included.
-- These are CLI runs of a reference implementation. They are not browser or mobile wallet numbers, and not a comparison with OMR, PIR, TEE or FHE. On-chain gas is out of scope.
+- Synthetic density far exceeds [mainnet density](docs/paged-discovery.md#mainnet-probe).
+- The link model has no TLS, compression, provider time, rate limits, jitter or loss. `public` is a what-if, not a provider measurement.
+- Fetch, scan and verify run sequentially. A pipelined wallet could hide up to min(network, scan).
+- n = 3 is too small for confidence intervals.
+- CLI runs only. Browser and mobile timings differ.

@@ -1,23 +1,8 @@
 # Paged discovery
 
-What does a wallet pay to find its payments by paging through history over JSON-RPC? On a fast link, scanning is 94–97% of the cost. On a 100 ms, 50 Mbit/s link, page size decides whether the network matters, and verification adds about 0.205 s per payment. Catch-up cost depends on the new blocks, not the history.
+What does a wallet pay to find its payments by paging through history over JSON-RPC?
 
-Medians [min–max] of three repetitions on 2026-11-25/26. Each fresh wallet process matched the sender schedule by ordered `(blockHash, transactionHash, logIndex)` outside the timers.
-
-[Per-run evidence](../data/paged-discovery/) · [Repeat statistics](../data/paged-discovery/repeat.csv) · [Samples and host state](../data/paged-discovery/repeat-samples.csv) · [Single-run CSV](../data/paged-discovery/single-run.csv) · [Method](../METHODS.md#paged-discovery) · [Hardware](../METHODS.md#hardware)
-
-## Findings
-
-1. **On a fast link, discovery is scanning.** On `none` the scan is 94–97% of a cold rescan on both hosts. Fetching 107 MiB of logs per 100k announcements takes 0.2–0.5 s on Bazzite and 0.6–1.3 s on the Pi. 1M/100k is 9.95–10.1x. The Pi is 3.6–3.7x slower than the i7 on medians: 3.4–3.6x on the cool node 3, 3.9–4.3x on the throttled node 2. `lan` was not repeated. Its single-run scan share was 89–96%.
-2. **On a public link, page size decides whether the network matters.** With 1-block pages at 1M, the Bazzite network term (983 s) exceeds the scan (542 s). From 64 blocks per page the network sits at the bandwidth floor: 18.7–19.7 s per 100k on Bazzite and 19.0–20.0 s on the Pi, about 1.1 KB per announcement uncompressed. 16-block pages take 23.5–23.7 s. Network terms vary by under 1%, so the spread in totals comes from the scan.
-
-   ![Network, scan and verify time for a 1M cold rescan](figures/paged-breakdown.svg)
-   <sub>Bazzite i7-13700K, synthetic 1M announcements with 1,000 payments, oldest-first cold rescan, median of 3. The link is emulated on loopback: none = no delay, public = 100 ms RTT, 50/20 Mbit/s. Totals also include decode and checkpoints. Data: `data/paged-discovery/repeat.csv`.</sub>
-3. **Verification is a fixed tax per payment.** Two calls per candidate cost 0.2052–0.2082 s at 100 ms RTT for every page size, history, host and node. That is 20.53–20.82 s per 100 payments and 205.2–205.8 s for 1,000. It is 23.4% of the best public-link total on Bazzite (100k and 1M) and 9.8% on the Pi. No number in the study is less noisy.
-4. **Bigger pages delay the first match and raise memory.** First-match time is about one page's fetch and scan. Peak RSS is 103–283 MiB up to 64 blocks and 498–749 MiB for cold rescans at 256 blocks (32,768 logs, ~28 MiB per response). History size adds little, except +11% at 256 blocks (726 against 654 MiB, matching the single run's 723 against 654). Scan cost held the whole fixture and needed ~3.9 GiB at 1M.
-5. **Catch-up depends on the new blocks, not the history.** On `public`, 1-block pages mean 64 round trips and double the cost. Small pages also scan slower through the SDK wrapper, 1-block against 256-block: 8% (100k) and 6% (1M) on Bazzite, 11% on every Pi node. The single run showed ~10%. The cause was not isolated.
-
-All five single-run findings (Appendix A) held in the repeats, with finding 4's history effect and finding 5's slowdown refined.
+On a fast link the scan dominates. On a slow link page size sets the network cost, and each payment adds a fixed verification cost.
 
 ## Cold rescans (median [min–max], n = 3)
 
@@ -49,7 +34,10 @@ All five single-run findings (Appendix A) held in the repeats, with finding 4's 
 | Turing RK1 A76 (nodes 1-3) | 1,000,000 (zero-match) | none | 64 | 5.4 [5.2-5.9] | 1,821.0 [1,692.0-2,038.4] | 0.00 [0.00-0.00] | 1,883.2 [1,751.1-2,110.0] | - | 248 [248-250] | 1,882.3 |
 <!-- /generated:paged-cold -->
 
-Pi rows pool nodes 1–3, one sample each. The single-run column is Bazzite, or Turing node 1 for the Pi.
+2026-11-25/26 on the [hosts](../METHODS.md#hosts-and-software) and [link profiles](../METHODS.md#paged-discovery), under the [synthetic caveats](../METHODS.md#caveats-for-synthetic-experiments). Turing rows pool nodes 1–3. The single-run column is Bazzite or Turing node 1. The Turing 1M fixture has no matches, so it has no verification cost.
+
+![Network, scan and verify time for a 1M cold rescan on Bazzite](figures/paged-breakdown.svg)
+<sub>1,000 payments. Totals also include decode and checkpoints.</sub>
 
 ## 64-block catch-up (8,192 announcements, 8 payments; median [min–max], n = 3)
 
@@ -76,105 +64,91 @@ Pi rows pool nodes 1–3, one sample each. The single-run column is Bazzite, or 
 | Turing RK1 A76 (nodes 1-3) | 100,000 | public | 256 | 17.70 [17.68-18.39] | 1.66 [1.66-1.67] | 18.06 |
 <!-- /generated:paged-catchup -->
 
-## Controls (scan-cost crypto engine, 100k zero-match, unprofiled)
+## Findings
 
-| Host / node | Before s | After s | Drift | Max C | Throttle state | Note |
+1. The scan is 94–97% of a cold rescan on `none` and 89–96% on the single-run `lan`. 1M/100k is 9.95–10.1×. Turing is 3.6–3.7× slower than Bazzite: 3.4× on node 3, up to 4.3× on the throttled node 2.
+2. From 64-block pages, the network runs at the bandwidth floor, about 1.1 kB per announcement. Network terms vary by under 1%, so the spread in totals comes from the scan.
+3. Verification costs 0.2052–0.2082 s per candidate at 100 ms RTT in every setting: 23.4% of the best `public` total on Bazzite and 9.8% on Turing.
+4. First match takes about one page's fetch and scan, because the first scheduled match is at index 0. A 256-block page holds 32,768 announcements, about 29 MB. History adds 11% to RSS at 256 blocks only.
+5. Catch-up cost follows the new blocks, not the history. 1-block pages scan 8% (100k) and 6% (1M) slower than 256-block pages on Bazzite, and 11% slower on Turing. The cause is not isolated.
+
+## Controls
+
+Scan-cost crypto engine, 100k zero-match, unprofiled.
+
+| Host | Before, s | After, s | Drift | Max °C | Throttle state | Note |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| Bazzite | 47.584 | 47.274 | 0.7% | 84 | n/a | ~2% faster than scan cost (48.5-52.0) and the single run (48.5/48.2) |
-| Turing node 1 | 168.285 | 172.364 | 2.4% | 86.8 | 2 | inside the scan-cost range (168.5-181.9) |
-| Turing node 2 | 188.253 | 187.562 | 0.4% | 86.8 | 3 | throttles to 1800 MHz; above the scan-cost range |
-| Turing node 3 | 161.612 | 161.231 | 0.2% | 61.9 | 0 | never throttled (2256 MHz); below the scan-cost range |
+| Bazzite | 47.584 | 47.274 | 0.7% | 84 | n/a | ~2% faster than [scan cost](scan-cost.md) and the single run |
+| Turing node 1 | 168.285 | 172.364 | 2.4% | 86.8 | 2 | Inside the scan-cost range |
+| Turing node 2 | 188.253 | 187.562 | 0.4% | 86.8 | 3 | Throttles to 1,800 MHz; above the scan-cost range |
+| Turing node 3 | 161.612 | 161.231 | 0.2% | 61.9 | 0 | Never throttles (2,256 MHz); below the scan-cost range |
 
-The Pi nodes differ by up to 17% because of cooling. Nodes 1 and 2 reach 85–87 C and drop to thermal-cpufreq states 1–4 within a 20 s sample. Node 3 stays under 62 C. Node 3 was fastest and node 2 slowest in every cold scan. The 1M zero-match rescan took 1751 s, 1883 s and 2110 s on nodes 3, 1 and 2.
+Cooling separates the Turing nodes by up to 17%.
 
 ## Design
 
 | Host | Setup |
 | --- | --- |
-| Bazzite (wallet cores 0,2,4,6, server 8,10) | Cold 100k sparse at 1/16/64/256 blocks and 1M sparse at 1/16/256. Catch-up on both histories at 1/16/256. `none` and `public`. Three repetitions, 78 samples, 5.1 h. |
-| Turing nodes 1–3 (wallet A76 cores 4–6, server 7) | Kernel 5.10 on node 1, 6.1 on nodes 2–3. Cold 100k sparse at 1/16/64/256 and catch-up at 1/16/256 on both profiles, plus 1M zero-match cold at 64 blocks on `none`. One repetition per node in parallel, 45 samples, ~2.2 h. The spread mixes run and node effects. |
+| Bazzite | Cold 100k sparse at 1/16/64/256 blocks and 1M sparse at 1/16/256. Catch-up on both histories at 1/16/256. `none` and `public`. Three repetitions, 78 samples, 5.1 h. |
+| Turing nodes 1–3 | Cold 100k sparse at 1/16/64/256 and catch-up at 1/16/256 on both profiles, plus 1M zero-match cold at 64 blocks on `none`. One repetition per node in parallel, 45 samples, ~2.2 h. The spread mixes run and node effects. |
 
-- Each repetition shuffles its [matrix](../src/paged-discovery/matrix/) with the seed in `plan.json`, between 100k crypto controls. Hosts record temperature, CPU frequency, throttle state, swap traffic and memory PSI every 2 s. Turing waited up to 281 s for all zones below 70 C. Node 3 never waited.
-- The Bazzite gate (≥8 GiB available, ≤100 swap pages/s over 10 s, PSI some avg60 ≤1.0) passed at 18.2 GiB, 1.8 pages/s, PSI 0.00 and load 1.3, with 5.7 GiB of parked zram.
-- Bun 1.4.4, lockfile `d17ecebb...`. Fixtures were generated on the M1, SHA256-checked, and rechecked after copying. `bun run check` and `bun test` (88/88) passed on each host.
-- Single run only: `lan`, 10k, 4-block pages and Bazzite 1M at 64 blocks.
+| Check | Result |
+| --- | --- |
+| Setting order | Shuffled per repetition ([matrix](../src/paged-discovery/matrix/)) |
+| Turing temperature wait | Up to 281 s for the [`COOLDOWN_C` gate](../METHODS.md#host-runner) |
+| Bazzite [host gate](../METHODS.md#host-runner) | 18.2 GiB available, 1.8 swap pages/s, PSI 0.00 |
+| Lockfile, tests | `d17ecebb...`, 88/88 per host |
 
 ## Bazzite host activity
 
-An IDE and `kwin_wayland` grew during the first hour. MemAvailable fell from 17.4 to 12.8 GiB, zram rose from 5.7 to 14.4 GiB, and 1-minute load peaked at 10.9 before sample 9 of 78. Load then stayed at 0.9–2.7, with 10.4–11.1 GiB available. The wallet peaked at 750 MiB and chain servers at 46–708 MiB.
+An IDE and `kwin_wayland` grow in the first hour: MemAvailable drops to 12.8 GiB, zram rises to 14.4 GiB, and load peaks at 10.9 before sample 9. Wallet RSS peaks at 750 MiB, chain servers at 46–708 MiB.
 
-A sample is flagged if any 2 s interval exceeds 100 swap pages/s or memory PSI avg10 1.0. The flag marks 23 of 78 samples, mostly in that first hour. Flagged samples were within −0.3% to +2.0% of unflagged peers, with two exceptions:
+`tainted` in [`repeat-samples.csv`](../data/paged-discovery/repeat-samples.csv) flags any 2 s interval above 100 swap pages/s or PSI avg10 1.0. The 23 flagged samples fall within −0.3% to +2.0% of their peers, except two. Both are their group's maximum, so the medians hold.
 
 | Sample | Setting | Condition | Flagged | Unflagged |
 | --- | --- | --- | ---: | ---: |
-| 9 | 1M `public`, 1 block | load 10.9, PSI avg10 9.1 | 1826 s (+3.6%) | 1764 s |
+| 9 | 1M `public`, 1 block | load 10.9, PSI avg10 9.1 | 1,826 s (+3.6%) | 1,764 s |
 | 22 | 1M `none`, 256 blocks | 23k swap pages/s | 533 s (+8%) | 490/496 s |
 
-All three samples of the second setting are flagged; the other two agree within 1.2%. Both outliers are their group's max, so medians hold, and dropping all flagged samples changes no finding. Flags are the `tainted` column in [`repeat-samples.csv`](../data/paged-discovery/repeat-samples.csv). Intel has no thermal-cpufreq device, so Bazzite has no throttle state. The package reached 100 C only in samples 8–9.
+## Mainnet probe
 
-The single run on this host swapped heavily. Its 1M `none` totals at 1 and 16 blocks (565.2 and 521.3 s) were 3–5% above the repeat ranges. Turing node 1 throttled, and its 64–256-block totals fell in the slow half of the repeats. The single-run 1M `public` 1-block total (1731 s) was 3.5% below the repeat median.
+Turing node 1 against keyless `ethereum-rpc.publicnode.com`: blocks 26,484,827–26,494,826 return 14 announcements in 10 requests, 55–92 ms each, 1.1 kB per announcement. Older ranges hit the [archive-token error](chain-volume.md#endpoint-behavior). [`mainnet-fetch.json`](../data/paged-discovery/mainnet-probe/mainnet-fetch.json)
 
-## Caveats
+## Prior work
 
-[Shared caveats](../METHODS.md#caveats-for-synthetic-experiments) cover the synthetic workload, deterministic link, sequential stages, RSS and three-sample ranges. The first scheduled match is at index 0, so first-match time measures the first page. The Pi 1M fixture has no matches and no verification cost.
+| Client | Retrieval |
+| --- | --- |
+| [ScopeLift SDK](https://github.com/ScopeLift/stealth-address-sdk) | Paged `getLogs`, or a subgraph |
+| [umbra-js](https://github.com/ScopeLift/umbra-protocol/blob/master/umbra-js/src/classes/Umbra.ts) | Indexer, then one unpaged RPC call |
 
-## Mainnet fetch-only probe
-
-One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, [canonical Announcer](chain-volume.md). Blocks 26,484,827–26,494,826 returned 14 announcements in 10 requests of 1000 blocks, 55–92 ms each, 1.1 KB per decoded log, brotli on the wire. Older ranges returned HTTP 403 "Archive requests require a personal token", which ended the probe under the no-credential rule. [`mainnet-fetch.json`](../data/paged-discovery/mainnet-probe/mainnet-fetch.json)
-
-## Prior work and OMR crossover
-
-- The [ScopeLift SDK](https://github.com/ScopeLift/stealth-address-sdk) reads RPC `getLogs` in chunks, or a subgraph with an `id_lt` cursor and pinned `snapshotBlock`.
-- [umbra-js](https://github.com/ScopeLift/umbra-protocol/blob/master/umbra-js/src/classes/Umbra.ts) tries the indexer, then one unchunked RPC call to `latest`.
-- [Fluidkey](https://docs.fluidkey.com/technical-documentation/technical-walkthrough) shares a viewing-key BIP-32 node with its server, which implies server-side scanning.
-- None of this code handles reorgs or cross-checks sources.
-
-| Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
-| --- | ---: | ---: | ---: | --- |
-| [OMRp2](https://eprint.iacr.org/2021/1256) | 59.8 / 30.1 | 11 | 956 | Yes (proven in 2024/510, Lemma 4.3) |
-| [PerfOMR1](https://eprint.iacr.org/2024/204) | 4.1 / 2.1 | 21 | 2,181 | No (attacks in 2024/510, Section 5.1) |
-| [PerfOMR2](https://eprint.iacr.org/2024/204) | 21.5 / 11.3 | 11 | 583 | No |
-| [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (Theorem 5.3) |
-
-All rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one Google Compute Cloud n4-standard-8 (32 GB) with SEAL HEXL / AVX512-IFMA52, prior schemes rebenchmarked on the same instance. Detector runtime is per scanned message, amortized over N, for one recipient's digest. Table 2 gives DoS-PerfOMR's amortized runtime as 4.95 ms/msg. The original OMR paper ([2021/1256](https://eprint.iacr.org/2021/1256)) puts server cost at ~$1 per million messages scanned. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4x faster than PerfOMR.
-
-![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
-<sub>Solid lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain's canonical Announcer rate, first announcement to 2026-11-26, 0.006–1.2 per day per chain; A76 CPU at the busiest is 2.1 ms/day. Dashed lines are literature values, not measured here: detector runtime per scanned message, amortized over N = 2^19, for one recipient's digest, from eprint 2024/510 Table 1 (GCP n4-standard-8 with AVX512 (HEXL), 1 thread): PerfOMR2 21.5 ms/message (not DoS-resistant), DoS-PerfOMR 4.9 ms/message (DoS-resistant). The flat line is DoS-PerfOMR's 20 ms recipient runtime from the same table; the A76 scan-cost rate passes it at ~12/day. The ~100k/day budget is an assumption, not derived from OMR; there the A76 needs 2.9 min CPU/day, and 29 min at 1M/day. Lines compare a cloud x86 core with AVX512 to one A76 core. Data: `data/scan-cost/results.csv`, `data/chain-volume/canonical/retrieve-*.json`. Details: [Scan cost](scan-cost.md).</sub>
-
-The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Drafts EIP-7745, EIP-8304 (log indexes with proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). I found no published design for signed or Merkle-committed ERC-5564 feed pages.
+Neither handles reorgs or cross-checks providers. The 1-byte view tag skips the final derivation, not the ECDH, with 1/256 false positives.
 
 ## Reproduce
 
-Set `FIXTURE_DIRS` to comma-separated fixture directories and `NODE` to the Pi node (1–3). For reports, set `BAZZITE_RUN` and `TURING_RUN_*` to the host run directories.
+`FIXTURE_DIRS` lists fixture directories, `NODE` is the Turing node, and `BAZZITE_RUN` and `TURING_RUN_*` are run directories.
 
 ```sh
-bun run src/paged-discovery/prepare-fixtures.ts --output work/fixtures \
-  --fixtures 100000-zero,10000-sparse,100000-sparse,1000000-sparse   # checked against pinned digests
-bun run paged-discovery --fixtures work/fixtures/100000-sparse --pages 1,16,64,256 \
-  --profiles none,public --scenarios cold,catchup \
-  --control-fixture work/fixtures/100000-zero --output results/paged-discovery-my-run   # one sweep
-# repeats: 3 shuffled repetitions between controls; matrices in src/paged-discovery/matrix/
-scripts/paged-discovery.sh repeat-bazzite        # Bazzite, host-gated, ~5.2 h
-REUSE_FIXTURES="$FIXTURE_DIRS" HOST_LABEL="turing-node-$NODE" FIRST_REPETITION="$NODE" REPETITIONS=1 \
-  WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 scripts/paged-discovery.sh repeat-turing   # per Pi node, ~2.2 h
-scripts/paged-discovery.sh repeat-smoke          # 5-minute check of the repeat path
-bun run src/paged-discovery/repeat-report.ts --host "bazzite=$BAZZITE_RUN" --host "turing=$TURING_RUN_1" \
-  --host "turing=$TURING_RUN_2" --host "turing=$TURING_RUN_3" --csv summary.csv --samples-csv samples.csv --md table.md
-# original single run (Appendix A)
-scripts/paged-discovery.sh bazzite
-REUSE_FIXTURES="$FIXTURE_DIRS" WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 scripts/paged-discovery.sh turing
+bun run src/paged-discovery/prepare-fixtures.ts --output work/fixtures --fixtures 100000-zero,10000-sparse,100000-sparse,1000000-sparse   # checked against pinned digests
+bun run paged-discovery --fixtures work/fixtures/100000-sparse --pages 1,16,64,256 --profiles none,public --scenarios cold,catchup --control-fixture work/fixtures/100000-zero --output results/paged-discovery-my-run   # one sweep
+scripts/paged-discovery.sh repeat-bazzite   # 3 shuffled repetitions, host-gated, ~5.2 h
+REUSE_FIXTURES="$FIXTURE_DIRS" HOST_LABEL="turing-node-$NODE" FIRST_REPETITION="$NODE" REPETITIONS=1 WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 scripts/paged-discovery.sh repeat-turing   # per Turing node, ~2.2 h
+scripts/paged-discovery.sh repeat-smoke   # 5 min check of the repeat path
+bun run src/paged-discovery/repeat-report.ts --host "bazzite=$BAZZITE_RUN" --host "turing=$TURING_RUN_1" --host "turing=$TURING_RUN_2" --host "turing=$TURING_RUN_3" --csv summary.csv --samples-csv samples.csv --md table.md
+scripts/paged-discovery.sh bazzite   # single run, Appendix A
+REUSE_FIXTURES="$FIXTURE_DIRS" WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 scripts/paged-discovery.sh turing   # single run, Appendix A
 bun run src/paged-discovery/report.ts --host "bazzite=$BAZZITE_RUN" --host "turing-node-1=$TURING_RUN_1" --csv single-run.csv --md table.md
-# optional read-only mainnet probe, never mixed into results
-bun run paged-discovery:mainnet --rpc https://ethereum-rpc.publicnode.com --output results/mainnet-probe
+bun run paged-discovery:mainnet --rpc https://ethereum-rpc.publicnode.com --output results/mainnet-probe   # read-only, kept out of results
 ```
+
+[Per-run evidence](../data/paged-discovery/) · [Repeat statistics](../data/paged-discovery/repeat.csv) · [Samples and host state](../data/paged-discovery/repeat-samples.csv) · [Single-run CSV](../data/paged-discovery/single-run.csv)
 
 ---
 
-# Appendix A: single run (2026-11-25, one repetition per configuration)
+# Appendix A: single run (2026-11-25, one repetition per setting)
 
-Same hosts and pinning, Turing node 1 only, fixed setting order. [Comparison with the repeats](#bazzite-host-activity)
+Same hosts, Turing node 1 only, fixed setting order. The repeats confirm all five findings.
 
-## A. Controls (scan-cost crypto engine, 100k zero-match, unprofiled)
+## A. Controls
 
 <!-- generated:paged-single-controls -->
 | Host | Before s | After s | Scan-cost range s |
@@ -184,7 +158,7 @@ Same hosts and pinning, Turing node 1 only, fixed setting order. [Comparison wit
 | Turing node 1 (1M run) | 177.087 | 174.666 |  |
 <!-- /generated:paged-single-controls -->
 
-Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 7–8%.
+Drift stays inside the scan-cost runs' 7–8%.
 
 ## A. Cold rescans
 
@@ -212,7 +186,7 @@ Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 
 | Turing Pi A76 | 1,000,000 (zero-match) | none | 64 | 5.2 | 1818.8 | 0.0 | 1882.3 | - | 1070 | 250 |
 <!-- /generated:paged-single-cold -->
 
-64-block catch-up (8,192 announcements, 8 payments), total seconds, including about 1.65 s of verification on `public`:
+64-block catch-up totals in s, including about 1.65 s of verification on `public`:
 
 <!-- generated:paged-single-catchup -->
 | Host | none | lan | public, 1-block pages | public, 16-256-block pages |
@@ -221,18 +195,8 @@ Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 
 | Turing node 1 (100k history) | 15.1-16.8 | 15.6-17.0 | 26.8 | 18.1-18.7 |
 <!-- /generated:paged-single-catchup -->
 
-## A. Findings
-
-| Topic | Single-run result |
+| Single-run condition | Effect on totals |
 | --- | --- |
-| Scanning | ECDH and view-tag checks took 89–97% of cold rescans on `none`/`lan`. Fetching 107 MiB per 100k cost 0.2–3.9 s. Bazzite scaled ~10x from 100k to 1M. The Pi took 3.6–3.9x as long as the i7. |
-| Network | At 1M with 1-block pages, Bazzite spent 979 s fetching and 520 s scanning, 1731 s total. At 16–64 blocks per page the network approached 18–19 s per 100k. Fastest 100k totals: 88 s (Bazzite), 219 s (Pi). |
-| Verification | ~0.205 s per payment at 100 ms RTT: 23% (Bazzite) and 9% (Pi) of the best public-link totals. |
-| First match and memory | At 1 against 256 blocks per page: Bazzite 0.09 against 16–22 s, Pi 0.4 against 61–66 s. Peak RSS 110–280 MiB up to 64 blocks, 470–720 MiB at 256. History size had little effect at smaller pages. |
-| Catch-up | Bazzite took 4.1–4.5 s for 64 blocks on both histories. On `public`, 14.7 s at 1 block against 7.4 s at larger pages. The 1M scan took 532.6 s at 1 block against 478.7 s at 256. |
-
-## A. Caveats
-
-The [shared caveats](#caveats) apply. Bazzite swap grew from 2.2 to 11.5 GiB (~2.9M more `pswpout` pages), with 12–17 GiB available, wallet RSS under 1 GiB and drift within 0.6%. The Pi throttled at 80–86 C (~2.0 of 2.26 GHz) and used a 1M zero-match fixture to save ~1 h of generation. The 1M chain server used ~400 MiB, mostly hash indexes.
-
-The [single-run CSV](../data/paged-discovery/single-run.csv) has every host, size, scenario, profile and page size, with requests, stage times, first match, wire bytes and RSS.
+| Bazzite swap grows from 2.2 to 11.5 GiB | 1M `none` at 1 and 16 blocks: 3–5% above the repeat ranges. 1M `public` at 1 block: 3.5% below the repeat median. |
+| Turing node 1 throttles at 80–86 °C (~2.0 of 2.26 GHz) | 64–256-block totals in the slow half of the repeats |
+| 1M chain server | ~400 MiB RSS |

@@ -140,7 +140,6 @@ Each experiment doc ends with its own commands. Scan cost and paged discovery wr
 | `test/` | `bun test` suites and recorded fixtures |
 | `data/<experiment>/` | Recorded results ([data/README.md](data/README.md)) |
 | `docs/<experiment>.md` | Results per experiment |
-| `FINDINGS.md`, `PHASE*.md` | Redirects to the old paths |
 
 ## Caveats for synthetic experiments
 

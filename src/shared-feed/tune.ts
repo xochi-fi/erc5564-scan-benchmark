@@ -1,4 +1,4 @@
-import { mkdtemp, readdir, rename, rm } from 'node:fs/promises';
+import { mkdtemp, rename, rm } from 'node:fs/promises';
 import { hostname, tmpdir } from 'node:os';
 import { getAnnouncementsForUser } from '@scopelift/stealth-address-sdk';
 import { z } from 'zod';
@@ -7,6 +7,8 @@ import { identity } from '../shared/announcer.ts';
 import { rpc, scope, type Window } from '../shared/base-windows.ts';
 import { decodeAnnouncements, type RawLog } from '../shared/raw-logs.ts';
 import { compact, digest, expand, referencePath } from './feed.ts';
+import { waitForCooldown } from '../shared/host.ts';
+import { median } from '../shared/stats.ts';
 
 const paramsSchema = z.strictObject({
   pageWindows: z.union([z.literal(1), z.literal(2), z.literal(4), z.literal(8), z.literal(16), z.literal(32)]),
@@ -208,19 +210,9 @@ async function scan(name: string, limit = pages.length) {
 }
 
 const cooldownC = 70;
-async function maxThermalC() {
-  const zones = (await readdir('/sys/class/thermal').catch(() => [])).filter(zone => zone.startsWith('thermal_zone'));
-  const temps = await Promise.all(zones.map(zone => Bun.file(`/sys/class/thermal/${zone}/temp`).text().then(Number, () => NaN)));
-  const valid = temps.filter(Number.isFinite);
-  return valid.length ? Math.max(...valid) / 1000 : null;
-}
 let peakC: number | null = null;
 async function thermalGate() {
-  let maxC = await maxThermalC();
-  while (maxC !== null && maxC > cooldownC) {
-    await Bun.sleep(5_000);
-    maxC = await maxThermalC();
-  }
+  const { maxC } = await waitForCooldown(cooldownC);
   if (maxC !== null) peakC = Math.max(peakC ?? maxC, maxC);
 }
 
@@ -228,10 +220,6 @@ const expectedCold = [...identities].sort();
 const warmFrom = windows[warmWindows - 1]!.to;
 const expectedWarm = expectedCold.filter(log => Number(log.split(':')[0]) > warmFrom);
 const same = (logs: string[], expected: string[]) => digest([...logs].sort()) === digest(expected);
-const median = (values: number[]) => {
-  const sorted = [...values].sort((x, y) => x - y);
-  return (sorted[(sorted.length - 1) >> 1]! + sorted[sorted.length >> 1]!) / 2;
-};
 
 try {
   await thermalGate();
@@ -252,7 +240,7 @@ try {
   const gzipBytes = primary.bodies.reduce((sum, body) => sum + Bun.gzipSync(body).byteLength, 0);
   const metrics = {
     cold_bytes: cold.bytes[0], cold_gzip_bytes: gzipBytes, manifest_bytes: JSON.stringify(manifest).length, warm_bytes: warmBytes,
-    warm_ms: median(warmMs).toFixed(2), warm_min_ms: Math.min(...warmMs).toFixed(2), warm_max_ms: Math.max(...warmMs).toFixed(2),
+    warm_ms: median(warmMs)!.toFixed(2), warm_min_ms: Math.min(...warmMs).toFixed(2), warm_max_ms: Math.max(...warmMs).toFixed(2),
     cold_ms: cold.ms.toFixed(2), pages: pages.length, logs_cold: cold.logs.length, logs_warm: warmLogs, peak_c: peakC ?? 'na',
   };
   for (const [key, value] of Object.entries(metrics)) console.log(`METRIC ${key}=${value}`);

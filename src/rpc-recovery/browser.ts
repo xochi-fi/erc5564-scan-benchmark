@@ -1,4 +1,5 @@
 import { filter, hex, identity, scope, type LogIdentity, type Window } from './config.ts';
+import { rpcRecorder } from '../shared/browser-rpc.ts';
 
 export type RawLog = LogIdentity & {
   address: string;
@@ -7,50 +8,8 @@ export type RawLog = LogIdentity & {
   transactionIndex: string;
   removed?: boolean;
 };
-type RequestSample = {
-  request: { jsonrpc: '2.0'; id: number; method: string; params: unknown[] };
-  endpoint: string; elapsedMs: number; status?: number; body?: string; bodyBytes?: number;
-  requestBytes: number; error?: { kind: string; message: string };
-};
-const utf8 = new TextEncoder();
-let requestSamples: RequestSample[] = [];
+const recorder = rpcRecorder({ recordEndpoint: true });
 
-async function call<T>(endpoint: string, method: string, params: unknown[]): Promise<T> {
-  const request = { jsonrpc: '2.0' as const, id: requestSamples.length + 1, method, params };
-  const payload = JSON.stringify(request);
-  const sample: RequestSample = { request, endpoint, requestBytes: utf8.encode(payload).length, elapsedMs: 0 };
-  requestSamples.push(sample);
-  const start = performance.now();
-  const signal = AbortSignal.timeout(12_000);
-  let kind = 'fetch-rejection';
-  try {
-    const response = await fetch(endpoint, {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      mode: 'cors', credentials: 'omit', cache: 'no-store', signal, body: payload,
-    });
-    sample.status = response.status;
-    kind = 'body-read-error';
-    const bytes = await response.arrayBuffer();
-    sample.elapsedMs = performance.now() - start;
-    sample.bodyBytes = bytes.byteLength;
-    sample.body = new TextDecoder().decode(bytes);
-    kind = 'http-error';
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    kind = 'invalid-response';
-    const json = JSON.parse(sample.body);
-    if (json.jsonrpc !== '2.0' || json.id !== request.id) throw new Error('Invalid JSON-RPC envelope');
-    if (json.error) {
-      kind = 'rpc-error';
-      throw new Error(JSON.stringify(json.error));
-    }
-    if (!Object.hasOwn(json, 'result')) throw new Error('Missing result');
-    return json.result;
-  } catch (error) {
-    if (sample.elapsedMs === 0) sample.elapsedMs = performance.now() - start;
-    sample.error = { kind: signal.aborted ? 'timeout' : kind, message: String(error) };
-    throw new Error(sample.error.message);
-  }
-}
 
 type Mode = 'probe' | 'single' | 'cross' | 'resume';
 interface Input {
@@ -66,20 +25,9 @@ interface Checkpoint {
 type Vote = { endpoint: string; ids: string[]; error?: undefined } |
   { endpoint: string; ids?: undefined; error: string };
 
-async function controls(url: string) {
-  requestSamples = [];
-  for (const path of ['allow', 'deny']) {
-    try {
-      await call(`${url}/${path}`, 'eth_chainId', []);
-    } catch {
-      // Raw samples preserve the rejection.
-    }
-  }
-  return requestSamples;
-}
 
 async function run({ name, mode, reference, endpoints }: Input) {
-  requestSamples = [];
+  recorder.reset();
   performance.clearResourceTimings();
   const startedAt = new Date().toISOString();
   const start = performance.now();
@@ -95,7 +43,7 @@ async function run({ name, mode, reference, endpoints }: Input) {
       if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));
     }
     lastStarts.set(endpoint, performance.now());
-    return call<T>(endpoint, method, params);
+    return recorder.call<T>(endpoint, method, params);
   };
   const healthy = new Map<string, boolean>();
   const initialization = await Promise.all(endpoints.map(async endpoint => {
@@ -170,10 +118,10 @@ async function run({ name, mode, reference, endpoints }: Input) {
   return {
     name, mode, startedAt, userAgent: navigator.userAgent, endpoints, initialization,
     initialNext, checkpoint, stop, reachedEnd, elapsedMs, catchUpMs: reachedEnd ? elapsedMs : null,
-    requestCount: requestSamples.length, windows, requests: requestSamples,
+    requestCount: recorder.samples.length, windows, requests: recorder.samples,
     resourceTimings: performance.getEntriesByType('resource').map(entry => entry.toJSON()),
     observed, missing: [...expected].filter(id => !observedSet.has(id)),
     extra: [...observedSet].filter(id => !expected.has(id)), duplicates: observed.length - observedSet.size,
   };
 }
-Object.assign(globalThis, { recovery: { run, controls } });
+Object.assign(globalThis, { recovery: { run, controls: recorder.controls } });

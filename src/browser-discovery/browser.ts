@@ -2,6 +2,7 @@
 import { ERC5564AnnouncerAbi, getAnnouncementsForUser, type AnnouncementLog } from '@scopelift/stealth-address-sdk';
 import { decodeEventLog, type Hex } from 'viem';
 import { filter, hex, identity, scope, type LogIdentity } from './config.ts';
+import { rpcRecorder } from '../shared/browser-rpc.ts';
 
 export type RawLog = LogIdentity & {
   address: Hex;
@@ -18,50 +19,8 @@ export interface Input {
     rows: { block: number; raw: RawLog; expected: boolean }[] };
   reference: { headHash: string; identities: string[] };
 }
-type RequestSample = {
-  request: { jsonrpc: '2.0'; id: number; method: string; params: unknown[] };
-  elapsedMs: number; status?: number; body?: string; bodyBytes?: number;
-  requestBytes: number; error?: { kind: string; message: string };
-};
-const utf8 = new TextEncoder();
-let requestSamples: RequestSample[] = [];
+const recorder = rpcRecorder();
 
-async function call<T>(endpoint: string, method: string, params: unknown[]): Promise<T> {
-  const request = { jsonrpc: '2.0' as const, id: requestSamples.length + 1, method, params };
-  const payload = JSON.stringify(request);
-  const sample: RequestSample = { request, requestBytes: utf8.encode(payload).length, elapsedMs: 0 };
-  requestSamples.push(sample);
-  const start = performance.now();
-  const signal = AbortSignal.timeout(12_000);
-  let kind = 'fetch-rejection';
-  try {
-    const response = await fetch(endpoint, {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      mode: 'cors', credentials: 'omit', cache: 'no-store', signal, body: payload,
-    });
-    sample.status = response.status;
-    kind = 'body-read-error';
-    const bytes = await response.arrayBuffer();
-    sample.elapsedMs = performance.now() - start;
-    sample.bodyBytes = bytes.byteLength;
-    sample.body = new TextDecoder().decode(bytes);
-    kind = 'http-error';
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    kind = 'invalid-response';
-    const json = JSON.parse(sample.body);
-    if (json.jsonrpc !== '2.0' || json.id !== request.id) throw new Error('Invalid JSON-RPC envelope');
-    if (json.error) {
-      kind = 'rpc-error';
-      throw new Error(JSON.stringify(json.error));
-    }
-    if (!Object.hasOwn(json, 'result')) throw new Error('Missing result');
-    return json.result;
-  } catch (error) {
-    if (sample.elapsedMs === 0) sample.elapsedMs = performance.now() - start;
-    sample.error = { kind: signal.aborted ? 'timeout' : kind, message: String(error) };
-    throw new Error(sample.error.message);
-  }
-}
 
 function decode(raw: RawLog): AnnouncementLog {
   const { args } = decodeEventLog({
@@ -79,7 +38,7 @@ const storageKey = 'browser-discovery-checkpoint';
 async function run(input: Input) {
   const { endpoint, mode, reference, fixture, repetition } = input;
   performance.clearResourceTimings();
-  requestSamples = [];
+  recorder.reset();
   localStorage.removeItem(storageKey);
   if (mode === 'resume') localStorage.setItem(storageKey, String(scope.saved));
   const startedAt = new Date().toISOString();
@@ -96,14 +55,14 @@ async function run(input: Input) {
   let checkedHead = false;
   let failure: string | null = null;
   try {
-    if (await call(endpoint, 'eth_chainId', []) !== scope.chainId) throw new Error('Wrong chain');
-    const head = await call<{ hash: string; number: string }>(endpoint, 'eth_getBlockByNumber', [hex(scope.head), false]);
+    if (await recorder.call(endpoint, 'eth_chainId', []) !== scope.chainId) throw new Error('Wrong chain');
+    const head = await recorder.call<{ hash: string; number: string }>(endpoint, 'eth_getBlockByNumber', [hex(scope.head), false]);
     if (Number(head.number) !== scope.head || head.hash.toLowerCase() !== reference.headHash) throw new Error('Wrong fixed head');
     checkedHead = true;
     for (let from = fromBlock; from <= scope.head; from += scope.pageBlocks) {
       const to = Math.min(from + scope.pageBlocks - 1, scope.head);
       const query = filter(from, to);
-      const rows = await call<RawLog[]>(endpoint, 'eth_getLogs', [query]);
+      const rows = await recorder.call<RawLog[]>(endpoint, 'eth_getLogs', [query]);
       const scanStart = performance.now();
       for (const log of rows) {
         const block = Number(log.blockNumber);
@@ -145,10 +104,10 @@ async function run(input: Input) {
     origin: location.origin, userAgent: navigator.userAgent, startedAt, endpoint, mode, repetition,
     initialCheckpoint, fromBlock, head: scope.head, checkedHead, checkpoint, reachedHead, failure,
     elapsedMs, firstFixtureMatchMs, firstRealMatchMs, catchUpMs: reachedHead ? elapsedMs : null,
-    requestCount: requestSamples.length,
-    networkMs: requestSamples.reduce((sum, sample) => sum + sample.elapsedMs, 0),
+    requestCount: recorder.samples.length,
+    networkMs: recorder.samples.reduce((sum, sample) => sum + sample.elapsedMs, 0),
     networkResources: performance.getEntriesByType('resource').map(entry => entry.toJSON()),
-    pages, requests: requestSamples,
+    pages, requests: recorder.samples,
     fixtureMatches, fixtureExpected, fixtureExact, realMatches,
     completeness: {
       expected, observed: realIds, missing, extra, duplicateCount,
@@ -158,15 +117,4 @@ async function run(input: Input) {
   };
 }
 
-async function controls(url: string) {
-  requestSamples = [];
-  for (const path of ['allow', 'deny']) {
-    try {
-      await call(`${url}/${path}`, 'eth_chainId', []);
-    } catch {
-      // The raw result records the rejection.
-    }
-  }
-  return requestSamples;
-}
-Object.assign(globalThis, { discovery: { run, controls } });
+Object.assign(globalThis, { discovery: { run, controls: recorder.controls } });

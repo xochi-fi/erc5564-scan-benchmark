@@ -1,5 +1,7 @@
+/** Base mainnet chain ID as `eth_chainId` returns it. */
+export const BASE_CHAIN_ID = "0x2105";
 /** Base windows and providers pinned by the RPC-recovery reference; the shared feed scans the same windows. */
-export const scope = { chainId: "0x2105", start: 34_304_282, head: 46_544_281, pageBlocks: 1_000 };
+export const scope = { chainId: BASE_CHAIN_ID, start: 34_304_282, head: 46_544_281, pageBlocks: 1_000 };
 export const rpc = {
   daybreak: "https://base.daybreak-rpc.network",
   tenderly: "https://base.gateway.tenderly.co",

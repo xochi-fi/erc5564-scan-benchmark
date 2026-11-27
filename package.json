@@ -11,7 +11,9 @@
     "test": "bun test",
     "paged-discovery": "bun run src/paged-discovery/sweep.ts",
     "paged-discovery:mainnet": "bun run src/paged-discovery/mainnet.ts",
-    "chain-volume": "bun run src/chain-volume/run.ts"
+    "chain-volume": "bun run src/chain-volume/run.ts",
+    "figures": "bun run src/figures/figures.ts",
+    "tables": "bun run src/figures/tables.ts"
   },
   "dependencies": {
     "@noble/secp256k1": "2.3.0",

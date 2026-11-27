@@ -5,6 +5,51 @@ Measures stealth payment discovery and keyless announcement retrieval with Scope
 > **All keys and addresses in this repository are public, deterministic test material.
 > Never fund them.**
 
+## Findings so far
+
+Figures and tables below are generated from [`data/`](data/README.md) by `bun run figures` and `bun run tables`. Each one links to the doc that has the method and caveats.
+
+**Scanning is cheap at real volume. Retrieval and completeness are the hard part.** Every chain's full ERC-5564 history would scan in seconds. Scan time is extrapolated from the synthetic scan-cost runs ([Scan cost](docs/scan-cost.md), [Chain volume](docs/chain-volume.md)).
+
+![Scan time against announcement count, log-log](docs/figures/scan-vs-volume.svg)
+
+**Base is the outlier for keyless backfill.** Only parallel backfill reached head ([Chain volume](docs/chain-volume.md)).
+
+![Requests to fetch each chain's full history by strategy](docs/figures/cold-start-requests.svg)
+
+**On a public link, page size decides whether the network matters.** Verification adds a fixed cost per payment ([Paged discovery](docs/paged-discovery.md)).
+
+![Network, scan and verify time for a 1M cold rescan](docs/figures/paged-breakdown.svg)
+
+**Who recovered the logs a Base RPC silently dropped** ([RPC recovery](docs/rpc-recovery.md), [Shared feed](docs/shared-feed.md)):
+
+<!-- generated:recovery-matrix -->
+| Strategy | Experiment | Scope | Logs found | Requests | Time |
+| --- | --- | --- | ---: | ---: | ---: |
+| Daybreak alone | [RPC recovery](docs/rpc-recovery.md) | Base, 68 pinned windows × 1,000 blocks, live, browser | 0/48 ✗ | 70 POST | 18.69 s |
+| Daybreak cross-checked with Tenderly, Sentio as tiebreaker | [RPC recovery](docs/rpc-recovery.md) | Base, 68 pinned windows × 1,000 blocks, live, browser | 48/48 ✓ | 181 POST | 31.25 s |
+| Tenderly alone | [RPC recovery](docs/rpc-recovery.md) | Base, 68 pinned windows × 1,000 blocks, live, browser | 48/48 ✓ | 70 POST | 18.82 s |
+| Live RPC, Bun client | [Shared feed](docs/shared-feed.md) | Base, 68 pinned windows × 1,000 blocks, live | 48/48 ✓ | 71 POST | 19.33 s (median of 3) |
+| Two independent static feeds | [Shared feed](docs/shared-feed.md) | Base, 68 pinned windows × 1,000 blocks, **loopback** | 48/48 ✓ | 36 GET | 38.8 ms (median of 3, loopback) |
+| One feed that dropped every log | [Shared feed](docs/shared-feed.md) | Base, 68 pinned windows × 1,000 blocks, **loopback** | 0/48 ✗ | 18 GET | 9.2 ms (loopback) |
+| Same feed plus an independent feed, then resume with a corrected source | [Shared feed](docs/shared-feed.md) | Base, 68 pinned windows × 1,000 blocks, **loopback** | held, then 48/48 ✓ | 8 + 34 GET | 36.8 ms after resume (loopback) |
+<!-- /generated:recovery-matrix -->
+
+**Discovery approaches side by side.** Scopes differ by row. Compare rows only where their scope matches.
+
+<!-- generated:approaches -->
+| Approach | Experiment | Scope | Requests | Time | Complete | In a browser |
+| --- | --- | --- | ---: | ---: | --- | --- |
+| Local scan of fetched announcements | [Scan cost](docs/scan-cost.md) | Synthetic 100k, no network | 0 | 48.5–52.0 s (i7), 168.5–181.9 s (A76) | Fixture oracle ✓ | No (Bun CLI) |
+| Paged JSON-RPC, cold rescan | [Paged discovery](docs/paged-discovery.md) | Synthetic 1M, emulated 100 ms / 50 Mbit/s link, 256-block pages, i7 | — | 875.4 s median | Fixture oracle ✓ | No (Bun CLI) |
+| Keyless RPC, sequential adaptive | [Chain volume](docs/chain-volume.md) | Base, deploy block to head, live | 8,000 | 39 min | ✗ budget spent at 462 of 679 | No (Bun CLI) |
+| Keyless RPC, parallel backfill | [Chain volume](docs/chain-volume.md) | Base, deploy block to head, live | 16,296 | 28 min | ✓ 679 logs | No (Bun CLI) |
+| Public RPC with a saved cursor | [Browser discovery](docs/browser-discovery.md) | Base, 5,000 blocks, live | 12 fresh / 6 resumed | 1.58–4.44 s fresh, 0.71–2.21 s resumed | 3 of 6 endpoints exact | Yes |
+| One public RPC (Daybreak) | [RPC recovery](docs/rpc-recovery.md) | Base, 68 pinned windows × 1,000 blocks, live | 70 POST | 18.69 s | ✗ 0/48 | Yes |
+| Cross-checked RPCs | [RPC recovery](docs/rpc-recovery.md) | Base, 68 pinned windows × 1,000 blocks, live | 181 POST | 31.25 s | ✓ 48/48 | Yes |
+| Two static feeds | [Shared feed](docs/shared-feed.md) | Base, 68 pinned windows × 1,000 blocks, **loopback** | 36 GET | 38.8 ms (loopback) | ✓ 48/48 | No (Bun client) |
+<!-- /generated:approaches -->
+
 ## Experiments
 
 | Experiment | Question | Short answer (figures in each doc) |

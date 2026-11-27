@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="495" viewBox="0 0 760 495" role="img" aria-label="Requests to fetch each chain's full history by strategy">
+<title>Requests to fetch each chain's full history by strategy</title>
+<style>
+  .bg { fill: #ffffff; }
+  .ink { fill: #1f2328; }
+  .muted { fill: #59636e; }
+  .grid { stroke: #d1d9e0; }
+  .axis { stroke: #818b98; }
+  .gap { stroke: #ffffff; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; }
+  .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; }
+  .band { fill: #818b98; fill-opacity: 0.16; }
+  .hollow { fill: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0d1117; }
+    .ink { fill: #f0f6fc; }
+    .muted { fill: #9198a1; }
+    .grid { stroke: #2f353d; }
+    .axis { stroke: #656c76; }
+    .gap { stroke: #0d1117; }
+    .s1 { fill: #3987e5; stroke: #3987e5; }
+    .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; }
+    .band { fill: #9198a1; fill-opacity: 0.18; }
+    .hollow { fill: #0d1117; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  .title { font-size: 15px; font-weight: 600; }
+  .label { font-size: 12px; }
+  .small { font-size: 11px; }
+</style>
+<rect class="bg" x="0" y="0" width="760" height="495" rx="6"/>
+<text x="20" y="28" class="title ink" text-anchor="start">Requests to fetch each chain's full announcement history, keyless public RPC</text>
+<rect x="118" y="41" width="10" height="10" class="s2" rx="2"></rect>
+<text x="133" y="50" class="label ink" text-anchor="start">Chainlist order</text>
+<rect x="242" y="41" width="10" height="10" class="s1" rx="2"></rect>
+<text x="257" y="50" class="label ink" text-anchor="start">Probe-informed</text>
+<rect x="359.4" y="41" width="10" height="10" class="s3" rx="2"></rect>
+<text x="374.4" y="50" class="label ink" text-anchor="start">Parallel backfill</text>
+<line x1="118" y1="64" x2="118" y2="386" class="grid"/>
+<text x="118" y="402" class="small muted" text-anchor="middle">10</text>
+<line x1="248.5" y1="64" x2="248.5" y2="386" class="grid"/>
+<text x="248.5" y="402" class="small muted" text-anchor="middle">100</text>
+<line x1="379" y1="64" x2="379" y2="386" class="grid"/>
+<text x="379" y="402" class="small muted" text-anchor="middle">1k</text>
+<line x1="509.5" y1="64" x2="509.5" y2="386" class="grid"/>
+<text x="509.5" y="402" class="small muted" text-anchor="middle">10k</text>
+<line x1="640" y1="64" x2="640" y2="386" class="grid"/>
+<text x="640" y="402" class="small muted" text-anchor="middle">100k</text>
+<line x1="118" y1="386" x2="640" y2="386" class="axis"/>
+<text x="640" y="418" class="small muted" text-anchor="end">requests (log)</text>
+<text x="108" y="93" class="label ink" text-anchor="end">Ethereum</text>
+<rect x="118" y="70" width="275.8" height="11" class="s2" rx="2"><title>Ethereum, Chainlist order: 1,299 requests, 1,556.2 s, 298 logs</title></rect>
+<text x="399.8" y="80" class="small ink" text-anchor="start">1,299</text>
+<rect x="118" y="83" width="62.3" height="11" class="s1" rx="2"><title>Ethereum, Probe-informed: 30 requests, 7.6 s, 298 logs</title></rect>
+<text x="186.3" y="93" class="small ink" text-anchor="start">30</text>
+<text x="108" y="139" class="label ink" text-anchor="end">Base</text>
+<rect x="119" y="117" width="376.9" height="9" class="s2" rx="2" fill-opacity="0.12" stroke-width="2"><title>Base, Chainlist order: 8,000 requests, 2,051.2 s, stopped after 457 logs</title></rect>
+<text x="502.9" y="126" class="small ink" text-anchor="start">8,000, stopped: request budget spent</text>
+<rect x="119" y="130" width="376.9" height="9" class="s1" rx="2" fill-opacity="0.12" stroke-width="2"><title>Base, Probe-informed: 8,000 requests, 2,334.1 s, stopped after 462 logs</title></rect>
+<text x="502.9" y="139" class="small ink" text-anchor="start">8,000, stopped: request budget spent</text>
+<rect x="118" y="142" width="419.2" height="11" class="s3" rx="2"><title>Base, Parallel backfill: 16,296 requests, 1,659.4 s, 679 logs</title></rect>
+<text x="543.2" y="152" class="small ink" text-anchor="start">16,296</text>
+<text x="108" y="185" class="label ink" text-anchor="end">Arbitrum One</text>
+<rect x="118" y="162" width="108.6" height="11" class="s2" rx="2"><title>Arbitrum One, Chainlist order: 68 requests, 16.9 s, 19 logs</title></rect>
+<text x="232.6" y="172" class="small ink" text-anchor="start">68</text>
+<rect x="118" y="175" width="93.4" height="11" class="s1" rx="2"><title>Arbitrum One, Probe-informed: 52 requests, 14.2 s, 19 logs</title></rect>
+<text x="217.4" y="185" class="small ink" text-anchor="start">52</text>
+<text x="108" y="231" class="label ink" text-anchor="end">OP Mainnet</text>
+<rect x="118" y="208" width="338.6" height="11" class="s2" rx="2"><title>OP Mainnet, Chainlist order: 3,930 requests, 1,104.9 s, 2 logs</title></rect>
+<text x="462.6" y="218" class="small ink" text-anchor="start">3,930</text>
+<rect x="118" y="221" width="78.6" height="11" class="s1" rx="2"><title>OP Mainnet, Probe-informed: 40 requests, 10.5 s, 2 logs</title></rect>
+<text x="202.6" y="231" class="small ink" text-anchor="start">40</text>
+<text x="108" y="277" class="label ink" text-anchor="end">Gnosis</text>
+<rect x="118" y="254" width="343.2" height="11" class="s2" rx="2"><title>Gnosis, Chainlist order: 4,268 requests, 4,297.1 s, 3 logs</title></rect>
+<text x="467.2" y="264" class="small ink" text-anchor="start">4,268</text>
+<rect x="118" y="267" width="69.4" height="11" class="s1" rx="2"><title>Gnosis, Probe-informed: 34 requests, 17.0 s, 3 logs</title></rect>
+<text x="193.4" y="277" class="small ink" text-anchor="start">34</text>
+<text x="108" y="323" class="label ink" text-anchor="end">Polygon PoS</text>
+<rect x="118" y="300" width="339.9" height="11" class="s2" rx="2"><title>Polygon PoS, Chainlist order: 4,026 requests, 1,034.7 s, 9 logs</title></rect>
+<text x="463.9" y="310" class="small ink" text-anchor="start">4,026</text>
+<rect x="118" y="313" width="78.6" height="11" class="s1" rx="2"><title>Polygon PoS, Probe-informed: 40 requests, 11.9 s, 9 logs</title></rect>
+<text x="202.6" y="323" class="small ink" text-anchor="start">40</text>
+<text x="108" y="369" class="label ink" text-anchor="end">Sepolia</text>
+<rect x="118" y="346" width="117.9" height="11" class="s2" rx="2"><title>Sepolia, Chainlist order: 80 requests, 66.2 s, 1,039 logs</title></rect>
+<text x="241.9" y="356" class="small ink" text-anchor="start">80</text>
+<rect x="118" y="359" width="62.3" height="11" class="s1" rx="2"><title>Sepolia, Probe-informed: 30 requests, 8.0 s, 1,039 logs</title></rect>
+<text x="186.3" y="369" class="small ink" text-anchor="start">30</text>
+<text x="20" y="442" class="small muted" text-anchor="start">One run per strategy from a residential IP, ≤4 requests/s per host, 2026-11-26. Hollow bar: stopped before head. Parallel</text>
+<text x="20" y="457" class="small muted" text-anchor="start">was run only where needed.</text>
+<text x="20" y="472" class="small muted" text-anchor="start">Source: data/chain-volume/summary.csv (list-order, probe-informed and parallel requests). Details: docs/chain-volume.md.</text>
+</svg>

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="506" viewBox="0 0 760 506" role="img" aria-label="Scan time against announcement count, log-log">
+<title>Scan time against announcement count, log-log</title>
+<style>
+  .bg { fill: #ffffff; }
+  .ink { fill: #1f2328; }
+  .muted { fill: #59636e; }
+  .grid { stroke: #d1d9e0; }
+  .axis { stroke: #818b98; }
+  .gap { stroke: #ffffff; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; }
+  .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; }
+  .band { fill: #818b98; fill-opacity: 0.16; }
+  .hollow { fill: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0d1117; }
+    .ink { fill: #f0f6fc; }
+    .muted { fill: #9198a1; }
+    .grid { stroke: #2f353d; }
+    .axis { stroke: #656c76; }
+    .gap { stroke: #0d1117; }
+    .s1 { fill: #3987e5; stroke: #3987e5; }
+    .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; }
+    .band { fill: #9198a1; fill-opacity: 0.18; }
+    .hollow { fill: #0d1117; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  .title { font-size: 15px; font-weight: 600; }
+  .label { font-size: 12px; }
+  .small { font-size: 11px; }
+</style>
+<rect class="bg" x="0" y="0" width="760" height="506" rx="6"/>
+<text x="20" y="28" class="title ink" text-anchor="start">Local scan time vs announcements: real histories are tiny next to the synthetic runs</text>
+<line x1="78" y1="58" x2="78" y2="300" class="grid"/>
+<text x="78" y="316" class="small muted" text-anchor="middle">1</text>
+<line x1="185.7" y1="58" x2="185.7" y2="300" class="grid"/>
+<text x="185.7" y="316" class="small muted" text-anchor="middle">10</text>
+<line x1="293.3" y1="58" x2="293.3" y2="300" class="grid"/>
+<text x="293.3" y="316" class="small muted" text-anchor="middle">100</text>
+<line x1="401" y1="58" x2="401" y2="300" class="grid"/>
+<text x="401" y="316" class="small muted" text-anchor="middle">1k</text>
+<line x1="508.7" y1="58" x2="508.7" y2="300" class="grid"/>
+<text x="508.7" y="316" class="small muted" text-anchor="middle">10k</text>
+<line x1="616.3" y1="58" x2="616.3" y2="300" class="grid"/>
+<text x="616.3" y="316" class="small muted" text-anchor="middle">100k</text>
+<line x1="724" y1="58" x2="724" y2="300" class="grid"/>
+<text x="724" y="316" class="small muted" text-anchor="middle">1M</text>
+<line x1="78" y1="300" x2="724" y2="300" class="grid"/>
+<text x="72" y="304" class="small muted" text-anchor="end">0.0001</text>
+<line x1="78" y1="269.8" x2="724" y2="269.8" class="grid"/>
+<text x="72" y="273.8" class="small muted" text-anchor="end">0.001</text>
+<line x1="78" y1="239.5" x2="724" y2="239.5" class="grid"/>
+<text x="72" y="243.5" class="small muted" text-anchor="end">0.01</text>
+<line x1="78" y1="209.3" x2="724" y2="209.3" class="grid"/>
+<text x="72" y="213.3" class="small muted" text-anchor="end">0.1</text>
+<line x1="78" y1="179" x2="724" y2="179" class="grid"/>
+<text x="72" y="183" class="small muted" text-anchor="end">1</text>
+<line x1="78" y1="148.8" x2="724" y2="148.8" class="grid"/>
+<text x="72" y="152.8" class="small muted" text-anchor="end">10</text>
+<line x1="78" y1="118.5" x2="724" y2="118.5" class="grid"/>
+<text x="72" y="122.5" class="small muted" text-anchor="end">100</text>
+<line x1="78" y1="88.3" x2="724" y2="88.3" class="grid"/>
+<text x="72" y="92.3" class="small muted" text-anchor="end">1k</text>
+<line x1="78" y1="58" x2="724" y2="58" class="grid"/>
+<text x="72" y="62" class="small muted" text-anchor="end">10k</text>
+<line x1="78" y1="300" x2="724" y2="300" class="axis"/>
+<line x1="78" y1="58" x2="78" y2="300" class="axis"/>
+<text x="724" y="332" class="small muted" text-anchor="end">announcements scanned (log)</text>
+<text x="26" y="46" class="small muted" text-anchor="start">scan s (log)</text>
+<line x1="78" y1="278.8" x2="616.3" y2="127.5" class="s1" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<line x1="616.3" y1="127.5" x2="724" y2="96.9" class="s1" stroke-width="2" fill="none"/>
+<line x1="616.3" y1="128" x2="616.3" y2="127.1" class="s1" stroke-width="2"/>
+<circle cx="616.3" cy="128" r="4.5" class="s1" stroke-width="2"><title>i7-13700K (Bazzite), 100k control before: 48.531 s</title></circle>
+<circle cx="616.3" cy="128" r="2" class="hollow"></circle>
+<circle cx="616.3" cy="127.1" r="4.5" class="s1" stroke-width="2"><title>i7-13700K (Bazzite), 100k control after: 51.951 s</title></circle>
+<circle cx="616.3" cy="127.1" r="2" class="hollow"></circle>
+<circle cx="724" cy="96.9" r="4.5" class="s1" stroke-width="2"><title>i7-13700K (Bazzite), 1M run: 519.084 s</title></circle>
+<circle cx="724" cy="96.9" r="2" class="hollow"></circle>
+<text x="433.4" y="200.9" class="label ink" text-anchor="start">i7-13700K (Bazzite): 0.50 ms each</text>
+<line x1="78" y1="262.4" x2="616.3" y2="111.1" class="s2" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<line x1="616.3" y1="111.1" x2="724" y2="80.5" class="s2" stroke-width="2" fill="none"/>
+<line x1="616.3" y1="111.6" x2="616.3" y2="110.6" class="s2" stroke-width="2"/>
+<circle cx="616.3" cy="111.6" r="4.5" class="s2" stroke-width="2"><title>Cortex-A76 (Turing node 1), 100k control before: 168.457 s</title></circle>
+<circle cx="616.3" cy="111.6" r="2" class="hollow"></circle>
+<circle cx="616.3" cy="110.6" r="4.5" class="s2" stroke-width="2"><title>Cortex-A76 (Turing node 1), 100k control after: 181.946 s</title></circle>
+<circle cx="616.3" cy="110.6" r="2" class="hollow"></circle>
+<circle cx="724" cy="80.5" r="4.5" class="s2" stroke-width="2"><title>Cortex-A76 (Turing node 1), 1M run: 1,804.305 s</title></circle>
+<circle cx="724" cy="80.5" r="2" class="hollow"></circle>
+<text x="433.4" y="150.5" class="label ink" text-anchor="end">Cortex-A76 (Turing node 1): 1.75 ms each</text>
+<rect x="110.4" y="346" width="292.4" height="12" class="band" rx="3"></rect>
+<rect x="342.9" y="345" width="3" height="14" class="muted"><title>Ethereum: 298 announcements</title></rect>
+<rect x="381.4" y="345" width="3" height="14" class="muted"><title>Base: 679 announcements</title></rect>
+<rect x="214.2" y="345" width="3" height="14" class="muted"><title>Arbitrum One: 19 announcements</title></rect>
+<rect x="108.9" y="345" width="3" height="14" class="muted"><title>OP Mainnet: 2 announcements</title></rect>
+<rect x="127.9" y="345" width="3" height="14" class="muted"><title>Gnosis: 3 announcements</title></rect>
+<rect x="179.2" y="345" width="3" height="14" class="muted"><title>Polygon PoS: 9 announcements</title></rect>
+<rect x="401.3" y="345" width="3" height="14" class="muted"><title>Sepolia: 1,039 announcements</title></rect>
+<text x="72" y="356" class="small ink" text-anchor="end">ERC-5564</text>
+<text x="410.8" y="356" class="small muted" text-anchor="start">2–1,039 per chain</text>
+<rect x="326.2" y="368" width="291.3" height="12" class="band" rx="3"></rect>
+<rect x="551" y="367" width="3" height="14" class="muted"><title>Ethereum: 25,558 announcements</title></rect>
+<rect x="496.5" y="367" width="3" height="14" class="muted"><title>Base: 7,955 announcements</title></rect>
+<rect x="614.9" y="367" width="3" height="14" class="muted"><title>Arbitrum One: 100,196 announcements</title></rect>
+<rect x="599.7" y="367" width="3" height="14" class="muted"><title>OP Mainnet: 72,277 announcements</title></rect>
+<rect x="324.7" y="367" width="3" height="14" class="muted"><title>Gnosis: 202 announcements</title></rect>
+<rect x="616" y="367" width="3" height="14" class="muted"><title>Polygon PoS: 102,552 announcements</title></rect>
+<rect x="505.7" y="367" width="3" height="14" class="muted"><title>Sepolia: 9,690 announcements</title></rect>
+<text x="72" y="378" class="small ink" text-anchor="end">Umbra</text>
+<text x="625.5" y="378" class="small muted" text-anchor="start">202–102,552 per chain</text>
+<text x="20" y="408" class="small muted" text-anchor="start">Rug rows: each chain's full history from deployment to head, 7 chains, 2026-11-26. The largest (Umbra, 102,552) would take</text>
+<text x="20" y="423" class="small muted" text-anchor="start">about 180 s on the A76.</text>
+<text x="20" y="438" class="small muted" text-anchor="start">Lines: synthetic zero-match fixtures, crypto engine. Dots are measured. Dashed is a linear extrapolation (1M / 100k</text>
+<text x="20" y="453" class="small muted" text-anchor="start">measured at 9.9–10.7x).</text>
+<text x="20" y="468" class="small muted" text-anchor="start">Sources: data/scan-cost/results.csv, data/chain-volume/summary.csv, data/chain-volume/umbra/retrieve-*.json.</text>
+<text x="20" y="483" class="small muted" text-anchor="start">Details: docs/scan-cost.md, docs/chain-volume.md.</text>
+</svg>

@@ -12,7 +12,7 @@ import {
 } from '@scopelift/stealth-address-sdk';
 import { bytesToHex, hexToBytes, keccak256, type Hex } from 'viem';
 import { privateKeyToAddress } from 'viem/accounts';
-import { generateFixture, loadFixture } from '../src/fixtures.ts';
+import { generateFixture, loadFixture } from '../src/shared/fixtures.ts';
 
 const directories: string[] = [];
 

@@ -3,9 +3,9 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { AnnouncementLog } from '@scopelift/stealth-address-sdk';
-import { generateFixture, loadFixture } from '../src/fixtures.ts';
-import type { Engine, LoadedFixture } from '../src/model.ts';
-import { announcementIdentity, assertMatches, scanAnnouncements } from '../src/worker.ts';
+import { generateFixture, loadFixture } from '../src/shared/fixtures.ts';
+import type { Engine, LoadedFixture } from '../src/shared/model.ts';
+import { announcementIdentity, assertMatches, scanAnnouncements } from '../src/shared/worker.ts';
 
 let directory: string | undefined;
 let sparse: LoadedFixture;

@@ -9,4 +9,4 @@ announcements.jsonl
 *.cpuprofile
 .DS_Store
 ._*
-data/phase3/partial/
+data/chain-volume/partial/

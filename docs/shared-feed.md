@@ -1,8 +1,6 @@
-# Phase 6 — Shared Base announcement feed
+# Shared feed
 
-## Bazzite results
-
-Bazzite 45, Intel i7-13700K, Bun 1.4.4, 2026-11-27. Live Tenderly over the Internet versus two prebuilt loopback HTTP feeds. Three samples per arm and mode in one process, alternating arm order. Cold starts without a checkpoint. Warm reloads a checkpoint written after scanning eight pages through block 44,788,281. Warm timings exclude that prefix scan. Connections and runtime state can persist.
+Can a static, finalized announcement feed replace live RPC for Base discovery without trusting one source? In this test it did. Two loopback feeds found the same 48 logs with 36 GETs where live RPC used 71 POSTs. When one of the two feeds dropped every log, the client held its checkpoint. A corrected source recovered all 48 on resume.
 
 | Path | Mode | Exact logs in sampled range | POST / GET | Request / response body bytes | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -11,15 +9,28 @@ Bazzite 45, Intel i7-13700K, Bun 1.4.4, 2026-11-27. Live Tenderly over the Inter
 | Live RPC | Warm | 28/28 | 39 / 0 | 8,935 / 58,987 | 3,833 | 23.6 | 2.8 | 2,829 | 10,530 [10,525–10,563] |
 | Dual feed, loopback | Warm | 28/28 | 0 / 20 | 0 / 55,492 | 2.7 | 20.6 | 1.0 | 6.0 | 25.4 [25.1–30.9] |
 
-Times are medians. Fetch sums request start through body read, including overlapping GETs. Body bytes are decoded sizes without HTTP headers or transport framing. Each RPC sample includes chain ID, finalized block and pinned block checks, with starts spaced at least 275 ms apart. Each feed sample includes a manifest GET per source and two concurrent GETs per page. Catch-up includes parsing, pacing, local discovery and checkpoint I/O. Page verification covers log validation and, for dual feed, source agreement. First match is timed after the required responses and the local scan of its page group. No canonical log matched the synthetic recipient.
+Bazzite 45, Intel i7-13700K, Bun 1.4.4, 2026-11-27. Live Tenderly over the Internet against two prebuilt loopback HTTP feeds. Medians of three samples per arm and mode in one process, alternating arm order. Cold has no checkpoint. Warm reloads one written after eight pages (block 44,788,281) and excludes that prefix. Connections and runtime state can persist.
 
-One compact source's cold pages used 43,719 response bytes versus 57,605 for the RPC log pages alone (24% fewer). Two copies plus manifests used 10.8% more response bytes than all cold RPC replies, and 5.9% fewer than all warm RPC replies. The feed latency is local. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
+- Fetch sums request start to body read, overlapping GETs included. Body bytes are decoded, without headers or framing.
+- RPC samples check chain ID, finalized block and pinned block, with request starts ≥275 ms apart. Feed samples make one manifest GET per source and two concurrent GETs per page.
+- Catch-up includes parsing, pacing, discovery and checkpoint I/O. Page verification is log validation plus, for the dual feed, source agreement. First match is timed after the needed responses and the scan of its page group. No canonical log matched the synthetic recipient.
 
-## Bazzite vs Turing
+One compact source's cold pages took 43,719 response bytes against 57,605 for the RPC log pages (24% fewer). Two copies plus manifests took 10.8% more than all cold RPC replies and 5.9% less than all warm ones. Feed latency here is loopback. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
 
-Turing Pi RK1 nodes 1–3 (Rockchip RK3588), Bun 1.4.4, 2026-11-27 17:20–17:36 UTC, one run per node, nodes in sequence. Process pinned with `taskset -c 4-7` to the four Cortex-A76 cores. Kernels 5.10.160-rockchip (node 1), 6.1.0-1012-rockchip (node 2), 6.1.0-1025-rockchip (node 3). Each node serves both feeds on its own loopback. Live RPC reaches Tenderly over the same home uplink as Bazzite. Same 68 windows, arms, sample order, checkpoints and retry rule as Bazzite.
+## Omission and resume controls
 
-Thermal gate: before each sample, the hottest thermal zone must be at most 70 °C, polled every 5 s. No sample waited. Peak readings were 62.8 °C, 67.5 °C and 49.9 °C. The Bazzite run predates the gate and recorded no temperatures.
+| Control | Committed groups | Missed / recovered logs | GETs | Elapsed (ms) |
+| --- | ---: | --- | ---: | ---: |
+| Empty feed alone | 17/17 | 48 missed | 18 | 9.2 |
+| Empty feed plus independent source | 1/17 | 48 pending | 8 | 0.7 |
+| Resume with corrected source | 17/17 | 48 recovered | 34 | 36.8 |
+| Same identities, altered ABI data | 1/17 | 48 pending | 8 | 1.1 |
+
+Both disagreement controls retried feed page 1 and held block 37,364,281. The omission resume reread the checkpoint, retried page 1 and skipped page 0. These omissions are injected into the frozen feed; the live one is in [RPC recovery](rpc-recovery.md). Shared upstream omissions can still agree falsely. Completeness covers the selected Base windows only.
+
+## Turing nodes
+
+Turing Pi RK1 nodes 1–3 (RK3588), Bun 1.4.4, 2026-11-27 17:20–17:36 UTC, one run per node in sequence, `taskset -c 4-7` on the four A76 cores. Kernels 5.10.160-rockchip (node 1), 6.1.0-1012-rockchip (node 2), 6.1.0-1025-rockchip (node 3). Feeds run on each node's loopback. Live RPC reaches Tenderly over the same home uplink as Bazzite. Everything else matches the Bazzite run. A sample started only once the hottest zone was ≤70 °C, polled every 5 s. None waited. Peaks were 62.8, 67.5 and 49.9 °C. The Bazzite run predates the gate and has no temperatures.
 
 | Path | Mode | Host | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
@@ -40,64 +51,51 @@ Thermal gate: before each sample, the hottest thermal zone must be at most 70 °
 | Dual feed, loopback | Warm | node 2 | 5.5 | 63.3 | 1.7 | 16.7 | 71.6 [67.8–73.1] |
 | Dual feed, loopback | Warm | node 3 | 6.1 | 61.3 | 1.7 | 16.4 | 70.5 [66.2–71.7] |
 
-All hosts matched 48/48 cold and 28/28 warm logs with the same requests: 71 / 39 POSTs and 36 / 20 GETs, 16,679 / 8,935 request bytes and identical feed and log page bytes. RPC response bytes differ by up to 2,416 only in the latest finalized block reply. Controls matched Bazzite on every node: 48 missed, 48 pending, 48 recovered, 48 pending, with 18 / 8 / 34 / 8 GETs. Omission-resume took 113–119 ms against 36.8 ms.
+- Every host matched 48/48 cold and 28/28 warm with identical requests: 71 / 39 POSTs, 36 / 20 GETs, 16,679 / 8,935 request bytes, identical feed and log page bytes. RPC response bytes differ by up to 2,416, only in the latest finalized block reply.
+- Controls matched Bazzite: 48 missed, 48 pending, 48 recovered, 48 pending, with 18 / 8 / 34 / 8 GETs. Omission-resume took 113–119 ms against 36.8 ms.
+- The A76 scan took 2.9–3.7× as long. Feed catch-up took 3.3–3.6× as long cold and 2.7–2.8× warm.
+- Live RPC catch-up stayed within 3.8% of Bazzite, since 275 ms spacing and provider latency dominate. Node 2's RPC fetch sum ran 3.9 s (cold) and 2.5 s (warm) over node 1 with the same requests.
+- Prototype setup took 794–939 ms against 745 ms.
 
-On the A76 cores, local scan took 2.9–3.7× as long. Loopback feed catch-up took 3.3–3.6× cold (129–140 ms) and 2.7–2.8× warm (69–72 ms). Live RPC catch-up stayed within 3.8% of Bazzite, because the 275 ms request spacing and provider latency dominate. Node 2's RPC fetch sum ran 3.9 s cold and 2.5 s warm above node 1 with the same request count. Prototype setup took 794–939 ms against 745 ms.
-
-[Node 1](data/phase6/turing-node-1/summary.json) · [Node 2](data/phase6/turing-node-2/summary.json) · [Node 3](data/phase6/turing-node-3/summary.json)
+[Node 1](../data/shared-feed/turing-node-1/summary.json) · [Node 2](../data/shared-feed/turing-node-2/summary.json) · [Node 3](../data/shared-feed/turing-node-3/summary.json)
 
 ## Feed format search
 
-Two single-metric searches over [`scripts/phase6/tune.ts`](scripts/phase6/tune.ts), using the autoresearch keep/revert protocol. Each iteration changed one field of a params JSON. The loop and git bookkeeping ran on a Mac, driven by a Claude Code session with no API calls. Every verify ran on turing-node-1 over ssh (`taskset -c 4-7`, Bun 1.4.4, 70 °C gate). Bazzite had no sshd. The wrapper serves both feeds on loopback from the two Phase 5 captures and makes no RPC calls. It fails unless every page round-trips losslessly, both sources agree, and the scan finds 48/48 cold and 28/28 warm logs plus the synthetic matches. Warm resumes after window 32 (block 44,788,281), as in the main run.
+Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts) with the autoresearch keep/revert protocol, one params field per iteration. A Claude Code session on a Mac ran the loop and git bookkeeping without API calls. Every verify ran on turing-node-1 over ssh (`taskset -c 4-7`, Bun 1.4.4, 70 °C gate); Bazzite had no sshd. The wrapper serves both feeds on loopback from the two RPC-recovery captures, with no RPC. It fails unless every page round-trips losslessly, both sources agree, and the scan finds 48/48 cold, 28/28 warm and the synthetic matches. Warm resumes after window 32 (block 44,788,281).
 
 | Search | Metric | Baseline | Best | Iterations | Best params |
 | --- | --- | ---: | ---: | ---: | --- |
-| Cold page bytes, one source | decoded body bytes | 43,719 | 14,953 (−65.8%) | 13 | [feed-bytes](data/phase6/autoresearch/feed-bytes.params.json) |
-| Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](data/phase6/autoresearch/warm-time.params.json) |
+| Cold page bytes, one source | decoded body bytes | 43,719 | 14,953 (−65.8%) | 13 | [feed-bytes](../data/shared-feed/autoresearch/feed-bytes.params.json) |
+| Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](../data/shared-feed/autoresearch/warm-time.params.json) |
 
-Bytes: zero-run encoding of the ABI data saved the most (34,887 → 16,753). Base64 hashes, trimmed topics, 32-window pages, columns, delta blocks and dropping the page header added the rest. Base64 for ABI data and a per-page block hash table did not help. Gzip shrinks the gap: 10,555 → 8,043 (−23.8%). The manifest stays near 2.5 kB. 32-window pages cut a source to three pages, so a checkpoint commits every 32 windows instead of 4. 16-window pages cost 40 B more.
+Bytes: zero-run encoding of ABI data saved the most (34,887 → 16,753). Base64 hashes, trimmed topics, 32-window pages, columns, delta blocks and no page header saved the rest. Base64 ABI data and a per-page block hash table did not help. Under gzip the gap narrows to 10,555 → 8,043 (−23.8%). The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4. 16-window pages cost 40 B more.
 
-Warm time: the loop kept only larger pages (8, 16, then 32 windows). Prefetch and encoding changes all landed 0.1–2.0 ms above the best. An interleaved check (5 rounds × 9 samples, peak 69.3 °C) gave per-round medians of 70.3–83.8 ms for baseline, 70.4–76.3 ms for 32-window pages and 66.3–79.8 ms for the byte-optimized format. Medians of round medians were 70.51, 71.40 and 75.02 ms. The spread between rounds exceeds any params effect. Local scan dominates A76 warm catch-up, and no format change is confirmed to shorten it.
+Warm time: the loop kept only larger pages (8, 16, then 32 windows). Prefetch and encoding changes landed 0.1–2.0 ms above the best. An interleaved check (5 rounds × 9 samples, peak 69.3 °C) gave round medians of 70.3–83.8 ms (baseline), 70.4–76.3 ms (32-window) and 66.3–79.8 ms (byte-optimized). Medians of those were 70.51, 71.40 and 75.02 ms. Spread between rounds is larger than any params effect. Local scan dominates A76 warm catch-up, and no format change is confirmed to shorten it.
 
-[Bytes log](data/phase6/autoresearch/feed-bytes.jsonl) · [Warm log](data/phase6/autoresearch/warm-time.jsonl) · [Interleaved check](data/phase6/autoresearch/confirm.txt) · [Baseline params](data/phase6/autoresearch/baseline.params.json)
+[Bytes log](../data/shared-feed/autoresearch/feed-bytes.jsonl) · [Warm log](../data/shared-feed/autoresearch/warm-time.jsonl) · [Interleaved check](../data/shared-feed/autoresearch/confirm.txt) · [Baseline params](../data/shared-feed/autoresearch/baseline.params.json)
 
-Prior work, OMR crossover and feed integrity: [FINDINGS.md](FINDINGS.md#prior-work-and-omr-crossover).
+## Method
 
-## Scope and method
+- Windows, logs and head come from the [RPC-recovery reference](../data/rpc-recovery/reference.json): 68 windows of 1,000 blocks (68,000 blocks with gaps, covering all 48 known Daybreak omissions), 48 logs, head 46,544,281. Both paths scan them in 17 groups of four.
+- The two origins serve pages built separately from the receipt-corroborated Tenderly and Sentio captures. Both providers confirmed chain, pinned hash and a finalized block above the pin. Setup took 745 ms, including six live POSTs, reference validation and serialization. The original capture cost 304 POSTs, 96 of them receipts. Client timings exclude both.
+- The manifest lists ranges and head. A page URL holds only the manifest hash and page index, so identical requests get identical public bytes, with no recipient parameters, cookies or keys. Rows drop the repeated announcer address and event signature and keep block and transaction hashes, block number, log and transaction indexes, indexed topics and ABI data.
+- Both paths use the paged-discovery ABI decoder and the ScopeLift SDK locally. The SDK checks the view tag before the full stealth-address check. Two synthetic matches and two decoys are scanned apart from canonical logs. Keys stay on the client. Scanning makes no transfers, receipt lookups or balance checks.
+- Feed sources must agree on exact identity (block, block hash, transaction hash, log index) and payload. A mismatch retries the pair once, then holds the checkpoint. Each accepted group commits block, next page and result together by file rename. Direct RPC accepts any valid page unchecked. The offline verifier scores both paths against the saved reference.
 
-- The [Phase 5 reference](data/phase5/reference.json) pins 68 selected 1,000-block windows, 48 logs and Base head 46,544,281. The windows cover 68,000 blocks with gaps and include all 48 known Daybreak omissions. Both paths scan exactly those windows in 17 groups of four.
-- Two loopback origins serve pages built separately from the receipt-corroborated Tenderly and Sentio captures. Both providers confirmed the chain, pinned hash and a finalized block above the pin. One-time prototype setup took 745 ms including six live POSTs, reference validation and page serialization. The earlier Phase 5 capture cost 304 POSTs including 96 receipt calls. Client timings exclude both build steps.
-- The manifest lists the fixed ranges and head. A page URL uses only the manifest hash and page index. Identical requests receive identical public bytes, with no recipient parameters, cookies or keys. Compact rows omit repeated announcer address and event signature. Rows retain block and transaction hashes, block number, log and transaction indexes, indexed topics and ABI data.
-- Both paths use the Phase 2 ABI decoder and ScopeLift SDK locally. The SDK derives and checks the view tag before the full stealth-address check. Two synthetic matches and two decoys are scanned separately from canonical logs. No recipient keys leave the client. No live transfers, candidate receipt lookups or balance checks occur during scanning.
-- Both feed sources must agree on exact identity (block, block hash, transaction hash, log index) and payload. A mismatch retries the same pair once, then holds the checkpoint. Each accepted scan group commits its block, next page index and result together via file rename. Direct RPC accepts a valid page without cross-checking. The offline verifier scores both paths against the saved reference.
-
-## Omission and resume controls
-
-| Control | Committed groups | Missed / recovered logs | GETs | Elapsed (ms) |
-| --- | ---: | --- | ---: | ---: |
-| Empty feed alone | 17/17 | 48 missed | 18 | 9.2 |
-| Empty feed plus independent source | 1/17 | 48 pending | 8 | 0.7 |
-| Resume with corrected source | 17/17 | 48 recovered | 34 | 36.8 |
-| Same identities, altered ABI data | 1/17 | 48 pending | 8 | 1.1 |
-
-Both disagreement controls retried feed page index 1 and held block 37,364,281. The omission resume reread the checkpoint, retried page 1 and skipped page 0. Shared upstream omissions can still yield false agreement. These controls inject omissions into the frozen feed. The live Daybreak omission was measured in [Phase 5](PHASE5.md). Completeness applies to the selected Base windows only.
+Prior work, OMR crossover and feed integrity: [FINDINGS.md](../FINDINGS.md#prior-work-and-omr-crossover).
 
 ## Reproduce
 
 ```sh
-bun install --frozen-lockfile
 mkdir -p results
-bun scripts/phase6/run.ts results/phase6-replay
-bun scripts/phase6/verify.ts results/phase6-replay/evidence.json
-bun scripts/phase6/verify.ts data/phase6/evidence.json
+bun src/shared-feed/run.ts results/shared-feed-replay
+bun src/shared-feed/verify.ts results/shared-feed-replay/evidence.json
+bun src/shared-feed/verify.ts data/shared-feed/evidence.json
 # Turing node N, host name turing-node-N
-taskset -c 4-7 bun scripts/phase6/run.ts results/phase6-replay
-bun scripts/phase6/verify.ts data/phase6/turing-node-N/evidence.json
+taskset -c 4-7 bun src/shared-feed/run.ts results/shared-feed-replay
+bun src/shared-feed/verify.ts data/shared-feed/turing-node-N/evidence.json
+# feed format search, Turing node, no RPC
+taskset -c 4-7 bun src/shared-feed/tune.ts data/shared-feed/autoresearch/feed-bytes.params.json 9
 ```
 
-```sh
-# Feed format search, Turing node, no RPC
-taskset -c 4-7 bun scripts/phase6/tune.ts data/phase6/autoresearch/feed-bytes.params.json 9
-```
-
-Use a fresh run directory. `COOLDOWN_C` overrides the 70 °C thermal gate. The verifier emits medians, minima and maxima in that order. Recorded evidence contains public range metadata, page digests and timings. [Evidence](data/phase6/evidence.json) · [Verified summary](data/phase6/summary.json)
+Use a fresh run directory. `COOLDOWN_C` overrides the 70 °C gate. The verifier prints medians, minima and maxima in that order. Recorded evidence holds public range metadata, page digests and timings. [Evidence](../data/shared-feed/evidence.json) · [Verified summary](../data/shared-feed/summary.json)

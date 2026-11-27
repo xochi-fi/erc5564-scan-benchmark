@@ -1,42 +1,26 @@
 # Recorded data
 
-## Summary CSVs
-
-| File | Contents |
-| --- | --- |
-| `results.csv` | phase 1 unprofiled crypto scans: 100k before/after controls and the 1m run per Linux host |
-| `results-phase2-repeat.csv` | phase 2 repeats: per-setting median, min and max |
-| `results-phase2-repeat-samples.csv` | phase 2 repeats: every sample with node, temperature, throttle state, swap activity and a `tainted` flag |
-| `results-phase2.csv` | phase 2 original single run (FINDINGS.md Appendix A) |
-
-## Per-run files
+One directory per experiment. Home-directory prefixes in recorded paths are replaced with `~`. Host labels (`bazzite`, `turing-node-N`) match the findings. Recorded JSON is unchanged from the runs, so it still names the old `phaseN` paths and kinds.
 
 | Directory | Contents |
 | --- | --- |
-| `phase1/smoke`, `phase1/baseline-10000`, `phase1/baseline-100k-1m` | `run.json`, `samples.jsonl`, `summary.json`, and each fixture's `manifest.json` (test keys, destination schedule, SHA256 of the fixture). `baseline-100k-1m.log` is that sweep's console log. Apple M1. |
-| `phase1/profiling-bazzite`, `phase1/profiling-turing` | unprofiled controls (`*-unprofiled*.json`), `summary.json`, and per profile the verified `result.json` and `functions.txt` (sampled function summary). |
-| `phase1/profiling-1m`, `phase1/profile-smoke` | Apple M1 retained-set controls and a profiler smoke test: `result.json`, `functions.txt`. |
-| `phase2/repeat/<host>` | `plan.json` (seeded shuffled order), `run.json`, `samples.jsonl`, `controls.jsonl`, `summary.json`/`.csv`, `fixtures.json` (fixture verification), and on Bazzite `HOST-GATE.txt`. Plus per-host `*-summary.csv/md` and `*-samples.csv`. |
-| `phase2/single-run/<host>` | the same files for the original single run (`sweep/`, and `million/` for the Pi 1m rescan). |
-| `phase2/mainnet-probe` | the optional keyless mainnet fetch-only probe. |
-| `phase3/` | keyless retrieval study ([PHASE3.md](../PHASE3.md)): `endpoints.json` (chainlist snapshot metadata and per-chain candidate URLs), `probe/<chain>.json` (per-endpoint limits, errors, archive depth, latency), `canonical/` and `umbra/` (`reference-*` indexer runs, `retrieve-*` full-history runs with identities for the canonical Announcer, `deploy-check-*`), `consistency/<chain>.json` (known-announcement re-checks), and the derived `summary.md/csv`, `endpoints.csv`, `cross-source.csv`. |
-| [phase4/](phase4/) | [Browser discovery](../PHASE4.md). Browser samples and per-sample timings, counts and verdicts in `samples.csv`, dual-provider reference, browser CORS controls and command-line preflight summary. |
-| [phase5/](phase5/) | [Base RPC recovery](../PHASE5.md). Pinned window manifest and receipt-corroborated reference, live and loopback browser captures, browser CORS controls and parser-verified `summary.json`. |
-| [phase6/](phase6/) | [Shared feed](../PHASE6.md). Request metrics, page digests, sample timings and checkpoint controls. |
+| [scan-cost/](scan-cost/) | [Scan cost](../docs/scan-cost.md). `results.csv`: unprofiled crypto scans, 100k before/after controls and the 1M run per Linux host. `smoke`, `baseline-10000`, `baseline-100k-1m` (Apple M1): `run.json`, `samples.jsonl`, `summary.json` and each fixture's `manifest.json` (test keys, destination schedule, SHA256). `baseline-100k-1m.log` is that sweep's console log. `profiling-bazzite`, `profiling-turing`: unprofiled controls (`*-unprofiled*.json`), `summary.json`, and per profile a verified `result.json` and `functions.txt`. `profiling-1m`, `profile-smoke`: M1 retained-set controls and a profiler smoke test. |
+| [paged-discovery/](paged-discovery/) | [Paged discovery](../FINDINGS.md). `repeat.csv`: per-setting median, min and max. `repeat-samples.csv`: every sample with node, temperature, throttle state, swap activity and a `tainted` flag. `single-run.csv`: the original single run (Appendix A). `repeat/<host>`: `plan.json` (seeded shuffle), `run.json`, `samples.jsonl`, `controls.jsonl`, `summary.json`/`.csv`, `fixtures.json`, and on Bazzite `HOST-GATE.txt`, plus per-host `*-summary.csv/md` and `*-samples.csv`. `single-run/<host>`: the same files (`sweep/`, and `million/` for the Pi 1M rescan). `mainnet-probe`: the keyless mainnet fetch-only probe. |
+| [chain-volume/](chain-volume/) | [Chain volume](../docs/chain-volume.md). `endpoints.json`: chainlist snapshot metadata and candidate URLs. `probe/<chain>.json`: limits, errors, archive depth, latency. `canonical/` and `umbra/`: `reference-*` indexer runs, `retrieve-*` full-history runs with identities, `deploy-check-*`. `consistency/<chain>.json`: known-announcement rechecks. Derived `summary.md/csv`, `endpoints.csv`, `cross-source.csv`. |
+| [browser-discovery/](browser-discovery/) | [Browser discovery](../docs/browser-discovery.md). Browser samples, `samples.csv` (timings, counts, verdicts), dual-provider reference, CORS controls, command-line preflight summary. |
+| [rpc-recovery/](rpc-recovery/) | [RPC recovery](../docs/rpc-recovery.md). Pinned window manifest and receipt-corroborated reference, live and loopback captures, CORS controls, verified `summary.json`. |
+| [shared-feed/](shared-feed/) | [Shared feed](../docs/shared-feed.md). Request metrics, page digests, sample timings, checkpoint controls, per-node evidence and the feed format search. |
 
-Absolute home-directory prefixes in recorded paths were replaced with `~`. Host labels
-(`bazzite`, `turing-node-N`) are the run labels used throughout the findings.
-
-## Not included, and how to regenerate it
+## Not included
 
 | Left out | Size | Regenerate |
 | --- | --- | --- |
-| Fixtures (`announcements.jsonl`) | about 100 MB per 100k, 1 GB per 1m | `bun run src/phase2/prepare-fixtures.ts --output work/fixtures --fixtures <names>` (or `bun run bench`). Deterministic from seed `erc5564-scan-v1`; the generated bytes are checked against the pinned SHA256 digests. |
-| Phase 2 `pages.jsonl` (per-page timings) | up to 7 MB per run | rerun the sweep; per-sample totals are in `samples.jsonl` |
-| Phase 2 `state/` (scan caches and expected-match oracles) | up to 380 KB each | rebuilt by every sweep from the fixtures |
-| Phase 2 `run.log`, `bun-test.log`, `host-before/after.txt` | | written by `scripts/phase2-run.sh`; per-sample host state is already in `samples.jsonl` |
-| Profiler dumps: `scan.cpuprofile`, `scan.collapsed`, `stacks.json`, `gc.json`, `phases.json`, `bytecodes.txt`, native `sample` output, `vm-stat` logs | up to 16 MB each | `bun run profile ...` (see METHODS.md) |
-| Run tarballs, `node_modules`, Bun runtime binaries | | `bun install --frozen-lockfile` |
+| Fixtures (`announcements.jsonl`) | ~100 MB per 100k, 1 GB per 1M | `bun run src/paged-discovery/prepare-fixtures.ts --output work/fixtures --fixtures <names>` or `bun run bench`. Seed `erc5564-scan-v1`; bytes are checked against pinned SHA256 digests. |
+| Paged-discovery `pages.jsonl` (per-page timings) | up to 7 MB per run | Rerun the sweep. Per-sample totals are in `samples.jsonl`. |
+| Paged-discovery `state/` (scan caches, expected-match oracles) | up to 380 KB each | Rebuilt by every sweep |
+| Paged-discovery `run.log`, `bun-test.log`, `host-before/after.txt` | | Written by `src/paged-discovery/run.sh`. Per-sample host state is in `samples.jsonl`. |
+| Profiler dumps: `scan.cpuprofile`, `scan.collapsed`, `stacks.json`, `gc.json`, `phases.json`, `bytecodes.txt`, native `sample` output, `vm-stat` logs | up to 16 MB each | `bun run profile` ([METHODS.md](../METHODS.md#profiling)) |
+| Run tarballs, `node_modules`, Bun binaries | | `bun install --frozen-lockfile` |
 
 **All keys and addresses in the manifests are public, deterministic test material.
 Never fund them.**

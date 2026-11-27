@@ -35,7 +35,7 @@ The equal-count run stopped on two different one-log subsets once the third sour
 
 ## Scope
 
-The windows come from the [chain-volume](chain-volume.md#findings) Base run. After it switched to Daybreak at block 34,304,282, Daybreak returned zero logs in 6,120 successful 2,000-block pages through block 46,544,281. The parallel run found 48 there.
+The windows come from the Base run in [chain-volume finding 3](chain-volume.md#findings): Daybreak returned zero logs in 6,120 successful 2,000-block pages through block 46,544,281, where the parallel run found 48.
 
 The replay takes all 29 positive pages plus five empty controls, interval boundaries included. The original-width diagnostic queries these 34 pages as is. Strategy trials split them into 68 windows of 1,000 blocks, so catch-up covers 68,000 blocks.
 
@@ -43,7 +43,7 @@ Tenderly and Sentio scanned the ranges independently in 1,000- and 613-block ste
 
 ## Method
 
-Chromium 150.0.7871.250 in Orca Electron 43.8.10 on Bazzite 45, one isolated profile, with the [browser-discovery](browser-discovery.md) transport: CORS-enforced POSTs, no credentials. Loopback controls saw OPTIONS and POST on the allow route and only OPTIONS on the deny route.
+Chromium 150.0.7871.250 in Orca Electron 43.8.10 on Bazzite 45, one isolated profile, with the [browser-discovery](browser-discovery.md) transport and its CORS controls: CORS-enforced POSTs, no credentials.
 
 - Single RPC commits any successful page, empty or not, and stops on error.
 - Cross-check queries two providers at once and calls a third on an error or disagreement. A commit needs two agreeing responses.
@@ -61,7 +61,7 @@ Exact identity agreement catches different results with equal counts. Shared ups
 Bun 1.4.4 and Orca on Bazzite, from the Orca worktree, with a fresh output directory. The replay is read-only and needs no keys.
 
 ```sh
-bun src/rpc-recovery/serve.ts data/rpc-recovery/reference.json results/rpc-recovery-replay
+bun run rpc-recovery:serve data/rpc-recovery/reference.json results/rpc-recovery-replay
 ```
 
 In another terminal, create an isolated profile, then a tab with that profile ID, then pass the page ID to the runner.
@@ -70,11 +70,11 @@ In another terminal, create an isolated profile, then a tab with that profile ID
 ORCA_CLI="${ORCA_CLI_COMMAND:-orca-ide}"
 "$ORCA_CLI" tab profile create --label 'RPC recovery replay' --scope isolated --json
 "$ORCA_CLI" tab create --url http://127.0.0.1:8784/ --worktree current --profile PROFILE_ID --headless --json
-bun src/rpc-recovery/run.ts "$ORCA_CLI" PAGE_ID data/rpc-recovery/reference.json results/rpc-recovery-replay
-bun src/rpc-recovery/verify.ts data/rpc-recovery/reference.json results/rpc-recovery-replay > results/rpc-recovery-replay/summary.json
-bun src/rpc-recovery/verify.ts data/rpc-recovery/reference.json data/rpc-recovery   # recorded samples
+bun run rpc-recovery "$ORCA_CLI" PAGE_ID data/rpc-recovery/reference.json results/rpc-recovery-replay
+bun run rpc-recovery:verify data/rpc-recovery/reference.json results/rpc-recovery-replay > results/rpc-recovery-replay/summary.json
+bun run rpc-recovery:verify data/rpc-recovery/reference.json data/rpc-recovery   # recorded samples
 ```
 
-The runner's last argument is `all` (default), `live` or `fixture`. The fixture suite makes only loopback requests. `bun src/rpc-recovery/reference.ts results/rpc-recovery-replay/reference-rediscovery.json` recaptures the reference into a new file once the output directory exists.
+The runner's last argument is `all` (default), `live` or `fixture`. The fixture suite makes only loopback requests. `bun run rpc-recovery:reference results/rpc-recovery-replay/reference-rediscovery.json` recaptures the reference into a new file once the output directory exists.
 
 [Pinned reference](../data/rpc-recovery/reference.json) · [Browser samples](../data/rpc-recovery/) · [Verified metrics](../data/rpc-recovery/summary.json) · [CORS controls](../data/rpc-recovery/controls.json)

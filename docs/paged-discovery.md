@@ -4,12 +4,14 @@ What does a wallet pay to find its payments by paging through history over JSON-
 
 Medians [min–max] of three repetitions on 2026-11-25/26. Each fresh wallet process matched the sender schedule by ordered `(blockHash, transactionHash, logIndex)` outside the timers.
 
-[Per-run evidence](../data/paged-discovery/) · [Repeat statistics](../data/paged-discovery/repeat.csv) · [Samples and host state](../data/paged-discovery/repeat-samples.csv) · [Single-run CSV](../data/paged-discovery/single-run.csv) · [Method](../METHODS.md#paged-discovery) · [Hardware](../README.md#hardware)
+[Per-run evidence](../data/paged-discovery/) · [Repeat statistics](../data/paged-discovery/repeat.csv) · [Samples and host state](../data/paged-discovery/repeat-samples.csv) · [Single-run CSV](../data/paged-discovery/single-run.csv) · [Method](../METHODS.md#paged-discovery) · [Hardware](../METHODS.md#hardware)
 
 ## Findings
 
 1. **On a fast link, discovery is scanning.** On `none` the scan is 94–97% of a cold rescan on both hosts. Fetching 107 MiB of logs per 100k announcements takes 0.2–0.5 s on Bazzite and 0.6–1.3 s on the Pi. 1M/100k is 9.95–10.1x. The Pi is 3.6–3.7x slower than the i7 on medians: 3.4–3.6x on the cool node 3, 3.9–4.3x on the throttled node 2. `lan` was not repeated. Its single-run scan share was 89–96%.
 2. **On a public link, page size decides whether the network matters.** With 1-block pages at 1M, the Bazzite network term (983 s) exceeds the scan (542 s). From 64 blocks per page the network sits at the bandwidth floor: 18.7–19.7 s per 100k on Bazzite and 19.0–20.0 s on the Pi, about 1.1 KB per announcement uncompressed. 16-block pages take 23.5–23.7 s. Network terms vary by under 1%, so the spread in totals comes from the scan.
+
+   ![Network, scan and verify time for a 1M cold rescan](figures/paged-breakdown.svg)
 3. **Verification is a fixed tax per payment.** Two calls per candidate cost 0.2052–0.2082 s at 100 ms RTT for every page size, history, host and node. That is 20.53–20.82 s per 100 payments and 205.2–205.8 s for 1,000. It is 23.4% of the best public-link total on Bazzite (100k and 1M) and 9.8% on the Pi. No number in the study is less noisy.
 4. **Bigger pages delay the first match and raise memory.** First-match time is about one page's fetch and scan. Peak RSS is 103–283 MiB up to 64 blocks and 498–749 MiB for cold rescans at 256 blocks (32,768 logs, ~28 MiB per response). History size adds little, except +11% at 256 blocks (726 against 654 MiB, matching the single run's 723 against 654). Scan cost held the whole fixture and needed ~3.9 GiB at 1M.
 5. **Catch-up depends on the new blocks, not the history.** On `public`, 1-block pages mean 64 round trips and double the cost. Small pages also scan slower through the SDK wrapper, 1-block against 256-block: 8% (100k) and 6% (1M) on Bazzite, 11% on every Pi node. The single run showed ~10%. The cause was not isolated.
@@ -153,15 +155,15 @@ bun run paged-discovery --fixtures work/fixtures/100000-sparse --pages 1,16,64,2
   --profiles none,public --scenarios cold,catchup \
   --control-fixture work/fixtures/100000-zero --output results/paged-discovery-my-run   # one sweep
 # repeats: 3 shuffled repetitions between controls; matrices in src/paged-discovery/matrix/
-scripts/run-bazzite.sh repeat-bazzite            # Bazzite, host-gated, ~5.2 h
+scripts/paged-discovery.sh repeat-bazzite        # Bazzite, host-gated, ~5.2 h
 REUSE_FIXTURES="$FIXTURE_DIRS" HOST_LABEL="turing-node-$NODE" FIRST_REPETITION="$NODE" REPETITIONS=1 \
-  WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 src/paged-discovery/run.sh repeat-turing   # per Pi node, ~2.2 h
-src/paged-discovery/run.sh repeat-smoke          # 5-minute check of the repeat path
+  WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 scripts/paged-discovery.sh repeat-turing   # per Pi node, ~2.2 h
+scripts/paged-discovery.sh repeat-smoke          # 5-minute check of the repeat path
 bun run src/paged-discovery/repeat-report.ts --host "bazzite=$BAZZITE_RUN" --host "turing=$TURING_RUN_1" \
   --host "turing=$TURING_RUN_2" --host "turing=$TURING_RUN_3" --csv summary.csv --samples-csv samples.csv --md table.md
 # original single run (Appendix A)
-scripts/run-bazzite.sh bazzite
-REUSE_FIXTURES="$FIXTURE_DIRS" WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 src/paged-discovery/run.sh turing
+scripts/paged-discovery.sh bazzite
+REUSE_FIXTURES="$FIXTURE_DIRS" WALLET_CPUS=4,5,6 CHAIN_CPUS=7 CONTROL_CPUS=4-7 scripts/paged-discovery.sh turing
 bun run src/paged-discovery/report.ts --host "bazzite=$BAZZITE_RUN" --host "turing-node-1=$TURING_RUN_1" --csv single-run.csv --md table.md
 # optional read-only mainnet probe, never mixed into results
 bun run paged-discovery:mainnet --rpc https://ethereum-rpc.publicnode.com --output results/mainnet-probe
@@ -175,16 +177,19 @@ Same hosts and pinning, Turing node 1 only, fixed setting order. [Comparison wit
 
 ## A. Controls (scan-cost crypto engine, 100k zero-match, unprofiled)
 
+<!-- generated:paged-single-controls -->
 | Host | Before s | After s | Scan-cost range s |
 | --- | ---: | ---: | --- |
 | Bazzite | 48.509 | 48.235 | 48.531-51.951 |
 | Turing node 1 (10k/100k sweep) | 177.044 | 176.762 | 168.457-181.946 |
-| Turing node 1 (1M run) | 177.087 | 174.666 | |
+| Turing node 1 (1M run) | 177.087 | 174.666 |  |
+<!-- /generated:paged-single-controls -->
 
 Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 7–8%.
 
 ## A. Cold rescans
 
+<!-- generated:paged-single-cold -->
 | Host | Size | Profile | Page blocks | Network s | Scan s | Verify s | Total s | First match s | Wire down MiB | Wallet peak RSS MiB |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Bazzite i7-13700K | 100,000 | none | 1 | 0.6 | 51.1 | 0.1 | 54.0 | 0.09 | 107 | 146 |
@@ -194,7 +199,7 @@ Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 
 | Bazzite i7-13700K | 100,000 | public | 16 | 23.3 | 51.8 | 20.5 | 97.2 | 2.01 | 107 | 180 |
 | Bazzite i7-13700K | 100,000 | public | 256 | 18.6 | 47.4 | 20.5 | 88.0 | 22.48 | 107 | 658 |
 | Bazzite i7-13700K | 1,000,000 | none | 1 | 6.3 | 532.6 | 1.2 | 565.2 | 0.09 | 1073 | 157 |
-| Bazzite i7-13700K | 1,000,000 | none | 16 | 2.4 | 502.4 | 1.4 | 521.3 | 1.12 | 1072 | 179 |
+| Bazzite i7-13700K | 1,000,000 | none | 16 | 2.4 | 502.4 | 1.4 | 521.3 | 1.13 | 1072 | 179 |
 | Bazzite i7-13700K | 1,000,000 | none | 256 | 2.4 | 478.7 | 0.5 | 496.4 | 16.29 | 1072 | 723 |
 | Bazzite i7-13700K | 1,000,000 | public | 1 | 979.4 | 520.0 | 205.0 | 1730.6 | 0.52 | 1073 | 165 |
 | Bazzite i7-13700K | 1,000,000 | public | 16 | 231.6 | 497.2 | 205.2 | 949.4 | 1.89 | 1072 | 197 |
@@ -206,13 +211,16 @@ Control drift was 0.6% (Bazzite) and 0.2%/1.4% (Pi), inside the scan-cost runs' 
 | Turing Pi A76 | 100,000 | public | 16 | 23.7 | 177.7 | 20.7 | 228.6 | 4.75 | 107 | 139 |
 | Turing Pi A76 | 100,000 | public | 256 | 18.9 | 174.1 | 20.7 | 219.3 | 66.47 | 107 | 497 |
 | Turing Pi A76 | 1,000,000 (zero-match) | none | 64 | 5.2 | 1818.8 | 0.0 | 1882.3 | - | 1070 | 250 |
+<!-- /generated:paged-single-cold -->
 
 64-block catch-up (8,192 announcements, 8 payments), total seconds, including about 1.65 s of verification on `public`:
 
+<!-- generated:paged-single-catchup -->
 | Host | none | lan | public, 1-block pages | public, 16-256-block pages |
 | --- | --- | --- | --- | --- |
-| Bazzite (100k and 1M histories) | 4.1-4.6 | 4.2-5.0 | 14.3-14.7 | 7.4-8.0 |
+| Bazzite (100k and 1M histories) | 4.1-4.6 | 4.3-5.0 | 14.3-14.7 | 7.4-8.0 |
 | Turing node 1 (100k history) | 15.1-16.8 | 15.6-17.0 | 26.8 | 18.1-18.7 |
+<!-- /generated:paged-single-catchup -->
 
 ## A. Findings
 

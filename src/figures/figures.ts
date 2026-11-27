@@ -1,4 +1,4 @@
-// `bun run figures`: writes the README summary figures to docs/figures/ from data/.
+// `bun run figures`: writes the summary figures (README and docs) to docs/figures/ from data/.
 // Pass --check to fail instead of writing when a figure would change.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { CHAIN_LABELS, ROOT, STRATEGIES, chainVolume, num, pagedRepeat, scanCost, type Strategy } from './data.ts';

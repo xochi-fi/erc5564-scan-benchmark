@@ -10,7 +10,7 @@ import { waitForCooldown } from '../shared/host.ts';
 
 const [output] = Bun.argv.slice(2);
 if (!output || !/^(bazzite|turing-node-[123])$/.test(hostname())) {
-  throw new Error('Usage on Bazzite or a Turing node: bun src/shared-feed/run.ts NEW_OUTPUT_DIR');
+  throw new Error('Usage on Bazzite or a Turing node: bun run shared-feed NEW_OUTPUT_DIR');
 }
 await mkdir(output, { recursive: false });
 const evidencePath = `${output}/evidence.json`;

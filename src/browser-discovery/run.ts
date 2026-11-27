@@ -4,7 +4,7 @@ import { origin, rpc, scope } from './config.ts';
 const [cli, page, referencePath, output, count = '3'] = Bun.argv.slice(2);
 const rounds = Number(count);
 if (!cli || !page || !referencePath || !output || !Number.isSafeInteger(rounds) || rounds < 1) {
-  throw new Error('Usage: bun src/browser-discovery/run.ts ORCA_CLI PAGE REFERENCE_JSON OUTPUT_DIR [ROUNDS]');
+  throw new Error('Usage: bun run browser-discovery ORCA_CLI PAGE REFERENCE_JSON OUTPUT_DIR [ROUNDS]');
 }
 const { agreed, scope: referenceScope, headHash, identities } = await Bun.file(referencePath).json();
 if (!agreed || JSON.stringify(referenceScope) !== JSON.stringify(scope) || !headHash || !identities?.length) {

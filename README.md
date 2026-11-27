@@ -1,10 +1,8 @@
 # ERC-5564 scan benchmark
 
-> **Decision: don't deploy OMR for ERC-5564 now.**\
-> Use a public feed of finalized pages instead: clients fetch all of it, scan locally, and advance only when two feeds agree.\
-> Why: OMR servers spend 4.1–59.8 ms per message per recipient on AVX512, clues add 583–2,181 B each, and no DoS-resistant variant is in production.\
-> OMR wins on phone CPU above ~12 announcements/day. Feeds win on server cost, onchain bytes and deployability.\
-> Revisit near 100k announcements/day (assumed 3 min A76 CPU or 60 MB) or at Umbra scale. [Detail](docs/shared-feed.md#decision)
+> **No OMR for ERC-5564 yet.** Wallets fetch a public finalized feed in full, scan locally, and advance only when two feeds agree.\
+> OMR is cheaper for the phone CPU above ~12/day, but costs servers 4–60 ms per message per recipient and adds ~0.6–2 kB onchain per announcement.\
+> Revisit near 100k announcements/day. [Decision](docs/shared-feed.md#decision)
 
 Can a wallet find its ERC-5564 stealth payments from public, keyless infrastructure, and know it found all of them? Measured with ScopeLift's unmodified `@scopelift/stealth-address-sdk` 1.0.0-beta.5 on Bun 1.4.4.
 

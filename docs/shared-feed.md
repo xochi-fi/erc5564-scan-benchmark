@@ -2,17 +2,15 @@
 
 ## Decision
 
-Don't deploy OMR for ERC-5564 now ([summary](../README.md)). Clients fetch every finalized feed page, scan locally with view tags, resume from a checkpoint, and retry a range when two independent feeds disagree. Signed page commitments stay optional until [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745) or [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) can prove completeness.
+Clients fetch every finalized feed page, scan locally with view tags, resume from a checkpoint, and retry a range when two independent feeds disagree; signed page commitments stay optional until [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745) or [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) can prove completeness ([summary](../README.md)).
 
-[OMR](paged-discovery.md#prior-work-and-omr-crossover) servers spend 4.1–59.8 ms per message per recipient on cloud AVX512, clues add 583–2,181 B per announcement, and no DoS-resistant variant is in production. OMR does win on recipient CPU: ~20 ms flat against 1.75 ms per announcement on an A76, so above ~12/day. Feeds win on server cost, onchain bytes and deployability. Here the dual feed recovered 48/48 and caught up cold in 38.8 ms (Bazzite) and 129–140 ms (Pi).
+[OMR](paged-discovery.md#prior-work-and-omr-crossover) servers spend 4.1–59.8 ms per message per recipient on cloud AVX512 with 583–2,181 B clues and no DoS-resistant variant in production, and its ~20 ms decode beats the A76's 1.75 ms per announcement only above ~12/day, while the dual feed here recovered 48/48 and caught up cold in 38.8 ms (Bazzite) and 129–140 ms (Pi).
 
 | Revisit when | Assumed budget | Breaks at |
 | --- | --- | ---: |
-| Daily A76 scan time | 3 min CPU, 1.75 ms each | ~100k/day |
-| Daily feed bytes, two sources | 60 MB, ~620 B each | ~100k/day |
+| Daily A76 scan time | 3 min CPU at 1.75 ms each | ~100k/day |
+| Daily feed bytes | 60 MB at ~620 B (2 × best format) | ~100k/day |
 | Wallets cover Umbra-scale streams | — | ~100k per chain |
-
-~620 B is the best cold format's 14,953 B per source for 48 logs, empty windows included, times two.
 
 ## Feed against live RPC
 

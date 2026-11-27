@@ -1,14 +1,12 @@
 # Methods
 
-[Overview](README.md) · [Pipeline](#discovery-pipeline) · [Hosts](#hosts-and-software) · [Live RPC](#live-rpc) · [Browser runs](#browser-runs) · [Names in recorded data](#names-in-recorded-data) · [Commands](#commands) · [Layout](#repository-layout)
-
 ## Test keys
 
-**All keys and addresses in this repository, its fixtures and manifests are public, deterministic test material. Never fund them.**
+**Every key and address in this repository is public, deterministic test material. Never fund them.**
 
 ## Discovery pipeline
 
-Each experiment measures one stage. Orange stages failed in the recorded runs; green is the fix.
+Orange stages failed in the recorded runs. Green is the fix.
 
 ```mermaid
 flowchart LR
@@ -29,7 +27,7 @@ flowchart LR
   class check fix
 ```
 
-Experiments ran in this order, each reusing data or code from the earlier ones: [scan cost](docs/scan-cost.md), [paged discovery](docs/paged-discovery.md), [chain volume](docs/chain-volume.md), [browser discovery](docs/browser-discovery.md), [RPC recovery](docs/rpc-recovery.md), [shared feed](docs/shared-feed.md).
+Run order, each reusing earlier data or code: [scan cost](docs/scan-cost.md), [paged discovery](docs/paged-discovery.md), [chain volume](docs/chain-volume.md), [browser discovery](docs/browser-discovery.md), [RPC recovery](docs/rpc-recovery.md), [shared feed](docs/shared-feed.md).
 
 ## Hosts and software
 
@@ -39,16 +37,15 @@ Experiments ran in this order, each reusing data or code from the earlier ones: 
 | `turing-node-1..3` | Turing Pi RK1 modules (Rockchip RK3588, Cortex-A76 cores 4–7), 8 GB (node 1) / 16 GB (nodes 2–3); kernels 5.10.160-rockchip (node 1), 6.1.0-1012-rockchip (node 2), 6.1.0-1025-rockchip (node 3) | `taskset -c 4-7`; paged-discovery wallet on 4–6, server on 7 | Scan cost (node 1), paged discovery, shared feed |
 | Apple M1 | MacBook, Apple M1, 8 GiB RAM | none | Scan-cost initial sweep and retained-set control |
 
-- Bun 1.4.4 (`packageManager`) and ScopeLift's [`@scopelift/stealth-address-sdk`](https://github.com/ScopeLift/stealth-address-sdk) 1.0.0-beta.5, unmodified, npm `gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2). Other Bun versions run but count as a different environment.
-- Browser runs: Chromium 150.0.7871.250 in Orca Electron 43.8.10 on `bazzite`.
+Bun 1.4.4 and the unmodified [`@scopelift/stealth-address-sdk`](https://github.com/ScopeLift/stealth-address-sdk) 1.0.0-beta.5 (`gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2)). Browser runs use Chromium 150.0.7871.250 in Orca Electron 43.8.10 on `bazzite`.
 
 ## Live RPC
 
-Live runs are read-only and keyless, from a residential IP in Europe. Request starts are paced per provider: ≤4/s per host (chain volume), ≥270 ms apart (RPC recovery), ≥275 ms apart (browser-discovery reference, shared feed).
+Live runs are read-only and keyless, from a residential IP in Europe. Requests per provider are paced at ≤4/s (chain volume), ≥270 ms apart (RPC recovery) or ≥275 ms apart (browser-discovery reference, shared feed).
 
 ## Browser runs
 
-From the Orca worktree, start the experiment's server (port in its doc), then create an isolated profile and a tab; each command prints the next one's ID.
+From the Orca worktree, start the experiment's server, then create a profile and a tab. Each command prints the next one's ID.
 
 ```sh
 ORCA_CLI="${ORCA_CLI_COMMAND:-orca-ide}"
@@ -56,11 +53,11 @@ ORCA_CLI="${ORCA_CLI_COMMAND:-orca-ide}"
 "$ORCA_CLI" tab create --url http://127.0.0.1:PORT/ --worktree current --profile PROFILE_ID --headless --json
 ```
 
-Pass `"$ORCA_CLI"` and the page ID to the runner, with a fresh output directory. Chromium fetches public RPCs directly, with normal CORS and no credentials; the local server serves the harness and fixture and receives samples. Samples share one profile, so connection and preflight caches can persist and affect timing.
+Pass `"$ORCA_CLI"` and the page ID to the runner with a fresh output directory. Chromium fetches public RPCs directly under normal CORS, without credentials. Samples share one profile, so connection and preflight caches can affect timing.
 
 ## Names in recorded data
 
-The experiments were first numbered as phases. A few `phaseN` strings remain because recorded fixtures, seeds or evidence depend on them.
+Recorded fixtures, seeds and evidence still use the original phase numbers.
 
 | String | Experiment | Where | Why it stays |
 | --- | --- | --- | --- |
@@ -72,27 +69,13 @@ The experiments were first numbered as phases. A few `phaseN` strings remain bec
 | `phase4-checkpoint`, `phase5:<name>` | Browser discovery, RPC recovery | localStorage keys during the recorded runs (not stored in `data/`) | Renamed: the code now uses `browser-discovery-checkpoint` and `rpc-recovery:<name>`, which does not change any result |
 | `phase6:base:v1` | Shared feed | Synthetic fixture seed in `src/shared-feed/run.ts` and `tune.ts` | Reproduces the recorded synthetic matches |
 
-Recorded JSON may also name old `phaseN` paths.
-
 ## Synthetic fixtures
 
-Scan cost and paged discovery use seeded synthetic announcements; nothing is transferred.
-
-- `zero` targets a decoy throughout. `sparse` targets the recipient at indices divisible by `matchEvery` (default 1000).
-- Ephemeral keys come from domain-separated SHA256 with rejection sampling. Logs are ABI-encoded at 128 announcements per block, one per transaction.
-- Verification checks ordered `(blockHash, transactionHash, logIndex)` with multiplicity against the sender schedule, so a dropped SDK rejection cannot pass as a missing match.
-- Before timing, the loader validates schema, points, decoding, identities, order, row count, SHA256 and byte counts. It reads view-tag hit counts from the manifest so it does not warm ECDH.
-- The default seed `erc5564-scan-v1` gives byte-identical `announcements.jsonl`. Digests are pinned in [`data/scan-cost/*/fixtures/*/manifest.json`](data/scan-cost/) and `src/paged-discovery/prepare-fixtures.ts`, which rejects a fixture whose bytes differ.
-
-Offline tests use the real implementations.
+Scan cost and paged discovery use seeded synthetic announcements, 128 per block, one per transaction. `zero` targets a decoy throughout; `sparse` targets the recipient every `matchEvery` (default 1000) indices. Verification checks ordered `(blockHash, transactionHash, logIndex)` with multiplicity against the sender schedule. The loader validates every row before timing and reads view-tag counts from the manifest so it does not warm ECDH. Seed `erc5564-scan-v1` gives byte-identical `announcements.jsonl`, pinned in [`manifest.json`](data/scan-cost/) and `src/paged-discovery/prepare-fixtures.ts`.
 
 ## Scan cost
 
-### Measurement boundary
-
-Each engine, mode and repetition runs in a fresh Bun process, in fixed order: load and validate, prepare expected identities, optional `--warmup`, then one timed scan and identity verification, with GC and a memory snapshot before each stage.
-
-`scanMs` includes scan allocation and automatic GC. Imports, ABI decoding, key validation and recipient derivation run before it.
+Each engine, mode and repetition runs in a fresh Bun process in fixed order. `scanMs` times one complete scan, allocation and GC included, after loading, decoding and key setup.
 
 | Engine or mode | What it does |
 | --- | --- |
@@ -101,9 +84,7 @@ Each engine, mode and repetition runs in a fresh Bun process, in fixed order: lo
 | `full` | Scans the whole array once. Models a lost scan cursor with retained viewing keys. |
 | `incremental` | Scans contiguous batches of retained history, batch and result overhead included. |
 
-Out of scope: seed-only and StOMR recovery, provider completeness, spendability, streaming, checkpoints, new heads and reorgs.
-
-`processLifetimePeakRssBytes` includes imports, loading, validation and warmup. `syntheticRpcResponseBytes` is the uncompressed UTF-8 size of `{"jsonrpc":"2.0","id":1,"result":[...rawLogs]}`. Million-entry runs need several GB of RAM.
+`processLifetimePeakRssBytes` includes imports and loading. `syntheticRpcResponseBytes` is the uncompressed size of `{"jsonrpc":"2.0","id":1,"result":[...rawLogs]}`.
 
 | File | Contents |
 | --- | --- |
@@ -115,15 +96,11 @@ Out of scope: seed-only and StOMR recovery, provider completeness, spendability,
 
 ### Profiling
 
-`bun run profile` reuses the loader and engines on a fixture. JavaScriptCore sampling (20 ms) and `node:v8` GC events cover the scan only. macOS adds native `sample` and `vm_stat`; on Linux pass `--native-seconds 0` for `vmstat`, `/proc` pressure, swap and sysfs thermal data, which include other processes.
-
-GC durations are microseconds in the pinned Bun ([native observer](https://github.com/oven-sh/bun/blob/38afee6c84fc/src/jsc/bindings/NodeV8.h)), prologue to epilogue with concurrent phases, so their sum is not stop-the-world time. Profiles are diagnostics, not baseline samples.
-
-`--scan-count 100000` scans a prefix while retaining the full fixture, separating retained-set effects from scan work.
+`bun run profile` samples the scan with JavaScriptCore (20 ms) and `node:v8` GC events. On Linux pass `--native-seconds 0`. GC durations are microseconds from prologue to epilogue ([native observer](https://github.com/oven-sh/bun/blob/38afee6c84fc/src/jsc/bindings/NodeV8.h)) and include concurrent phases, so they are not stop-the-world time. `--scan-count 100000` scans a prefix of a larger retained fixture.
 
 ## Paged discovery
 
-The wallet reuses the scan-cost fixtures and engines (`scanAnnouncements` in `src/shared/worker.ts`). Files are in `src/paged-discovery/`.
+The wallet reuses the scan-cost fixtures and engines. Files are in `src/paged-discovery/`.
 
 | File | Role |
 | --- | --- |
@@ -149,13 +126,11 @@ The wallet reuses the scan-cost fixtures and engines (`scanAnnouncements` in `sr
 | `wireDownMiB`, `wireUpMiB` | TCP payload through the emulator, HTTP headers included, no TCP/IP framing or TLS. `bodyMiB` is JSON-RPC bodies. |
 | `peakRssMiB`, `chainRssMiB` | Wallet lifetime peak RSS with imports; server RSS at sample end |
 
-After the timers stop, each sample checks the in-memory result, new matches and the persisted cache against an oracle read from the fixture.
-
-Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-20, spending, sweep key derivation and query privacy. Every log, receipt and balance lookup reveals interest to the RPC.
+After the timers stop, each sample checks its result and persisted cache against the fixture oracle. Every log, receipt and balance lookup reveals interest to the RPC.
 
 ### Host runner
 
-`scripts/paged-discovery.sh PLAN` (or `bun run paged-discovery:host PLAN`) runs the check, tests, fixtures and a sweep, then archives the run under `results/paged-discovery/`.
+`scripts/paged-discovery.sh PLAN` runs the check, tests, fixtures and a sweep, and archives the run under `results/paged-discovery/`.
 
 | Setting | Use |
 | --- | --- |
@@ -171,9 +146,7 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 ## Commands
 
-Setup and tests: [Quickstart](README.md#quickstart). After changing `data/`, run `bun run figures` and `bun run tables`; CI fails on stale output.
-
-Each experiment doc ends with its commands. Runs write under ignored `results/` or `work/` unless given a `data/` path, and exit nonzero on an oracle miss.
+After changing `data/`, run `bun run figures` and `bun run tables`. CI fails on stale output. Runs write under ignored `results/` or `work/` and exit nonzero on an oracle miss.
 
 ## Repository layout
 
@@ -194,11 +167,8 @@ Each experiment doc ends with its commands. Runs write under ignored `results/` 
 
 ## Caveats for synthetic experiments
 
-These apply to scan cost and paged discovery.
-
-- The synthetic block and match density far exceed real use ([real density](docs/paged-discovery.md#mainnet-fetch-only-probe)).
-- The link model has no TLS, compression, provider query time, rate limits, jitter or loss, so its network spread is near zero. `public` is a what-if, not a provider measurement.
-- Fetch, scan and verify run sequentially; a pipelined wallet could hide up to min(network, scan).
-- n = 3 is too small for confidence intervals. The Pi's three samples per setting come from three nodes.
-- Peak RSS is the process high-water mark, imports included.
-- CLI runs of a reference implementation: not browser or mobile numbers, and not a comparison with OMR, PIR, TEE or FHE. Gas is out of scope.
+- Synthetic density far exceeds [real use](docs/paged-discovery.md#mainnet-fetch-only-probe).
+- The link model has no TLS, compression, provider time, rate limits, jitter or loss. `public` is a what-if, not a provider measurement.
+- Fetch, scan and verify run sequentially. A pipelined wallet could hide up to min(network, scan).
+- n = 3 is too small for confidence intervals.
+- These are CLI runs, not browser or mobile numbers.

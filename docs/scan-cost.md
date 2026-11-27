@@ -1,6 +1,8 @@
 # Scan cost
 
-How long does a local ERC-5564 scan take? Linear time from 100k to 1M announcements.
+How long does a local ERC-5564 scan take?
+
+Linear time: 1M announcements take about 10 times as long as 100k.
 
 <!-- generated:scan-cost -->
 | Host | 100k before/after controls, s | 1M, s | 1M / 100k |
@@ -9,11 +11,11 @@ How long does a local ERC-5564 scan take? Linear time from 100k to 1M announceme
 | Turing node 1, Cortex-A76 cores 4–7 | 168.457–181.946 | 1804.305 | 9.92–10.71 |
 <!-- /generated:scan-cost -->
 
-[Hosts](../METHODS.md#hosts-and-software). Crypto engine, zero-match fixtures, unprofiled, bracketed by two 100k controls; all 12 runs matched the oracle. The largest chain history, [Umbra on Polygon](chain-volume.md#umbra-and-uncountable-systems), would take about 180 s on the A76. Estimates elsewhere use these controls, not the [paged-discovery ones](paged-discovery.md#controls).
+Crypto engine, zero-match fixtures, two 100k controls per [host](../METHODS.md#hosts-and-software). The largest chain history, [Umbra on Polygon](chain-volume.md#umbra-and-uncountable-systems), takes about 180 s on the A76.
 
 ## Retained working set
 
-Each profile scans the same 100k prefix (input digest `46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05`) and retains 100k or 1M decoded announcements.
+Each profile scans the same 100k prefix, digest `46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05`.
 
 | Host | Retain 100k, s | Retain 1M, s | Ratio |
 | --- | --- | --- | --- |
@@ -21,24 +23,20 @@ Each profile scans the same 100k prefix (input digest `46416d7ef2564c31807dd4c3e
 | Bazzite | 48.226 | 47.157 | 0.98 |
 | Turing node 1 | 180.607 | 180.927 | 1.00 |
 
-The M1 recorded more page faults and swap; the cause was not isolated.
+The M1 run had more page faults and swap, cause not isolated.
 
 ## Initial sweep (Apple M1)
 
-One repetition per scenario, 1,000-entry incremental batches, no warmup; all 16 samples matched the oracle. RSS includes loading and validation.
+One repetition per scenario, 1,000-entry batches, no warmup. RSS includes loading, validation and the retained fixture.
 
 | Announcements | Scan time across eight scenarios | Process-lifetime peak RSS |
 | --- | --- | --- |
 | 100,000 | 48.9–80.4 s | 464–487 MiB |
 | 1,000,000 | 1013.4–1482.5 s | 3879–4099 MiB |
 
-## Where the time goes
+## Profile
 
-Point addition and modular reduction (noble `add` and `M`) take 83–85% of sampled self hits in the Linux 1M profiles. GC spans sum to about 0.1% of wall time.
-
-## Limits
-
-Linux snapshots showed no benchmark swap, though Bazzite ran other workloads and both hosts used shared cores. Incremental mode retains the whole fixture. [Method](../METHODS.md#scan-cost) · [Shared caveats](../METHODS.md#caveats-for-synthetic-experiments)
+Noble `add` and `M` take 83–85% of sampled self hits in the Linux 1M profiles, GC about 0.1% of wall time. Both hosts used shared cores. [Method](../METHODS.md#scan-cost)
 
 ## Reproduce
 

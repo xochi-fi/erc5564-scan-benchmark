@@ -1,10 +1,14 @@
 # Shared feed
 
+Should wallets use a shared static feed or OMR?
+
+A shared feed, because two feeds recovered every log in milliseconds and OMR costs servers per message per recipient.
+
 ## Decision
 
-Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a range when two independent feeds disagree. Signed page commitments wait for a log index with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. No published design signs ERC-5564 feed pages. Silent `getLogs` omissions are [documented](https://docs.envio.dev/blog/nodes-silently-miss-events) in Erigon #16364 and Nethermind #9178.
+Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a range when two feeds disagree. Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. No published design signs ERC-5564 feed pages. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
 
-OMR is not worth it yet. No DoS-resistant variant runs in production, servers pay per message per recipient, and clues add bytes to every announcement:
+No DoS-resistant OMR variant runs in production:
 
 | Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
 | --- | ---: | ---: | ---: | --- |
@@ -13,12 +17,12 @@ OMR is not worth it yet. No DoS-resistant variant runs in production, servers pa
 | [PerfOMR2](https://eprint.iacr.org/2024/204) | 21.5 / 11.3 | 11 | 583 | No |
 | [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (Theorem 5.3) |
 
-All rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one Google Compute Cloud n4-standard-8 (32 GB) with SEAL HEXL / AVX512-IFMA52, prior schemes rebenchmarked on the same instance. Detector runtime is per scanned message, amortized over N, for one recipient's digest. Table 2 gives DoS-PerfOMR's amortized runtime as 4.95 ms/msg. The original OMR paper ([2021/1256](https://eprint.iacr.org/2021/1256)) puts server cost at ~$1 per million messages scanned. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4x faster than PerfOMR.
+Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one GCP n4-standard-8 with SEAL HEXL / AVX512-IFMA52. Detector runtime is per scanned message for one recipient's digest. Table 2 gives DoS-PerfOMR 4.95 ms/msg amortized. [2021/1256](https://eprint.iacr.org/2021/1256) puts server cost at ~$1 per million messages. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4x faster than PerfOMR.
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
-<sub>Dashed OMR lines: single-thread literature values, not measured here.</sub>
+<sub>Dashed OMR lines are single-thread literature values.</sub>
 
-Solid lines scale the [scan-cost](scan-cost.md) controls linearly. Each chain's Announcer averaged 0.006–1.2 announcements per day to 2026-11-26; the busiest costs the A76 2.1 ms CPU per day. The A76 scan passes DoS-PerfOMR's 20 ms recipient runtime at ~12/day. The lines set one cloud x86 core with AVX512 against one A76 core.
+Solid lines scale the [scan-cost](scan-cost.md) controls. Each chain's Announcer averaged 0.006–1.2 announcements per day to 2026-11-26, which costs the A76 at most 2.1 ms CPU per day. The A76 scan passes DoS-PerfOMR's 20 ms recipient runtime at ~12/day. The comparison is one cloud AVX512 core against one A76 core.
 
 | Revisit when | Assumed budget | Breaks at |
 | --- | --- | ---: |
@@ -26,7 +30,7 @@ Solid lines scale the [scan-cost](scan-cost.md) controls linearly. Each chain's 
 | Daily feed bytes | 60 MB at ~620 B (2 × best format) | ~100k/day |
 | Wallets cover Umbra-scale streams | — | ~100k per chain |
 
-The budgets are assumptions, not derived from OMR; 1M/day would take the A76 29 min.
+The budgets are assumptions. At 1M/day the A76 needs 29 min.
 
 ## Feed against live RPC
 
@@ -39,11 +43,7 @@ The budgets are assumptions, not derived from OMR; 1M/day would take the A76 29 
 | Dual feed, loopback | Warm | 28/28 | 0 / 20 | 0 / 55,492 | 2.7 | 20.6 | 1.0 | 6.0 | 25.4 [25.1–30.9] |
 <!-- /generated:shared-feed -->
 
-`bazzite`, 2026-11-27. Live Tenderly against two prebuilt loopback feeds, medians of three samples per arm and mode in one process, alternating arm order. Connections and runtime state can persist. Live RPC is the Bun client; the same windows took 70 POSTs in a [browser](rpc-recovery.md). Remote RTT, hosting, caching, compression and provider limits will change the comparison.
-
-- Fetch: request start to body read, overlapping GETs included. Body bytes are decoded, without headers or framing.
-- Feed samples make one manifest GET per source and two concurrent GETs per page. RPC samples first check chain ID, finalized and pinned block.
-- Catch-up includes parsing, pacing, discovery and checkpoint I/O. Page verification adds source agreement for the dual feed. No canonical log matched the synthetic recipient.
+Bazzite, 2026-11-27, live Tenderly against two loopback feeds, medians of three. Live RPC is the Bun client; a [browser](rpc-recovery.md) took 70 POSTs. Remote hosting, caching and compression would change the feed numbers. Bytes are decoded bodies without headers.
 
 ## Omission and resume controls
 
@@ -56,11 +56,11 @@ The budgets are assumptions, not derived from OMR; 1M/day would take the A76 29 
 | Same identities, altered ABI data | 1/17 | 48 pending | 8 | 1.1 |
 <!-- /generated:shared-feed-controls -->
 
-Both disagreement controls retried feed page 1 and held block 37,364,281. The omission resume reread the checkpoint, retried page 1 and skipped page 0. These omissions are injected; the live one is in [RPC recovery](rpc-recovery.md), whose [limits](rpc-recovery.md#limits) apply here too.
+Both disagreement controls held block 37,364,281. The omissions are injected. [RPC recovery limits](rpc-recovery.md#method) apply.
 
 ## Turing nodes
 
-Nodes 1–3, 2026-11-27 17:20–17:36 UTC, one run per node in sequence. Live RPC shares Bazzite's home uplink. A sample started only once the hottest zone was ≤70 °C; none waited, and peaks were 62.8, 67.5 and 49.9 °C. The Bazzite run predates the gate.
+Nodes 1–3, 2026-11-27 17:20–17:36 UTC, in sequence. A sample started only below 70 °C. Peaks were 62.8, 67.5 and 49.9 °C.
 
 <!-- generated:shared-feed-hosts -->
 | Path | Mode | Host | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
@@ -83,14 +83,13 @@ Nodes 1–3, 2026-11-27 17:20–17:36 UTC, one run per node in sequence. Live RP
 | Dual feed, loopback | Warm | node 3 | 6.1 | 61.3 | 1.7 | 16.4 | 70.5 [66.2–71.7] |
 <!-- /generated:shared-feed-hosts -->
 
-- Every host matched every log with identical requests and page bytes; RPC response bytes differed by up to 2,416, only in the finalized block reply. Controls matched too; omission-resume took 113–119 ms.
-- The A76 scan took 2.9–3.7× as long, feed catch-up 3.3–3.6× cold and 2.7–2.8× warm. Live RPC stayed within 3.8%: pacing and provider latency dominate.
+Requests and page bytes matched on every host; RPC replies differed by up to 2,416 bytes, in the finalized block only. Omission-resume took 113–119 ms. The A76 scan took 2.9–3.7× as long as Bazzite, feed catch-up 3.3–3.6× cold and 2.7–2.8× warm. Live RPC stayed within 3.8% because pacing and provider latency dominate.
 
 [Node 1](../data/shared-feed/turing-node-1/summary.json) · [Node 2](../data/shared-feed/turing-node-2/summary.json) · [Node 3](../data/shared-feed/turing-node-3/summary.json)
 
 ## Feed format search
 
-Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts), autoresearch keep/revert, one params field per iteration. A Claude Code session on a Mac ran the loop without API calls; verifies ran on turing-node-1 over ssh under the same gate. The wrapper serves both feeds on loopback and fails unless every page round-trips losslessly, sources agree, and every log and synthetic match is found.
+A Claude Code session ran two keep/revert searches over [`tune.ts`](../src/shared-feed/tune.ts), one params field per iteration. Each verify ran on turing-node-1 and failed on any lossy page or missed match.
 
 | Search | Metric | Baseline | Best | Iterations | Best params |
 | --- | --- | ---: | ---: | ---: | --- |
@@ -98,21 +97,15 @@ Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts), autores
 | Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](../data/shared-feed/autoresearch/warm-time.params.json) |
 
 ![Response bytes for feed pages and RPC payloads, with the format search](figures/feed-bytes.svg)
-<sub>Lower panel: one source's cold pages per search iteration.</sub>
+<sub>Lower panel: one source's cold pages per iteration.</sub>
 
-The best bytes params are 23.8% smaller under gzip; RPC gzip was not measured. The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4.
-
-The warm-time loop kept only larger pages (8, 16, then 32 windows). An interleaved check (5 rounds × 9 samples) gave 70.51 ms (baseline), 71.40 ms (32-window) and 75.02 ms (byte-optimized), with more spread between rounds than between params: local scan dominates A76 warm catch-up.
+The best bytes params are 23.8% smaller under gzip. RPC gzip was not measured. The manifest is about 2.5 kB. The warm-time loop kept only larger pages (8, 16, then 32 windows). An interleaved check of 5 rounds × 9 samples gave 70.51 ms (baseline), 71.40 ms (32-window) and 75.02 ms (byte-optimized), with more spread between rounds than between params.
 
 [Bytes log](../data/shared-feed/autoresearch/feed-bytes.jsonl) · [Warm log](../data/shared-feed/autoresearch/warm-time.jsonl) · [Interleaved check](../data/shared-feed/autoresearch/confirm.txt) · [Baseline params](../data/shared-feed/autoresearch/baseline.params.json)
 
 ## Method
 
-- Windows, logs and head: the [RPC-recovery reference](rpc-recovery.md#scope), in 17 groups of four. Warm reloads a checkpoint written after window 32 (block 44,788,281).
-- The two origins serve pages built separately from the Tenderly and Sentio captures. Client timings exclude setup (745 ms, six live POSTs) and the capture (304 POSTs).
-- A page URL holds only the manifest hash and page index: identical public bytes for every client, no recipient parameters, cookies or keys.
-- Both paths decode with the paged-discovery ABI decoder and scan with the SDK locally. Two synthetic matches and two decoys are scanned apart.
-- Feeds must agree on exact identity (block, block hash, transaction hash, log index) and payload. A mismatch retries once, then holds the checkpoint. Each accepted group commits by file rename. Direct RPC accepts any valid page.
+Both paths scan the [RPC-recovery windows](rpc-recovery.md#scope) in 17 groups of four. Warm starts after window 32 (block 44,788,281). The origins serve pages built separately from the Tenderly and Sentio captures. Timings exclude setup (745 ms, six POSTs) and the capture (304 POSTs). Page URLs carry only the manifest hash and page index. Feeds must agree on identity and payload; a mismatch retries once, then holds the checkpoint.
 
 ## Reproduce
 

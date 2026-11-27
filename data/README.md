@@ -1,6 +1,6 @@
 # Recorded data
 
-One directory per experiment. Home-directory prefixes are replaced with `~`. Host labels: [Hosts](../METHODS.md#hosts-and-software). Old `phaseN` strings: [Names in recorded data](../METHODS.md#names-in-recorded-data).
+One directory per experiment, with home paths shown as `~` ([hosts](../METHODS.md#hosts-and-software), [names](../METHODS.md#names-in-recorded-data)).
 
 | Directory | Contents |
 | --- | --- |
@@ -21,5 +21,3 @@ One directory per experiment. Home-directory prefixes are replaced with `~`. Hos
 | Paged-discovery `run.log`, `bun-test.log`, `host-before/after.txt` | | Written by `scripts/paged-discovery.sh`. Per-sample host state is in `samples.jsonl`. |
 | Profiler dumps: `scan.cpuprofile`, `scan.collapsed`, `stacks.json`, `gc.json`, `phases.json`, `bytecodes.txt`, native `sample` output, `vm-stat` logs | up to 16 MB each | `bun run profile` ([METHODS.md](../METHODS.md#profiling)) |
 | Run tarballs, `node_modules`, Bun binaries | | `bun install --frozen-lockfile` |
-
-[Never fund the test keys](../METHODS.md#test-keys).

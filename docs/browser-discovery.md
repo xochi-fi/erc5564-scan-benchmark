@@ -1,6 +1,8 @@
 # Browser discovery
 
-Can a browser wallet discover Base payments from keyless public RPCs? Three of six endpoints completed every run, and a saved cursor halved their POSTs.
+Can a browser wallet discover Base payments from keyless public RPCs?
+
+Three of six endpoints completed every run, and a saved cursor halved their requests.
 
 <!-- generated:browser-discovery -->
 | Endpoint | Completed | First fixture match (s) | Catch-up (s) | Browser fetch (s) | RPC calls | Real completeness |
@@ -13,18 +15,15 @@ Can a browser wallet discover Base payments from keyless public RPCs? Three of s
 | Blockscout RPC | 0/6 | — | — | 0.115 / 0.119 | 1 / 1 | 0/2 seen before HTTP 429 on chain ID |
 <!-- /generated:browser-discovery -->
 
-Medians, fresh / resume, three of each per endpoint, 2026-11-26 19:33–19:34 UTC, revision `9ba009890e71f3509489ffe5365cbc733264bf6f`. Every completion also found both synthetic matches, and all 204 RPC attempts got readable HTTP responses. Fresh catch-up ranged 1.566–2.523 s (Pocket), 1.717–1.761 s (BlockPI) and 4.392–4.503 s (Sentio). A command-line OPTIONS request to Blockscout got HTTP 403 without CORS headers; loopback controls saw OPTIONS and POST on the allow route and only OPTIONS on the deny route. Samples ran serially, rotating provider order and alternating mode.
+Medians of three fresh and three resume runs per endpoint, 2026-11-26 19:33 UTC, revision `9ba009890e71f3509489ffe5365cbc733264bf6f`. Every completion found both synthetic matches. All 204 requests got readable HTTP responses. Fresh catch-up ranged 1.566–2.523 s on Pocket, 1.717–1.761 s on BlockPI and 4.392–4.503 s on Sentio. A command-line OPTIONS request to Blockscout got HTTP 403 without CORS headers.
 
 ## Method
 
-- Base blocks 62,241,130–62,246,129 in 500-block windows. Resume starts at 62,244,130 from a preseeded localStorage cursor. Both modes check chain ID and the pinned head and stop on the first error.
-- PublicNode (200-block windows) and Tenderly (173) agreed on the [pinned head and both canonical logs](../data/browser-discovery/reference.json), which receipts corroborate and which fall in the resume range. Comparison uses block number, block hash, transaction hash and log index.
-- A seeded fixture ([seed](../METHODS.md#names-in-recorded-data)) places two matches and two decoys in blocks 62,244,879 and 62,245,879, in local arrays. The SDK checks ownership locally. No receipts, balances or transactions.
-- Catch-up runs from cursor read to final write. Browser fetch runs from fetch to body read, preflight included, without parse or scan. Counts are attempted POSTs.
+The range is Base blocks 62,241,130–62,246,129 in 500-block windows. Resume starts at block 62,244,130 from a preseeded cursor. PublicNode and Tenderly agreed on the [pinned head and both canonical logs](../data/browser-discovery/reference.json), which fall in the resume range. A seeded fixture adds two matches and two decoys at blocks 62,244,879 and 62,245,879. Catch-up runs from cursor read to final write. Browser fetch runs from fetch to body read, preflight included.
 
 ## Reproduce
 
-[Browser runs](../METHODS.md#browser-runs), server port 8764, with access to public Base RPCs.
+These are [browser runs](../METHODS.md#browser-runs) on server port 8764.
 
 ```sh
 mkdir -p results/browser-discovery-replay

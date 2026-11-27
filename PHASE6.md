@@ -61,6 +61,8 @@ Warm time: the loop kept only larger pages (8, 16, then 32 windows). Prefetch an
 
 [Bytes log](data/phase6/autoresearch/feed-bytes.jsonl) · [Warm log](data/phase6/autoresearch/warm-time.jsonl) · [Interleaved check](data/phase6/autoresearch/confirm.txt) · [Baseline params](data/phase6/autoresearch/baseline.params.json)
 
+Prior work, OMR crossover and feed integrity: [FINDINGS.md](FINDINGS.md#prior-work-and-omr-crossover).
+
 ## Scope and method
 
 - The [Phase 5 reference](data/phase5/reference.json) pins 68 selected 1,000-block windows, 48 logs and Base head 46,544,281. The windows cover 68,000 blocks with gaps and include all 48 known Daybreak omissions. Both paths scan exactly those windows in 17 groups of four.

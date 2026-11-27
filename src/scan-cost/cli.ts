@@ -4,6 +4,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 import { generateFixture } from '../shared/fixtures.ts';
+import { median as medianOf } from '../shared/stats.ts';
 import { SDK_COMMIT, SDK_VERSION, type Engine, type WorkerOptions } from '../shared/model.ts';
 
 const root = fileURLToPath(new URL('../..', import.meta.url));
@@ -123,10 +124,8 @@ function summarize(samples: Sample[]) {
     const first = group[0];
     if (!first) throw new Error('Cannot summarize an empty sample group');
     const times = group.map(sample => sample.scanMs).sort((a, b) => a - b);
-    const lower = times[Math.floor((times.length - 1) / 2)];
-    const upper = times[Math.floor(times.length / 2)];
-    if (lower === undefined || upper === undefined) throw new Error('Missing timing sample');
-    const median = (lower + upper) / 2;
+    const median = medianOf(times);
+    if (median === null) throw new Error('Missing timing sample');
     return {
       count: first.count,
       case: first.matchEvery === 0 ? 'zero' : 'sparse',

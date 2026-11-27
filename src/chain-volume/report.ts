@@ -6,6 +6,7 @@ import { CHAINS } from './chains.ts';
 import type { EndpointProbe } from './probe.ts';
 import { classifyError } from './rpc.ts';
 import { compareSets, parseKeyed } from './retrieve.ts';
+import { median } from '../shared/stats.ts';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Json = any;
@@ -28,13 +29,6 @@ export const spanLabel = (probe: EndpointProbe) => {
   if (probe.range.unbounded) return `whole history (${probe.range.maxOk})`;
   return String(probe.range.maxOk);
 };
-
-function median(values: number[]): number | null {
-  if (values.length === 0) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 ? sorted[mid] ?? null : ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2;
-}
 
 const fmt = (n: number | null | undefined, digits = 0) => (n === null || n === undefined ? '-' : n.toLocaleString('en-US', { maximumFractionDigits: digits }));
 

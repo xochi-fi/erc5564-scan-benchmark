@@ -1,4 +1,4 @@
-import { mkdir, readdir, readFile, rename } from 'node:fs/promises';
+import { mkdir, readFile, rename } from 'node:fs/promises';
 import { hostname, release } from 'node:os';
 import { generateFixture } from '../shared/fixtures.ts';
 import { decodeAnnouncements, type RawLog } from '../shared/raw-logs.ts';
@@ -6,6 +6,7 @@ import { getAnnouncementsForUser } from '@scopelift/stealth-address-sdk';
 import { filter, hex } from '../shared/announcer.ts';
 import { rpc, scope } from '../shared/base-windows.ts';
 import { compact, digest, endpoint, expand, loadReference, warmPage, type Feed } from './feed.ts';
+import { waitForCooldown } from '../shared/host.ts';
 
 const [output] = Bun.argv.slice(2);
 if (!output || !/^(bazzite|turing-node-[123])$/.test(hostname())) {
@@ -222,22 +223,7 @@ async function scan(name: string, mode: Mode, urls: URL[], limit = feed.primary.
 }
 
 const cooldownC = Number(process.env.COOLDOWN_C ?? 70);
-async function maxThermalC() {
-  const zones = (await readdir('/sys/class/thermal').catch(() => [])).filter(zone => zone.startsWith('thermal_zone'));
-  const temps = await Promise.all(zones.map(zone => Bun.file(`/sys/class/thermal/${zone}/temp`).text()
-    .then(Number, () => NaN)));
-  const valid = temps.filter(Number.isFinite);
-  return valid.length ? Math.max(...valid) / 1000 : null;
-}
-async function thermalGate() {
-  const start = performance.now();
-  let maxC = await maxThermalC();
-  while (maxC !== null && maxC > cooldownC) {
-    await Bun.sleep(5_000);
-    maxC = await maxThermalC();
-  }
-  return { maxC, waitMs: performance.now() - start };
-}
+const thermalGate = () => waitForCooldown(cooldownC);
 async function cpus() {
   const allowed = (await Bun.file('/proc/self/status').text()).match(/^Cpus_allowed_list:\s*(\S+)$/m)?.[1] ?? null;
   const parts: Record<string, string> = { '0xd05': 'Cortex-A55', '0xd0b': 'Cortex-A76' };

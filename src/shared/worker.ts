@@ -18,6 +18,7 @@ import {
   type Recipient,
   type WorkerOptions,
 } from './model.ts';
+import { memorySnapshot } from './host.ts';
 
 const workerOptionsSchema = z.object({
   fixtureDir: z.string().min(1),
@@ -110,15 +111,6 @@ export async function scanAnnouncements(
     for (const announcement of batchMatches) matches.push(announcement);
   }
   return matches;
-}
-
-function memorySnapshot(): MemorySnapshot {
-  const memory = process.memoryUsage();
-  return {
-    rssBytes: memory.rss,
-    heapUsedBytes: memory.heapUsed,
-    externalBytes: memory.external,
-  };
 }
 
 async function environmentProvenance(): Promise<BenchmarkSample['environment']> {

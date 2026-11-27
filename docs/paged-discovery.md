@@ -84,8 +84,8 @@ The Pi nodes differ by up to 17% because of cooling. Nodes 1 and 2 reach 85–87
 
 | Host | Setup |
 | --- | --- |
-| Bazzite (32 GB; wallet cores 0,2,4,6, server 8,10) | Cold 100k sparse at 1/16/64/256 blocks and 1M sparse at 1/16/256. Catch-up on both histories at 1/16/256. `none` and `public`. Three repetitions, 78 samples, 5.1 h. |
-| Turing nodes 1–3 (wallet A76 cores 4–6, server 7) | Node 1: 8 GB, kernel 5.10. Nodes 2–3: 16 GB, kernel 6.1. Cold 100k sparse at 1/16/64/256 and catch-up at 1/16/256 on both profiles, plus 1M zero-match cold at 64 blocks on `none`. One repetition per node in parallel, 45 samples, ~2.2 h. The spread mixes run and node effects. |
+| Bazzite (wallet cores 0,2,4,6, server 8,10) | Cold 100k sparse at 1/16/64/256 blocks and 1M sparse at 1/16/256. Catch-up on both histories at 1/16/256. `none` and `public`. Three repetitions, 78 samples, 5.1 h. |
+| Turing nodes 1–3 (wallet A76 cores 4–6, server 7) | Kernel 5.10 on node 1, 6.1 on nodes 2–3. Cold 100k sparse at 1/16/64/256 and catch-up at 1/16/256 on both profiles, plus 1M zero-match cold at 64 blocks on `none`. One repetition per node in parallel, 45 samples, ~2.2 h. The spread mixes run and node effects. |
 
 - Each repetition shuffles its [matrix](../src/paged-discovery/matrix/) with the seed in `plan.json`, between 100k crypto controls. Hosts record temperature, CPU frequency, throttle state, swap traffic and memory PSI every 2 s. Turing waited up to 281 s for all zones below 70 C. Node 3 never waited.
 - The Bazzite gate (≥8 GiB available, ≤100 swap pages/s over 10 s, PSI some avg60 ≤1.0) passed at 18.2 GiB, 1.8 pages/s, PSI 0.00 and load 1.3, with 5.7 GiB of parked zram.
@@ -113,7 +113,7 @@ The single run on this host swapped heavily. Its 1M `none` totals at 1 and 16 bl
 
 ## Mainnet fetch-only probe
 
-One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`. Blocks 26,484,827–26,494,826 returned 14 announcements in 10 requests of 1000 blocks, 55–92 ms each, 1.1 KB per decoded log, brotli on the wire. Older ranges returned HTTP 403 "Archive requests require a personal token", which ended the probe under the no-credential rule. [`mainnet-fetch.json`](../data/paged-discovery/mainnet-probe/mainnet-fetch.json)
+One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, [canonical Announcer](chain-volume.md). Blocks 26,484,827–26,494,826 returned 14 announcements in 10 requests of 1000 blocks, 55–92 ms each, 1.1 KB per decoded log, brotli on the wire. Older ranges returned HTTP 403 "Archive requests require a personal token", which ended the probe under the no-credential rule. [`mainnet-fetch.json`](../data/paged-discovery/mainnet-probe/mainnet-fetch.json)
 
 ## Prior work and OMR crossover
 

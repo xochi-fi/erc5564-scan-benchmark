@@ -4,10 +4,10 @@ How long does a local ERC-5564 scan take? About 0.5 ms per announcement on an i7
 
 | Host | 100k before/after controls, s | 1M, s | 1M / 100k |
 | --- | --- | --- | --- |
-| Bazzite, i7-13700K, P-core threads 0,2,4,6, 32 GB | 48.531–51.951 | 519.084 | 9.99–10.70 |
-| Turing node 1, Cortex-A76 cores 4–7, 8 GB | 168.457–181.946 | 1804.305 | 9.92–10.71 |
+| Bazzite, P-core threads 0,2,4,6 | 48.531–51.951 | 519.084 | 9.99–10.70 |
+| Turing node 1, Cortex-A76 cores 4–7 | 168.457–181.946 | 1804.305 | 9.92–10.71 |
 
-Crypto engine, zero-match fixtures, unprofiled. Two 100k controls bracket the other runs. All 12 Linux runs matched the fixture oracle. Data: [`results.csv`](../data/scan-cost/results.csv), [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/), [`profiling-turing/`](../data/scan-cost/profiling-turing/).
+[Hardware](../README.md#hardware). Crypto engine, zero-match fixtures, unprofiled. Two 100k controls bracket the other runs. All 12 Linux runs matched the fixture oracle. Data: [`results.csv`](../data/scan-cost/results.csv), [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/), [`profiling-turing/`](../data/scan-cost/profiling-turing/).
 
 ## Retained working set
 
@@ -15,13 +15,13 @@ Each profile scans the same 100k prefix with the same keys and retains either 10
 
 | Host | Retain 100k, s | Retain 1M, s | Ratio |
 | --- | --- | --- | --- |
-| Apple M1, 8 GiB, shared development host | 52.734 | 161.425 | 3.06 |
+| Apple M1, shared development host | 52.734 | 161.425 | 3.06 |
 | Bazzite | 48.226 | 47.157 | 0.98 |
 | Turing node 1 | 180.607 | 180.927 | 1.00 |
 
 The M1 run recorded more page faults and system swap. Paging, compression, CPU placement, thermals or competing work could explain it. Scaling estimates use the Linux controls.
 
-## Initial sweep (Apple M1, 8 GiB)
+## Initial sweep (Apple M1)
 
 16 samples, all matching the oracle. Sparse cases found 100 and 1,000 announcements. One repetition per configuration, 1,000-entry incremental batches, no explicit warmup.
 

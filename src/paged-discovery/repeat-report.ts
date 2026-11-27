@@ -5,6 +5,7 @@ import { parseArgs } from 'node:util';
 import type { WalletSample } from './model.ts';
 import { spread, type Spread } from './repeat.ts';
 import { summaryRow, type HostMonitor, type SummaryRow } from './sweep.ts';
+import { readJsonl } from '../shared/host.ts';
 
 /** A sample is tainted when the host swapped or was under memory pressure while it ran. */
 export const SWAP_PAGES_PER_S_LIMIT = 100;
@@ -27,16 +28,6 @@ interface SampleRow extends SummaryRow {
   maxMemoryPsiAvg10: number | null;
   swapUsedMiB: number | null;
   tainted: boolean;
-}
-
-async function jsonl(path: string): Promise<Record<string, unknown>[]> {
-  try {
-    const text = await readFile(path, 'utf8');
-    return text.split('\n').filter(Boolean).map(line => JSON.parse(line) as Record<string, unknown>);
-  } catch (error) {
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return [];
-    throw error;
-  }
 }
 
 const num = (value: unknown): number | null => (typeof value === 'number' && Number.isFinite(value) ? value : null);
@@ -160,7 +151,7 @@ async function main(): Promise<void> {
     for (const sweep of (await readdir(dir, { withFileTypes: true })).filter(d => d.isDirectory()).map(d => d.name).sort()) {
       const runJson = JSON.parse(await readFile(join(dir, sweep, 'run.json'), 'utf8')) as Record<string, unknown>;
       const cpus = walletCpus(runJson);
-      for (const record of await jsonl(join(dir, sweep, 'samples.jsonl'))) {
+      for (const record of await readJsonl(join(dir, sweep, 'samples.jsonl'))) {
         const sample = { ...(record as unknown as WalletSample), pages: [] };
         const summary = summaryRow(sample);
         rows.push({
@@ -169,7 +160,7 @@ async function main(): Promise<void> {
           ...hostFields(record, cpus, gateOverridden),
         });
       }
-      for (const control of await jsonl(join(dir, sweep, 'controls.jsonl'))) {
+      for (const control of await readJsonl(join(dir, sweep, 'controls.jsonl'))) {
         const fields = hostFields(control, cpus, gateOverridden);
         controls.push({
           host, run, sweep, node: fields.node, label: control.label,

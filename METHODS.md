@@ -4,7 +4,7 @@
 
 ## Software
 
-ScopeLift's [`@scopelift/stealth-address-sdk`](https://github.com/ScopeLift/stealth-address-sdk) `1.0.0-beta.5` (npm `gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2)), unmodified, on [Bun](https://bun.sh) 1.4.4, the `packageManager` version. Other Bun versions run but are recorded as a different environment.
+Versions are pinned in `package.json`: the SDK in `dependencies` and Bun in `packageManager`. The [SDK](https://github.com/ScopeLift/stealth-address-sdk) is unmodified, npm `gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2). Other Bun versions run but are recorded as a different environment.
 
 ## Synthetic fixtures
 
@@ -118,13 +118,9 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 ## Commands
 
-```sh
-bun install --frozen-lockfile
-bun run check   # tsc --noEmit
-bun test        # no network, no mocks
-```
+Setup, type check and tests: [Quickstart](README.md#quickstart).
 
-Each experiment doc ends with its own commands. Scan cost and paged discovery write new directories under ignored `results/` or `work/`. Chain volume writes to `data/chain-volume/` by default and overwrites recorded files, so pass `--output results/<run>` on every stage for a separate run. A run exits nonzero if any sample misses the fixture oracle. Keep the large workloads out of ordinary CI.
+Each experiment doc ends with its own commands. Scan cost and paged discovery write new directories under ignored `results/` or `work/`. Chain volume overwrites recorded data by default ([Reproduce](docs/chain-volume.md#reproduce)). A run exits nonzero if any sample misses the fixture oracle. Keep the large workloads out of ordinary CI.
 
 ## Repository layout
 
@@ -140,7 +136,6 @@ Each experiment doc ends with its own commands. Scan cost and paged discovery wr
 | `test/` | `bun test` suites and recorded fixtures |
 | `data/<experiment>/` | Recorded results ([data/README.md](data/README.md)) |
 | `docs/<experiment>.md` | Results per experiment |
-| `FINDINGS.md`, `PHASE*.md` | Redirects to the old paths |
 
 ## Caveats for synthetic experiments
 

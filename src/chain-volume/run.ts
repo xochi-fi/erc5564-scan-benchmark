@@ -8,13 +8,13 @@ import { CHAINS, chainByKey, endpointsFromChainlist, type ChainConfig, type Endp
 import { PoliteHttp, USER_AGENT, type Transport } from './http.ts';
 import { blockscoutDeploy, blockscoutHead, blockscoutV2Logs, etherscanHead, etherscanLogs, type IndexerRun } from './indexers.ts';
 import { codeSchema, findDeployBlock, probeEndpoint, type EndpointProbe } from './probe.ts';
-import { percentile } from './range-search.ts';
 import { compareSets, formatKeyed, parseKeyed, retrieveHistory, type RetrieveOptions, type RetrieveResult } from './retrieve.ts';
 import { CANONICAL, UMBRA, getLogsParams, quantity, rpcLogsSchema, rpc, toHex, type LogFilter } from './rpc.ts';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Json = any;
 import { buildReport } from './report.ts';
+import { percentile } from '../shared/stats.ts';
 
 const CHAINLIST_URL = 'https://chainlist.org/rpcs.json';
 

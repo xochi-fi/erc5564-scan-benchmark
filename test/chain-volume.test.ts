@@ -4,7 +4,8 @@ import { endpointExclusion, endpointsFromChainlist } from '../src/chain-volume/c
 import { isCloudflareChallenge, parseRetryAfter, type HttpResult, type Transport } from '../src/chain-volume/http.ts';
 import { parseEtherscanLogs, parseV2Page, etherscanLogs, blockscoutV2Logs } from '../src/chain-volume/indexers.ts';
 import { findDeployBlock } from '../src/chain-volume/probe.ts';
-import { percentile, searchMaxRange } from '../src/chain-volume/range-search.ts';
+import { searchMaxRange } from '../src/chain-volume/range-search.ts';
+import { percentile } from '../src/shared/stats.ts';
 import { compareSets, retrieveHistory } from '../src/chain-volume/retrieve.ts';
 import { ANNOUNCEMENT_TOPIC, ANNOUNCER, classifyError, interpretRpc, parseLimitHint, quantity, rpcLogsSchema } from '../src/chain-volume/rpc.ts';
 

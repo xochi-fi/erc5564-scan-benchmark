@@ -86,9 +86,3 @@ export async function searchMaxRange(
   }
   return { maxOk, minFail, unbounded: false, steps };
 }
-
-export function percentile(values: number[], fraction: number): number | null {
-  if (values.length === 0) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.min(sorted.length - 1, Math.max(0, Math.ceil(fraction * sorted.length) - 1))] ?? null;
-}

@@ -86,6 +86,7 @@ Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts) with the
 | Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](../data/shared-feed/autoresearch/warm-time.params.json) |
 
 ![Response bytes for feed pages and RPC payloads, with the format search](figures/feed-bytes.svg)
+<sub>Decoded body bytes without headers or framing, median of three samples. RPC is live Tenderly; feeds are two loopback origins built from the RPC-recovery captures. Optimized is the search's best kept params, 65.8% smaller raw and 23.8% smaller under gzip; RPC gzip was not measured. Lower panel: one source's cold pages per keep/revert iteration (13 iterations); step names are in the bytes log below. Data: `data/shared-feed/summary.json`, `evidence.json`, `autoresearch/feed-bytes.jsonl`.</sub>
 
 The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4.
 

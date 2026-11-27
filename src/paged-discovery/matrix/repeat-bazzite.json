@@ -1,0 +1,9 @@
+{
+  "description": "Paged-discovery repeats behind findings 1-5 on Bazzite: 100k and 1M sparse cold rescans, 64-block catch-up, none vs public.",
+  "entries": [
+    { "fixture": "100000-sparse", "scenarios": ["cold"], "profiles": ["none", "public"], "pages": [1, 16, 64, 256] },
+    { "fixture": "1000000-sparse", "scenarios": ["cold"], "profiles": ["none", "public"], "pages": [1, 16, 256] },
+    { "fixture": "100000-sparse", "scenarios": ["catchup"], "profiles": ["none", "public"], "pages": [1, 16, 256] },
+    { "fixture": "1000000-sparse", "scenarios": ["catchup"], "profiles": ["none", "public"], "pages": [1, 16, 256] }
+  ]
+}

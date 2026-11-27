@@ -1,0 +1,8 @@
+{
+  "description": "Paged-discovery repeats behind findings 1-5 on a Turing Pi node: 100k sparse cold and catch-up, plus the 1M zero-match cold rescan.",
+  "entries": [
+    { "fixture": "100000-sparse", "scenarios": ["cold"], "profiles": ["none", "public"], "pages": [1, 16, 64, 256] },
+    { "fixture": "100000-sparse", "scenarios": ["catchup"], "profiles": ["none", "public"], "pages": [1, 16, 256] },
+    { "fixture": "1000000-zero", "scenarios": ["cold"], "profiles": ["none"], "pages": [64] }
+  ]
+}

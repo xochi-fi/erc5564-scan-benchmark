@@ -5,13 +5,13 @@
   "type": "module",
   "packageManager": "bun@1.4.4",
   "scripts": {
-    "bench": "bun run src/cli.ts",
-    "profile": "bun run src/profile.ts",
+    "bench": "bun run src/scan-cost/cli.ts",
+    "profile": "bun run src/scan-cost/profile.ts",
     "check": "tsc --noEmit",
     "test": "bun test",
-    "phase2": "bun run src/phase2/sweep.ts",
-    "phase2:mainnet": "bun run src/phase2/mainnet.ts",
-    "phase3": "bun run src/phase3/run.ts"
+    "paged-discovery": "bun run src/paged-discovery/sweep.ts",
+    "paged-discovery:mainnet": "bun run src/paged-discovery/mainnet.ts",
+    "chain-volume": "bun run src/chain-volume/run.ts"
   },
   "dependencies": {
     "@noble/secp256k1": "2.3.0",

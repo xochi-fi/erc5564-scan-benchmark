@@ -12,5 +12,5 @@
     "skipLibCheck": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "scripts/phase4/**/*.ts", "scripts/phase5/**/*.ts", "scripts/phase6/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }

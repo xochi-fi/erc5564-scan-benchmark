@@ -4,8 +4,7 @@ const sources = [
   { url: 'https://base-rpc.publicnode.com', span: 200 },
   { url: 'https://gateway.tenderly.co/public/base', span: 173 },
 ];
-// The two reference hosts are independent providers. Keep Tenderly-operated
-// reference hosts out of the measured endpoint matrix.
+// Reference providers are outside the browser endpoint matrix.
 const file = Bun.argv[2];
 if (!file || await Bun.file(file).exists()) throw new Error('Pass a new reference output path');
 type Raw = LogIdentity & { address: string; topics: string[]; data: string; removed?: boolean };

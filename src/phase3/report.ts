@@ -70,7 +70,7 @@ export async function buildReport(out: string): Promise<void> {
     }
     const usable = probes.filter(p => p.status === 'usable');
     const fullArchive = usable.filter(p => p.servesDeployBlock === true);
-    // Spans only for endpoints that serve the deploy block: a recent-only endpoint's "span" is its window, not a range limit.
+    // Only historical endpoints contribute to the span summary.
     const spans = fullArchive.map(p => (p.range?.unbounded ? Number.POSITIVE_INFINITY : p.range?.maxOk ?? 0));
     const finite = spans.filter(Number.isFinite);
     const unbounded = spans.length - finite.length;

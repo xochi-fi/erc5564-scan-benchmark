@@ -1,10 +1,8 @@
 # Phase 4 — Base browser wallet discovery
 
-On Bazzite, resuming from a saved cursor halved browser RPC calls and roughly halved median catch-up time on the three endpoints that completed. All 18 completed samples retrieved both expected canonical Base logs exactly and found both synthetic matches. The other 18 samples stopped on a readable HTTP error.
-
 ## Results
 
-Three fresh and three resume attempts per endpoint on 2026-11-26 at 19:33–19:34 UTC. Times below are medians in seconds, shown as fresh / resume. Browser measurements used Chromium 150 in Orca's Electron 43.8.10 on Bazzite 45 with an Intel Core i7-13700K, based on merged main at `9ba009890e71f3509489ffe5365cbc733264bf6f`.
+Three fresh and three resume attempts per endpoint on 2026-11-26, 19:33–19:34 UTC. Times are medians in seconds (fresh / resume). Chromium 150, Orca Electron 43.8.10, Bazzite 45, Intel i7-13700K, revision `9ba009890e71f3509489ffe5365cbc733264bf6f`.
 
 | Endpoint | Completed | First fixture match (s) | Catch-up (s) | Browser fetch (s) | RPC calls | Real completeness |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -15,20 +13,20 @@ Three fresh and three resume attempts per endpoint on 2026-11-26 at 19:33–19:3
 | dRPC | 0/6 | — | — | 0.354 / 0.348 | 3 / 3 | 0/2 observed before HTTP 400 on the first log page. The RPC body reported a 100-block free-plan limit |
 | Blockscout RPC | 0/6 | — | — | 0.115 / 0.119 | 1 / 1 | 0/2 observed before HTTP 429 on chain ID |
 
-Across **204 browser RPC fetches**, all reached readable HTTP responses, so the measured suite had **0 CORS failures and 0 unresolved fetch rejections**. Base public RPC's HTTP 429 included JSON-RPC code `-32011`. dRPC's HTTP 400 included JSON-RPC code `35`. Blockscout's browser response exposed an HTTP 429 with a rate-limit message. A separate command-line OPTIONS diagnostic encountered a Cloudflare HTTP 403 without CORS headers for Blockscout. The two observations describe different clients at different times. The local CORS controls recorded OPTIONS and POST for the allowed route and OPTIONS alone for the denied route, which rejected in browser JavaScript.
+All 18 completions found both canonical logs and both synthetic matches. The 204 browser RPC attempts yielded readable HTTP responses. An independent command-line OPTIONS request to Blockscout returned HTTP 403 without CORS headers. Loopback CORS controls logged OPTIONS and POST on the allow route and only OPTIONS on the denied route.
 
-Pocket fresh varied most across repeats, with catch-up ranging from 1.566 to 2.523 s. BlockPI ranged from 1.717 to 1.761 s and Sentio from 4.392 to 4.503 s. These are three serial samples per mode and provider on one machine and network with a single isolated browser profile. Endpoint order rotated and fresh/resume order alternated. Connection reuse and Chromium's CORS preflight cache can affect wall-clock times.
+Fresh catch-up ranges were 1.566–2.523 s (Pocket), 1.717–1.761 s (BlockPI), and 4.392–4.503 s (Sentio). One isolated profile ran the samples serially. Provider order rotated and mode order alternated. Connection and preflight caches may affect timing.
 
 ## Scope and timing
 
-- Fresh started at Base block **62,241,130** and used 10 sequential pages of 500 blocks. Resume read a preseeded localStorage cursor at **62,244,129**, then started at **62,244,130** and used four pages. Both stopped at fixed head **62,246,129**. Every run cleared prior benchmark cursor state, then restored the cursor only for resume. Both also attempted chain ID and historical head hash checks. The benchmark stopped at the first failure under this fixed, no-retry page policy.
-- PublicNode and Tenderly, neither in the browser endpoint matrix, independently scanned the full range in 200- and 173-block pages. They agreed on the pinned head hash `0x52970c9a17a278f7da13d0e6a30f464652339bd7b157341f5435ed77f108f0e0` and the exact identities of both canonical ERC-5564 logs, and checked each log against its transaction receipt. Browser equality used block number, block hash, transaction hash, and numeric log index, with missing, extra and duplicate checks. Fresh and resume were compared against their respective inclusive ranges. Both reference logs fall in the resume range. Cross-provider agreement is evidence for this range and these two logs; the benchmark does not establish completeness across Base history.
-- The existing synthetic generator used seed `phase4:base:browser:v1` and produced two matches and two decoys. The browser scanned these in separate arrays after processing the corresponding live page. It timed the SDK's first synthetic match when that page became available. Both modes had the same first-match block, **62,244,879**, and second-match block, **62,245,879**. No live log matched the synthetic recipient, so real time to first match is unavailable. Verification measured here is the SDK ownership check. The browser did no receipt or balance verification and sent no transactions.
-- Catch-up time starts just before reading the cursor and stops after scanning and writing the fixed-head cursor. Browser fetch time is the sum of fetch-to-body-complete intervals, including any preflight wait inside the fetch. It excludes JSON parse and local scan time, and it includes browser scheduling, connection, and server response time. RPC count means JavaScript POST fetch attempts, with OPTIONS and localhost requests excluded. Individual Chromium resource timings, when exposed, are preserved without inferring wire-level phase times from zeros.
+- Base blocks 62,241,130–62,246,129, in 500-block windows. Resume starts at 62,244,130 from a preseeded localStorage cursor. Both modes check chain ID and pinned head and stop on the first error.
+- PublicNode and Tenderly independently used 200- and 173-block windows. They agreed on the [pinned head and both canonical logs](data/phase4/reference.json). Receipts corroborated the logs. Both logs fall in the resume range. Browser comparisons used block number, block hash, transaction hash and log index, including missing, extra and duplicate checks.
+- Seed `phase4:base:browser:v1` placed two matches and two decoys in separate local arrays. The match blocks were 62,244,879 and 62,245,879. The SDK checked ownership locally. There were no canonical matches for the synthetic recipient, receipt or balance checks during the browser run, or transactions.
+- Catch-up covers cursor read through the final write. Browser fetch time covers fetch through body read, including preflight wait, and excludes JSON parse and scan. Counts are attempted RPC POSTs. Resource timings are recorded when Chromium exposes them.
 
 ## Reproduce on Bazzite
 
-Use Bun 1.4.4 and the Orca desktop app with its CLI available on Bazzite. Run from the repository’s Orca worktree. The live replay needs network access to public Base RPCs and uses the saved reference for the same fixed identities.
+Use Bun 1.4.4 and Orca on Bazzite. Run from the Orca worktree with access to public Base RPCs.
 
 ```sh
 bun install --frozen-lockfile

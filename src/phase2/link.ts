@@ -44,11 +44,7 @@ interface QueuedChunk {
   after?: () => void;
 }
 
-/**
- * One direction of the emulated access link, shared by every connection.
- * Delivery time = max(arrival, linkFreeAt) + bytes / bandwidth + latency.
- * Chunks are delivered strictly in FIFO order.
- */
+// FIFO delivery time is max(arrival, linkFreeAt) + bytes / bandwidth + latency.
 export class ShapedDirection {
   bytes = 0;
   private linkFreeAt = 0;
@@ -101,8 +97,7 @@ export class ShapedDirection {
   private flush(): void {
     this.timer = null;
     const now = performance.now();
-    // Deliver everything due; timer granularity error is not accumulated because
-    // deliverAt times are absolute.
+    // Absolute delivery times avoid accumulating timer drift.
     while (this.queue.length > 0) {
       const head = this.queue[0];
       if (head === undefined || head.deliverAt > now + 0.05) break;
@@ -128,11 +123,7 @@ interface ClientState {
   closed: boolean;
 }
 
-/**
- * TCP proxy between the wallet and the JSON-RPC server. Counts TCP payload
- * bytes in each direction (HTTP headers and bodies; not TCP/IP framing) and
- * applies the link profile.
- */
+// Count TCP payload bytes, including HTTP headers, through the shaped proxy.
 export function startLinkEmulator(upstreamPort: number, profile: LinkProfile): LinkEmulator {
   const uplink = new ShapedDirection(profile.oneWayLatencyMs, profile.uplinkBytesPerSecond);
   const downlink = new ShapedDirection(profile.oneWayLatencyMs, profile.downlinkBytesPerSecond);

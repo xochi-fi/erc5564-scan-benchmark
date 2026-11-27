@@ -1,8 +1,3 @@
-/**
- * Aggregates phase-2 host result directories into one CSV and a Markdown table.
- * Usage: bun run src/phase2/report.ts --host LABEL=DIR [--host LABEL=DIR ...] --csv OUT.csv --md OUT.md
- * Each DIR is a scripts/phase2-run.sh output (subdirectories with samples.jsonl / controls.jsonl).
- */
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';

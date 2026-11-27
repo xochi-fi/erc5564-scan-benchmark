@@ -1,11 +1,4 @@
-/**
- * A realistic keyless wallet history fetch: walk [deployBlock, head] with
- * eth_getLogs, halving the span on range/result/timeout errors, growing it
- * again after successes, retrying transient errors with backoff, and falling
- * back to the next endpoint when one keeps failing. A checkpoint (the next
- * block to fetch) only advances past a window once that window succeeded, so
- * an interruption can never skip history.
- */
+// Advance the checkpoint only after a successful window.
 import type { Transport } from './http.ts';
 import { CANONICAL, getLogsParams, logKey, rpc, rpcLogsSchema, type ErrorKind, type LogFilter, type RpcLog } from './rpc.ts';
 

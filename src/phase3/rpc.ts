@@ -85,9 +85,9 @@ export function classifyError(message: string, httpStatus: number, opts: { chall
   if (httpStatus === 429) return RANGE_PATTERNS.some(pattern => pattern.test(message)) && !/rate|too many requests/i.test(message) ? 'range-limit' : 'rate-limit';
   if (/cloudflare-1xxx-errors|error code: 10\d\d/i.test(message)) return 'blocked';
   const test = (patterns: RegExp[]) => patterns.some(pattern => pattern.test(message));
-  // A load-balanced backend that is a few blocks behind: transient, not a range limit.
+  // A lagging backend is a transient failure.
   if (/beyond (the )?current head|after last accepted|header not found|unknown block/i.test(message)) return 'other';
-  // Order matters: range/result messages often also say "limit" or "exceeded".
+  // Check range and result limits before rate limits.
   if (test(RESULT_PATTERNS)) return 'result-limit';
   if (test(RANGE_PATTERNS)) return 'range-limit';
   if (test(RATE_PATTERNS)) return 'rate-limit';

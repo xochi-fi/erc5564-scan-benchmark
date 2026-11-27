@@ -89,7 +89,7 @@ async function run({ name, mode, reference, endpoints }: Input) {
   const initialNext = checkpoint.next;
   const lastStarts = new Map<string, number>();
   const invoke = async <T>(endpoint: string, method: string, params: unknown[]) => {
-    // Match Phase 3's public per-host request policy. Loopback fixtures have no throttle.
+    // Pace public hosts only.
     if (!endpoint.startsWith('http://127.0.0.1:')) {
       const delay = (lastStarts.get(endpoint) ?? 0) + 270 - performance.now();
       if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));

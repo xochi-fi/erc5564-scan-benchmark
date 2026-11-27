@@ -1,12 +1,4 @@
-/**
- * Aggregates repeated phase-2 runs into per-setting median / min / max.
- *
- * Usage: bun run src/phase2/repeat-report.ts --host LABEL=RUNDIR [--host LABEL=RUNDIR ...]
- *          [--samples-csv OUT.csv] [--csv OUT.csv] [--md OUT.md]
- * A RUNDIR is one scripts/phase2-run.sh output (sweep subdirectories with samples.jsonl /
- * controls.jsonl). Several RUNDIRs may share a LABEL (e.g. one per Turing node); the node of
- * every sample is taken from its recorded hostname.
- */
+// Aggregate per-host and per-node samples into median, min and max.
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';

@@ -1,12 +1,10 @@
 # Phase 1: local scanning baseline
 
-Local cryptographic scanning scaled roughly linearly on both Linux hosts, with elliptic-curve arithmetic dominating CPU cost. The Apple M1 slowed down with a larger retained fixture.
-
 Fresh Bun 1.4.4 processes scanned deterministic fixtures with ScopeLift SDK 1.0.0-beta.5 and frozen dependencies. Timings cover allocation and automatic GC during the scan. [Measurement boundaries](METHODS.md#measurement-boundary) · [Paged discovery](FINDINGS.md)
 
 ## Unprofiled scaling controls (crypto engine, zero-match)
 
-The 100k crypto controls bracket the other measurements. Ranges span two observations. All 12 Linux runs matched the fixture oracle.
+Two 100k controls bracket the other measurements. All 12 Linux runs matched the fixture oracle.
 
 | Host and CPU affinity | 100k before/after, s | 1m, s | 1m / 100k |
 | --- | --- | --- | --- |
@@ -33,9 +31,7 @@ The larger M1 run recorded more page faults and system swap. Paging, compression
 
 ## Initial scale sweep (Apple M1, 8 GiB)
 
-All 16 samples verified exact matches: zero-case results were empty; sparse cases
-returned 100 and 1000 announcements. One repetition per engine/mode/case, 1000-entry
-incremental batches, no explicit scan warmup.
+All 16 samples matched the fixture oracle. Sparse cases found 100 and 1,000 announcements. One repetition per configuration, 1,000-entry incremental batches, no explicit warmup.
 
 | Announcements | Scan duration across eight scenarios | Process-lifetime peak RSS |
 | --- | --- | --- |
@@ -49,16 +45,7 @@ Ranges span engines, modes and match cases. RSS includes loading and validation.
 - Elliptic-curve point addition and modular reduction (the noble `add` and `M`
   functions) account for about 83-85% of sampled self hits in the Linux million-entry
   profiles. See `functions.txt` under `data/phase1/profiling-*/`.
-- Recorded GC collection spans sum to about 0.1% of wall time in those profiles. They
-  include concurrent phases and are not stop-the-world pause totals.
-- Benchmark-process swap was zero at the Linux before/after snapshots, but Bazzite had
-  other workload and host-wide swap activity. Neither host was reserved; CPU affinity
-  does not reserve cores.
-- These are reference-implementation observations, not browser/mobile predictions,
-  statistical guarantees, or an engine ranking.
-- Incremental mode still retains the whole fixture. Peak RSS includes loading and
-  validation; it is not a wallet minimum-RAM requirement.
-
-## Scope
-
-This local baseline supports matched private-discovery experiments. It leaves first-contact bootstrap, gas, recovery, private follow-up queries and spendable-balance checks unmeasured.
+- GC collection spans sum to about 0.1% of wall time, including concurrent phases.
+- Linux snapshots showed zero benchmark-process swap. Bazzite had other workloads and host-wide swap activity. Both hosts used shared cores.
+- Incremental mode retains the whole fixture. Peak RSS includes loading and validation.
+- Scope is local CLI scanning. Browser and mobile performance, first-contact bootstrap, gas, recovery, private follow-up queries and spendable-balance checks are outside scope.

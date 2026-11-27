@@ -1,9 +1,4 @@
-/**
- * Polite keyless HTTP for phase 3: one generic User-Agent, a per-host minimum
- * request interval (default 250 ms = 4 req/s), Retry-After-aware backoff on 429,
- * a hard timeout, byte and latency accounting, and Cloudflare-challenge
- * detection (recorded as "blocked", never worked around).
- */
+// Pace each host, honor Retry-After, and record Cloudflare challenges as blocked.
 
 export const USER_AGENT = 'erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)';
 

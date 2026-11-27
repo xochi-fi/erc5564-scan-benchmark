@@ -6,9 +6,7 @@ Results are medians [min–max] from three repetitions on 2026-11-25/26. Each fr
 
 Hosts are the i7-13700K Bazzite desktop and three Turing Pi 2 RK1 modules (RK3588, Cortex-A76). [Hardware](README.md#hardware)
 
-## Verdict on the five findings
-
-All five original findings held. Repeats refined the history-size effect on memory and the scan overhead of 1-block pages. [Repeat findings](#findings-repeat-medians-min-max) · [Original findings](#a-findings)
+## Repeat and single-run comparison
 
 Under heavy swapping, the Bazzite single-run 1M `none` totals at 1 and 16 blocks/page (565.2 and 521.3 s) were 3–5% above repeat ranges (536–539 and 506–516 s). Turing node 1 throttled and its 64–256-block totals fell in the slow half of the repeats. The single-run 1M `public` 1-block total (1731 s) was 3.5% below the repeat median (1791 s [1764–1826]).
 
@@ -199,7 +197,7 @@ bun run src/phase2/report.ts --host "bazzite=$BAZZITE_RUN" --host "turing-node-1
 
 # Appendix A: single-run results (2026-11-25, one repetition per configuration)
 
-The single run used the same hosts and pinning, Turing node 1 only, and fixed setting order. [Repeat verdict](#verdict-on-the-five-findings)
+The single run used the same hosts and pinning, Turing node 1 only, and fixed setting order. [Repeat verdict](#repeat-and-single-run-comparison)
 
 ## A. Controls (phase-1 crypto engine, 100k zero-match, unprofiled)
 

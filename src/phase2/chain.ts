@@ -48,12 +48,7 @@ export interface ChainIndex {
   file: FileHandle;
 }
 
-/**
- * Indexes a phase-1 fixture for serving: verifies the file SHA256 against the
- * manifest and block ordering, records line offsets and hash lookups. Log
- * bodies stay on disk and are read per request, so server memory is bounded
- * by the indexes, not the history.
- */
+// Verify the fixture digest and block order, then index on-disk log offsets.
 export async function indexFixture(fixtureDir: string): Promise<ChainIndex> {
   const manifest = await readManifest(fixtureDir);
   const path = join(fixtureDir, 'announcements.jsonl');
@@ -242,11 +237,7 @@ export class SyntheticChain {
   }
 }
 
-/**
- * Extracts the ETH amount from ABI-encoded Announcement data
- * (bytes ephemeralPubKey, bytes metadata) whose metadata is
- * viewTag(1) | 0xeeeeeeee(4) | token(20) | amount(32).
- */
+// Extract the amount from ETH transfer metadata in ABI-encoded Announcement data.
 export function metadataAmount(data: string): bigint {
   const hex = data.startsWith('0x') ? data.slice(2) : data;
   const metadataOffset = Number(BigInt(`0x${hex.slice(64, 128)}`)) * 2;

@@ -1,10 +1,3 @@
-/**
- * Phase 3: can a keyless wallet retrieve the full ERC-5564 Announcement history?
- *
- *   bun run phase3 --stage endpoints|reference|probe|retrieve|umbra|report|all [--chains ethereum,base] [--output data/phase3]
- *
- * Live network, read-only, no keys, polite (<= 4 req/s per host, backoff on 429).
- */
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -47,7 +40,6 @@ async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T, index: nu
   return results;
 }
 
-// ---------- stage: endpoints ----------
 interface EndpointsFile { source: string; fetchedAt: string; lastModified: string | null; sha256: string; chains: Record<string, EndpointCandidate[]> }
 
 async function stageEndpoints(transport: Transport, out: string): Promise<void> {
@@ -70,7 +62,6 @@ async function stageEndpoints(transport: Transport, out: string): Promise<void> 
   }
 }
 
-// ---------- stage: reference (indexers + volume) ----------
 export interface ReferenceFile {
   chain: string;
   measuredAt: string;
@@ -171,7 +162,6 @@ async function stageReference(transport: Transport, chain: ChainConfig, out: str
   await writeJson(join(out, tag, `reference-${chain.key}.json`), file);
 }
 
-// ---------- deploy block via eth_getCode bisection ----------
 async function deployByBisection(transport: Transport, endpoints: string[], head: number, address: string): Promise<{ block: number | null; source: string | null; notes: string[] }> {
   const notes: string[] = [];
   for (const url of endpoints) {
@@ -201,7 +191,6 @@ async function resolveDeploy(transport: Transport, chain: ChainConfig, out: stri
   return { block: bisect.block, source: bisect.source, notes: [...(ref?.deploy.notes ?? []), ...bisect.notes] };
 }
 
-// ---------- stage: probe ----------
 export interface ProbeFile { chain: string; measuredAt: string; deployBlock: number; deploySource: string | null; deployNotes: string[]; firstLog: { blockNumber: number; identity: string } | null; endpoints: EndpointProbe[] }
 
 async function stageProbe(transport: Transport, chain: ChainConfig, out: string): Promise<void> {
@@ -226,7 +215,6 @@ async function stageProbe(transport: Transport, chain: ChainConfig, out: string)
   await writeJson(join(out, 'probe', `${chain.key}.json`), file);
 }
 
-// ---------- stage: verify-deploy ----------
 /** Re-checks a deploy block on other endpoints: code at N, none at N-1 (guards against nodes that return 0x for pruned state). */
 async function stageVerifyDeploy(transport: Transport, chain: ChainConfig, out: string, address: string, tag: string): Promise<void> {
   const probe = await readJson<ProbeFile>(join(out, 'probe', `${chain.key}.json`));
@@ -250,12 +238,7 @@ async function stageVerifyDeploy(transport: Transport, chain: ChainConfig, out: 
   await writeJson(join(out, tag, `deploy-check-${chain.key}.json`), { chain: chain.key, address, deployBlock, confirmed, checks });
 }
 
-// ---------- stage: consistency ----------
-/**
- * For each endpoint that serves history, asks for windows around known announcements
- * (first, middle, last of the reference set) and records returned / empty / error.
- * "empty" is the dangerous case: no error, but a payment is missing.
- */
+// Probe the first, middle and last known announcements on each historical endpoint.
 async function stageConsistency(transport: Transport, chain: ChainConfig, out: string): Promise<void> {
   const probe = await readJson<ProbeFile>(join(out, 'probe', `${chain.key}.json`));
   const refPath = join(out, 'canonical', `reference-${chain.key}.json`);
@@ -269,7 +252,7 @@ async function stageConsistency(transport: Transport, chain: ChainConfig, out: s
       if (file?.result?.success) { rows = file.identities ?? []; source = `keyless RPC retrieval (${strategy})`; break; }
     }
     if (rows.length === 0) {
-      // No complete set yet: any announcement observed by any run is still a valid target.
+      // Every observed log can serve as a probe target.
       const seen = new Map<string, string>();
       for (const strategy of ['list-order', 'probe-informed', 'parallel']) {
         const r = join(out, 'canonical', `retrieve-${chain.key}-${strategy}.json`);
@@ -324,12 +307,7 @@ function mergeUses(parts: RetrieveResult[]): RetrieveResult['endpoints'] {
   return [...byUrl.values()];
 }
 
-// ---------- resumable state ----------
-/**
- * Partial retrieval state, written at most every 15 s and at each segment end, under
- * <output>/partial/ so a crash or kill loses at most a few windows. A rerun with the same
- * chain/strategy/segment start resumes from the saved checkpoint. Delete the file to start over.
- */
+// Save partial retrieval state every 15 seconds and at each segment end.
 const statePath = (out: string, tag: string, chain: string, strategy: string, segment: number) => join(out, 'partial', `${tag}-${chain}-${strategy}-${segment}.json`);
 
 async function loadState(out: string, tag: string, chain: string, strategy: string, segment: number, fromBlock: number): Promise<RetrieveOptions['resume'] | null> {
@@ -361,7 +339,6 @@ function saver(out: string, tag: string, chain: string, strategy: string, segmen
   };
 }
 
-// ---------- stage: retrieve ----------
 export interface RetrieveFile {
   chain: string; measuredAt: string; filter: LogFilter; strategy: string; endpointOrder: string[]; initialSpan: number;
   result: Omit<RetrieveResult, 'logs'> & { count: number; firstBlock: number | null; lastBlock: number | null; firstTime: string | null; lastTime: string | null };
@@ -416,10 +393,7 @@ async function stageRetrieve(transport: Transport, chain: ChainConfig, out: stri
     const state = await loadState(out, tag, chain.key, strategy, 0, deployBlock);
     result = await retrieveHistory(transport, { endpoints: order, filter, fromBlock: deployBlock, toBlock: head, initialSpan, maxRequests, maxMs: maxMinutes * 60_000, log, ...(state ? { resume: state } : {}), onCheckpoint: saver(out, tag, chain.key, strategy, 0, deployBlock, onCheckpoint) });
   } else {
-    // Work queue: the range is cut into CHUNKS contiguous chunks; one worker per distinct host
-    // (up to 4), each with the full fallback list rotated, pulls the next unfinished chunk. Fast
-    // endpoints therefore do most of the work. Each chunk's state is saved as it goes, so a rerun
-    // skips finished chunks and resumes partial ones. The plan (head, chunk size) is saved too.
+    // Hosts pull unfinished chunks with rotated fallback lists and saved cursors.
     const CHUNKS = 64;
     const hosts = [...new Map(order.map(url => [new URL(url).host, url])).values()];
     const planPath = join(out, 'partial', `${tag}-${chain.key}-parallel-plan.json`);
@@ -502,7 +476,6 @@ function bucketByBlock(blocks: number[], from: number, head: number, blockSecond
   return { blocksPer30d: per, buckets };
 }
 
-// ---------- main ----------
 async function main(): Promise<void> {
   const { values } = parseArgs({
     args: process.argv.slice(2), strict: true,

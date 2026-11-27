@@ -136,11 +136,7 @@ export interface VerificationResult {
   responseBodyBytes: number;
 }
 
-/**
- * The follow-up a wallet does for a candidate: the announcing transaction must
- * have a successful receipt containing exactly this Announcement log, and the
- * stealth address must hold at least the announced ETH amount.
- */
+// Check successful receipt inclusion and enough ETH at the stealth address.
 export async function verifyCandidate(client: RpcClient, announcement: AnnouncementLog): Promise<VerificationResult> {
   if (announcement.transactionHash === null || announcement.logIndex === null || announcement.blockHash === null || announcement.blockNumber === null) {
     throw new Error('candidate announcement lacks an on-chain identity');
@@ -219,11 +215,7 @@ export interface SyncResult {
   bytes: Omit<WalletSample['bytes'], 'wireUplink' | 'wireDownlink' | 'wireConnections'>;
 }
 
-/**
- * Wallet discovery loop: read head, then for each block page fetch logs,
- * decode, scan with the unmodified phase-1 engine, verify each candidate and
- * checkpoint the scan cache. Strictly sequential, so each cost is separable.
- */
+// Fetch, scan, verify and checkpoint one block page at a time.
 export async function syncWallet(params: SyncParams): Promise<SyncResult> {
   const { client, recipient, engine, pageBlocks, cachePath } = params;
   const t0 = performance.now();

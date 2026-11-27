@@ -63,7 +63,6 @@ async function call<T>(endpoint: string, method: string, params: unknown[]): Pro
   }
 }
 
-// Same ABI and mapping as phase 2. This page uses the SDK scanner directly.
 function decode(raw: RawLog): AnnouncementLog {
   const { args } = decodeEventLog({
     abi: ERC5564AnnouncerAbi, eventName: 'Announcement', data: raw.data, topics: raw.topics, strict: true,

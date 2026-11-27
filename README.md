@@ -8,15 +8,15 @@
 
 ## Findings
 
-1. 0.5 ms (i7), 1.7 ms (A76) per announcement: scanning is cheap.
-2. 28 minutes, 16,296 requests: Base keyless backfill. Other chains took seconds.
-3. 0 of 48: Base logs Daybreak returned, without error. Two sources recovered all.
-4. 38.8 ms vs 19.3 s: cold catch-up, two feeds vs live RPC.
+1. 0.5 ms (Bazzite), 1.7 ms (Turing) per announcement: scanning is cheap.
+2. 28 min, 16,296 requests: keyless Base backfill. Other chains take seconds.
+3. 0 of 48: Base announcements Daybreak returns, without error. Two providers recover all.
+4. 38.8 ms vs 19.3 s: cold rescan, two feeds vs live RPC.
 
 ![Outcome per strategy, fault and endpoint](docs/figures/outcome-matrix.svg)
-<sub>Hollow: one source, blind to omissions.</sub>
+<sub>Hollow: one provider, blind to omissions.</sub>
 
-![Requests against logs found, Base windows](docs/figures/cost-frontier.svg)
+![Requests against announcements found](docs/figures/cost-frontier.svg)
 <sub>Feeds on loopback.</sub>
 
 ![Scan time against announcements](docs/figures/scan-vs-volume.svg)

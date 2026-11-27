@@ -1,8 +1,8 @@
 # RPC recovery
 
-Can a browser wallet recover logs that a public RPC silently drops?
+Can a browser wallet recover announcements that a provider silently drops?
 
-Yes, in these windows: a two-provider cross-check recovered every log Daybreak dropped.
+Yes in these windows: a two-provider cross-check recovers every announcement Daybreak drops.
 
 <!-- generated:recovery-live -->
 | Live strategy | Accepted / expected logs | RPC POSTs | Third-provider pages | Wall time |
@@ -14,14 +14,14 @@ Yes, in these windows: a two-provider cross-check recovered every log Daybreak d
 | Tenderly + Sentio, Pocket on standby | 48 / 48 | 142 | 0 | 28.76 s |
 <!-- /generated:recovery-live -->
 
-One run per row, 2026-11-26 around 20:00 UTC, with no extra identities or transport errors. The Daybreak cross-check called Sentio on 39 mismatches and accepted 29 empty agreements.
+One run per row, 2026-11-26 at about 20:00 UTC, with no extra identities or transport errors. The Daybreak cross-check calls Sentio on 39 mismatches and accepts 29 empty agreements. POST counts include startup calls to every provider, standby included.
 
-![Logs accepted over wall time for each live strategy](figures/live-timeline.svg)
-<sub>Each step is a window committed with new logs.</sub>
+![Announcements accepted over wall time for each live strategy](figures/live-timeline.svg)
+<sub>Each step is a window committed with new announcements.</sub>
 
 ## Injected faults
 
-Loopback fixtures replay the frozen reference with injected faults, one loopback path per source.
+Loopback fixtures replay the frozen reference, with one loopback path per provider.
 
 <!-- generated:recovery-faults -->
 | Fixture | Committed windows | Missed in committed windows | Expected in pending windows | RPC POSTs | Third-provider pages | Elapsed |
@@ -36,23 +36,17 @@ Loopback fixtures replay the frozen reference with injected faults, one loopback
 | Resume after fallback recovers | 68 | 0 | 0 | 167 | 39 | 254.1 ms after resume |
 <!-- /generated:recovery-faults -->
 
-The mismatch-plus-error run stopped before blocks 41,623,282–41,624,281.
+The mismatch-plus-error run stops before blocks 41,623,282–41,624,281. Shared upstreams can agree falsely: the shared-omission run commits every window empty.
 
-## Scope
+## Windows
 
-In [chain volume](chain-volume.md#findings), Daybreak returned zero logs in 6,120 successful 2,000-block pages through block 46,544,281. The replay takes its 29 positive pages plus five empty controls, queried as is by the original-width row and split by the others into 68 windows of 1,000 blocks with 48 known logs.
+In [chain volume](chain-volume.md#findings), Daybreak returns no announcements in 6,120 successful 2,000-block pages through block 46,544,281. The replay takes its 29 non-empty pages plus five empty controls. The original-width row queries these 34 pages as is. The other rows split them into 68 windows of 1,000 blocks with 48 known announcements. Completeness holds for these windows only.
 
-Tenderly and Sentio scanned the ranges independently in 1,000- and 613-block steps and agreed on head hash, chain ID and all 48 receipt-checked identities.
+Tenderly and Sentio scanned the ranges independently, in 1,000- and 613-block steps, and agree on head hash, chain ID and all 48 receipt-checked identities.
 
 ## Method
 
-These are [browser runs](../METHODS.md#browser-runs). Single RPC commits any successful page. Cross-check calls a third provider on an error or disagreement and commits on two agreeing responses. POST counts include startup calls to every provider, standby included.
-
-Shared upstreams can still agree falsely: the shared-omission run committed every window empty. Completeness holds for these windows only.
-
-## Reproduce
-
-Server port 8784.
+These are [browser runs](../METHODS.md#browser-runs) on port 8784. Single RPC commits any successful page. Cross-check calls a third provider on an error or disagreement and commits on two agreeing responses.
 
 ```sh
 bun run rpc-recovery:serve data/rpc-recovery/reference.json results/rpc-recovery-replay

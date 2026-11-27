@@ -1,8 +1,8 @@
 # Browser discovery
 
-Can a browser wallet discover Base payments from keyless public RPCs?
+Can a browser wallet find Base payments through keyless providers?
 
-Three of six endpoints completed every run, and a saved cursor halved their requests.
+Three of six providers complete every run, and a saved checkpoint halves their requests.
 
 <!-- generated:browser-discovery -->
 | Endpoint | Completed | First fixture match (s) | Catch-up (s) | Browser fetch (s) | RPC calls | Real completeness |
@@ -15,15 +15,28 @@ Three of six endpoints completed every run, and a saved cursor halved their requ
 | Blockscout RPC | 0/6 | — | — | 0.115 / 0.119 | 1 / 1 | 0/2 seen before HTTP 429 on chain ID |
 <!-- /generated:browser-discovery -->
 
-Medians of three fresh and three resume runs per endpoint, 2026-11-26 19:33 UTC, revision `9ba009890e71f3509489ffe5365cbc733264bf6f`. Every completion found both synthetic matches. All 204 requests got readable HTTP responses. Fresh catch-up ranged 1.566–2.523 s on Pocket, 1.717–1.761 s on BlockPI and 4.392–4.503 s on Sentio. A command-line OPTIONS request to Blockscout got HTTP 403 without CORS headers.
+Medians of three fresh and three resume runs per provider, 2026-11-26 at 19:33 UTC, revision `9ba009890e71f3509489ffe5365cbc733264bf6f`. Every completed run also finds both synthetic matches. All 204 requests get readable HTTP responses.
+
+| Provider | Fresh catch-up range, s |
+| --- | --- |
+| Pocket | 1.566–2.523 |
+| BlockPI | 1.717–1.761 |
+| Sentio | 4.392–4.503 |
+
+A command-line OPTIONS request to Blockscout gets HTTP 403 without CORS headers.
 
 ## Method
 
-The range is Base blocks 62,241,130–62,246,129 in 500-block windows. Resume starts at block 62,244,130 from a preseeded cursor. PublicNode and Tenderly agreed on the [pinned head and both canonical logs](../data/browser-discovery/reference.json), which fall in the resume range. A seeded fixture adds two matches and two decoys at blocks 62,244,879 and 62,245,879. Catch-up runs from cursor read to final write. Browser fetch runs from fetch to body read, preflight included.
+| Item | Value |
+| --- | --- |
+| Range | Base blocks 62,241,130–62,246,129, 500-block pages |
+| Resume checkpoint | Block 62,244,130 |
+| Canonical announcements | 2, in the resume range; PublicNode and Tenderly agree ([reference](../data/browser-discovery/reference.json)) |
+| Synthetic matches and decoys | 2 each, blocks 62,244,879 and 62,245,879 |
+| Catch-up timer | Checkpoint read to final write |
+| Browser fetch timer | Fetch start to body read, preflight included |
 
-## Reproduce
-
-These are [browser runs](../METHODS.md#browser-runs) on server port 8764.
+These are [browser runs](../METHODS.md#browser-runs) on port 8764.
 
 ```sh
 mkdir -p results/browser-discovery-replay

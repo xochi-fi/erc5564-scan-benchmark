@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="772" viewBox="0 0 860 772" role="img" aria-label="Outcome of each strategy, injected fault and endpoint recheck">
+<title>Outcome of each strategy, injected fault and endpoint recheck</title>
+<style>
+  .bg { fill: #ffffff; }
+  .ink { fill: #1f2328; }
+  .muted { fill: #59636e; }
+  .grid { stroke: #d1d9e0; }
+  .axis { stroke: #818b98; }
+  .gap { stroke: #ffffff; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; }
+  .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; }
+  .band { fill: #818b98; fill-opacity: 0.16; }
+  .hollow { fill: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0d1117; }
+    .ink { fill: #f0f6fc; }
+    .muted { fill: #9198a1; }
+    .grid { stroke: #2f353d; }
+    .axis { stroke: #656c76; }
+    .gap { stroke: #0d1117; }
+    .s1 { fill: #3987e5; stroke: #3987e5; }
+    .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; }
+    .band { fill: #9198a1; fill-opacity: 0.18; }
+    .hollow { fill: #0d1117; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  .title { font-size: 15px; font-weight: 600; }
+  .label { font-size: 12px; }
+  .small { font-size: 11px; }
+</style>
+<rect class="bg" x="0" y="0" width="860" height="772" rx="6"/>
+<text x="20" y="28" class="title ink" text-anchor="start">Completeness fails silently: who committed missing logs, who held, who recovered</text>
+<text x="345" y="62" class="small ink" text-anchor="middle">logs missing</text>
+<text x="420" y="62" class="small ink" text-anchor="middle">held</text>
+<text x="495" y="62" class="small ink" text-anchor="middle">complete</text>
+<text x="20" y="104" class="label muted" text-anchor="start">Live public RPC, Base, 68 pinned windows, browser</text>
+<line x1="20" y1="110" x2="840" y2="110" class="grid"/>
+<text x="300" y="134" class="label ink" text-anchor="end">Daybreak alone</text>
+<circle cx="345" cy="130" r="1.5" class="grid"></circle>
+<circle cx="420" cy="130" r="1.5" class="grid"></circle>
+<circle cx="495" cy="130" r="1.5" class="grid"></circle>
+<circle cx="345" cy="130" r="5" class="s2 hollow" stroke-width="2.5"><title>Daybreak alone: logs missing, single source; 0/48 found, ended without error · 70 POST</title></circle>
+<text x="540" y="134" class="small muted" text-anchor="start">0/48 found, ended without error · 70 POST</text>
+<text x="300" y="154" class="label ink" text-anchor="end">Daybreak × Tenderly, Sentio tiebreak</text>
+<circle cx="345" cy="150" r="1.5" class="grid"></circle>
+<circle cx="420" cy="150" r="1.5" class="grid"></circle>
+<circle cx="495" cy="150" r="1.5" class="grid"></circle>
+<circle cx="495" cy="150" r="6" class="s3"><title>Daybreak × Tenderly, Sentio tiebreak: complete, two sources; 48/48 · 181 POST</title></circle>
+<text x="540" y="154" class="small muted" text-anchor="start">48/48 · 181 POST</text>
+<text x="300" y="174" class="label ink" text-anchor="end">Tenderly alone</text>
+<circle cx="345" cy="170" r="1.5" class="grid"></circle>
+<circle cx="420" cy="170" r="1.5" class="grid"></circle>
+<circle cx="495" cy="170" r="1.5" class="grid"></circle>
+<circle cx="495" cy="170" r="5" class="s3 hollow" stroke-width="2.5"><title>Tenderly alone: complete, single source; 48/48 · 70 POST</title></circle>
+<text x="540" y="174" class="small muted" text-anchor="start">48/48 · 70 POST</text>
+<text x="300" y="194" class="label ink" text-anchor="end">Tenderly × Sentio, Pocket standby</text>
+<circle cx="345" cy="190" r="1.5" class="grid"></circle>
+<circle cx="420" cy="190" r="1.5" class="grid"></circle>
+<circle cx="495" cy="190" r="1.5" class="grid"></circle>
+<circle cx="495" cy="190" r="6" class="s3"><title>Tenderly × Sentio, Pocket standby: complete, two sources; 48/48 · 142 POST</title></circle>
+<text x="540" y="194" class="small muted" text-anchor="start">48/48 · 142 POST</text>
+<text x="20" y="224" class="label muted" text-anchor="start">Injected RPC faults, same windows, loopback</text>
+<line x1="20" y1="230" x2="840" y2="230" class="grid"/>
+<text x="300" y="254" class="label ink" text-anchor="end">Silent omission, single</text>
+<circle cx="345" cy="250" r="1.5" class="grid"></circle>
+<circle cx="420" cy="250" r="1.5" class="grid"></circle>
+<circle cx="495" cy="250" r="1.5" class="grid"></circle>
+<circle cx="345" cy="250" r="5" class="s2 hollow" stroke-width="2.5"><title>Silent omission, single: logs missing, single source; 0/48 found, ended without error · 70 POST</title></circle>
+<text x="540" y="254" class="small muted" text-anchor="start">0/48 found, ended without error · 70 POST</text>
+<text x="300" y="274" class="label ink" text-anchor="end">Silent omission, cross-check</text>
+<circle cx="345" cy="270" r="1.5" class="grid"></circle>
+<circle cx="420" cy="270" r="1.5" class="grid"></circle>
+<circle cx="495" cy="270" r="1.5" class="grid"></circle>
+<circle cx="495" cy="270" r="6" class="s3"><title>Silent omission, cross-check: complete, two sources; 48/48 · 181 POST</title></circle>
+<text x="540" y="274" class="small muted" text-anchor="start">48/48 · 181 POST</text>
+<text x="300" y="294" class="label ink" text-anchor="end">Shared silent omission, cross-check</text>
+<circle cx="345" cy="290" r="1.5" class="grid"></circle>
+<circle cx="420" cy="290" r="1.5" class="grid"></circle>
+<circle cx="495" cy="290" r="1.5" class="grid"></circle>
+<circle cx="345" cy="290" r="6" class="s2"><title>Shared silent omission, cross-check: logs missing, two sources; 0/48 found, ended without error · 142 POST</title></circle>
+<text x="540" y="294" class="small muted" text-anchor="start">0/48 found, ended without error · 142 POST</text>
+<text x="300" y="314" class="label ink" text-anchor="end">Equal counts with different identities</text>
+<circle cx="345" cy="310" r="1.5" class="grid"></circle>
+<circle cx="420" cy="310" r="1.5" class="grid"></circle>
+<circle cx="495" cy="310" r="1.5" class="grid"></circle>
+<circle cx="420" cy="310" r="6" class="s1"><title>Equal counts with different identities: held, two sources; stopped at window 13/68, 45 pending · 35 POST</title></circle>
+<text x="540" y="314" class="small muted" text-anchor="start">stopped at window 13/68, 45 pending · 35 POST</text>
+<text x="300" y="334" class="label ink" text-anchor="end">HTTP 503, single</text>
+<circle cx="345" cy="330" r="1.5" class="grid"></circle>
+<circle cx="420" cy="330" r="1.5" class="grid"></circle>
+<circle cx="495" cy="330" r="1.5" class="grid"></circle>
+<circle cx="420" cy="330" r="5" class="s1 hollow" stroke-width="2.5"><title>HTTP 503, single: held, single source; stopped at window 7/68, 48 pending · 10 POST</title></circle>
+<text x="540" y="334" class="small muted" text-anchor="start">stopped at window 7/68, 48 pending · 10 POST</text>
+<text x="300" y="354" class="label ink" text-anchor="end">HTTP 503, cross-check</text>
+<circle cx="345" cy="350" r="1.5" class="grid"></circle>
+<circle cx="420" cy="350" r="1.5" class="grid"></circle>
+<circle cx="495" cy="350" r="1.5" class="grid"></circle>
+<circle cx="495" cy="350" r="6" class="s3"><title>HTTP 503, cross-check: complete, two sources; 48/48 · 143 POST</title></circle>
+<text x="540" y="354" class="small muted" text-anchor="start">48/48 · 143 POST</text>
+<text x="300" y="374" class="label ink" text-anchor="end">Mismatch with JSON-RPC error on fallback</text>
+<circle cx="345" cy="370" r="1.5" class="grid"></circle>
+<circle cx="420" cy="370" r="1.5" class="grid"></circle>
+<circle cx="495" cy="370" r="1.5" class="grid"></circle>
+<circle cx="420" cy="370" r="6" class="s1"><title>Mismatch with JSON-RPC error on fallback: held, two sources; stopped at window 7/68, 48 pending · 23 POST</title></circle>
+<text x="540" y="374" class="small muted" text-anchor="start">stopped at window 7/68, 48 pending · 23 POST</text>
+<text x="300" y="394" class="label ink" text-anchor="end">Resume after fallback recovers</text>
+<circle cx="345" cy="390" r="1.5" class="grid"></circle>
+<circle cx="420" cy="390" r="1.5" class="grid"></circle>
+<circle cx="495" cy="390" r="1.5" class="grid"></circle>
+<circle cx="495" cy="390" r="6" class="s3"><title>Resume after fallback recovers: complete, two sources; 48/48 · 167 POST</title></circle>
+<text x="540" y="394" class="small muted" text-anchor="start">48/48 · 167 POST</text>
+<text x="20" y="424" class="label muted" text-anchor="start">Static feed controls, same windows, loopback</text>
+<line x1="20" y1="430" x2="840" y2="430" class="grid"/>
+<text x="300" y="454" class="label ink" text-anchor="end">Two independent feeds</text>
+<circle cx="345" cy="450" r="1.5" class="grid"></circle>
+<circle cx="420" cy="450" r="1.5" class="grid"></circle>
+<circle cx="495" cy="450" r="1.5" class="grid"></circle>
+<circle cx="495" cy="450" r="6" class="s3"><title>Two independent feeds: complete, two sources; 48/48 · 36 GET</title></circle>
+<text x="540" y="454" class="small muted" text-anchor="start">48/48 · 36 GET</text>
+<text x="300" y="474" class="label ink" text-anchor="end">One feed that dropped every log</text>
+<circle cx="345" cy="470" r="1.5" class="grid"></circle>
+<circle cx="420" cy="470" r="1.5" class="grid"></circle>
+<circle cx="495" cy="470" r="1.5" class="grid"></circle>
+<circle cx="345" cy="470" r="5" class="s2 hollow" stroke-width="2.5"><title>One feed that dropped every log: logs missing, single source; 0/48 found, ended without error · 18 GET</title></circle>
+<text x="540" y="474" class="small muted" text-anchor="start">0/48 found, ended without error · 18 GET</text>
+<text x="300" y="494" class="label ink" text-anchor="end">Empty feed plus independent feed</text>
+<circle cx="345" cy="490" r="1.5" class="grid"></circle>
+<circle cx="420" cy="490" r="1.5" class="grid"></circle>
+<circle cx="495" cy="490" r="1.5" class="grid"></circle>
+<circle cx="420" cy="490" r="6" class="s1"><title>Empty feed plus independent feed: held, two sources; stopped at group 1/17, 48 pending · 8 GET</title></circle>
+<text x="540" y="494" class="small muted" text-anchor="start">stopped at group 1/17, 48 pending · 8 GET</text>
+<text x="300" y="514" class="label ink" text-anchor="end">Resume with corrected source</text>
+<circle cx="345" cy="510" r="1.5" class="grid"></circle>
+<circle cx="420" cy="510" r="1.5" class="grid"></circle>
+<circle cx="495" cy="510" r="1.5" class="grid"></circle>
+<circle cx="495" cy="510" r="6" class="s3"><title>Resume with corrected source: complete, two sources; 48/48 · 34 GET</title></circle>
+<text x="540" y="514" class="small muted" text-anchor="start">48/48 · 34 GET</text>
+<text x="300" y="534" class="label ink" text-anchor="end">Same identities, altered ABI data</text>
+<circle cx="345" cy="530" r="1.5" class="grid"></circle>
+<circle cx="420" cy="530" r="1.5" class="grid"></circle>
+<circle cx="495" cy="530" r="1.5" class="grid"></circle>
+<circle cx="420" cy="530" r="6" class="s1"><title>Same identities, altered ABI data: held, two sources; stopped at group 1/17, 48 pending · 8 GET</title></circle>
+<text x="540" y="534" class="small muted" text-anchor="start">stopped at group 1/17, 48 pending · 8 GET</text>
+<text x="20" y="564" class="label muted" text-anchor="start">Chain volume: keyless endpoints rechecked twice at known announcements, silent [] in orange</text>
+<line x1="20" y1="570" x2="840" y2="570" class="grid"/>
+<text x="300" y="594" class="label ink" text-anchor="end">rpc.degenprotocol.io (Base)</text>
+<rect x="326" y="584" width="12" height="12" class="s3" rx="2"><title>rpc.degenprotocol.io, log 16819551:257: returned</title></rect>
+<rect x="342" y="584" width="12" height="12" class="s3" rx="2"><title>rpc.degenprotocol.io, log 16819551:257: returned</title></rect>
+<rect x="358" y="584" width="12" height="12" class="s2" rx="2"><title>rpc.degenprotocol.io, log 22356541:308: empty</title></rect>
+<rect x="374" y="584" width="12" height="12" class="s2" rx="2"><title>rpc.degenprotocol.io, log 22356541:308: empty</title></rect>
+<rect x="390" y="584" width="12" height="12" class="s3" rx="2"><title>rpc.degenprotocol.io, log 62245129:76: returned</title></rect>
+<rect x="406" y="584" width="12" height="12" class="s3" rx="2"><title>rpc.degenprotocol.io, log 62245129:76: returned</title></rect>
+<text x="540" y="594" class="small muted" text-anchor="start">2 empty, 4 returned, 0 errors</text>
+<text x="300" y="614" class="label ink" text-anchor="end">base.daybreak-rpc.network (Base)</text>
+<rect x="326" y="604" width="12" height="12" class="s2" rx="2"><title>base.daybreak-rpc.network, log 16819551:257: empty</title></rect>
+<rect x="342" y="604" width="12" height="12" class="s2" rx="2"><title>base.daybreak-rpc.network, log 16819551:257: empty</title></rect>
+<rect x="358" y="604" width="12" height="12" class="s2" rx="2"><title>base.daybreak-rpc.network, log 22356541:308: empty</title></rect>
+<rect x="374" y="604" width="12" height="12" class="s2" rx="2"><title>base.daybreak-rpc.network, log 22356541:308: empty</title></rect>
+<rect x="390" y="604" width="12" height="12" class="s2" rx="2"><title>base.daybreak-rpc.network, log 62245129:76: empty</title></rect>
+<rect x="406" y="604" width="12" height="12" class="s2" rx="2"><title>base.daybreak-rpc.network, log 62245129:76: empty</title></rect>
+<text x="540" y="614" class="small muted" text-anchor="start">6 empty, 0 returned, 0 errors</text>
+<text x="300" y="634" class="label ink" text-anchor="end">rpc.baseazul.dev (Base)</text>
+<rect x="326" y="624" width="12" height="12" class="muted" rx="2"><title>rpc.baseazul.dev, log 16819551:257: error: archive-missing</title></rect>
+<rect x="342" y="624" width="12" height="12" class="s2" rx="2"><title>rpc.baseazul.dev, log 16819551:257: empty</title></rect>
+<rect x="358" y="624" width="12" height="12" class="s2" rx="2"><title>rpc.baseazul.dev, log 22356541:308: empty</title></rect>
+<rect x="374" y="624" width="12" height="12" class="s2" rx="2"><title>rpc.baseazul.dev, log 22356541:308: empty</title></rect>
+<rect x="390" y="624" width="12" height="12" class="s3" rx="2"><title>rpc.baseazul.dev, log 62245129:76: returned</title></rect>
+<rect x="406" y="624" width="12" height="12" class="s3" rx="2"><title>rpc.baseazul.dev, log 62245129:76: returned</title></rect>
+<text x="540" y="634" class="small muted" text-anchor="start">3 empty, 2 returned, 1 errors</text>
+<text x="300" y="654" class="label ink" text-anchor="end">public.1rpc.io (OP Mainnet)</text>
+<rect x="326" y="644" width="12" height="12" class="s2" rx="2"><title>public.1rpc.io, log 154353397:112: empty</title></rect>
+<rect x="342" y="644" width="12" height="12" class="s2" rx="2"><title>public.1rpc.io, log 154353397:112: empty</title></rect>
+<rect x="358" y="644" width="12" height="12" class="s2" rx="2"><title>public.1rpc.io, log 154455081:74: empty</title></rect>
+<rect x="374" y="644" width="12" height="12" class="s2" rx="2"><title>public.1rpc.io, log 154455081:74: empty</title></rect>
+<text x="540" y="654" class="small muted" text-anchor="start">4 empty, 0 returned, 0 errors</text>
+<text x="20" y="674" class="small muted" text-anchor="start">65 of 87 rechecked endpoints on 7 chains returned every known log; the rest errored on at least one check or, as above, answered [] without an error.</text>
+<text x="20" y="704" class="small muted" text-anchor="start">Filled dot: accepted only what two sources agreed on. Hollow: one source, so a complete result cannot be told apart from a silent</text>
+<text x="20" y="719" class="small muted" text-anchor="start">omission. The runs that miss logs end without an error; only scoring against the frozen reference shows the misses.</text>
+<text x="20" y="734" class="small muted" text-anchor="start">Sources: data/rpc-recovery/summary.json, data/shared-feed/summary.json and evidence.json, data/chain-volume/consistency/*.json. Details:</text>
+<text x="20" y="749" class="small muted" text-anchor="start">docs/rpc-recovery.md, docs/shared-feed.md, docs/chain-volume.md.</text>
+</svg>

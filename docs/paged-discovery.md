@@ -128,19 +128,18 @@ One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, [canon
 - [Fluidkey](https://docs.fluidkey.com/technical-documentation/technical-walkthrough) shares a viewing-key BIP-32 node with its server, which implies server-side scanning.
 - None of this code handles reorgs or cross-checks sources.
 
-| Scheme | Cost |
-| --- | --- |
-| [OMR](https://eprint.iacr.org/2021/1256) | ~$1 per 1M messages per recipient, ~20 ms client decode |
-| [PerfOMR](https://eprint.iacr.org/2024/204) | ~40 ms server per message per recipient, ~600 B clue |
-| [SophOMR](https://eprint.iacr.org/2024/1814) | 3.4x faster than PerfOMR |
+| Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
+| --- | ---: | ---: | ---: | --- |
+| [OMRp2](https://eprint.iacr.org/2021/1256) | 59.8 / 30.1 | 11 | 956 | Yes (proven in 2024/510, Lemma 4.3) |
+| [PerfOMR1](https://eprint.iacr.org/2024/204) | 4.1 / 2.1 | 21 | 2,181 | No (attacks in 2024/510, Section 5.1) |
+| [PerfOMR2](https://eprint.iacr.org/2024/204) | 21.5 / 11.3 | 11 | 583 | No |
+| [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (Theorem 5.3) |
 
-Crossover, at the A76's 1.75 ms per announcement ([cold 100k rows](#cold-rescans-median-minmax-n--3)):
+All rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one Google Compute Cloud n4-standard-8 (32 GB) with SEAL HEXL / AVX512-IFMA52, prior schemes rebenchmarked on the same instance. Detector runtime is per scanned message, amortized over N, for one recipient's digest. Table 2 gives DoS-PerfOMR's amortized runtime as 4.95 ms/msg. The original OMR paper ([2021/1256](https://eprint.iacr.org/2021/1256)) puts server cost at ~$1 per million messages scanned. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4x faster than PerfOMR.
 
-- Client CPU: OMR's flat ~20 ms beats scanning above ~12 announcements.
-- Total compute: OMR server cost is ~23x the phone scan per message per recipient at any volume.
-- A phone feed budget breaks near 1e5 announcements/day. 1M/day is ~29 min of CPU and ~100 MB at ~100 B per announcement.
-- Mainnet has ~296 ERC-5564 announcements all-time.
-- OMR adds ~0.6–1 kB of clue per announcement.
+![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
+
+Bandwidth is the other side of the budget: 1M/day is ~100 MB at ~100 B per announcement, and OMR adds a 583–2,181-byte clue per message (1,996 bytes for DoS-PerfOMR, Table 1 above).
 
 The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Draft EIP-7745 (log index with Merkle proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). I found no published design for signed or Merkle-committed ERC-5564 feed pages.
 

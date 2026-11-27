@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="642" viewBox="0 0 760 642" role="img" aria-label="Response bytes for feed pages and RPC payloads, with the format search">
+<title>Response bytes for feed pages and RPC payloads, with the format search</title>
+<style>
+  .bg { fill: #ffffff; }
+  .ink { fill: #1f2328; }
+  .muted { fill: #59636e; }
+  .grid { stroke: #d1d9e0; }
+  .axis { stroke: #818b98; }
+  .gap { stroke: #ffffff; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; }
+  .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; }
+  .band { fill: #818b98; fill-opacity: 0.16; }
+  .hollow { fill: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0d1117; }
+    .ink { fill: #f0f6fc; }
+    .muted { fill: #9198a1; }
+    .grid { stroke: #2f353d; }
+    .axis { stroke: #656c76; }
+    .gap { stroke: #0d1117; }
+    .s1 { fill: #3987e5; stroke: #3987e5; }
+    .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; }
+    .band { fill: #9198a1; fill-opacity: 0.18; }
+    .hollow { fill: #0d1117; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  .title { font-size: 15px; font-weight: 600; }
+  .label { font-size: 12px; }
+  .small { font-size: 11px; }
+</style>
+<rect class="bg" x="0" y="0" width="760" height="642" rx="6"/>
+<text x="20" y="28" class="title ink" text-anchor="start">Decoded response bytes for the same Base windows: feed pages against RPC payloads</text>
+<rect x="150" y="41" width="10" height="10" class="s2" rx="2"></rect>
+<text x="165" y="50" class="label ink" text-anchor="start">live RPC</text>
+<rect x="227.8" y="41" width="10" height="10" class="s1" rx="2"></rect>
+<text x="242.8" y="50" class="label ink" text-anchor="start">feed, recorded</text>
+<rect x="345.2" y="41" width="10" height="10" class="s3" rx="2"></rect>
+<text x="360.2" y="50" class="label ink" text-anchor="start">feed, optimized</text>
+<rect x="469.2" y="41" width="10" height="10" class="muted" rx="2"></rect>
+<text x="484.2" y="50" class="label ink" text-anchor="start">gzip</text>
+<line x1="250" y1="68" x2="250" y2="254" class="grid"/>
+<text x="250" y="268" class="small muted" text-anchor="middle">0k</text>
+<line x1="328" y1="68" x2="328" y2="254" class="grid"/>
+<text x="328" y="268" class="small muted" text-anchor="middle">20k</text>
+<line x1="406" y1="68" x2="406" y2="254" class="grid"/>
+<text x="406" y="268" class="small muted" text-anchor="middle">40k</text>
+<line x1="484" y1="68" x2="484" y2="254" class="grid"/>
+<text x="484" y="268" class="small muted" text-anchor="middle">60k</text>
+<line x1="562" y1="68" x2="562" y2="254" class="grid"/>
+<text x="562" y="268" class="small muted" text-anchor="middle">80k</text>
+<line x1="640" y1="68" x2="640" y2="254" class="grid"/>
+<text x="640" y="268" class="small muted" text-anchor="middle">100k</text>
+<text x="240" y="83" class="label ink" text-anchor="end">Live RPC, all cold replies</text>
+<rect x="250" y="72" width="324.3" height="14" class="s2" rx="2"><title>Live RPC, all cold replies: 83,147 bytes</title></rect>
+<text x="580.3" y="83" class="small ink" text-anchor="start">83,147</text>
+<text x="240" y="109" class="label ink" text-anchor="end">Live RPC, eth_getLogs replies only</text>
+<rect x="250" y="98" width="224.7" height="14" class="s2" rx="2"><title>Live RPC, eth_getLogs replies only: 57,605 bytes</title></rect>
+<text x="480.7" y="109" class="small ink" text-anchor="start">57,605</text>
+<text x="240" y="135" class="label ink" text-anchor="end">Two feeds plus manifests, cold</text>
+<rect x="250" y="124" width="359.3" height="14" class="s1" rx="2"><title>Two feeds plus manifests, cold: 92,134 bytes</title></rect>
+<text x="615.3" y="135" class="small ink" text-anchor="start">92,134</text>
+<text x="240" y="161" class="label ink" text-anchor="end">One feed, cold pages, recorded format</text>
+<rect x="250" y="150" width="170.5" height="14" class="s1" rx="2"><title>One feed, cold pages, recorded format: 43,719 bytes</title></rect>
+<rect x="250" y="165" width="41.2" height="5" class="muted"><title>One feed, cold pages, recorded format, gzip: 10,555 bytes</title></rect>
+<text x="426.5" y="161" class="small ink" text-anchor="start">43,719 (gzip 10,555)</text>
+<text x="240" y="187" class="label ink" text-anchor="end">One feed, cold pages, byte-optimized</text>
+<rect x="250" y="176" width="58.3" height="14" class="s3" rx="2"><title>One feed, cold pages, byte-optimized: 14,953 bytes</title></rect>
+<rect x="250" y="191" width="31.4" height="5" class="muted"><title>One feed, cold pages, byte-optimized, gzip: 8,043 bytes</title></rect>
+<text x="314.3" y="187" class="small ink" text-anchor="start">14,953 (gzip 8,043)</text>
+<text x="240" y="213" class="label ink" text-anchor="end">Live RPC, all warm replies</text>
+<rect x="250" y="202" width="230" height="14" class="s2" rx="2"><title>Live RPC, all warm replies: 58,987 bytes</title></rect>
+<text x="486" y="213" class="small ink" text-anchor="start">58,987</text>
+<text x="240" y="239" class="label ink" text-anchor="end">Two feeds plus manifests, warm</text>
+<rect x="250" y="228" width="216.4" height="14" class="s1" rx="2"><title>Two feeds plus manifests, warm: 55,492 bytes</title></rect>
+<text x="472.4" y="239" class="small ink" text-anchor="start">55,492</text>
+<text x="20" y="298" class="label muted" text-anchor="start">Format search, one source's cold pages per iteration (13 iterations, keep or revert)</text>
+<text x="240" y="325" class="small ink" text-anchor="end">0. baseline</text>
+<rect x="250" y="316" width="341" height="10" class="s1" rx="2"><title>baseline: 43,719 bytes, baseline</title></rect>
+<text x="597" y="325" class="small muted" text-anchor="start">43,719</text>
+<text x="240" y="342" class="small ink" text-anchor="end">1. drop 0x prefixes</text>
+<rect x="250" y="333" width="336.5" height="10" class="s3" rx="2"><title>drop 0x prefixes: 43,143 bytes, keep</title></rect>
+<text x="592.5" y="342" class="small muted" text-anchor="start">43,143</text>
+<text x="240" y="359" class="small ink" text-anchor="end">2. base64 hashes and topics</text>
+<rect x="250" y="350" width="299.1" height="10" class="s3" rx="2"><title>base64 hashes and topics: 38,343 bytes, keep</title></rect>
+<text x="555.1" y="359" class="small muted" text-anchor="start">38,343</text>
+<text x="240" y="376" class="small ink" text-anchor="end">3. trim leading zero bytes in topics</text>
+<rect x="250" y="367" width="272.1" height="10" class="s3" rx="2"><title>trim leading zero bytes in topics: 34,887 bytes, keep</title></rect>
+<text x="528.1" y="376" class="small muted" text-anchor="start">34,887</text>
+<text x="240" y="393" class="small ink" text-anchor="end">4. zero-run encode ABI data</text>
+<rect x="250" y="384" width="130.7" height="10" class="s3" rx="2"><title>zero-run encode ABI data: 16,753 bytes, keep</title></rect>
+<text x="386.7" y="393" class="small muted" text-anchor="start">16,753</text>
+<text x="240" y="410" class="small muted" text-anchor="end">5. base64 ABI data</text>
+<rect x="250" y="401" width="209.7" height="10" class="muted" rx="2" fill-opacity="0.35"><title>base64 ABI data: 26,883 bytes, discard</title></rect>
+<text x="465.7" y="410" class="small muted" text-anchor="start">26,883, reverted</text>
+<text x="240" y="427" class="small ink" text-anchor="end">6. 32 windows per page</text>
+<rect x="250" y="418" width="120.6" height="10" class="s3" rx="2"><title>32 windows per page: 15,457 bytes, keep</title></rect>
+<text x="376.6" y="427" class="small muted" text-anchor="start">15,457</text>
+<text x="240" y="444" class="small ink" text-anchor="end">7. drop page id and index from body</text>
+<rect x="250" y="435" width="118.6" height="10" class="s3" rx="2"><title>drop page id and index from body: 15,211 bytes, keep</title></rect>
+<text x="374.6" y="444" class="small muted" text-anchor="start">15,211</text>
+<text x="240" y="461" class="small ink" text-anchor="end">8. single-letter body keys</text>
+<rect x="250" y="452" width="118.6" height="10" class="s3" rx="2"><title>single-letter body keys: 15,202 bytes, keep</title></rect>
+<text x="374.6" y="461" class="small muted" text-anchor="start">15,202</text>
+<text x="240" y="478" class="small ink" text-anchor="end">9. columnar layout</text>
+<rect x="250" y="469" width="118.2" height="10" class="s3" rx="2"><title>columnar layout: 15,148 bytes, keep</title></rect>
+<text x="374.2" y="478" class="small muted" text-anchor="start">15,148</text>
+<text x="240" y="495" class="small ink" text-anchor="end">10. delta-encode block numbers</text>
+<rect x="250" y="486" width="116.6" height="10" class="s3" rx="2"><title>delta-encode block numbers: 14,953 bytes, keep</title></rect>
+<text x="372.6" y="495" class="small muted" text-anchor="start">14,953</text>
+<text x="240" y="512" class="small muted" text-anchor="end">11. per-page block hash table</text>
+<rect x="250" y="503" width="117" height="10" class="muted" rx="2" fill-opacity="0.35"><title>per-page block hash table: 14,996 bytes, discard</title></rect>
+<text x="373" y="512" class="small muted" text-anchor="start">14,996, reverted</text>
+<text x="240" y="529" class="small muted" text-anchor="end">12. 16 windows per page</text>
+<rect x="250" y="520" width="116.9" height="10" class="muted" rx="2" fill-opacity="0.35"><title>16 windows per page: 14,993 bytes, discard</title></rect>
+<text x="372.9" y="529" class="small muted" text-anchor="start">14,993, reverted</text>
+<text x="240" y="546" class="small muted" text-anchor="end">13. row layout with delta blocks</text>
+<rect x="250" y="537" width="117.1" height="10" class="muted" rx="2" fill-opacity="0.35"><title>row layout with delta blocks: 15,007 bytes, discard</title></rect>
+<text x="373.1" y="546" class="small muted" text-anchor="start">15,007, reverted</text>
+<text x="20" y="574" class="small muted" text-anchor="start">Decoded body bytes without headers or framing, median of three samples. Live RPC is Tenderly; feeds are two loopback</text>
+<text x="20" y="589" class="small muted" text-anchor="start">origins built from the RPC-recovery captures. The byte-optimized format is the search's best kept params, 65.8% smaller</text>
+<text x="20" y="604" class="small muted" text-anchor="start">raw and 23.8% smaller under gzip. RPC gzip was not measured.</text>
+<text x="20" y="619" class="small muted" text-anchor="start">Sources: data/shared-feed/summary.json, evidence.json, autoresearch/feed-bytes.jsonl. Details: docs/shared-feed.md.</text>
+</svg>

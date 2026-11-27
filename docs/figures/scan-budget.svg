@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="529" viewBox="0 0 760 529" role="img" aria-label="CPU per day to scan announcements against real chain rates and a phone budget">
+<title>CPU per day to scan announcements against real chain rates and a phone budget</title>
+<style>
+  .bg { fill: #ffffff; }
+  .ink { fill: #1f2328; }
+  .muted { fill: #59636e; }
+  .grid { stroke: #d1d9e0; }
+  .axis { stroke: #818b98; }
+  .gap { stroke: #ffffff; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; }
+  .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; }
+  .band { fill: #818b98; fill-opacity: 0.16; }
+  .hollow { fill: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0d1117; }
+    .ink { fill: #f0f6fc; }
+    .muted { fill: #9198a1; }
+    .grid { stroke: #2f353d; }
+    .axis { stroke: #656c76; }
+    .gap { stroke: #0d1117; }
+    .s1 { fill: #3987e5; stroke: #3987e5; }
+    .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; }
+    .band { fill: #9198a1; fill-opacity: 0.18; }
+    .hollow { fill: #0d1117; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  .title { font-size: 15px; font-weight: 600; }
+  .label { font-size: 12px; }
+  .small { font-size: 11px; }
+</style>
+<rect class="bg" x="0" y="0" width="760" height="529" rx="6"/>
+<text x="20" y="28" class="title ink" text-anchor="start">CPU per day to scan every announcement: real chains are far below a phone budget</text>
+<line x1="78" y1="58" x2="78" y2="300" class="grid"/>
+<text x="78" y="316" class="small muted" text-anchor="middle">0.001</text>
+<line x1="142.6" y1="58" x2="142.6" y2="300" class="grid"/>
+<text x="142.6" y="316" class="small muted" text-anchor="middle">0.01</text>
+<line x1="207.2" y1="58" x2="207.2" y2="300" class="grid"/>
+<text x="207.2" y="316" class="small muted" text-anchor="middle">0.1</text>
+<line x1="271.8" y1="58" x2="271.8" y2="300" class="grid"/>
+<text x="271.8" y="316" class="small muted" text-anchor="middle">1</text>
+<line x1="336.4" y1="58" x2="336.4" y2="300" class="grid"/>
+<text x="336.4" y="316" class="small muted" text-anchor="middle">10</text>
+<line x1="401" y1="58" x2="401" y2="300" class="grid"/>
+<text x="401" y="316" class="small muted" text-anchor="middle">100</text>
+<line x1="465.6" y1="58" x2="465.6" y2="300" class="grid"/>
+<text x="465.6" y="316" class="small muted" text-anchor="middle">1k</text>
+<line x1="530.2" y1="58" x2="530.2" y2="300" class="grid"/>
+<text x="530.2" y="316" class="small muted" text-anchor="middle">10k</text>
+<line x1="594.8" y1="58" x2="594.8" y2="300" class="grid"/>
+<text x="594.8" y="316" class="small muted" text-anchor="middle">100k</text>
+<line x1="659.4" y1="58" x2="659.4" y2="300" class="grid"/>
+<text x="659.4" y="316" class="small muted" text-anchor="middle">1M</text>
+<line x1="724" y1="58" x2="724" y2="300" class="grid"/>
+<text x="724" y="316" class="small muted" text-anchor="middle">10M</text>
+<line x1="78" y1="278" x2="724" y2="278" class="grid"/>
+<text x="72" y="282" class="small muted" text-anchor="end">0.0001</text>
+<line x1="78" y1="234" x2="724" y2="234" class="grid"/>
+<text x="72" y="238" class="small muted" text-anchor="end">0.01</text>
+<line x1="78" y1="190" x2="724" y2="190" class="grid"/>
+<text x="72" y="194" class="small muted" text-anchor="end">1</text>
+<line x1="78" y1="146" x2="724" y2="146" class="grid"/>
+<text x="72" y="150" class="small muted" text-anchor="end">100</text>
+<line x1="78" y1="102" x2="724" y2="102" class="grid"/>
+<text x="72" y="106" class="small muted" text-anchor="end">10k</text>
+<line x1="78" y1="58" x2="724" y2="58" class="grid"/>
+<text x="72" y="62" class="small muted" text-anchor="end">1M</text>
+<line x1="78" y1="300" x2="724" y2="300" class="axis"/>
+<line x1="78" y1="58" x2="78" y2="300" class="axis"/>
+<text x="724" y="332" class="small muted" text-anchor="end">announcements per day (log)</text>
+<text x="26" y="46" class="small muted" text-anchor="start">CPU s per day (log)</text>
+<line x1="78" y1="328.6" x2="724" y2="108.6" class="s1" stroke-width="2"/>
+<text x="465.6" y="216.6" class="label ink" text-anchor="start">i7-13700K: 0.50 ms each</text>
+<line x1="78" y1="316.6" x2="724" y2="96.6" class="s2" stroke-width="2"/>
+<text x="401" y="194.6" class="label ink" text-anchor="end">Cortex-A76: 1.75 ms each</text>
+<line x1="78" y1="227.4" x2="724" y2="227.4" class="axis" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="720" y="242.4" class="small muted" text-anchor="end">DoS-PerfOMR recipient runtime, flat 20 ms</text>
+<circle cx="340.1" cy="227.4" r="3.5" class="s2"><title>A76 scan passes DoS-PerfOMR recipient runtime at 11.4 announcements</title></circle>
+<text x="332.1" y="219.4" class="small muted" text-anchor="end">A76 scan passes it at ~12/day</text>
+<line x1="78" y1="292.7" x2="724" y2="72.7" class="axis" stroke-width="1.5" stroke-dasharray="2 3"/>
+<text x="561" y="118.2" class="small muted" text-anchor="end">PerfOMR2 detector, 21.5 ms/message (not DoS-resistant)</text>
+<line x1="78" y1="306.8" x2="724" y2="86.8" class="axis" stroke-width="1.5" stroke-dasharray="8 3"/>
+<text x="496.4" y="154.3" class="small muted" text-anchor="end">DoS-PerfOMR detector, 4.9 ms/message (DoS-resistant)</text>
+<line x1="594.8" y1="58" x2="594.8" y2="300" class="axis" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="588.8" y="70" class="small ink" text-anchor="end">~100k/day: assumed phone feed budget (estimate)</text>
+<text x="588.8" y="84" class="small muted" text-anchor="end">A76 2.9 min CPU/day</text>
+<circle cx="659.4" cy="118.6" r="3.5" class="s2"><title>1M/day on the A76: 29 min CPU</title></circle>
+<text x="651.4" y="122.6" class="small ink" text-anchor="end">1M/day: 29 min</text>
+<rect x="127.9" y="346" width="148.7" height="12" class="band" rx="3"></rect>
+<rect x="244.5" y="345" width="3" height="14" class="muted"><title>Ethereum: 0.398 announcements/day</title></rect>
+<rect x="263.3" y="345" width="3" height="14" class="muted"><title>Base: 0.779 announcements/day</title></rect>
+<rect x="195" y="345" width="3" height="14" class="muted"><title>Arbitrum One: 0.068 announcements/day</title></rect>
+<rect x="152.8" y="345" width="3" height="14" class="muted"><title>OP Mainnet: 0.015 announcements/day</title></rect>
+<rect x="126.4" y="345" width="3" height="14" class="muted"><title>Gnosis: 0.006 announcements/day</title></rect>
+<rect x="181.3" y="345" width="3" height="14" class="muted"><title>Polygon PoS: 0.042 announcements/day</title></rect>
+<rect x="275.1" y="345" width="3" height="14" class="muted"><title>Sepolia: 1.187 announcements/day</title></rect>
+<text x="72" y="356" class="small ink" text-anchor="end">ERC-5564</text>
+<text x="284.6" y="356" class="small muted" text-anchor="start">0.006–1.2 per day per chain; A76 CPU at the busiest: 2.1 ms/day</text>
+<text x="20" y="386" class="small muted" text-anchor="start">Lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain's canonical Announcer</text>
+<text x="20" y="401" class="small muted" text-anchor="start">rate, first announcement to 2026-11-26.</text>
+<text x="20" y="416" class="small muted" text-anchor="start">Dashed lines are literature values, not measured here: detector runtime per scanned message, amortized over N = 2^19, for</text>
+<text x="20" y="431" class="small muted" text-anchor="start">one recipient's digest; eprint 2024/510 Table 1, GCP n4-standard-8 with AVX512 (HEXL), 1 thread. The flat line is</text>
+<text x="20" y="446" class="small muted" text-anchor="start">DoS-PerfOMR's recipient runtime from the same table. The ~12/day crossover compares that recipient runtime with the A76</text>
+<text x="20" y="461" class="small muted" text-anchor="start">scan-cost rate. The ~100k/day budget is an assumption, not derived from OMR. Lines compare a cloud x86 core with AVX512 to</text>
+<text x="20" y="476" class="small muted" text-anchor="start">one A76 core.</text>
+<text x="20" y="491" class="small muted" text-anchor="start">Sources: data/scan-cost/results.csv, data/chain-volume/canonical/retrieve-*.json. Details: docs/paged-discovery.md (prior</text>
+<text x="20" y="506" class="small muted" text-anchor="start">work), docs/scan-cost.md.</text>
+</svg>

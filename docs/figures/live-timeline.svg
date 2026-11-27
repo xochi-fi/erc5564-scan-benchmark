@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="355" viewBox="0 0 860 355" role="img" aria-label="Logs accepted over wall time for each live strategy">
+<title>Logs accepted over wall time for each live strategy</title>
+<style>
+  .bg { fill: #ffffff; }
+  .ink { fill: #1f2328; }
+  .muted { fill: #59636e; }
+  .grid { stroke: #d1d9e0; }
+  .axis { stroke: #818b98; }
+  .gap { stroke: #ffffff; }
+  .s1 { fill: #2a78d6; stroke: #2a78d6; }
+  .s2 { fill: #eb6834; stroke: #eb6834; }
+  .s3 { fill: #1baf7a; stroke: #1baf7a; }
+  .band { fill: #818b98; fill-opacity: 0.16; }
+  .hollow { fill: #ffffff; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0d1117; }
+    .ink { fill: #f0f6fc; }
+    .muted { fill: #9198a1; }
+    .grid { stroke: #2f353d; }
+    .axis { stroke: #656c76; }
+    .gap { stroke: #0d1117; }
+    .s1 { fill: #3987e5; stroke: #3987e5; }
+    .s2 { fill: #d95926; stroke: #d95926; }
+    .s3 { fill: #199e70; stroke: #199e70; }
+    .band { fill: #9198a1; fill-opacity: 0.18; }
+    .hollow { fill: #0d1117; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+  .title { font-size: 15px; font-weight: 600; }
+  .label { font-size: 12px; }
+  .small { font-size: 11px; }
+</style>
+<rect class="bg" x="0" y="0" width="860" height="355" rx="6"/>
+<text x="20" y="28" class="title ink" text-anchor="start">Logs accepted over wall time: the single-RPC failure finishes on time, with nothing</text>
+<line x1="60" y1="56" x2="60" y2="250" class="grid"/>
+<text x="60" y="266" class="small muted" text-anchor="middle">0</text>
+<line x1="120" y1="56" x2="120" y2="250" class="grid"/>
+<text x="120" y="266" class="small muted" text-anchor="middle">5</text>
+<line x1="180" y1="56" x2="180" y2="250" class="grid"/>
+<text x="180" y="266" class="small muted" text-anchor="middle">10</text>
+<line x1="240" y1="56" x2="240" y2="250" class="grid"/>
+<text x="240" y="266" class="small muted" text-anchor="middle">15</text>
+<line x1="300" y1="56" x2="300" y2="250" class="grid"/>
+<text x="300" y="266" class="small muted" text-anchor="middle">20</text>
+<line x1="360" y1="56" x2="360" y2="250" class="grid"/>
+<text x="360" y="266" class="small muted" text-anchor="middle">25</text>
+<line x1="420" y1="56" x2="420" y2="250" class="grid"/>
+<text x="420" y="266" class="small muted" text-anchor="middle">30</text>
+<line x1="480" y1="56" x2="480" y2="250" class="grid"/>
+<text x="480" y="266" class="small muted" text-anchor="middle">35</text>
+<line x1="60" y1="250" x2="480" y2="250" class="grid"/>
+<text x="52" y="254" class="small muted" text-anchor="end">0</text>
+<line x1="60" y1="153" x2="480" y2="153" class="grid"/>
+<text x="52" y="157" class="small muted" text-anchor="end">24</text>
+<line x1="60" y1="56" x2="480" y2="56" class="grid"/>
+<text x="52" y="60" class="small muted" text-anchor="end">48</text>
+<line x1="60" y1="250" x2="480" y2="250" class="axis"/>
+<line x1="60" y1="56" x2="60" y2="250" class="axis"/>
+<text x="480" y="282" class="small muted" text-anchor="end">seconds since the first request</text>
+<text x="20" y="44" class="small muted" text-anchor="start">logs accepted / 48</text>
+<path d="M60.0,250.0 H67.5 H70.7 H74.0 H77.2 H80.4 H83.7 H86.9 H90.1 H93.4 H96.6 H99.9 H103.0 H106.3 H109.6 H112.8 H116.0 H119.2 H122.5 H125.7 H129.0 H132.2 H135.5 H138.7 H141.9 H145.2 H148.4 H151.6 H154.8 H158.1 H161.3 H164.5 H167.8 H171.0 H174.2 H177.4 H180.7 H184.0 H187.2 H190.4 H193.6 H196.9 H200.1 H203.4 H206.6 H209.8 H213.1 H216.3 H219.5 H222.9 H226.0 H229.3 H232.5 H235.7 H239.0 H242.2 H245.5 H249.3 H251.9 H255.1 H258.4 H261.6 H264.9 H268.1 H271.3 H274.5 H277.8 H281.0 H284.3 H284.3" class="s2" style="fill: none" stroke-width="2"/>
+<circle cx="284.3" cy="250" r="4" class="s2"><title>Daybreak alone: 0/48 at 18.69 s</title></circle>
+<text x="490" y="254" class="small ink" text-anchor="start">Daybreak alone: 0/48, done at 18.7 s</text>
+<path d="M60.0,250.0 H68.0 H71.1 H74.5 H78.2 H81.0 H84.1 H87.4 H90.6 V246.0 H93.8 H98.5 H100.4 V241.9 H104.0 H106.8 V237.9 H109.9 V229.8 H113.6 V225.8 H116.4 V221.7 H119.6 H123.0 V217.7 H126.2 V213.6 H129.5 V205.5 H132.7 V201.5 H135.8 V193.4 H139.1 V189.4 H142.3 H145.6 H149.6 V185.3 H152.2 V181.3 H155.2 H158.5 V177.3 H161.8 H165.2 V173.2 H168.3 V169.2 H171.5 H176.1 V165.1 H180.1 V161.1 H181.6 H184.8 H188.1 V157.0 H191.3 V153.0 H194.5 V149.0 H197.8 V140.9 H201.0 V132.8 H204.2 V128.8 H208.5 H210.6 V124.7 H214.8 H217.4 V120.7 H220.4 H223.6 V112.6 H226.9 V108.5 H230.2 V104.5 H233.3 V100.5 H239.1 H241.6 V96.4 H244.0 V92.4 H247.0 H250.3 V88.3 H253.5 H256.7 H260.2 V84.3 H263.3 V80.3 H266.5 H270.1 H272.9 V76.2 H276.3 V60.0 H279.5 V56.0 H282.6 H285.9 H285.9" class="s3" style="fill: none" stroke-width="2"/>
+<circle cx="285.9" cy="56" r="4" class="s3"><title>Tenderly alone: 48/48 at 18.82 s</title></circle>
+<text x="490" y="60" class="small ink" text-anchor="start">Tenderly alone: 48/48, done at 18.8 s</text>
+<path d="M60.0,250.0 H76.8 H82.1 H87.3 H92.7 H98.5 H104.4 H110.4 H116.2 V246.0 H121.2 H125.9 H132.1 V241.9 H137.1 H142.3 V237.9 H147.8 V229.8 H152.4 V225.8 H157.2 V221.7 H162.0 H167.0 V217.7 H172.1 V213.6 H177.0 V205.5 H181.7 V201.5 H186.6 V193.4 H191.7 V189.4 H197.3 H202.3 H206.9 V185.3 H211.6 V181.3 H216.6 H221.6 V177.3 H226.8 H231.4 V173.2 H236.2 V169.2 H240.8 H245.4 V165.1 H249.9 V161.1 H254.8 H259.9 H264.7 V157.0 H269.4 V153.0 H274.0 V149.0 H278.7 V140.9 H283.3 V132.8 H288.0 V128.8 H292.5 H297.0 V124.7 H301.6 H306.2 V120.7 H310.6 H315.1 V112.6 H319.7 V108.5 H324.5 V104.5 H329.2 V100.5 H333.7 H338.2 V96.4 H342.7 V92.4 H347.3 H352.2 V88.3 H357.0 H361.9 H366.8 V84.3 H371.5 V80.3 H376.8 H381.8 H386.4 V76.2 H390.9 V60.0 H395.3 V56.0 H400.4 H405.1 H405.1" class="axis" style="fill: none" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="405.1" cy="56" r="4" class="muted"><title>Tenderly × Sentio, Pocket standby: 48/48 at 28.76 s</title></circle>
+<text x="490" y="76" class="small ink" text-anchor="start">Tenderly × Sentio, Pocket standby: 48/48, done at 28.8 s</text>
+<path d="M60.0,250.0 H72.9 H77.5 H82.6 H85.7 H87.3 H90.8 H94.0 H102.9 V246.0 H104.3 H112.2 H120.6 V241.9 H122.8 H130.4 V237.9 H136.8 V229.8 H143.4 V225.8 H150.5 V221.7 H152.2 H160.7 V217.7 H168.3 V213.6 H175.9 V205.5 H182.4 V201.5 H189.8 V193.4 H196.9 V189.4 H199.9 H203.0 H209.7 V185.3 H216.1 V181.3 H217.6 H225.9 V177.3 H227.3 H239.1 V173.2 H245.4 V169.2 H247.0 H255.2 V165.1 H262.1 V161.1 H263.6 H266.9 H274.7 V157.0 H281.8 V153.0 H287.8 V149.0 H294.0 V140.9 H299.9 V132.8 H307.3 V128.8 H308.7 H316.6 V124.7 H318.0 H326.5 V120.7 H328.7 H336.8 V112.6 H343.4 V108.5 H349.9 V104.5 H356.0 V100.5 H357.6 H366.4 V96.4 H372.4 V92.4 H373.9 H383.2 V88.3 H384.6 H388.3 H397.7 V84.3 H404.4 V80.3 H405.9 H409.2 H417.4 V76.2 H423.6 V60.0 H430.2 V56.0 H431.7 H434.9 H434.9" class="s1" style="fill: none" stroke-width="2"/>
+<circle cx="434.9" cy="56" r="4" class="s1"><title>Daybreak × Tenderly, Sentio tiebreak: 48/48 at 31.25 s</title></circle>
+<text x="490" y="92" class="small ink" text-anchor="start">Daybreak × Tenderly, Sentio tiebreak: 48/48, done at 31.2 s</text>
+<text x="20" y="302" class="small muted" text-anchor="start">One browser run per strategy, Base, 68 pinned windows of 1,000 blocks, 2026-11-26. A step is a window committed with new logs; a window's</text>
+<text x="20" y="317" class="small muted" text-anchor="start">time is when its last log request ended. Pacing is ≥270 ms between requests per provider.</text>
+<text x="20" y="332" class="small muted" text-anchor="start">Source: data/rpc-recovery/live-*.json (requests and browser resource timings). Details: docs/rpc-recovery.md.</text>
+</svg>

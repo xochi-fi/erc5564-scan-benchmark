@@ -1,10 +1,35 @@
 # Methods
 
-[Overview](README.md) · [Hardware](#hardware) · [Names in recorded data](#names-in-recorded-data) · [Commands](#commands) · [Layout](#repository-layout)
+[Overview](README.md) · [Pipeline](#discovery-pipeline) · [Hardware](#hardware) · [Names in recorded data](#names-in-recorded-data) · [Commands](#commands) · [Layout](#repository-layout)
 
 ## Software
 
 Versions are pinned in `package.json`: the SDK in `dependencies` and Bun in `packageManager`. The [SDK](https://github.com/ScopeLift/stealth-address-sdk) is unmodified, npm `gitHead` [`88bcc27c`](https://github.com/ScopeLift/stealth-address-sdk/tree/88bcc27c3b6163080ee18f330dfd6336dc8bd2e2). Other Bun versions run but are recorded as a different environment.
+
+## Discovery pipeline
+
+What every experiment measures one stage of, and where each failure mode bites. Orange stages failed in the recorded runs; green ones are where the fix sits.
+
+```mermaid
+flowchart LR
+  deploy["Announcer deploy block<br/>(chain volume)"] --> page["Page eth_getLogs<br/>over keyless RPC"]
+  page -->|"range caps, archive limits,<br/>request budgets"| retrieval{{"Retrieval<br/>(chain volume, paged discovery)"}}
+  page -->|"HTTP 429, CORS"| browser{{"Browser access<br/>(browser discovery)"}}
+  page -->|"successful [] for real logs"| silent{{"Silent omission<br/>(chain volume, RPC recovery)"}}
+  retrieval --> check["Cross-check two sources<br/>or two static feeds"]
+  browser --> check
+  silent --> check
+  check -->|"disagree: hold checkpoint"| page
+  check -->|"agree"| scan["Local scan with viewing key<br/>(scan cost: cheap)"]
+  scan --> verify["Verify receipt and balance<br/>(paged discovery)"]
+  verify --> cursor["Advance checkpoint"]
+  classDef fail fill:#eb6834,stroke:#eb6834,color:#ffffff
+  classDef fix fill:#1baf7a,stroke:#1baf7a,color:#ffffff
+  class retrieval,browser,silent fail
+  class check fix
+```
+
+Results per stage: [Chain volume](docs/chain-volume.md), [Paged discovery](docs/paged-discovery.md), [Browser discovery](docs/browser-discovery.md), [RPC recovery](docs/rpc-recovery.md), [Shared feed](docs/shared-feed.md), [Scan cost](docs/scan-cost.md).
 
 ## Hardware
 

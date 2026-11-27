@@ -20,11 +20,7 @@ export interface RunningChain {
   stop(): Promise<void>;
 }
 
-/**
- * Starts the deterministic JSON-RPC server, the link emulator in front of it,
- * and an unshaped control endpoint (stats, head control) that is never on the
- * measured path.
- */
+// Serve RPC behind the emulator and expose control calls directly.
 export async function startChain(fixtureDir: string, profile: LinkProfile): Promise<RunningChain> {
   const index = await indexFixture(fixtureDir);
   const chain = new SyntheticChain(index);

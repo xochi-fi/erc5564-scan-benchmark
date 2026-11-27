@@ -1,7 +1,3 @@
-/**
- * Per-endpoint probe: chain id, head, eth_getLogs max span (binary search),
- * archive depth, recorded error messages, rate limiting and request latency.
- */
 import { z } from 'zod';
 import type { Transport } from './http.ts';
 import { percentile, searchMaxRange, type RangeSearchResult } from './range-search.ts';

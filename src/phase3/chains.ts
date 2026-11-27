@@ -43,11 +43,7 @@ export interface EndpointCandidate {
 /** MEV-protection / transaction-relay endpoints: listed as RPCs, but built to submit transactions. */
 const RELAY_HOSTS = /(flashbots\.net|mevblocker\.io|blxrbdn\.com|blocknative\.com|securerpc\.com|blockrazor\.xyz|mev-x\.com|fullsend\.to|backrun\.io|merkle\.io)$/i;
 
-/**
- * Decides whether a chainlist URL counts as "free and keyless". A URL that carries
- * a key in its query or a key-shaped path segment (even a published demo key)
- * is excluded: the study uses no API keys at all.
- */
+// Reject chainlist URLs with keys in the query or path.
 export function endpointExclusion(url: string): string | null {
   if (!url.startsWith('https://')) return url.startsWith('wss://') || url.startsWith('ws://') ? 'websocket' : 'not https';
   if (url.includes('${')) return 'template needs a key';

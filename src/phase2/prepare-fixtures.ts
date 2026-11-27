@@ -1,11 +1,4 @@
-/**
- * Reuses or regenerates the phase-1 fixtures that phase 2 serves, and proves
- * they are byte-identical to the originals (pinned SHA256 of announcements.jsonl,
- * as recorded in the original manifests generated on the Apple M1).
- *
- * Usage: bun run src/phase2/prepare-fixtures.ts --output DIR --fixtures 10000-sparse,100000-zero [--reuse DIR[,DIR...]]
- * Reuse directories are tried in order; the first one that holds the fixture must verify or the run stops.
- */
+// Verify regenerated or reused fixture bytes against the original M1 digests.
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { mkdir, stat, symlink } from 'node:fs/promises';

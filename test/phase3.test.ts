@@ -114,7 +114,6 @@ describe('deploy block bisection', () => {
   });
 });
 
-// ---- A simulated chain with recorded error bodies, for the wallet retriever ----
 const pad = (n: number) => n.toString(16).padStart(64, '0');
 function makeLog(block: number, index: number) {
   return {

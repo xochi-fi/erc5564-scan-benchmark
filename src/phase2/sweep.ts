@@ -301,10 +301,7 @@ export async function hostState(): Promise<Record<string, unknown>> {
   return state;
 }
 
-/**
- * Expected identities taken straight from the fixture file at the manifest's
- * sender-side destination schedule: independent of the server and the wallet.
- */
+// Read expected identities from the fixture using the sender schedule.
 export async function expectedIdentities(fixtureDir: string): Promise<ExpectedFile> {
   const manifest = await readManifest(fixtureDir);
   const wanted = new Set(manifest.expectedIndices);

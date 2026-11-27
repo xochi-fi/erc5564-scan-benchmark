@@ -3,12 +3,7 @@ import type { MemorySnapshot } from '../model.ts';
 
 export const PHASE2_SCHEMA_VERSION = 1;
 
-/**
- * A deterministic link model applied by the in-process TCP link emulator.
- * Each direction is a single FIFO link: a chunk starts transmitting when the
- * link is free, takes bytes / bandwidth seconds, then arrives after the
- * one-way latency. No jitter, loss, TCP slow start, TLS or compression.
- */
+// A FIFO link per direction models bandwidth and latency with no jitter, loss, TCP slow start, TLS or compression.
 export const linkProfileSchema = z.object({
   name: z.string().min(1),
   oneWayLatencyMs: z.number().finite().nonnegative(),

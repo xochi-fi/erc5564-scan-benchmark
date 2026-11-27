@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-# Bazzite (i7-13700K) entry point with the CPU pinning used for the recorded results.
-#
-# Optional reuse of an existing checkout (each fixture is SHA256-checked before use):
-#   REUSE_NODE_MODULES=<dir with node_modules and an identical bun.lock>
-#   REUSE_FIXTURES=<comma-separated fixture directories>
-# Without them, dependencies are installed from bun.lock and fixtures are regenerated.
+# See METHODS.md for runner options.
+
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 readonly ROOT

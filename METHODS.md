@@ -1,6 +1,6 @@
 # Methods
 
-[Overview](README.md) · [Phase 1](PHASE1.md) · [Phase 2](FINDINGS.md) · [Phase 3](PHASE3.md) · [Phase 4](PHASE4.md) · [Phase 5](PHASE5.md) · [Commands](#commands)
+[Overview](README.md) · [Phase 1](PHASE1.md) · [Phase 2](FINDINGS.md) · [Phase 3](PHASE3.md) · [Phase 4](PHASE4.md) · [Phase 5](PHASE5.md) · [Phase 6](PHASE6.md) · [Commands](#commands)
 
 # Phase 1: local scanning
 
@@ -52,13 +52,11 @@ Each new run directory contains:
 - `samples.jsonl`: unrounded verified timings, throughput, CPU time, memory snapshots, fixture digest, lockfile digest, dependency versions, Bun/Node-compatibility version, OS, CPU and RAM per process.
 - `summary.json`: per-scenario median/min/max milliseconds, throughput at median duration and maximum process-lifetime RSS. Single-sample summaries are smoke observations, not statistically stable performance claims.
 
-Deterministic inputs do not make timings deterministic. Record power/thermal conditions and competing load before making comparisons. Scan-engine order is fixed, not randomized. No TEE/FHE/PIR/OMR implementation or on-chain gas comparison is included.
+Scan-engine order is fixed. Power, thermals and competing load affect timing. TEE, FHE, PIR, OMR and on-chain gas are outside scope.
 
 ## Profiling a scan
 
-The profiling driver supports macOS and Linux and reuses the existing fixture
-loader and scan engines; it does not change either scanner. Use an existing
-fixture and a new output directory:
+The macOS and Linux profiling driver uses the same fixture loader and scan engines. Pass an existing fixture and a new output directory.
 
 ```sh
 bun run profile \
@@ -223,6 +221,20 @@ produce byte-identical `announcements.jsonl` files, and their SHA256 digests are
 in [`data/phase1/*/fixtures/*/manifest.json`](data/phase1/) and in
 `src/phase2/prepare-fixtures.ts`, which refuses a fixture whose bytes differ.
 
+### Phase 2 host runner options
+
+| Setting | Use |
+| --- | --- |
+| Plan argument | `bazzite`, `turing`, `smoke` or a repeat plan from [scripts/matrix/](scripts/matrix/) |
+| `BUN` | Bun override. Defaults to PATH, then `./.runtime/*/bun`. |
+| `REUSE_NODE_MODULES`, `REUSE_FIXTURES` | Project directory with the same lockfile, and comma-separated fixture directories checked by SHA256. |
+| `HOST_LABEL`, `WALLET_CPUS`, `CHAIN_CPUS`, `CONTROL_CPUS` | Output label (default short hostname) and Linux CPU lists. |
+| `MAINNET_RPC` | Optional read-only public RPC probe. |
+| `REPETITIONS`, `FIRST_REPETITION`, `SEED` | Repeat count, first repeat number and shuffle seed prefix for split runs. |
+| `COOLDOWN_C` | Maximum thermal zone temperature before each sample, default 70 °C for `repeat-turing`. |
+| `HOST_GATE`, `ALLOW_BUSY_HOST` | Enable host gate (default for `repeat-bazzite*`) or log an override after failure. |
+| `GATE_MIN_AVAILABLE_GIB`, `GATE_MAX_SWAP_PAGES_PER_S`, `GATE_MAX_PSI_AVG60` | Gate defaults are 8 GiB, 100 pages/s and PSI some avg60 of 1.0. |
+
 ## Hosts
 
 [Hardware and pinning](README.md#hardware) · [Phase 2 node and host-state details](FINDINGS.md#repeat-design)
@@ -235,7 +247,7 @@ in [`data/phase1/*/fixtures/*/manifest.json`](data/phase1/) and in
 | `src/phase2/` | local JSON-RPC chain server, link emulator, wallet, sweep and report tools |
 | `src/phase3/` | keyless endpoint probe, adaptive history retriever, indexer clients, report |
 | `test/` | `bun test` suites |
-| `scripts/` | host run plans (`phase2-run.sh`), Bazzite wrapper, repeat matrices |
+| `scripts/` | Phase 2 host plans, Phase 4–5 browser harnesses, Phase 6 feed benchmark |
 | `data/` | recorded results: summary CSVs and per-run JSON/JSONL ([data/README.md](data/README.md)) |
 | `PHASE1.md` | phase 1 findings |
 | `FINDINGS.md` | phase 2 findings, repeat tables and Appendix A single run |

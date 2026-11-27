@@ -1,0 +1,13 @@
+{
+  "pageWindows": 4,
+  "layout": "rows",
+  "pageHeader": true,
+  "shortKeys": false,
+  "hashEncoding": "hex",
+  "hexPrefix": true,
+  "blockDelta": false,
+  "blockHashTable": false,
+  "topicTrim": false,
+  "dataEncoding": "hex",
+  "prefetch": 0
+}

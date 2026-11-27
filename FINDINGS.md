@@ -6,9 +6,7 @@ Results are medians [min–max] from three repetitions on 2026-11-25/26. Each fr
 
 Hosts are the i7-13700K Bazzite desktop and three Turing Pi 2 RK1 modules (RK3588, Cortex-A76). [Hardware](README.md#hardware)
 
-## Verdict on the five findings
-
-All five original findings held. Repeats refined the history-size effect on memory and the scan overhead of 1-block pages. [Repeat findings](#findings-repeat-medians-min-max) · [Original findings](#a-findings)
+## Repeat and single-run comparison
 
 Under heavy swapping, the Bazzite single-run 1M `none` totals at 1 and 16 blocks/page (565.2 and 521.3 s) were 3–5% above repeat ranges (536–539 and 506–516 s). Turing node 1 throttled and its 64–256-block totals fell in the slow half of the repeats. The single-run 1M `public` 1-block total (1731 s) was 3.5% below the repeat median (1791 s [1764–1826]).
 
@@ -175,6 +173,22 @@ for the Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`. The last ~10k bl
 no-credential rule. Raw output:
 [`data/phase2/mainnet-probe/mainnet-fetch.json`](data/phase2/mainnet-probe/mainnet-fetch.json).
 
+## Prior work and OMR crossover
+
+**Current practice.** The [ScopeLift SDK](https://github.com/ScopeLift/stealth-address-sdk) reads RPC `getLogs` in chunks, or a subgraph with an `id_lt` cursor and pinned `snapshotBlock`. [umbra-js](https://github.com/ScopeLift/umbra-protocol/blob/master/umbra-js/src/classes/Umbra.ts) tries the indexer first, then falls back to one unchunked RPC call to `latest`. [Fluidkey](https://docs.fluidkey.com/technical-documentation/technical-walkthrough) shares a viewing-key BIP-32 node with its server, implying server-side scanning. The code checked has no reorg handling and no multi-source cross-check.
+
+**OMR costs.** [OMR](https://eprint.iacr.org/2021/1256): ~$1 per 1M messages per recipient, ~20 ms client decode. [PerfOMR](https://eprint.iacr.org/2024/204): ~40 ms server per message per recipient, ~600 B clue. [SophOMR](https://eprint.iacr.org/2024/1814): 3.4x faster than PerfOMR.
+
+**Crossover** (A76 at 1.75 ms/announcement, [cold 100k rows](#summary-cold-rescans-median-min-max-n--3)):
+
+- Client CPU only: OMR's flat ~20 ms beats scanning above ~12 announcements.
+- Total compute: OMR server cost is ~23x the phone scan per message per recipient, at every volume.
+- Phone feed budget breaks near 1e5 announcements/day; 1M/day is ~29 min CPU and ~100 MB at ~100 B/announcement.
+- ERC-5564 all-time mainnet is ~296 announcements.
+- OMR adds ~0.6-1 kB of clue per announcement.
+
+**Integrity.** The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Drafts EIP-7745 (log index with Merkle proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). No published design exists for signed or Merkle-committed ERC-5564 feed pages.
+
 ## Reproduce
 
 Set `FIXTURE_DIRS` to comma-separated fixture directories and `NODE` to the Pi node number (1–3). For each report, set `BAZZITE_RUN` and the corresponding `TURING_RUN_*` variables to the host run directories.
@@ -199,7 +213,7 @@ bun run src/phase2/report.ts --host "bazzite=$BAZZITE_RUN" --host "turing-node-1
 
 # Appendix A: single-run results (2026-11-25, one repetition per configuration)
 
-The single run used the same hosts and pinning, Turing node 1 only, and fixed setting order. [Repeat verdict](#verdict-on-the-five-findings)
+The single run used the same hosts and pinning, Turing node 1 only, and fixed setting order. [Repeat verdict](#repeat-and-single-run-comparison)
 
 ## A. Controls (phase-1 crypto engine, 100k zero-match, unprofiled)
 

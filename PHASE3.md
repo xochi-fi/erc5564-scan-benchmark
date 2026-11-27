@@ -170,45 +170,21 @@ Coverage is limited to the canonical singleton and Umbra. Other contracts may em
 
 ## Wallet retrieval and progress
 
-1. **Start a cold scan at the Announcer's deploy block.** Use the per-chain deploy
-   blocks in the summary table.
-2. **Checkpoint the next unscanned block, and advance it only after a window succeeded**
-   (and has been scanned). An interruption then resumes rather than skips. Store the
-   checkpoint with the viewing-key fingerprint and chain id. Keep found announcements
-   separately so they don't depend on the checkpoint.
-3. **Use an adaptive window, not a fixed one.** Start large (10k on L1s; probe
-   the whole history first where the endpoint allows it). On a range, result-size or
-   timeout error, use the number in the error message if there is one, otherwise halve.
-   Grow again after a few successes. Treat HTTP 429 with a range message as a range error.
-   **There is no single safe fixed page size:** the smallest cap among full-history
-   keyless endpoints was 10 blocks on Ethereum, Base and Arbitrum, 50 on OP and Sepolia,
-   51 on Polygon and 101 on Gnosis. 1,000 blocks worked on most full-history endpoints. Probe-free defaults that were safe
-   on the endpoints listed first below: Ethereum 5,000 (BlockPI) or whole history
-   (Tenderly); Base 1,000 (Tenderly) or ~10,000 (Pocket, unstable); not daybreak, degenprotocol or baseazul, which return silent empty results; Arbitrum whole history
-   (Tenderly) or 10,000,000 (arb1); OP 10,000 (mainnet.optimism.io) or whole history
-   (Tenderly); Gnosis whole history (rpc.gnosischain.com); Polygon 10,000 (QuickNode
-   public) or whole history (Tenderly); Sepolia whole history (Tenderly).
-4. **Fallback order: full-history endpoints first, by cap.** Treat an archive error
-   ("archive requests require a token", "pruned history", "only serves recent blocks")
-   as a reason to switch endpoints, not a reason to give up. Move endpoints whose cap is
-   under ~1,000 blocks to the back. Retry 5xx/timeouts with backoff before switching.
-   Ship the list with the app and re-probe it occasionally.
-5. **Never trust a single empty answer for history.** A clean `[]` from one endpoint
-   is not proof of absence (finding 3). Cheap defences, given how small the data is: fetch
-   the full history from two independent sources and compare counts per range. Or
-   re-fetch any range that came back empty from a second endpoint before advancing the
-   checkpoint, at least for ranges older than the endpoint's recent window. An indexer
-   (Blockscout, Routescan) is a good second source where reachable, but compare it too
-   (finding 4).
-6. **What to show the user while history loads:** "Checking payments since <deploy
-   date>: scanned to block N of M (x%)". Keep a visible "history incomplete" state until
-   the checkpoint reaches head. If retrieval stops (all endpoints refused), say "could not
-   check blocks A-B; your funds are not lost, retry or add an RPC URL", never "no
-   payments". Show found payments as soon as their window is scanned, with the newest
-   windows first (recent payments are most often what the user is waiting for), then
-   backfill.
-7. **Let the user add an RPC URL** (their own node, or a keyed provider) as the first
-   fallback, and say which endpoint served each range.
+1. Start at the Announcer deployment block. Store the next unscanned block, viewing-key fingerprint and chain ID. Advance only after a successful scan. Persist matches separately.
+2. Adapt the window on range, result-size and timeout errors. Use a reported limit or halve the span, then grow after successes. Treat HTTP 429 with a range message as a range error. The smallest historical caps observed were 10 blocks on Ethereum, Base and Arbitrum, 50 on OP and Sepolia, 51 on Polygon and 101 on Gnosis. A 1,000-block span worked on most historical endpoints.
+3. Prefer historical endpoints with larger caps. Switch on archive errors and retry transient failures with backoff. Smaller caps belong later in the fallback order. Allow a user-supplied RPC first and track which endpoint served each range.
+4. Cross-check empty historical windows and compare exact identities where two independent sources are available. [Base omission replay](PHASE5.md)
+5. Show scanned block ranges and found payments while backfilling. Keep history marked incomplete until catch-up. Report unresolved ranges with retry and RPC override options.
+
+| Chain | Observed starting spans |
+| --- | --- |
+| Ethereum | 5,000 on BlockPI. Whole history on Tenderly. |
+| Base | 1,000 on Tenderly. About 10,000 on Pocket, with unstable results. Daybreak, Degen Protocol and Base Azul returned silent omissions. |
+| Arbitrum | 10,000,000 on arb1. Whole history on Tenderly. |
+| OP Mainnet | 10,000 on mainnet.optimism.io. Whole history on Tenderly. |
+| Gnosis | Whole history on rpc.gnosischain.com. |
+| Polygon | 10,000 on QuickNode public. Whole history on Tenderly. |
+| Sepolia | Whole history on Tenderly. |
 
 ## Caveats
 

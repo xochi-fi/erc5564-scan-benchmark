@@ -1,7 +1,3 @@
-/**
- * Repeat-run support for the phase-2 sweep: matrix files, a seeded
- * interleaved run order, and median/min/max summaries.
- */
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
@@ -81,11 +77,7 @@ export function shuffled<T>(items: readonly T[], random: () => number): T[] {
   return copy;
 }
 
-/**
- * grouped: every repetition of a setting group back to back (the original single-run order).
- * shuffled: repetition-major blocks, each a fresh seeded permutation of all settings, so slow
- * host drift spreads across settings instead of lining up with one of them.
- */
+// Grouped order keeps repetitions together. Shuffled order permutes settings within each repetition.
 export function buildPlan(settings: readonly Setting[], options: {
   repetitions: number;
   firstRepetition: number;

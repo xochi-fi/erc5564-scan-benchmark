@@ -1,8 +1,3 @@
-/**
- * Keyless indexer clients: Blockscout API v2 address logs (cursor paging),
- * and the etherscan-compatible `module=logs&action=getLogs` (Blockscout and
- * Routescan), paged by advancing fromBlock. Every response is accounted for.
- */
 import { z } from 'zod';
 import type { HttpResult, Transport } from './http.ts';
 import { CANONICAL, type LogFilter } from './rpc.ts';
@@ -137,11 +132,7 @@ export function parseEtherscanLogs(text: string, filter: LogFilter = CANONICAL):
   return { logs, raw: items.length, message: body.message, status: body.status };
 }
 
-/**
- * Pages an etherscan-compatible getLogs from fromBlock to toBlock. When a page
- * comes back full (the server's per-call result cap), the next call restarts at
- * the last block seen (deduplicating), so a block cut in half is re-read.
- */
+// Restart at the last block of a full page to recover logs split across pages.
 export async function etherscanLogs(transport: Transport, source: string, base: string, fromBlock: number, toBlock: number, filter: LogFilter = CANONICAL, maxPages = 200): Promise<IndexerRun> {
   const run = emptyRun(source, base);
   const started = performance.now();
@@ -167,8 +158,7 @@ export async function etherscanLogs(transport: Transport, source: string, base: 
     run.pageSizeObserved = Math.max(run.pageSizeObserved ?? 0, page.raw);
     let added = 0;
     for (const log of page.logs) if (!seen.has(log.identity)) { seen.add(log.identity); run.logs.push(log); added++; }
-    // The per-call result cap differs by service (Routescan 100, Blockscout 1000) and is
-    // not announced, so keep paging from the last block seen until a page adds nothing.
+    // Page from the last block until no new logs appear. Result caps vary by service.
     if (page.raw === 0 || added === 0) {
       if (page.raw > 0 && cap !== null && page.raw >= cap && page.logs.every(log => log.blockNumber === cursor)) {
         run.failure = `page cap ${page.raw} reached inside one block ${cursor}; cannot page further`;

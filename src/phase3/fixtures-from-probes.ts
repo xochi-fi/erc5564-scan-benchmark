@@ -1,10 +1,5 @@
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
-/**
- * Regenerates test/fixtures/phase3/rpc-errors.json from recorded probe errors (one per host and
- * kind). The expected kinds are the classifier's output at generation time and were reviewed by
- * hand; rerun after changing the classifier and review the diff.
- *   bun run src/phase3/fixtures-from-probes.ts
- */
+// Regenerate recorded RPC error fixtures and review the classifier output.
 import { interpretRpc, rpcLogsSchema } from './rpc.ts';
 const seen = new Set<string>();
 const out: unknown[] = [];

@@ -1,9 +1,4 @@
-/**
- * OPTIONAL, OFF BY DEFAULT. Read-only, fetch-only paging of real ERC-5564
- * Announcer logs from a public mainnet JSON-RPC endpoint. Network cost only:
- * no keys, no accounts, no scanning, no verification. Requires an explicit
- * --rpc URL that needs no credential.
- */
+// Measure read-only public RPC log retrieval.
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';

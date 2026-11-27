@@ -1,28 +1,6 @@
 #!/usr/bin/env bash
-# Phase 2 (paged wallet discovery) host runner.
-#
-# Runs check + tests, prepares byte-verified fixtures, records host state,
-# runs the sweep bracketed by 100k crypto controls, and tars the results.
-#
-# Usage: scripts/phase2-run.sh PLAN
-#   PLAN = bazzite | turing | smoke                    single-repetition sweeps (original phase 2)
-#        | repeat-bazzite | repeat-bazzite-light       repeat runs from scripts/matrix/<PLAN>.json,
-#        | repeat-turing | repeat-smoke                 seeded shuffled order, bracketed by controls
-#
-# Environment (all optional):
-#   BUN                 bun binary (default: bun on PATH, then ./.runtime/*/bun)
-#   REUSE_FIXTURES      comma-separated directories with fixtures to reuse after SHA256 check
-#   REUSE_NODE_MODULES  project directory whose node_modules may be copied if bun.lock is identical
-#   HOST_LABEL          results subdirectory label (default: hostname -s)
-#   WALLET_CPUS / CHAIN_CPUS / CONTROL_CPUS  taskset CPU lists (Linux)
-#   MAINNET_RPC         if set, ALSO runs the optional read-only mainnet fetch-only probe
-#   REPETITIONS         repeat plans: repetitions in this run (default 3)
-#   FIRST_REPETITION    repeat plans: number of the first repetition (default 1; for splitting reps across nodes)
-#   SEED                repeat plans: shuffle seed prefix (default phase2-repeat-v1; label and first rep are appended)
-#   COOLDOWN_C          wait before each sample until all thermal zones are below this (default 70 on repeat-turing)
-#   HOST_GATE           1 = refuse to start on a busy host (default 1 on repeat-bazzite*, else 0)
-#   GATE_MIN_AVAILABLE_GIB / GATE_MAX_SWAP_PAGES_PER_S / GATE_MAX_PSI_AVG60  gate limits (8 / 100 / 1.0)
-#   ALLOW_BUSY_HOST     1 = run anyway when the gate fails; the override is logged and recorded in HOST-GATE.txt
+# See METHODS.md for plans and environment options.
+
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -99,9 +77,7 @@ host_state() {
   } > "$file" 2>&1
 }
 
-# Refuses to start (or, with ALLOW_BUSY_HOST=1, records a loud override) when the host is busy:
-# low MemAvailable, active swapping over a 10 s vmstat sample, or memory pressure (PSI some avg60).
-# Swap *size* is not gated: zram keeps cold pages parked without slowing anything.
+# Gate on active swapping, available memory and PSI.
 host_gate() {
   local file="$RESULTS/HOST-GATE.txt"
   if [[ ! -r /proc/meminfo ]]; then

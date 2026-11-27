@@ -1,8 +1,4 @@
-/**
- * Finds the largest eth_getLogs block span an endpoint accepts, with an
- * exponential bracket and then a binary search. Pure apart from the supplied
- * `accepts` callback, so tests drive it with recorded or synthetic endpoints.
- */
+// Find the maximum accepted span by exponential bracketing and bisection.
 
 export type Verdict = 'ok' | 'fail';
 

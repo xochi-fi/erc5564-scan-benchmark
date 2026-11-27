@@ -2,7 +2,7 @@
 
 How many ERC-5564 announcements exist per chain, and can a keyless client fetch them all? Seven chains hold 1 to 1,039 each, and keyless scans reached head on all seven. With a whole-history endpoint, a cold start took 8–17 s and 30–52 requests. On Base, one endpoint silently skipped 48 logs. A parallel run reached head in 28 minutes and 16,296 requests, with four workers and five hostnames across four providers. Of 190 endpoints probed, 105 answered `eth_getLogs` and 77 accepted the deploy-block query.
 
-Read-only run from Bazzite on 2026-11-26, canonical Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`, deployment to measured head. Residential IP, ≤4 requests/s per host, HTTP 429 backoff with Retry-After, User-Agent `erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)`. The User-Agent string is unchanged from the recorded run.
+Read-only run from Bazzite on 2026-11-26, canonical Announcer `0x55649E01B5Df198D18D95b5cc5051630cfD45564`, deployment to measured head. Residential IP, ≤4 requests/s per host, HTTP 429 backoff with Retry-After, User-Agent `erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)` ([why `phase3`](../METHODS.md#names-in-recorded-data)).
 
 [Code](../src/chain-volume/) · [Raw results](../data/chain-volume/)
 
@@ -10,15 +10,17 @@ Read-only run from Bazzite on 2026-11-26, canonical Announcer `0x55649E01B5Df198
 
 Sources agree on `(block, logIndex)`, and on transaction hash where present. "Full history" means the endpoint accepted a deploy-block window. Span is `toBlock - fromBlock + 1`.
 
+<!-- generated:chain-volume -->
 | Chain | Deploy block | Announcements | First - last announcement | Per month (since first) | Keyless endpoints: listed / probed / answered getLogs / full history | Max span of full-history endpoints, blocks: median [min-max] | Best keyless cold start | Naive cold start (chainlist order) | Keyless indexers |
 | --- | ---: | --- | --- | ---: | --- | --- | --- | --- | --- |
 | Ethereum | 20,042,207 | **298**: Blockscout v2 = Routescan = RPC (2 endpoint sets) | 21,140,089 (2024-11-08) - 26,499,925 (2026-11-26) | 12.1 (30-36 in each of the last 3 months) | 72 / 36 / 17 / 11 | 1,001 [10 - whole history]; 2 took the whole history | OK, exact: 8 s, 30 requests, 335 KiB | OK, exact: 26 min, 1,299 requests | Blockscout v2 OK (50/page); Routescan OK (100/page, ~441 blocks behind head); Blockscout etherscan-API timed out (90 s) or 429 |
-| Base | 15,502,414 | **679**: RPC only (matches both partial runs on their silent-free prefixes) | 16,819,551 (2024-07-08) - 62,245,129 (2026-11-25) | 23.7 | 41 / 33 / 16 / 11 (3 of the 11 return silent empty results) | 1,001 [10 - 63,752] (none took the whole history) | OK, parallel: 1.4 MiB (see above) | FAILED: 8,000-request budget spent at 17% of history (34 min, 457 announcements so far) | Blockscout: Cloudflare challenge (blocked); Basescan/Etherscan: key required |
-| Arbitrum One | 219,468,264 | **19**: RPC (2 endpoint sets agree) | 434,497,958 - 522,929,374 | 2.1 | 35 / 27 / 15 / 12 | 551 [10 - whole history]; 1 took the whole history | OK: 14 s, 52 requests | OK: 17 s, 68 requests | Blockscout: Cloudflare challenge (blocked) |
-| OP Mainnet | 121,097,390 | **2**: Blockscout v2 = Blockscout etherscan-API = RPC | 154,353,397 - 154,455,081 (2026-07-17..20) | 0.5 | 36 / 25 / 18 / 13 | 5,001 [50 - whole history]; 2 took the whole history | OK, exact: 10 s, 40 requests | OK, exact: 18 min, 3,930 requests | Blockscout (explorer.optimism.io) OK |
-| Gnosis | 34,349,356 | **3**: RPC (2 endpoint sets agree) | 40,967,594 - 41,054,058 (2025-07) | 0.2 | 25 / 20 / 10 / 9 | 10,000 [101 - whole history]; 3 took the whole history | OK: 17 s, 34 requests | OK: 72 min, 4,268 requests | Blockscout: Cloudflare challenge (blocked) |
-| Polygon PoS | 57,888,814 | **9**: RPC (2 endpoint sets agree) | 85,999,710 - 95,895,782 | 1.3 | 40 / 28 / 15 / 10 | 1,001 [51 - whole history]; 2 took the whole history | OK: 12 s, 40 requests | OK: 17 min, 4,026 requests | Blockscout: Cloudflare challenge (blocked) |
-| Sepolia | 5,486,597 | **1,039**: Routescan = RPC (2 endpoint sets); **Blockscout has 1,026** | 6,241,244 (2024-07-04) - 12,186,737 | 36.2 | 30 / 21 / 14 / 11 | 10,001 [50 - whole history]; 2 took the whole history (one 3-block value excluded: a head-lag artifact, see caveats) | OK: 8 s, 30 requests | OK: 66 s, 80 requests | Blockscout v2 and etherscan-API: 13 missing; Routescan OK |
+| Base | 15,502,414 | **679**: RPC only (matches both partial runs on their silent-free prefixes) | 16,819,551 (2024-07-08) - 62,245,129 (2026-11-25) | 23.7 | 41 / 33 / 16 / 11 (3 of the 11 return silent empty results) | 1,001 [10 - 63,752] (none took the whole history) | OK, parallel: 28 min, 16,296 requests, 1,394 KiB | FAILED: 8,000-request budget spent at 17% of history (34 min, 457 announcements so far) | Blockscout: Cloudflare challenge (blocked); Basescan/Etherscan: key required |
+| Arbitrum One | 219,468,264 | **19**: RPC (2 endpoint sets agree) | 434,497,958 (2026-02-21) - 522,929,374 (2026-11-10) | 2.1 | 35 / 27 / 15 / 12 | 551 [10 - whole history]; 1 took the whole history | OK: 14 s, 52 requests, 26 KiB | OK: 17 s, 68 requests | Blockscout: Cloudflare challenge (blocked) |
+| OP Mainnet | 121,097,390 | **2**: Blockscout v2 = Blockscout etherscan-API = RPC | 154,353,397 (2026-07-17) - 154,455,081 (2026-07-20) | 0.5 | 36 / 25 / 18 / 13 | 5,001 [50 - whole history]; 2 took the whole history | OK, exact: 10 s, 40 requests, 4 KiB | OK, exact: 18 min, 3,930 requests | Blockscout (explorer.optimism.io) OK |
+| Gnosis | 34,349,356 | **3**: RPC (2 endpoint sets agree) | 40,967,594 (2025-07-07) - 41,054,058 (2025-07-12) | 0.2 | 25 / 20 / 10 / 9 | 10,000 [101 - whole history]; 3 took the whole history | OK: 17 s, 34 requests, 5 KiB | OK: 72 min, 4,268 requests | Blockscout: Cloudflare challenge (blocked) |
+| Polygon PoS | 57,888,814 | **9**: RPC (2 endpoint sets agree) | 85,999,710 (2026-04-25) - 95,895,782 (2026-10-21) | 1.3 | 40 / 28 / 15 / 10 | 1,001 [51 - whole history]; 2 took the whole history | OK: 12 s, 40 requests, 12 KiB | OK: 17 min, 4,026 requests | Blockscout: Cloudflare challenge (blocked) |
+| Sepolia | 5,486,597 | **1,039**: Routescan = RPC (2 endpoint sets); **Blockscout has 1,026** | 6,241,244 (2024-07-04) - 12,186,737 (2026-11-22) | 36.1 | 30 / 21 / 14 / 11 | 10,001 [50 - whole history]; 2 took the whole history (one 3-block value excluded: a head-lag artifact, see caveats) | OK: 8 s, 30 requests, 1,227 KiB | OK: 66 s, 80 requests | Blockscout v2 and etherscan-API: 13 missing; Routescan OK |
+<!-- /generated:chain-volume -->
 
 Probe-informed runs rank deploy-block-capable endpoints by span. List-order runs take Chainlist order among endpoints that answered a 10-block query. Both start at 10,000 blocks, adapt, and use up to eight endpoints. The parallel strategy splits the range into 64 resumable chunks. Deploy blocks come from Blockscout creation transactions (Ethereum, OP Mainnet, Sepolia) or `eth_getCode` bisection. Two more endpoints showed code at each deploy block and none at the block before.
 
@@ -141,7 +143,7 @@ Only the canonical singleton and Umbra are covered. Other contracts may emit sim
 
 ```sh
 bun test test/chain-volume.test.ts   # no network: recorded error bodies, simulated endpoints
-# live, read-only, keyless; each stage writes JSON under data/chain-volume/ and overwrites it
+# live, read-only, keyless; each stage writes JSON under results/chain-volume/ (--output to change)
 bun run chain-volume --stage endpoints                  # fetch and filter chainlist rpcs.json
 bun run chain-volume --stage reference                  # Blockscout / Routescan counts and deploy blocks
 bun run chain-volume --stage probe                      # limits, archive depth, latency (~10-25 min per chain)
@@ -152,4 +154,4 @@ bun run chain-volume --stage umbra-reference,umbra-retrieve,umbra-verify-deploy
 bun run chain-volume --stage report                     # summary.md/csv, endpoints.csv, cross-source.csv
 ```
 
-`--chains` takes a comma list of `ethereum,base,arbitrum,optimism,gnosis,polygon,sepolia`. The probe and the naive cold start make several thousand requests per chain at ≤4/s per host. Probe-informed and parallel runs skip hosts flagged by saved consistency results. Pass `--output results/<run>` on every stage to keep recorded data intact.
+`--chains` takes a comma list of `ethereum,base,arbitrum,optimism,gnosis,polygon,sepolia`. The probe and the naive cold start make several thousand requests per chain at ≤4/s per host. Later stages read earlier ones from the same `--output`, and probe-informed and parallel runs skip hosts flagged by saved consistency results there. `--output data/chain-volume` replaces the recorded data, for example `bun run chain-volume --stage report --output data/chain-volume` to rebuild the derived files from it.

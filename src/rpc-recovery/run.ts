@@ -3,7 +3,7 @@ import { control, origin, rpc, scope, type Window } from './config.ts';
 
 const [cli, page, referencePath, output, suite = 'all'] = Bun.argv.slice(2);
 if (!cli || !page || !referencePath || !output || !['all', 'live', 'fixture'].includes(suite)) {
-  throw new Error('Usage: bun src/rpc-recovery/run.ts ORCA_CLI PAGE REFERENCE_JSON OUTPUT_DIR [all|live|fixture]');
+  throw new Error('Usage: bun run rpc-recovery ORCA_CLI PAGE REFERENCE_JSON OUTPUT_DIR [all|live|fixture]');
 }
 const { agreed, headHash, identities, windows } = await Bun.file(referencePath).json() as {
   agreed: boolean; headHash: string; identities: string[]; windows: Window[];

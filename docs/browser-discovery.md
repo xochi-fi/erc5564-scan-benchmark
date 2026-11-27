@@ -23,9 +23,8 @@ Medians, fresh / resume, three of each per endpoint, 2026-11-26 19:33–19:34 UT
 ## Method
 
 - Base blocks 62,241,130–62,246,129 in 500-block windows. Resume starts at 62,244,130 from a preseeded localStorage cursor. Both modes check chain ID and the pinned head, and stop on the first error.
-- The localStorage keys are now `browser-discovery-checkpoint` here and `rpc-recovery:<name>` in RPC recovery. The recorded runs used `phase4-checkpoint` and `phase5:<name>`.
 - PublicNode and Tenderly scanned independently in 200- and 173-block windows and agreed on the [pinned head and both canonical logs](../data/browser-discovery/reference.json). Receipts corroborated the logs, which both fall in the resume range. Comparison uses block number, block hash, transaction hash and log index, and checks for missing, extra and duplicate logs.
-- Seed `phase4:base:browser:v1`, kept so the fixture reproduces, places two matches and two decoys in separate local arrays, in blocks 62,244,879 and 62,245,879. The SDK checks ownership locally. No canonical log matched the synthetic recipient. No receipt or balance checks, no transactions.
+- A seeded synthetic fixture ([seed name](../METHODS.md#names-in-recorded-data)) places two matches and two decoys in separate local arrays, in blocks 62,244,879 and 62,245,879. The SDK checks ownership locally. No canonical log matched the synthetic recipient. No receipt or balance checks, no transactions.
 - Catch-up runs from cursor read to final write. Browser fetch runs from fetch to body read, preflight wait included, without JSON parse or scan. Counts are attempted POSTs. Resource timings are kept when Chromium exposes them.
 
 ## Reproduce
@@ -34,7 +33,7 @@ Bun 1.4.4 and Orca on Bazzite, from the Orca worktree, with access to public Bas
 
 ```sh
 mkdir -p results/browser-discovery-replay
-bun src/browser-discovery/serve.ts results/browser-discovery-replay
+bun run browser-discovery:serve results/browser-discovery-replay
 ```
 
 In another terminal, create an isolated profile and a tab. Each command returns the ID the next one needs.
@@ -43,10 +42,10 @@ In another terminal, create an isolated profile and a tab. Each command returns 
 ORCA_CLI="${ORCA_CLI_COMMAND:-orca-ide}"
 "$ORCA_CLI" tab profile create --label 'Browser discovery replay' --scope isolated --json
 "$ORCA_CLI" tab create --url http://127.0.0.1:8764/ --worktree current --profile PROFILE_ID --headless --json
-bun src/browser-discovery/run.ts "$ORCA_CLI" PAGE_ID data/browser-discovery/reference.json results/browser-discovery-replay 3
-bun src/browser-discovery/preflight.ts results/browser-discovery-replay/preflight.json
+bun run browser-discovery "$ORCA_CLI" PAGE_ID data/browser-discovery/reference.json results/browser-discovery-replay 3
+bun run browser-discovery:preflight results/browser-discovery-replay/preflight.json
 ```
 
-`bun src/browser-discovery/reference.ts results/browser-discovery-replay/reference.json` recaptures the reference, with at least 275 ms between request starts per provider. Each replay needs a fresh output directory. The local server serves the harness, controls and fixture and receives samples. Chromium fetches public RPCs directly, with normal CORS and credentials omitted.
+`bun run browser-discovery:reference results/browser-discovery-replay/reference.json` recaptures the reference, with at least 275 ms between request starts per provider. Each replay needs a fresh output directory. The local server serves the harness, controls and fixture and receives samples. Chromium fetches public RPCs directly, with normal CORS and credentials omitted.
 
 [Sample CSV](../data/browser-discovery/samples.csv) · [Browser samples](../data/browser-discovery/samples/) · [Pinned reference](../data/browser-discovery/reference.json) · [CORS controls](../data/browser-discovery/controls.json) · [Command-line preflight](../data/browser-discovery/preflight.json)

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# See METHODS.md for plans and environment options.
+# Paged-discovery host runner. See METHODS.md#host-runner for plans and environment options.
 
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 readonly ROOT
 cd "$ROOT"
 
@@ -13,6 +13,16 @@ case "$PLAN" in
   *)
     printf 'usage: %s bazzite|turing|smoke|repeat-bazzite|repeat-bazzite-light|repeat-turing|repeat-smoke\n' "$0" >&2
     exit 2
+    ;;
+esac
+
+# Bazzite plans: the same P-core threads as the scan-cost Bazzite controls; chain/link on two other P-cores.
+case "$PLAN" in
+  bazzite | repeat-bazzite*)
+    export HOST_LABEL="${HOST_LABEL:-bazzite}"
+    export WALLET_CPUS="${WALLET_CPUS:-0,2,4,6}"
+    export CONTROL_CPUS="${CONTROL_CPUS:-0,2,4,6}"
+    export CHAIN_CPUS="${CHAIN_CPUS:-8,10}"
     ;;
 esac
 
@@ -131,8 +141,8 @@ printf 'plan=%s label=%s bun=%s (%s)\n' "$PLAN" "$LABEL" "$("$BUN_BIN" --version
 if [[ "$("$BUN_BIN" --version)" != "1.4.4" ]]; then
   printf 'WARNING: bun is not 1.4.4; this is a different benchmark environment\n'
 fi
-sha256sum package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts src/paged-discovery/*.sh test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json 2>/dev/null \
-  || shasum -a 256 package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts src/paged-discovery/*.sh test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json
+sha256sum package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json 2>/dev/null \
+  || shasum -a 256 package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json
 host_state "$RESULTS/host-before.txt"
 case "$PLAN" in
   repeat-bazzite*) GATE_DEFAULT=1 ;;

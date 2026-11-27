@@ -28,7 +28,7 @@ type Row = ReturnType<typeof compact>[number];
 
 const [paramsPath, samplesArg] = Bun.argv.slice(2);
 if (!paramsPath || !/^(bazzite|turing-node-[123])$/.test(hostname())) {
-  throw new Error('Usage on Bazzite or a Turing node: bun src/shared-feed/tune.ts PARAMS_JSON [WARM_SAMPLES]');
+  throw new Error('Usage on Bazzite or a Turing node: bun run shared-feed:tune PARAMS_JSON [WARM_SAMPLES]');
 }
 const params = paramsSchema.parse(await Bun.file(paramsPath).json());
 const warmSamples = Number(samplesArg ?? 1);

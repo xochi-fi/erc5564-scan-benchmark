@@ -3,7 +3,7 @@ import { control, filter, hex, origin, scope, type Window } from './config.ts';
 import type { RawLog } from './browser.ts';
 
 const [referencePath, output] = Bun.argv.slice(2);
-if (!referencePath || !output) throw new Error('Usage: bun src/rpc-recovery/serve.ts REFERENCE_JSON OUTPUT_DIR');
+if (!referencePath || !output) throw new Error('Usage: bun run rpc-recovery:serve REFERENCE_JSON OUTPUT_DIR');
 const reference = await Bun.file(referencePath).json() as {
   agreed: boolean; headHash: string; windows: Window[]; logs: RawLog[];
 };

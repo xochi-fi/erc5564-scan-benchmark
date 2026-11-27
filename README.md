@@ -1,5 +1,9 @@
 # ERC-5564 scan benchmark
 
+> **No OMR for ERC-5564 yet.** Wallets fetch a public finalized feed in full, scan locally, and advance only when two feeds agree.\
+> OMR is cheaper for the phone CPU above ~12/day, but costs servers 4–60 ms per message per recipient and adds ~0.6–2 kB onchain per announcement.\
+> Revisit near 100k announcements/day. [Decision](docs/shared-feed.md#decision)
+
 Can a wallet find its ERC-5564 stealth payments from public, keyless infrastructure, and know it found all of them? Measured with ScopeLift's unmodified `@scopelift/stealth-address-sdk` 1.0.0-beta.5 on Bun 1.4.4.
 
 > **All keys and addresses in this repository are public, deterministic test material.
@@ -9,7 +13,6 @@ Can a wallet find its ERC-5564 stealth payments from public, keyless infrastruct
 
 1. **Scanning is cheap at real volume.** Every chain's full ERC-5564 history would scan in seconds ([Scan cost](docs/scan-cost.md)).
 2. **Retrieval is the hard part.** Keyless RPCs reached head on all seven chains, but Base only with a parallel backfill ([Chain volume](docs/chain-volume.md)). Over a public link, page size decides whether the network matters ([Paged discovery](docs/paged-discovery.md)).
-3. **Cross-checking fixes completeness cheaply.** A second RPC, or two independent static feeds, recovered every omitted log and held the checkpoint while sources disagreed ([RPC recovery](docs/rpc-recovery.md), [Shared feed](docs/shared-feed.md)).
 
 ![Outcome of each strategy, injected fault and endpoint recheck](docs/figures/outcome-matrix.svg)
 

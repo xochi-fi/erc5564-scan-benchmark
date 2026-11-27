@@ -455,19 +455,19 @@ function feedBytes(): string {
 
 // ---- 8. daily scan budget -----------------------------------------------------
 
-// Literature constants and one assumption, not measurements from this repo. They mirror the scheme
-// table in docs/paged-discovery.md.
-// Assumption: the daily announcement volume at which a phone-class feed budget runs out.
+// Literature constants and one assumption, not measurements from this repo. Only values the papers'
+// abstracts state are used; the evaluation tables could not be fetched (eprint returns 403 to automated
+// clients). They mirror the scheme table in docs/paged-discovery.md.
+// Assumption, not derived from any OMR figure: the daily announcement volume at which a phone-class
+// feed budget runs out.
 const PHONE_BUDGET_PER_DAY = 1e5;
-// Liu and Tromer, Oblivious Message Retrieval, eprint 2021/1256: "the resulting digests can be decoded
-// by recipients in ~20ms" (abstract).
+// OMR, eprint 2021/1256 abstract: "the resulting digests can be decoded by recipients in ~20ms".
 const OMR_CLIENT_S = 0.02;
-// DoS-resistant OMR, eprint 2024/510: server time per message per recipient, ~4.9 ms. Taken from the
-// coordinator's reading of the paper's evaluation table; the PDF could not be fetched here, so the
-// per-recipient scope and the benchmark hardware are not independently checked. The abstract claims
-// 12x faster than OMRp2 (2021/1256). PerfOMR1/2 (eprint 2024/204, ~40 ms per message for PerfOMR2) are
-// not shown: they are not DoS-resistant, since a crafted clue breaks them.
-const DOS_OMR_SERVER_S_PER_MESSAGE = 0.0049;
+// PerfOMR2, eprint 2024/204 abstract: "~40.0ms per message". Not DoS-resistant. The abstract does not
+// say per recipient or give the hardware.
+const PERFOMR2_SERVER_S_PER_MESSAGE = 0.04;
+// DoS-resistant OMR, eprint 2024/510: its abstract gives only relative speed (12x faster than OMRp2
+// from 2021/1256), so it is named in the caption and not drawn.
 
 function scanBudget(): string {
   const W = 760, L = 78, R = 724, T = 58, B = 300;
@@ -504,13 +504,13 @@ function scanBudget(): string {
   const cross = OMR_CLIENT_S / a76;
   out.push(circle(x.scale(cross), y.scale(OMR_CLIENT_S), 3.5, 's2', `A76 scan passes OMR client decode at ${fmt(cross, 1)} announcements`));
   out.push(text(x.scale(cross) - 8, y.scale(OMR_CLIENT_S) - 8, `A76 scan passes it at ~${fmt(Math.ceil(cross))}/day`, 'small muted', 'end'));
-  const sx = Math.min(1e7, 1e6 / DOS_OMR_SERVER_S_PER_MESSAGE);
-  out.push(line(x.scale(1e-3), y.scale(1e-3 * DOS_OMR_SERVER_S_PER_MESSAGE), x.scale(sx), y.scale(sx * DOS_OMR_SERVER_S_PER_MESSAGE), 'axis', ' stroke-width="1.5" stroke-dasharray="2 3"'));
-  out.push(text(x.scale(3e4), y.scale(3e4 * DOS_OMR_SERVER_S_PER_MESSAGE) - 10, `DoS-resistant OMR server, ~${fmt(DOS_OMR_SERVER_S_PER_MESSAGE * 1000, 1)} ms/message/recipient (cited): ${fmt(DOS_OMR_SERVER_S_PER_MESSAGE / a76, 1)}x the A76 scan`, 'small muted', 'end'));
+  const sx = Math.min(1e7, 1e6 / PERFOMR2_SERVER_S_PER_MESSAGE);
+  out.push(line(x.scale(1e-3), y.scale(1e-3 * PERFOMR2_SERVER_S_PER_MESSAGE), x.scale(sx), y.scale(sx * PERFOMR2_SERVER_S_PER_MESSAGE), 'axis', ' stroke-width="1.5" stroke-dasharray="2 3"'));
+  out.push(text(x.scale(3e4), y.scale(3e4 * PERFOMR2_SERVER_S_PER_MESSAGE) - 10, `PerfOMR2 server, ~${PERFOMR2_SERVER_S_PER_MESSAGE * 1000} ms/message (cited, not DoS-resistant): ${fmt(PERFOMR2_SERVER_S_PER_MESSAGE / a76, 0)}x the A76 scan`, 'small muted', 'end'));
   // Budget line.
   const bx = x.scale(PHONE_BUDGET_PER_DAY);
   out.push(line(bx, T, bx, B, 'axis', ' stroke-width="1.5" stroke-dasharray="4 3"'));
-  out.push(text(bx - 6, T + 12, `~${decadeLabel(PHONE_BUDGET_PER_DAY)}/day: phone feed budget`, 'small ink', 'end'));
+  out.push(text(bx - 6, T + 12, `~${decadeLabel(PHONE_BUDGET_PER_DAY)}/day: assumed phone feed budget (estimate)`, 'small ink', 'end'));
   out.push(text(bx - 6, T + 26, `A76 ${fmt(PHONE_BUDGET_PER_DAY * a76 / 60, 1)} min CPU/day`, 'small muted', 'end'));
   out.push(circle(x.scale(1e6), y.scale(1e6 * a76), 3.5, 's2', `1M/day on the A76: ${fmt(1e6 * a76 / 60, 0)} min CPU`));
   out.push(text(x.scale(1e6) - 8, y.scale(1e6 * a76) + 4, `1M/day: ${fmt(1e6 * a76 / 60, 0)} min`, 'small ink', 'end'));
@@ -523,7 +523,8 @@ function scanBudget(): string {
   out.push(text(L - 6, rowY + 4, 'ERC-5564', 'small ink', 'end'));
   out.push(text(x.scale(hi) + 8, rowY + 4, `${fmt(lo, 3)}–${fmt(hi, 1)} per day per chain; A76 CPU at the busiest: ${fmt(hi * a76 * 1000, 1)} ms/day`, 'small muted'));
   const notes = caption(20, B + 86, W - 40, [
-    'Lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain\'s canonical Announcer rate, first announcement to 2026-11-26. Dashed lines are literature constants, not measured here: OMR client decode (eprint 2021/1256) and DoS-resistant OMR server time per message per recipient (eprint 2024/510). PerfOMR (eprint 2024/204) is left out because it is not DoS-resistant.',
+    'Lines: scan-cost 100k controls, crypto engine, per announcement, scaled linearly. Rug: each chain\'s canonical Announcer rate, first announcement to 2026-11-26. Dashed lines are literature constants from the papers\' abstracts, not measured here: OMR recipient decode, ~20 ms (eprint 2021/1256), and PerfOMR2 server time, ~40 ms per message (eprint 2024/204, not DoS-resistant). The ~12/day crossover uses the OMR decode; the PerfOMR2 ratio uses PerfOMR2. The ~100k/day budget is an assumption, not derived from OMR.',
+    'DoS-resistant OMR (eprint 2024/510) reports 12x faster than OMRp2 and near state-of-the-art non-DoS-resistant OMR; per-message figure not verified (evaluation tables not accessible).',
     'Sources: data/scan-cost/results.csv, data/chain-volume/canonical/retrieve-*.json. Details: docs/paged-discovery.md (prior work), docs/scan-cost.md.',
   ]);
   out.push(...notes.elements);

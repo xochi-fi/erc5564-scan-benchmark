@@ -46,6 +46,21 @@ On the A76 cores, local scan took 2.9–3.7× as long. Loopback feed catch-up to
 
 [Node 1](data/phase6/turing-node-1/summary.json) · [Node 2](data/phase6/turing-node-2/summary.json) · [Node 3](data/phase6/turing-node-3/summary.json)
 
+## Feed format search
+
+Two single-metric searches over [`scripts/phase6/tune.ts`](scripts/phase6/tune.ts), using the autoresearch keep/revert protocol. Each iteration changed one field of a params JSON. The loop and git bookkeeping ran on a Mac, driven by a Claude Code session with no API calls. Every verify ran on turing-node-1 over ssh (`taskset -c 4-7`, Bun 1.4.4, 70 °C gate). Bazzite had no sshd. The wrapper serves both feeds on loopback from the two Phase 5 captures and makes no RPC calls. It fails unless every page round-trips losslessly, both sources agree, and the scan finds 48/48 cold and 28/28 warm logs plus the synthetic matches. Warm resumes after window 32 (block 44,788,281), as in the main run.
+
+| Search | Metric | Baseline | Best | Iterations | Best params |
+| --- | --- | ---: | ---: | ---: | --- |
+| Cold page bytes, one source | decoded body bytes | 43,719 | 14,953 (−65.8%) | 13 | [feed-bytes](data/phase6/autoresearch/feed-bytes.params.json) |
+| Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](data/phase6/autoresearch/warm-time.params.json) |
+
+Bytes: zero-run encoding of the ABI data saved the most (34,887 → 16,753). Base64 hashes, trimmed topics, 32-window pages, columns, delta blocks and dropping the page header added the rest. Base64 for ABI data and a per-page block hash table did not help. Gzip shrinks the gap: 10,555 → 8,043 (−23.8%). The manifest stays near 2.5 kB. 32-window pages cut a source to three pages, so a checkpoint commits every 32 windows instead of 4. 16-window pages cost 40 B more.
+
+Warm time: the loop kept only larger pages (8, 16, then 32 windows). Prefetch and encoding changes all landed 0.1–2.0 ms above the best. An interleaved check (5 rounds × 9 samples, peak 69.3 °C) gave per-round medians of 70.3–83.8 ms for baseline, 70.4–76.3 ms for 32-window pages and 66.3–79.8 ms for the byte-optimized format. Medians of round medians were 70.51, 71.40 and 75.02 ms. The spread between rounds exceeds any params effect. Local scan dominates A76 warm catch-up, and no format change is confirmed to shorten it.
+
+[Bytes log](data/phase6/autoresearch/feed-bytes.jsonl) · [Warm log](data/phase6/autoresearch/warm-time.jsonl) · [Interleaved check](data/phase6/autoresearch/confirm.txt) · [Baseline params](data/phase6/autoresearch/baseline.params.json)
+
 ## Scope and method
 
 - The [Phase 5 reference](data/phase5/reference.json) pins 68 selected 1,000-block windows, 48 logs and Base head 46,544,281. The windows cover 68,000 blocks with gaps and include all 48 known Daybreak omissions. Both paths scan exactly those windows in 17 groups of four.
@@ -76,6 +91,11 @@ bun scripts/phase6/verify.ts data/phase6/evidence.json
 # Turing node N, host name turing-node-N
 taskset -c 4-7 bun scripts/phase6/run.ts results/phase6-replay
 bun scripts/phase6/verify.ts data/phase6/turing-node-N/evidence.json
+```
+
+```sh
+# Feed format search, Turing node, no RPC
+taskset -c 4-7 bun scripts/phase6/tune.ts data/phase6/autoresearch/feed-bytes.params.json 9
 ```
 
 Use a fresh run directory. `COOLDOWN_C` overrides the 70 °C thermal gate. The verifier emits medians, minima and maxima in that order. Recorded evidence contains public range metadata, page digests and timings. [Evidence](data/phase6/evidence.json) · [Verified summary](data/phase6/summary.json)

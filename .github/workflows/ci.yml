@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun test
+      - name: Generated figures and tables are up to date
+        run: |
+          bun run figures
+          bun run tables
+          git status --porcelain
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Relative links and anchors in Markdown
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Offline: local files and #fragments only, so third-party sites can't make CI flaky.
+          args: --offline --include-fragments --no-progress --exclude-path node_modules './**/*.md'
+          fail: true

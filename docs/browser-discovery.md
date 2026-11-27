@@ -2,6 +2,7 @@
 
 Can a browser wallet discover Base payments from keyless public RPCs? Three of six endpoints completed every run with both canonical logs. A saved cursor cut their POSTs from 12 to 6.
 
+<!-- generated:browser-discovery -->
 | Endpoint | Completed | First fixture match (s) | Catch-up (s) | Browser fetch (s) | RPC calls | Real completeness |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | Pocket | 6/6 | 1.356 / 0.463 | 1.577 / 0.714 | 1.572 / 0.710 | 12 / 6 | Exact 2/2 in every run |
@@ -10,6 +11,7 @@ Can a browser wallet discover Base payments from keyless public RPCs? Three of s
 | Base public RPC | 0/6 | — | — | 0.683 / 0.678 | 3 / 3 | 0/2 seen before HTTP 429 on the first log page |
 | dRPC | 0/6 | — | — | 0.354 / 0.348 | 3 / 3 | 0/2 seen before HTTP 400 on the first log page. The body reported a 100-block free-plan limit. |
 | Blockscout RPC | 0/6 | — | — | 0.115 / 0.119 | 1 / 1 | 0/2 seen before HTTP 429 on chain ID |
+<!-- /generated:browser-discovery -->
 
 Medians, fresh / resume, three of each per endpoint, 2026-11-26 19:33–19:34 UTC. Chromium 150, Orca Electron 43.8.10, Bazzite 45, Intel i7-13700K, revision `9ba009890e71f3509489ffe5365cbc733264bf6f`.
 

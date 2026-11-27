@@ -2,10 +2,12 @@
 
 How long does a local ERC-5564 scan take? About 0.5 ms per announcement on an i7-13700K and 1.7–1.8 ms on a Cortex-A76. Time grows linearly from 100k to 1M.
 
+<!-- generated:scan-cost -->
 | Host | 100k before/after controls, s | 1M, s | 1M / 100k |
 | --- | --- | --- | --- |
 | Bazzite, P-core threads 0,2,4,6 | 48.531–51.951 | 519.084 | 9.99–10.70 |
 | Turing node 1, Cortex-A76 cores 4–7 | 168.457–181.946 | 1804.305 | 9.92–10.71 |
+<!-- /generated:scan-cost -->
 
 [Hardware](../README.md#hardware). Crypto engine, zero-match fixtures, unprofiled. Two 100k controls bracket the other runs. All 12 Linux runs matched the fixture oracle. Data: [`results.csv`](../data/scan-cost/results.csv), [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/), [`profiling-turing/`](../data/scan-cost/profiling-turing/).
 

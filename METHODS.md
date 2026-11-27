@@ -118,7 +118,7 @@ Out of scope: birthday-block and newest-first scans, reorgs, subscriptions, ERC-
 
 ## Commands
 
-Setup, type check and tests: [Quickstart](README.md#quickstart).
+Setup, type check and tests: [Quickstart](README.md#quickstart). After changing anything under `data/`, run `bun run figures` and `bun run tables`. CI fails if the checked-in output is stale.
 
 Each experiment doc ends with its own commands. Scan cost and paged discovery write new directories under ignored `results/` or `work/`. Chain volume overwrites recorded data by default ([Reproduce](docs/chain-volume.md#reproduce)). A run exits nonzero if any sample misses the fixture oracle. Keep the large workloads out of ordinary CI.
 
@@ -132,10 +132,12 @@ Each experiment doc ends with its own commands. Scan cost and paged discovery wr
 | `src/chain-volume/` | Keyless endpoint probe, adaptive retriever, indexer clients, report |
 | `src/browser-discovery/`, `src/rpc-recovery/` | Browser harnesses |
 | `src/shared-feed/` | Feed builder, benchmark, verifier and format search |
+| `src/figures/` | `bun run figures` and `bun run tables`: README figures and the generated result tables, from `data/` |
 | `scripts/` | Bazzite host runner |
 | `test/` | `bun test` suites and recorded fixtures |
 | `data/<experiment>/` | Recorded results ([data/README.md](data/README.md)) |
-| `docs/<experiment>.md` | Results per experiment |
+| `docs/<experiment>.md` | Results per experiment. Tables between `<!-- generated:… -->` markers come from `bun run tables`. |
+| `docs/figures/` | SVGs from `bun run figures` |
 
 ## Caveats for synthetic experiments
 

@@ -1,0 +1,25 @@
+import { describe, expect, test } from 'bun:test';
+import { parseCsv } from '../src/figures/data.ts';
+import { renderTables } from '../src/figures/tables.ts';
+import { FIGURES } from '../src/figures/figures.ts';
+
+describe('figures and tables', () => {
+  test('parseCsv handles quoted fields, commas and doubled quotes', () => {
+    expect(parseCsv('a,b,c\n"x, y","say ""hi""",3\n')).toEqual([{ a: 'x, y', b: 'say "hi"', c: '3' }]);
+  });
+
+  test('every table renders from recorded data', () => {
+    const files = renderTables();
+    expect([...files.keys()].sort()).toEqual(
+      ['README.md', 'docs/browser-discovery.md', 'docs/paged-discovery.md', 'docs/rpc-recovery.md', 'docs/scan-cost.md', 'docs/shared-feed.md']);
+  });
+
+  test('every figure is a standalone SVG with light and dark styles', () => {
+    for (const render of Object.values(FIGURES)) {
+      const svg = render();
+      expect(svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg"')).toBe(true);
+      expect(svg).toContain('prefers-color-scheme: dark');
+      expect(svg).not.toContain('NaN');
+    }
+  });
+});

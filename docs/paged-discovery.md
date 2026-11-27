@@ -130,8 +130,9 @@ One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, [canon
 
 | Scheme | Cost |
 | --- | --- |
-| [OMR](https://eprint.iacr.org/2021/1256) | ~$1 per 1M messages per recipient, ~20 ms client decode |
-| [PerfOMR](https://eprint.iacr.org/2024/204) | ~40 ms server per message per recipient, ~600 B clue |
+| [OMR](https://eprint.iacr.org/2021/1256) | ~$1 server cost per 1M messages scanned, ~20 ms client decode |
+| [DoS-resistant OMR](https://eprint.iacr.org/2024/510) | ~4.9 ms server per message per recipient, 12x faster than OMRp2 |
+| [PerfOMR](https://eprint.iacr.org/2024/204) | ~40 ms server per message (PerfOMR2), ~600 B clue. Not DoS-resistant: a crafted clue breaks it |
 | [SophOMR](https://eprint.iacr.org/2024/1814) | 3.4x faster than PerfOMR |
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)

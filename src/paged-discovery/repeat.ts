@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
 import { LINK_PROFILE_NAMES, type LinkProfileName } from './model.ts';
+import { median } from '../shared/stats.ts';
 
 export type Scenario = 'cold' | 'catchup';
 
@@ -102,7 +103,5 @@ export function spread(values: readonly (number | null | undefined)[]): Spread {
   const numbers = values.filter((v): v is number => typeof v === 'number' && Number.isFinite(v)).sort((a, b) => a - b);
   const n = numbers.length;
   if (n === 0) return { n: 0, median: null, min: null, max: null };
-  const mid = Math.floor(n / 2);
-  const median = n % 2 === 1 ? numbers[mid] as number : ((numbers[mid - 1] as number) + (numbers[mid] as number)) / 2;
-  return { n, median, min: numbers[0] as number, max: numbers[n - 1] as number };
+  return { n, median: median(numbers), min: numbers[0] as number, max: numbers[n - 1] as number };
 }

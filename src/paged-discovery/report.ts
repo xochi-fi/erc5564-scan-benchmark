@@ -1,23 +1,14 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import type { WalletSample } from './model.ts';
 import { summaryRow, type SummaryRow } from './sweep.ts';
+import { readJsonl } from '../shared/host.ts';
 
 interface HostRow extends SummaryRow {
   host: string;
   cpu: string;
   sweep: string;
-}
-
-async function jsonl(path: string): Promise<Record<string, unknown>[]> {
-  try {
-    const text = await readFile(path, 'utf8');
-    return text.split('\n').filter(Boolean).map(line => JSON.parse(line) as Record<string, unknown>);
-  } catch (error) {
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return [];
-    throw error;
-  }
 }
 
 async function main(): Promise<void> {
@@ -32,12 +23,12 @@ async function main(): Promise<void> {
     const [host, dir] = entry.split('=');
     if (host === undefined || dir === undefined) throw new Error(`invalid --host ${entry}`);
     for (const sweep of (await readdir(dir, { withFileTypes: true })).filter(d => d.isDirectory()).map(d => d.name).sort()) {
-      for (const sample of await jsonl(join(dir, sweep, 'samples.jsonl'))) {
+      for (const sample of await readJsonl(join(dir, sweep, 'samples.jsonl'))) {
         const typed = { ...(sample as unknown as WalletSample), pages: [] };
         const env = typed.environment as { cpuModel?: string };
         rows.push({ host, cpu: env.cpuModel ?? '', sweep, ...summaryRow(typed) });
       }
-      for (const control of await jsonl(join(dir, sweep, 'controls.jsonl'))) {
+      for (const control of await readJsonl(join(dir, sweep, 'controls.jsonl'))) {
         controls.push(`| ${host} | ${sweep} | ${String(control.label)} | ${(Number(control.scanMs) / 1000).toFixed(3)} | ${(Number(control.processLifetimePeakRssBytes) / 1024 ** 2).toFixed(0)} |`);
       }
     }

@@ -4,7 +4,7 @@ import { cpus, release, totalmem } from 'node:os';
 import type { AnnouncementLog } from '@scopelift/stealth-address-sdk';
 import type { Hex } from 'viem';
 import { z } from 'zod';
-import { SDK_COMMIT, SDK_VERSION, type Engine, type MemorySnapshot, type Recipient } from '../shared/model.ts';
+import { SDK_COMMIT, SDK_VERSION, type Engine, type Recipient } from '../shared/model.ts';
 import { announcementIdentity, scanAnnouncements } from '../shared/worker.ts';
 import { ANNOUNCEMENT_TOPIC, ANNOUNCER } from '../shared/announcer.ts';
 import { decodeAnnouncements, hexString, rawLogSchema, rawLogsSchema } from '../shared/raw-logs.ts';
@@ -21,6 +21,8 @@ import {
   type WalletOptions,
   type WalletSample,
 } from './model.ts';
+import { memorySnapshot } from '../shared/host.ts';
+import { percentile } from '../shared/stats.ts';
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder('utf-8', { fatal: true });
@@ -284,17 +286,6 @@ export async function syncWallet(params: SyncParams): Promise<SyncResult> {
   };
 }
 
-function memorySnapshot(): MemorySnapshot {
-  const memory = process.memoryUsage();
-  return { rssBytes: memory.rss, heapUsedBytes: memory.heapUsed, externalBytes: memory.external };
-}
-
-function percentile(values: number[], fraction: number): number | null {
-  if (values.length === 0) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.min(sorted.length - 1, Math.ceil(fraction * sorted.length) - 1)] ?? null;
-}
-
 export async function environmentProvenance(): Promise<Record<string, unknown>> {
   const names = ['@scopelift/stealth-address-sdk', '@noble/secp256k1', 'viem', 'zod'];
   const dependencies: Record<string, string> = {};
@@ -327,6 +318,8 @@ export async function environmentProvenance(): Promise<Record<string, unknown>> 
       'src/paged-discovery/link.ts': await sha('./link.ts'),
       'src/shared/announcer.ts': await sha('../shared/announcer.ts'),
       'src/shared/raw-logs.ts': await sha('../shared/raw-logs.ts'),
+      'src/shared/host.ts': await sha('../shared/host.ts'),
+      'src/shared/stats.ts': await sha('../shared/stats.ts'),
     },
     dependencies,
   };

@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import type { Transport } from './http.ts';
-import { percentile, searchMaxRange, type RangeSearchResult } from './range-search.ts';
+import { searchMaxRange, type RangeSearchResult } from './range-search.ts';
 import { getLogsParams, logKey, quantity, rpc, rpcLogsSchema, type ErrorKind, type RpcCall } from './rpc.ts';
+import { percentile } from '../shared/stats.ts';
 
 export interface ErrorSample { kind: ErrorKind; code: number | null; httpStatus: number; message: string; limitHint: number | null; span: number | null }
 

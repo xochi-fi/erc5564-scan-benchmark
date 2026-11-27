@@ -1,6 +1,6 @@
 # Recorded data
 
-One directory per experiment. Home-directory prefixes in recorded paths are replaced with `~`. Host labels (`bazzite`, `turing-node-N`) match the findings. Recorded JSON keeps the old `phaseN` paths and kinds ([Names in recorded data](../METHODS.md#names-in-recorded-data)).
+One directory per experiment. Home-directory prefixes are replaced with `~`. Host labels: [Hosts](../METHODS.md#hosts-and-software). Old `phaseN` strings: [Names in recorded data](../METHODS.md#names-in-recorded-data).
 
 | Directory | Contents |
 | --- | --- |
@@ -15,12 +15,11 @@ One directory per experiment. Home-directory prefixes in recorded paths are repl
 
 | Left out | Size | Regenerate |
 | --- | --- | --- |
-| Fixtures (`announcements.jsonl`) | ~100 MB per 100k, 1 GB per 1M | `bun run src/paged-discovery/prepare-fixtures.ts --output work/fixtures --fixtures <names>` or `bun run bench`. Seed `erc5564-scan-v1`; bytes are checked against pinned SHA256 digests. |
+| Fixtures (`announcements.jsonl`) | ~100 MB per 100k, 1 GB per 1M | `bun run src/paged-discovery/prepare-fixtures.ts --output work/fixtures --fixtures <names>` or `bun run bench`. ([seed and digests](../METHODS.md#synthetic-fixtures)) |
 | Paged-discovery `pages.jsonl` (per-page timings) | up to 7 MB per run | Rerun the sweep. Per-sample totals are in `samples.jsonl`. |
 | Paged-discovery `state/` (scan caches, expected-match oracles) | up to 380 KB each | Rebuilt by every sweep |
 | Paged-discovery `run.log`, `bun-test.log`, `host-before/after.txt` | | Written by `scripts/paged-discovery.sh`. Per-sample host state is in `samples.jsonl`. |
 | Profiler dumps: `scan.cpuprofile`, `scan.collapsed`, `stacks.json`, `gc.json`, `phases.json`, `bytecodes.txt`, native `sample` output, `vm-stat` logs | up to 16 MB each | `bun run profile` ([METHODS.md](../METHODS.md#profiling)) |
 | Run tarballs, `node_modules`, Bun binaries | | `bun install --frozen-lockfile` |
 
-**All keys and addresses in the manifests are public, deterministic test material.
-Never fund them.**
+[Never fund the test keys](../METHODS.md#test-keys).

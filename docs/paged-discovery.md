@@ -139,9 +139,7 @@ All rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
 
-Bandwidth is the other side of the budget: 1M/day is ~100 MB at ~100 B per announcement, and OMR adds a 583–2,181-byte clue per message (1,996 bytes for DoS-PerfOMR, Table 1 above).
-
-The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Draft EIP-7745 (log index with Merkle proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). I found no published design for signed or Merkle-committed ERC-5564 feed pages.
+The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Drafts EIP-7745, EIP-8304 (log indexes with proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). I found no published design for signed or Merkle-committed ERC-5564 feed pages.
 
 ## Reproduce
 

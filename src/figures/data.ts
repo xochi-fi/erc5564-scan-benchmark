@@ -65,6 +65,9 @@ export function scanCost(): ScanHost[] {
 
 export const pagedRepeat = () => readCsv('data/paged-discovery/repeat.csv');
 export const pagedSingle = () => readCsv('data/paged-discovery/single-run.csv');
+/** Crypto-engine 100k controls bracketing a paged-discovery run, in seconds. */
+export const pagedControls = (dir: string) => readFileSync(path(`data/paged-discovery/${dir}/controls.jsonl`), 'utf8').trim().split('\n')
+  .map(line => JSON.parse(line)).map(c => ({ label: c.label as string, seconds: (c.scanMs as number) / 1000 }));
 
 // ---- chain volume -------------------------------------------------------------
 
@@ -103,6 +106,24 @@ export function chainVolume(): Chain[] {
   });
 }
 
+/** A recorded full-history retrieval of the canonical Announcer, or null if that strategy was not run. */
+export function chainRetrieval(chain: string, strategy: string): any | null {
+  try { return readJson(`data/chain-volume/canonical/retrieve-${chain}-${strategy}.json`); } catch { return null; }
+}
+/** The complete retrieval a chain's count comes from: parallel where it reached head, else probe-informed. */
+export function bestRetrieval(chain: string): any {
+  const parallel = chainRetrieval(chain, 'parallel');
+  return parallel?.result.success ? parallel : chainRetrieval(chain, 'probe-informed');
+}
+/** Announcements per 30.44-day month, first announcement to measurement, as in report.ts. */
+export const perMonth = (retrieval: any) =>
+  retrieval.result.count / ((Date.parse(retrieval.measuredAt) - Date.parse(retrieval.result.firstTime)) / (30.44 * 86400_000));
+
+/** Consistency recheck: per endpoint, the outcome of each attempt at each known announcement. */
+export interface ConsistencyEndpoint { chain: string; host: string; checks: { target: string; outcome: string }[] }
+export const consistency = (chain: string): ConsistencyEndpoint[] =>
+  readJson(`data/chain-volume/consistency/${chain}.json`).endpoints.map((e: any) => ({ chain, host: e.host, checks: e.checks }));
+
 // ---- browser discovery --------------------------------------------------------
 
 export const browserSamples = () => readCsv('data/browser-discovery/samples.csv');
@@ -120,6 +141,22 @@ export const recoveryRun = (name: string, mode: string) => {
   if (!run) throw new Error(`rpc-recovery: no ${name}/${mode}`);
   return run;
 };
+/** Live run timeline: per window, when its last log request ended (ms from the first request) and logs accepted so far. */
+export function recoveryTimeline(name: string, mode: string) {
+  const run = readJson(`data/rpc-recovery/${name}-${mode}.json`);
+  const t0 = run.resourceTimings[0].startTime as number;
+  const ends = new Map<number, number>();
+  run.requests.forEach((req: any, i: number) => {
+    if (req.request.method !== 'eth_getLogs') return;
+    const timing = run.resourceTimings[i];
+    if (`${req.endpoint}/` !== timing.name) throw new Error(`rpc-recovery: ${name} request ${i} does not match its resource timing`);
+    const from = Number(req.request.params[0].fromBlock);
+    ends.set(from, Math.max(ends.get(from) ?? 0, timing.startTime + timing.duration - t0));
+  });
+  let accepted = 0;
+  const points = (run.windows as any[]).map(w => ({ ms: ends.get(w.from)!, accepted: (accepted += w.accepted.length) }));
+  return { elapsedMs: run.elapsedMs as number, points };
+}
 export function recoveryReference() {
   const ref = readJson('data/rpc-recovery/reference.json');
   return { windows: ref.windows.length as number, expected: (ref.expected as unknown[]).length, pageBlocks: ref.scope.pageBlocks as number };
@@ -132,5 +169,12 @@ export interface FeedSummary {
   expected: number[]; observed: number[]; posts: number[]; gets: number[]; requestBytes: number[]; responseBytes: number[];
   fetchMs: number[]; scanMs: number[]; verificationMs: number[]; elapsedMs: number[]; firstSyntheticMatchMs: number[];
 }
+/** Omission and resume controls from the verified shared-feed summary. */
+export const feedControls = () => readJson('data/shared-feed/summary.json').controls as Record<'omit' | 'hold' | 'resume' | 'altered',
+  { expected: number; observed: number; gets: number; elapsedMs: number }>;
+export const feedEvidence = (host = '') => readJson(`data/shared-feed/${host ? `${host}/` : ''}evidence.json`);
+/** Feed format search log: one row per iteration. */
+export const feedBytesLog = () => readFileSync(path('data/shared-feed/autoresearch/feed-bytes.jsonl'), 'utf8').trim().split('\n')
+  .map(line => JSON.parse(line) as { run: number; description: string; status: string; metric: number; metrics: Record<string, string> });
 export const feedSummary = (host = '') =>
   readJson<{ summaries: Record<FeedKey, FeedSummary> }>(`data/shared-feed/${host ? `${host}/` : ''}summary.json`).summaries;

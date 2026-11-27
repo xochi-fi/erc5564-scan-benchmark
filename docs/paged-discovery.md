@@ -134,13 +134,9 @@ One run from Turing node 1 against keyless `ethereum-rpc.publicnode.com`, [canon
 | [PerfOMR](https://eprint.iacr.org/2024/204) | ~40 ms server per message per recipient, ~600 B clue |
 | [SophOMR](https://eprint.iacr.org/2024/1814) | 3.4x faster than PerfOMR |
 
-Crossover, at the A76's 1.75 ms per announcement ([cold 100k rows](#cold-rescans-median-minmax-n--3)):
+![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
 
-- Client CPU: OMR's flat ~20 ms beats scanning above ~12 announcements.
-- Total compute: OMR server cost is ~23x the phone scan per message per recipient at any volume.
-- A phone feed budget breaks near 1e5 announcements/day. 1M/day is ~29 min of CPU and ~100 MB at ~100 B per announcement.
-- Mainnet has ~296 ERC-5564 announcements all-time.
-- OMR adds ~0.6–1 kB of clue per announcement.
+Bandwidth is the other side of the budget: 1M/day is ~100 MB at ~100 B per announcement, and OMR adds ~0.6–1 kB of clue per announcement.
 
 The 1-byte view tag gives 1/256 false positives and skips the final derivation, not the ECDH. Draft EIP-7745 (log index with Merkle proofs) and EIP-7792 (verifiable `eth_getLogs`) could prove a feed page complete. [Envio](https://docs.envio.dev/blog/nodes-silently-miss-events) documents silent `getLogs` omissions (Erigon #16364, Nethermind #9178). I found no published design for signed or Merkle-committed ERC-5564 feed pages.
 

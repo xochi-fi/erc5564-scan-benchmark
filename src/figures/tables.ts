@@ -1,11 +1,10 @@
 // `bun run tables`: regenerates result tables from data/ and writes them between
-// `<!-- generated:NAME -->` and `<!-- /generated:NAME -->` markers in docs/*.md and README.md.
+// `<!-- generated:NAME -->` and `<!-- /generated:NAME -->` markers in docs/*.md.
 // Pass --check to fail instead of writing when a file would change.
 import { readFileSync, writeFileSync } from 'node:fs';
-import { scope as browserScope } from '../browser-discovery/config.ts';
 import {
-  CHAIN_LABELS, ROOT, browserSamples, chainVolume, feedSummary, num, pagedRepeat, pagedSingle, readCsv, readJson,
-  recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
+  CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
+  bestRetrieval, chainRetrieval, perMonth, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 
@@ -87,8 +86,8 @@ function pagedCatchupTable() {
 const SINGLE_LABELS: Record<string, string> = { bazzite: 'Bazzite i7-13700K', 'turing-node-1': 'Turing Pi A76' };
 function pagedSingleControlsTable() {
   const control = (dir: string) => {
-    const rows = readFileSync(`${ROOT}data/paged-discovery/single-run/${dir}/controls.jsonl`, 'utf8').trim().split('\n').map(line => JSON.parse(line));
-    const get = (label: string) => (rows.find(r => r.label === label).scanMs / 1000).toFixed(3);
+    const rows = pagedControls(`single-run/${dir}`);
+    const get = (label: string) => rows.find(r => r.label === label)!.seconds.toFixed(3);
     return [get('control_before'), get('control_after')];
   };
   const scan = (host: string) => {
@@ -145,8 +144,6 @@ const CHAIN_NOTES: Record<string, { sources: string; perMonth?: string; endpoint
 function chainVolumeTable() {
   const summary = readCsv('data/chain-volume/summary.csv');
   const n = (value: number) => fixed(value, 0);
-  // Rate of the counted announcements, first one to measurement, in 30.44-day months as in report.ts.
-  const perMonth = (r: any) => r.result.count / ((Date.parse(r.measuredAt) - Date.parse(r.result.firstTime)) / (30.44 * 86400_000));
   const duration = (ms: number) => (ms < 100_000 ? `${Math.round(ms / 1000)} s` : `${Math.round(ms / 60_000)} min`);
   return table(['Chain', 'Deploy block', 'Announcements', 'First - last announcement', 'Per month (since first)',
     'Keyless endpoints: listed / probed / answered getLogs / full history', 'Max span of full-history endpoints, blocks: median [min-max]',
@@ -155,11 +152,9 @@ function chainVolumeTable() {
   summary.map(row => {
     const chain = row.chain!;
     const notes = CHAIN_NOTES[chain]!;
-    const retrieve = (strategy: string) => {
-      try { return readJson(`data/chain-volume/canonical/retrieve-${chain}-${strategy}.json`); } catch { return null; }
-    };
+    const retrieve = (strategy: string) => chainRetrieval(chain, strategy);
     const parallel = retrieve('parallel');
-    const best = parallel?.result.success ? parallel : retrieve('probe-informed');
+    const best = bestRetrieval(chain);
     const naive = retrieve('list-order');
     const date = (time: string | null) => (time ? ` (${time.slice(0, 10)})` : '');
     // Span over endpoints that served the deploy block, as in report.ts; a flagged host is left out of the minimum only.
@@ -172,7 +167,7 @@ function chainVolumeTable() {
     const span = `${median} [${n(min)} - ${whole ? 'whole history' : n(Math.max(...finite.map((p: any) => p.span)))}]`
       + (whole ? `; ${whole} took the whole history` : ' (none took the whole history)')
       + (excluded ? ` (one ${excluded.span}-block value excluded: a head-lag artifact, see caveats)` : '');
-    const ok = (r: any) => `OK${parallel?.result.success && r === parallel ? ', parallel' : r.comparison?.exact ? ', exact' : ''}`;
+    const ok = (r: any) => `OK${parallel?.result.success && r === best ? ', parallel' : r.comparison?.exact ? ', exact' : ''}`;
     const bestCell = `${ok(best)}: ${duration(best.result.totalMs)}, ${n(best.result.requests)} requests, ${n(best.result.responseBytes / 1024)} KiB`;
     const naiveCell = naive.result.success
       ? `${ok(naive)}: ${duration(naive.result.totalMs)}, ${n(naive.result.requests)} requests`
@@ -224,7 +219,7 @@ function browserTable() {
 
 // ---- RPC recovery -------------------------------------------------------------
 
-const LIVE_RECOVERY: [string, string, string][] = [
+export const LIVE_RECOVERY: [string, string, string][] = [
   ['live-original-probe', 'probe', 'Daybreak, original-width diagnostic'],
   ['live-daybreak-single', 'single', 'Daybreak single'],
   ['live-daybreak-cross', 'cross', 'Daybreak + Tenderly, Sentio fallback'],
@@ -245,7 +240,7 @@ function recoveryLiveTable() {
       return [label, `${run.observed} / ${expected}`, String(run.requests), String(run.fallbackWindows), seconds];
     }));
 }
-const FAULTS: [string, string, string][] = [
+export const FAULTS: [string, string, string][] = [
   ['fixture-omission-single', 'single', 'Silent omission, single'],
   ['fixture-omission-cross', 'cross', 'Silent omission, cross-check'],
   ['fixture-shared-omission', 'cross', 'Shared silent omission, cross-check'],
@@ -312,7 +307,7 @@ function feedHostsTable() {
 }
 
 function feedControlsTable() {
-  const controls = readJson('data/shared-feed/summary.json').controls;
+  const controls = feedControls();
   const { expected } = recoveryReference();
   const samples = readJson('data/shared-feed/evidence.json').samples;
   const committed = (key: string) => `${samples[key].next}/${samples[key].limit}`;
@@ -325,54 +320,6 @@ function feedControlsTable() {
 }
 
 // ---- README summary tables ----------------------------------------------------
-
-function approachTable() {
-  const scan = scanCost();
-  const controls = (host: string) => {
-    const h = scan.find(x => x.host === host)!;
-    return range(fixed(Math.min(h.before, h.after), 1), fixed(Math.max(h.before, h.after), 1), '–');
-  };
-  const base = chainVolume().find(c => c.chain === 'base')!;
-  const run = (strategy: string) => base.runs.find(r => r.strategy === strategy)!;
-  const cold = pagedRepeat().find(r => r.host === 'bazzite' && r.scenario === 'cold' && r.count === '1000000' && r.profile === 'public' && r.pageBlocks === '256')!;
-  const samples = browserSamples();
-  const browserEndpoints = [...new Set(samples.map(s => s.endpoint))];
-  const completed = browserEndpoints.filter(e => samples.filter(s => s.endpoint === e).every(s => s.exact === 'True'));
-  const requests = (mode: string) => median(samples.filter(s => completed.includes(s.endpoint!) && s.mode === mode).map(s => Number(s.requests)))!;
-  // Per completed endpoint, the median catch-up; the cell shows the fastest to slowest endpoint.
-  const catchUp = (mode: string) => {
-    const medians = completed.map(e => median(samples.filter(s => s.endpoint === e && s.mode === mode).map(s => Number(s.catchUpMs)))! / 1000);
-    return range(Math.min(...medians).toFixed(2), Math.max(...medians).toFixed(2), '–');
-  };
-  const { windows, pageBlocks, expected } = recoveryReference();
-  const windowScope = `Base, ${windows} pinned windows × ${fixed(pageBlocks, 0)} blocks`;
-  const single = recoveryRun('live-daybreak-single', 'single');
-  const cross = recoveryRun('live-daybreak-cross', 'cross');
-  const feed = feedSummary()['dual-cold'];
-  const minutes = (seconds: number) => `${fixed(seconds / 60, 0)} min`;
-  const rows: string[][] = [
-    ['Local scan of fetched announcements', '[Scan cost](docs/scan-cost.md)', 'Synthetic 100k, no network', '0',
-      `${controls('Bazzite')} s (i7), ${controls('Turing Pi')} s (A76)`, 'Fixture oracle ✓', 'No (Bun CLI)'],
-    ['Paged JSON-RPC, cold rescan', '[Paged discovery](docs/paged-discovery.md)', 'Synthetic 1M, emulated 100 ms / 50 Mbit/s link, 256-block pages, i7', '—',
-      `${fixed(num(cold.totalSMedian)!, 1)} s median`, 'Fixture oracle ✓', 'No (Bun CLI)'],
-    ['Keyless RPC, sequential adaptive', '[Chain volume](docs/chain-volume.md)', 'Base, deploy block to head, live', fixed(run('probe-informed').requests, 0),
-      minutes(run('probe-informed').seconds), `✗ budget spent at ${fixed(run('probe-informed').count, 0)} of ${fixed(base.canonical, 0)}`, 'No (Bun CLI)'],
-    ['Keyless RPC, parallel backfill', '[Chain volume](docs/chain-volume.md)', 'Base, deploy block to head, live', fixed(run('parallel').requests, 0),
-      minutes(run('parallel').seconds), `✓ ${fixed(run('parallel').count, 0)} logs`, 'No (Bun CLI)'],
-    ['Public RPC with a saved cursor', '[Browser discovery](docs/browser-discovery.md)', `Base, ${fixed(browserScope.head - browserScope.start + 1, 0)} blocks, live`,
-      `${requests('fresh')} fresh / ${requests('resume')} resumed`, `${catchUp('fresh')} s fresh, ${catchUp('resume')} s resumed`, `${completed.length} of ${browserEndpoints.length} endpoints exact`, 'Yes'],
-    ['One public RPC (Daybreak)', '[RPC recovery](docs/rpc-recovery.md)', `${windowScope}, live`, `${single.requests} POST`,
-      `${(single.elapsedMs / 1000).toFixed(2)} s`, `✗ ${single.observed}/${expected}`, 'Yes'],
-    ['Cross-checked RPCs', '[RPC recovery](docs/rpc-recovery.md)', `${windowScope}, live`, `${cross.requests} POST`,
-      `${(cross.elapsedMs / 1000).toFixed(2)} s`, `✓ ${cross.observed}/${expected}`, 'Yes'],
-    ['Two static feeds', '[Shared feed](docs/shared-feed.md)', `${windowScope}, **loopback**`, `${one(feed.gets, 'gets')} GET`,
-      `${ms(median(feed.elapsedMs)!)} ms (loopback)`, `✓ ${one(feed.observed, 'observed')}/${expected}`, 'No (Bun client)'],
-  ];
-  // Compact for the README: the approach links its experiment, and browser runs say so in the scope.
-  return table(['Approach', 'Scope', 'Requests', 'Time', 'Complete'], ['l', 'l', 'r', 'r', 'l'],
-    rows.map(([approach, experiment, scope, requests, time, complete, browser]) =>
-      [`[${approach}](${/\]\((.+)\)$/.exec(experiment!)![1]})`, browser === 'Yes' ? `${scope}, browser` : scope!, requests!, time!, complete!]));
-}
 
 // ---- writer -------------------------------------------------------------------
 
@@ -390,7 +337,6 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'shared-feed': ['docs/shared-feed.md', feedTable],
   'shared-feed-hosts': ['docs/shared-feed.md', feedHostsTable],
   'shared-feed-controls': ['docs/shared-feed.md', feedControlsTable],
-  'approaches': ['README.md', approachTable],
 };
 
 export function renderTables(): Map<string, string> {

@@ -17,7 +17,7 @@ Bazzite 45, Intel i7-13700K, Bun 1.4.4, 2026-11-27. Live Tenderly over the Inter
 - RPC samples check chain ID, finalized block and pinned block, with request starts ≥275 ms apart. Feed samples make one manifest GET per source and two concurrent GETs per page.
 - Catch-up includes parsing, pacing, discovery and checkpoint I/O. Page verification is log validation plus, for the dual feed, source agreement. First match is timed after the needed responses and the scan of its page group. No canonical log matched the synthetic recipient.
 
-One compact source's cold pages took 43,719 response bytes against 57,605 for the RPC log pages (24% fewer). Two copies plus manifests took 10.8% more than all cold RPC replies and 5.9% less than all warm ones. Feed latency here is loopback. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
+Response bytes for each path are compared in the [byte chart](#feed-format-search). Feed latency here is loopback. Remote RTT, hosting, caching, compression and provider limits will change the comparison.
 
 ## Omission and resume controls
 
@@ -74,7 +74,9 @@ Two single-metric searches over [`tune.ts`](../src/shared-feed/tune.ts) with the
 | Cold page bytes, one source | decoded body bytes | 43,719 | 14,953 (−65.8%) | 13 | [feed-bytes](../data/shared-feed/autoresearch/feed-bytes.params.json) |
 | Dual-feed warm catch-up | median of 9 (ms) | 69.95 | 64.20 in loop, not confirmed | 11 | [warm-time](../data/shared-feed/autoresearch/warm-time.params.json) |
 
-Bytes: zero-run encoding of ABI data saved the most (34,887 → 16,753). Base64 hashes, trimmed topics, 32-window pages, columns, delta blocks and no page header saved the rest. Base64 ABI data and a per-page block hash table did not help. Under gzip the gap narrows to 10,555 → 8,043 (−23.8%). The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4. 16-window pages cost 40 B more.
+![Response bytes for feed pages and RPC payloads, with the format search](figures/feed-bytes.svg)
+
+The manifest stays near 2.5 kB. With 32-window pages a source has three pages, and a checkpoint commits every 32 windows instead of 4.
 
 Warm time: the loop kept only larger pages (8, 16, then 32 windows). Prefetch and encoding changes landed 0.1–2.0 ms above the best. An interleaved check (5 rounds × 9 samples, peak 69.3 °C) gave round medians of 70.3–83.8 ms (baseline), 70.4–76.3 ms (32-window) and 66.3–79.8 ms (byte-optimized). Medians of those were 70.51, 71.40 and 75.02 ms. Spread between rounds is larger than any params effect. Local scan dominates A76 warm catch-up, and no format change is confirmed to shorten it.
 

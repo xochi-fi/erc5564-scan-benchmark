@@ -1,4 +1,4 @@
-import { mkdir, readFile, rename } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rename } from 'node:fs/promises';
 import { hostname, release } from 'node:os';
 import { generateFixture } from '../../src/fixtures.ts';
 import { decodeAnnouncements, type RawLog } from '../../src/phase2/wallet.ts';
@@ -7,7 +7,9 @@ import { filter, hex, rpc, scope } from '../phase5/config.ts';
 import { compact, digest, endpoint, expand, loadReference, warmPage, type Feed } from './feed.ts';
 
 const [output] = Bun.argv.slice(2);
-if (!output || hostname() !== 'bazzite') throw new Error('Usage on Bazzite: bun scripts/phase6/run.ts NEW_OUTPUT_DIR');
+if (!output || !/^(bazzite|turing-node-[123])$/.test(hostname())) {
+  throw new Error('Usage on Bazzite or a Turing node: bun scripts/phase6/run.ts NEW_OUTPUT_DIR');
+}
 await mkdir(output, { recursive: false });
 const evidencePath = `${output}/evidence.json`;
 
@@ -217,13 +219,43 @@ async function scan(name: string, mode: Mode, urls: URL[], limit = feed.primary.
     scanMs, verificationMs, firstSyntheticMatchMs, firstCanonicalMatchMs, requests: io.requests };
 }
 
-type Sample = Awaited<ReturnType<typeof scan>>;
+const cooldownC = Number(process.env.COOLDOWN_C ?? 70);
+async function maxThermalC() {
+  const zones = (await readdir('/sys/class/thermal').catch(() => [])).filter(zone => zone.startsWith('thermal_zone'));
+  const temps = await Promise.all(zones.map(zone => Bun.file(`/sys/class/thermal/${zone}/temp`).text()
+    .then(Number, () => NaN)));
+  const valid = temps.filter(Number.isFinite);
+  return valid.length ? Math.max(...valid) / 1000 : null;
+}
+async function thermalGate() {
+  const start = performance.now();
+  let maxC = await maxThermalC();
+  while (maxC !== null && maxC > cooldownC) {
+    await Bun.sleep(5_000);
+    maxC = await maxThermalC();
+  }
+  return { maxC, waitMs: performance.now() - start };
+}
+async function cpus() {
+  const allowed = (await Bun.file('/proc/self/status').text()).match(/^Cpus_allowed_list:\s*(\S+)$/m)?.[1] ?? null;
+  const parts: Record<string, string> = { '0xd05': 'Cortex-A55', '0xd0b': 'Cortex-A76' };
+  const models = (await Bun.file('/proc/cpuinfo').text()).split('\n\n').flatMap(block => {
+    const field = (key: string) => block.match(new RegExp(`^${key}\\s*:\\s*(.+)$`, 'm'))?.[1]?.trim();
+    const cpu = field('processor');
+    const model = field('model name') ?? parts[field('CPU part') ?? ''];
+    return cpu === undefined || !model ? [] : [[cpu, model] as const];
+  });
+  return { allowed, models: Object.fromEntries(models) };
+}
+
+type Sample = Awaited<ReturnType<typeof scan>> & { thermal: Awaited<ReturnType<typeof thermalGate>> };
 const evidence = {
-  startedAt: new Date().toISOString(), host: hostname(), kernel: release(), bun: Bun.version, manifest: feed.manifest,
-  feedId: feed.id, buildMs, validation, samples: {} as Record<string, Sample>,
+  startedAt: new Date().toISOString(), host: hostname(), kernel: release(), bun: Bun.version, cpus: await cpus(),
+  cooldownC, manifest: feed.manifest, feedId: feed.id, buildMs, validation, samples: {} as Record<string, Sample>,
 };
 async function sample(label: string, ...args: Parameters<typeof scan>) {
-  const result = await scan(...args);
+  const thermal = await thermalGate();
+  const result = { ...await scan(...args), thermal };
   evidence.samples[label] = result;
   await Bun.write(evidencePath, JSON.stringify(evidence, null, 2) + '\n');
   console.log(label, result.next, result.stop ?? result.elapsedMs.toFixed(1));
@@ -246,3 +278,4 @@ await sample('omission-single', 'omission-single', 'single', [omit.url]);
 await sample('omission-hold', 'recovery', 'dual', [omit.url, secondary.url]);
 await sample('omission-resume', 'recovery', 'dual', pair);
 await sample('payload-hold', 'payload-hold', 'dual', [altered.url, secondary.url]);
+for (const server of [primary, secondary, omit, altered]) server.stop(true);

@@ -21,7 +21,7 @@ Benchmarks stealth payment discovery and keyless announcement retrieval with Sco
 | Label in data | Hardware | Used for |
 | --- | --- | --- |
 | `bazzite` | Desktop, Intel i7-13700K, 32 GB RAM, Bazzite Linux; wallet pinned to P-core threads 0,2,4,6 | phase 1 controls and profiles, phases 2–6 |
-| `turing-node-1..3` | Turing Pi RK1 modules (Rockchip RK3588, Cortex-A76 cores used), 8 GB (node 1) / 16 GB (nodes 2-3) | phase 1 controls and profiles (node 1), phase 2 |
+| `turing-node-1..3` | Turing Pi RK1 modules (Rockchip RK3588, Cortex-A76 cores used), 8 GB (node 1) / 16 GB (nodes 2-3) | phase 1 controls and profiles (node 1), phases 2 and 6 |
 | Apple M1 | MacBook, Apple M1, 8 GiB RAM | phase 1 initial sweep and retained-set control only |
 
 ## Quickstart

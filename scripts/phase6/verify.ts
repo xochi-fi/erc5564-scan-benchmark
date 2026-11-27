@@ -9,15 +9,27 @@ type Sample = {
   retries: number[]; attemptPages: number[];
   pages: { index: number; count: number; digest: string; canonicalMatches: number; syntheticMatches: number }[];
   requests: { source: string; operation: string; requestBytes: number; responseBytes: number; fetchMs: number }[];
+  thermal?: { maxC: number | null; waitMs: number };
 };
 const path = Bun.argv[2];
 if (!path) throw new Error('Usage: bun scripts/phase6/verify.ts EVIDENCE_JSON');
-const { host, bun, manifest, feedId, samples, validation, buildMs } = await Bun.file(path).json() as {
-  host: string; bun: string; manifest: unknown; feedId: string; samples: Record<string, Sample>;
+const { host, bun, cpus, cooldownC, manifest, feedId, samples, validation, buildMs } = await Bun.file(path).json() as {
+  host: string; bun: string; cpus?: { allowed: string | null; models: Record<string, string> }; cooldownC?: number;
+  manifest: unknown; feedId: string; samples: Record<string, Sample>;
   validation: { source: string; finalized: number; requests: Sample['requests'] }[]; buildMs: number;
 };
 const feed = await loadReference();
-assert.equal(host, 'bazzite');
+assert.match(host, /^(bazzite|turing-node-[123])$/);
+if (host !== 'bazzite') {
+  assert.equal(cpus?.allowed, '4-7');
+  assert.deepEqual(['4', '5', '6', '7'].map(cpu => cpus.models[cpu]), Array(4).fill('Cortex-A76'));
+  assert.equal(cooldownC, 70);
+}
+if (cooldownC !== undefined) {
+  for (const sample of Object.values(samples)) {
+    assert.ok(sample.thermal?.maxC != null && sample.thermal.maxC <= cooldownC && sample.thermal.waitMs >= 0);
+  }
+}
 assert.equal(bun, '1.4.4');
 assert.equal(digest(manifest), feedId);
 assert.equal(feedId, feed.id);
@@ -108,7 +120,11 @@ function stats(values: number[]) {
   const sorted = [...values].sort((a, b) => a - b);
   return [sorted[1], sorted[0], sorted[2]];
 }
-console.log(JSON.stringify({ buildMs, summaries: Object.fromEntries(Object.entries(summaries).map(([key, rows]) => [
+const thermal = cooldownC === undefined ? null : {
+  cooldownC, maxC: Math.max(...Object.values(samples).map(sample => sample.thermal!.maxC!)),
+  waitMs: Object.values(samples).reduce((sum, sample) => sum + sample.thermal!.waitMs, 0),
+};
+console.log(JSON.stringify({ host, bun, cpus: cpus ?? null, thermal, buildMs, summaries: Object.fromEntries(Object.entries(summaries).map(([key, rows]) => [
   key, Object.fromEntries(Object.keys(rows[0]!).map(field => [
     field, stats(rows.map(row => row[field as keyof typeof row]!)),
   ])),

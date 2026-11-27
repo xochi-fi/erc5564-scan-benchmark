@@ -1,4 +1,8 @@
 {
+  "host": "bazzite",
+  "bun": "1.4.4",
+  "cpus": null,
+  "thermal": null,
   "buildMs": 745.045896,
   "summaries": {
     "rpc-cold": {

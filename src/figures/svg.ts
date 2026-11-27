@@ -1,8 +1,10 @@
 // Minimal SVG building blocks for docs/figures/. Colors are roles defined once in THEME,
 // with light values for GitHub's light theme and dark values under prefers-color-scheme.
 // Series colors are slots 1-3 of the dataviz reference palette, validated against
-// #ffffff (light) and #0d1117 (dark). Every mark carries a direct label, so aqua's
-// 2.8:1 light-mode contrast is relieved by text, not color alone.
+// #ffffff (light) and #0d1117 (dark). Key series carry a direct label or a legend entry
+// with a second cue (hollow marks, dashes), so aqua's 2.8:1 light-mode contrast is relieved
+// by text or shape, not color alone. Text is 13px or larger; sources and caveats live in the
+// Markdown caption under each figure, not in the image.
 
 export const esc = (text: string) =>
   text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -33,9 +35,9 @@ const THEME = `
     .hollow { fill: #0d1117; }
   }
   text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
-  .title { font-size: 15px; font-weight: 600; }
-  .label { font-size: 12px; }
-  .small { font-size: 11px; }
+  .title { font-size: 18px; font-weight: 600; }
+  .label { font-size: 14px; }
+  .small { font-size: 13px; }
 `;
 
 export function svg(width: number, height: number, title: string, body: string[]): string {
@@ -79,29 +81,23 @@ export function decadeLabel(value: number): string {
   return String(Number(value.toPrecision(1)));
 }
 
-/** Caption paragraphs under the plot, wrapped to `width` px (11px text ≈ 5.9px per character). Returns the y after it. */
-export function caption(x: number, y: number, width: number, paragraphs: string[]): { elements: string[]; bottom: number } {
-  const max = Math.floor(width / 5.9);
-  const lines: string[] = [];
-  for (const paragraph of paragraphs) {
-    let current = '';
-    for (const word of paragraph.split(' ')) {
-      if (current && `${current} ${word}`.length > max) { lines.push(current); current = word; }
-      else current = current ? `${current} ${word}` : word;
-    }
-    if (current) lines.push(current);
-  }
-  return { elements: lines.map((content, i) => text(x, y + i * 15, content, 'small muted')), bottom: y + lines.length * 15 };
-}
-
 /** Legend row of colored swatches with labels. */
 export function legend(x: number, y: number, items: [cls: string, label: string][]) {
   const out: string[] = [];
   let cx = x;
   for (const [cls, label] of items) {
-    out.push(rect(cx, y - 9, 10, 10, cls, undefined, ' rx="2"'));
-    out.push(text(cx + 15, y, label, 'label ink'));
-    cx += 25 + label.length * 6.6;
+    out.push(rect(cx, y - 11, 12, 12, cls, undefined, ' rx="2"'));
+    out.push(text(cx + 18, y, label, 'label ink'));
+    cx += 34 + label.length * 7.6;
   }
   return out;
+}
+
+/** Legend entry for a filled or hollow dot. Returns the x after it. */
+export function dotKey(x: number, y: number, cls: string, label: string, hollow: boolean, out: string[]): number {
+  out.push(hollow
+    ? circle(x + 6, y - 5, 5, `${cls} hollow`, undefined, ' stroke-width="2.5"')
+    : circle(x + 6, y - 5, 6, cls));
+  out.push(text(x + 18, y, label, 'label ink'));
+  return x + 34 + label.length * 7.6;
 }

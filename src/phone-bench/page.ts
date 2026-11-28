@@ -9,6 +9,8 @@ declare const PAGE_VERSION: string;
 declare const WORKER_SOURCE: string;
 export const REPO = 'xochi-fi/erc5564-scan-benchmark';
 const CHUNK = 250;
+/** Main-thread fallback steps: small, so the page repaints between them even without a JIT. */
+const FALLBACK_CHUNK = 10;
 
 type State = 'idle' | 'running' | 'done' | 'error';
 
@@ -49,12 +51,12 @@ if (typeof document !== 'undefined') {
   const candidates = parsed.device === 'iPhone' ? iphoneCandidates(screen.width, screen.height, devicePixelRatio) : [];
   const jit = jitGuess(parsed.os, hasWasm);
   const detected: Record<string, unknown> = { ...parsed, deviceCandidates: candidates, ...jit, uaChModel: null, uaChPlatform: null, uaChPlatformVersion: null };
-  input('device').value = candidates.length ? `${candidates[0]!.split(',')[0]} (guess)` : parsed.device;
+  input('device').value = candidates.length ? `${candidates.length === 1 ? candidates[0] : candidates.join(' or ')} (guess: pick one)` : parsed.device;
   input('os').value = [parsed.os, parsed.osVersion].filter(Boolean).join(' ');
   input('browser').value = [parsed.browser, parsed.browserVersion].filter(Boolean).join(' ');
   $<HTMLSelectElement>('jit').value = jit.jitGuess;
   $('jit-reason').textContent = `Prefilled: ${jit.jitReason}.`;
-  $('candidates').textContent = candidates.length ? `Models with this screen: ${candidates.join('; ')}. Correct the field if it is wrong.` : '';
+  $('candidates').textContent = candidates.length ? 'iPhones do not report their model; these share your screen size. Edit the field to your model.' : '';
   const hints = (navigator as unknown as { userAgentData?: { getHighEntropyValues(k: string[]): Promise<Record<string, string>> } }).userAgentData;
   hints?.getHighEntropyValues(['model', 'platform', 'platformVersion']).then(v => {
     detected.uaChModel = v.model || null; detected.uaChPlatform = v.platform || null; detected.uaChPlatformVersion = v.platformVersion || null;
@@ -85,7 +87,7 @@ if (typeof document !== 'undefined') {
     timer = setInterval(() => { $('elapsed').textContent = `${((performance.now() - started) / 1000).toFixed(1)} s`; }, 100);
     try { wakeLock = await (navigator as unknown as { wakeLock?: { request(t: string): Promise<{ release(): Promise<void> }> } }).wakeLock?.request('screen') ?? null; } catch { wakeLock = null; }
 
-    const finish = (r: { scanMs: number; matches: number; expected: number; verified: boolean }, usedWorker: boolean) => {
+    const finish = (r: { scanMs: number; matches: number; expected: number; verified: boolean }, usedWorker: boolean, chunk: number) => {
       stop();
       const ms = r.scanMs / count;
       lastResult = {
@@ -94,7 +96,7 @@ if (typeof document !== 'undefined') {
         jit: $<HTMLSelectElement>('jit').value, notes: input('notes').value.trim() || null,
         detected, userAgent: ua, screen: { width: screen.width, height: screen.height, devicePixelRatio },
         hardwareConcurrency: navigator.hardwareConcurrency ?? null, webAssembly: hasWasm, secureContext: window.isSecureContext, worker: usedWorker,
-        engine, count, chunk: CHUNK, seed: FIXTURE.seed, fixtureSha256: FIXTURE.fixtureSha256, packedSha256: FIXTURE.packedSha256,
+        engine, count, chunk, seed: FIXTURE.seed, fixtureSha256: FIXTURE.fixtureSha256, packedSha256: FIXTURE.packedSha256,
         scanMs: Number(r.scanMs.toFixed(1)), msPerAnnouncement: Number(ms.toFixed(4)),
         matches: r.matches, expectedMatches: r.expected, verified: r.verified,
       };
@@ -110,7 +112,7 @@ if (typeof document !== 'undefined') {
     if (worker) {
       worker.onmessage = (e: MessageEvent<{ type: string; done?: number; message?: string; scanMs: number; matches: number; expected: number; verified: boolean }>) => {
         if (e.data.type === 'progress') progress(e.data.done!);
-        else if (e.data.type === 'done') finish(e.data, true);
+        else if (e.data.type === 'done') finish(e.data, true, CHUNK);
         else fail(`Scan error: ${e.data.message}`);
       };
       worker.onerror = e => { e.preventDefault(); fail(`Worker error: ${e.message || 'unknown'}`); };
@@ -118,8 +120,8 @@ if (typeof document !== 'undefined') {
     } else {
       $('message').textContent = 'Web Workers are unavailable here, so the scan runs on the page in small steps. Keep this tab open.';
       try {
-        const r = await runScan(FIXTURE, engine, count, CHUNK, progress, () => cancelled);
-        finish({ scanMs: r.scanMs, matches: r.matches.length, expected: r.expected.length, verified: r.verified }, false);
+        const r = await runScan(FIXTURE, engine, count, FALLBACK_CHUNK, progress, () => cancelled);
+        finish({ scanMs: r.scanMs, matches: r.matches.length, expected: r.expected.length, verified: r.verified }, false, FALLBACK_CHUNK);
       } catch (error) {
         if (!cancelled) fail(`Scan error: ${error instanceof Error ? error.message : String(error)}`);
       }

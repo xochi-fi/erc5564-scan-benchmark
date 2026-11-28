@@ -19,7 +19,7 @@ export const resultSchema = z.object({
   }).strict(),
   userAgent: text(400), screen: z.object({ width: z.number().int().positive().max(10000), height: z.number().int().positive().max(10000), devicePixelRatio: z.number().positive().max(10) }).strict(),
   hardwareConcurrency: z.number().int().positive().max(512).nullable(), webAssembly: z.boolean(), secureContext: z.boolean(), worker: z.boolean(),
-  engine: z.enum(['crypto', 'sdk']), count: z.union([z.literal(1000), z.literal(5000), z.literal(10000)]), chunk: z.literal(250),
+  engine: z.enum(['crypto', 'sdk']), count: z.union([z.literal(1000), z.literal(5000), z.literal(10000)]), chunk: z.union([z.literal(250), z.literal(10)]),
   seed: z.literal(PHONE_SEED), fixtureSha256: z.literal(PHONE_FIXTURE_SHA256), packedSha256: z.literal(PHONE_PACKED_SHA256),
   scanMs: z.number().positive(), msPerAnnouncement: z.number().min(0.05).max(2000),
   matches: z.number().int(), expectedMatches: z.number().int(), verified: z.literal(true),

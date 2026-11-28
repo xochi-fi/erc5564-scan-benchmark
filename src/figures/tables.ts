@@ -4,9 +4,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
-  bestRetrieval, chainRetrieval, perMonth, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
+  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
+import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
 
 // ---- formatting ---------------------------------------------------------------
 
@@ -184,6 +185,38 @@ function chainVolumeTable() {
   }));
 }
 
+// Weekly refresh: counts and rates move; everything in chainVolumeTable stays the 2026-11-26 recording.
+const BASELINE_DATE = '2026-11-26';
+const list = (items: string[]) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
+function chainRefreshTable() {
+  const latest = refreshSnapshots().at(-1);
+  if (latest === undefined) return 'No refresh recorded yet.';
+  const n = (value: number) => fixed(value, 0);
+  const rows = table(['Chain', `Recorded ${BASELINE_DATE}`, `Latest ${latest.date}`, 'Per month', 'Status'], ['l', 'r', 'r', 'r', 'l'],
+    Object.keys(CHAIN_LABELS).map(chain => {
+      const state = chainLatest(chain);
+      const rate = statePerMonth(state);
+      const entry = state.latest;
+      const status = entry === null || entry.date !== latest.date ? 'not run'
+        : entry.status === 'agreed' ? (entry.reason ? `agree (${entry.reason})` : 'agree') : `held: ${entry.reason}`;
+      return [CHAIN_LABELS[chain]!, n(bestRetrieval(chain).result.count), n(state.count), rate === null ? '-' : rate.toFixed(1), status];
+    }));
+  // Silent hosts of 2026-11-26, grouped by today's verdict and chain.
+  const hosts = (verdict: string) => {
+    const byChain = new Map<string, string[]>();
+    for (const c of latest.silent.filter(c => c.verdict === verdict)) byChain.set(c.chain, [...(byChain.get(c.chain) ?? []), `\`${c.host}\``]);
+    return [...byChain].map(([chain, names]) => `${CHAIN_LABELS[chain]} ${names.join(', ')}`).join('; ');
+  };
+  const lines: string[] = [];
+  if (hosts('still silent')) lines.push(`Still silent on ${latest.date}: ${hosts('still silent')}.`);
+  if (hosts('returns all')) lines.push(`${hosts('returns all')} returned every known announcement this time, after empty answers on ${BASELINE_DATE}.`);
+  for (const verdict of ['errors', 'inconclusive']) if (hosts(verdict)) lines.push(`${hosts(verdict)}: ${verdict}.`);
+  const { columns, rows: differing } = vantageComparison(refreshSnapshots());
+  if (columns.length >= 2) lines.push(`${differing.length} endpoint checks differ between ${list(columns.map(c => `${c.vantage} (${c.date})`))}.`);
+  lines.push(`Detail per endpoint and vantage is in [${latest.date}.json](../data/chain-volume/refresh/${latest.date}.json).`);
+  return `${rows}\n\n${lines.join(' ')}`;
+}
+
 // ---- browser discovery --------------------------------------------------------
 
 const BROWSER_ENDPOINTS: [string, string, string][] = [
@@ -331,6 +364,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'paged-single-cold': ['docs/paged-discovery.md', pagedSingleColdTable],
   'paged-single-catchup': ['docs/paged-discovery.md', pagedSingleCatchupTable],
   'chain-volume': ['docs/chain-volume.md', chainVolumeTable],
+  'chain-volume-refresh': ['docs/chain-volume.md', chainRefreshTable],
   'browser-discovery': ['docs/browser-discovery.md', browserTable],
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],

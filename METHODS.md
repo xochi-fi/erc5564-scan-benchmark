@@ -62,6 +62,16 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | Chain volume | ≤4 requests/s |
 | RPC recovery | ≥270 ms between request starts |
 | Browser-discovery reference, shared feed | ≥275 ms between request starts |
+| Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |
+
+### Weekly refresh
+
+| Item | Rule |
+| --- | --- |
+| Refreshed | Chain-volume counts, rates and silent recheck ([table](docs/chain-volume.md#weekly-refresh)). All else, hardware timings included, is fixed. |
+| Range | Last agreed block + 1 to the lower of two heads minus 15 min of blocks |
+| Accept | Two endpoint sets with no provider in common return the same block, log index and tx hash. Otherwise the count holds. |
+| Vantage | `--vantage`, or runner kind and Azure region; never an address |
 
 ## Browser runs
 

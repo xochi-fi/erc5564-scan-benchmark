@@ -13,6 +13,7 @@
     "paged-discovery:host": "scripts/paged-discovery.sh",
     "paged-discovery:mainnet": "bun run src/paged-discovery/mainnet.ts",
     "chain-volume": "bun run src/chain-volume/run.ts",
+    "chain-volume:refresh": "bun run src/chain-volume/refresh.ts",
     "browser-discovery": "bun run src/browser-discovery/run.ts",
     "browser-discovery:serve": "bun run src/browser-discovery/serve.ts",
     "browser-discovery:preflight": "bun run src/browser-discovery/preflight.ts",

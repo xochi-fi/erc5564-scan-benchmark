@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { median } from '../shared/stats.ts';
+import { chainState, loadBaseline, loadSnapshots, type ChainState, type RefreshSnapshot } from '../chain-volume/refresh-state.ts';
 
 export const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const path = (relative: string) => `${ROOT}${relative}`;
@@ -118,6 +119,10 @@ export function bestRetrieval(chain: string): any {
 /** Announcements per 30.44-day month, first announcement to measurement, as in report.ts. */
 export const perMonth = (retrieval: any) =>
   retrieval.result.count / ((Date.parse(retrieval.measuredAt) - Date.parse(retrieval.result.firstTime)) / (30.44 * 86400_000));
+
+/** Weekly refresh: the 2026-11-26 baseline plus every agreed increment in data/chain-volume/refresh/. */
+export const refreshSnapshots = (): RefreshSnapshot[] => loadSnapshots(path('data/chain-volume'));
+export const chainLatest = (chain: string): ChainState => chainState(loadBaseline(path('data/chain-volume'), chain), refreshSnapshots());
 
 /** Consistency recheck: per endpoint, the outcome of each attempt at each known announcement. */
 export interface ConsistencyEndpoint { chain: string; host: string; checks: { target: string; outcome: string }[] }

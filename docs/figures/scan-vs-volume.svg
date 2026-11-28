@@ -74,14 +74,14 @@
 <circle cx="730" cy="87.8" r="4.5" class="s2" stroke-width="2"><title>Cortex-A76, 1M run: 1,804.305 s</title></circle>
 <circle cx="730" cy="87.8" r="2" class="hollow"></circle>
 <text x="444.8" y="153.1" class="label ink" text-anchor="end">Cortex-A76: 1.75 ms each</text>
-<rect x="127.8" y="363" width="286.9" height="14" class="band" rx="3"></rect>
-<rect x="355.9" y="362" width="3" height="16" class="muted"><title>Ethereum: 298 announcements</title></rect>
-<rect x="393.7" y="362" width="3" height="16" class="muted"><title>Base: 679 announcements</title></rect>
+<rect x="127.8" y="363" width="287" height="14" class="band" rx="3"></rect>
+<rect x="356.6" y="362" width="3" height="16" class="muted"><title>Ethereum: 302 announcements</title></rect>
+<rect x="394.1" y="362" width="3" height="16" class="muted"><title>Base: 685 announcements</title></rect>
 <rect x="229.6" y="362" width="3" height="16" class="muted"><title>Arbitrum One: 19 announcements</title></rect>
 <rect x="126.3" y="362" width="3" height="16" class="muted"><title>OP Mainnet: 2 announcements</title></rect>
 <rect x="144.9" y="362" width="3" height="16" class="muted"><title>Gnosis: 3 announcements</title></rect>
 <rect x="195.3" y="362" width="3" height="16" class="muted"><title>Polygon PoS: 9 announcements</title></rect>
-<rect x="413.3" y="362" width="3" height="16" class="muted"><title>Sepolia: 1,039 announcements</title></rect>
+<rect x="413.3" y="362" width="3" height="16" class="muted"><title>Sepolia: 1,040 announcements</title></rect>
 <text x="88" y="375" class="small ink" text-anchor="end">ERC-5564</text>
 <rect x="339.6" y="389" width="285.9" height="14" class="band" rx="3"></rect>
 <rect x="560.2" y="388" width="3" height="16" class="muted"><title>Ethereum: 25,558 announcements</title></rect>

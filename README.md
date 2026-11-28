@@ -6,6 +6,8 @@
 
 > **Never fund the [test keys](METHODS.md#test-keys).**
 
+For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance)), RPC operators ([omissions](docs/rpc-recovery.md)) and OMR researchers ([decision](docs/shared-feed.md#decision)).
+
 ## Findings
 
 1. 0.5 ms (Bazzite), 1.7 ms (Turing) per announcement: scanning is cheap.

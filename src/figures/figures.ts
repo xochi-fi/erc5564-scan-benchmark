@@ -4,7 +4,7 @@
 // sit in hover tooltips; sources, scope and caveats go in the Markdown caption under each image.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import {
-  CHAIN_LABELS, ROOT, STRATEGIES, bestRetrieval, chainVolume, consistency, feedBytesLog, feedEvidence, feedControls, feedSummary, num,
+  CHAIN_LABELS, ROOT, STRATEGIES, bestRetrieval, chainLatest, chainVolume, consistency, feedBytesLog, feedEvidence, feedControls, feedSummary, num,
   pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, scanCost, type Strategy,
 } from './data.ts';
 import { FAULTS } from './tables.ts';
@@ -66,7 +66,8 @@ function scanVsVolume(): string {
     for (const [chain, n] of counts) out.push(rect(x.scale(n) - 1.5, rowY - 8, 3, 16, 'muted', `${chain}: ${fmt(n)} announcements`));
     out.push(text(L - 8, rowY + 5, label, 'small ink', 'end'));
   };
-  rug(B + 70, 'ERC-5564', chains.map(c => [CHAIN_LABELS[c.chain]!, c.canonical]));
+  // ERC-5564 counts follow the weekly refresh; Umbra stays at the 2026-11-26 recording.
+  rug(B + 70, 'ERC-5564', chains.map(c => [CHAIN_LABELS[c.chain]!, chainLatest(c.chain).count]));
   rug(B + 96, 'Umbra', chains.filter(c => c.umbra !== null).map(c => [CHAIN_LABELS[c.chain]!, c.umbra!]));
   return svg(W, B + 116, 'Scan time against announcement count, log-log', out);
 }

@@ -31,8 +31,26 @@ One run on 2026-11-26 under the [live RPC rules](../METHODS.md#live-rpc), from t
 
 1. Tenderly serves whole-history queries on five chains, and rpc.gnosischain.com and gateway.fm on Gnosis. A sequential Base backfill at 1,000 blocks per page needs ~47,000 requests and over 3 h.
 2. publicnode requires a token for history on five chains. blockreq serves the last 1,024 blocks, blockmachine 100–10,000, thyme and blazingnode 128. Per chain, 28–53% of probed endpoints fail `eth_getLogs`.
-3. Base's `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev`, and OP's `public.1rpc.io`, pass the deploy-block probe but return `[]` for known announcements. OP has four misses in 50-block pages. The Base probe-informed run switches to Daybreak at block 34,304,282, finds nothing more, and spends its 8,000 requests by block 46,544,282 ([recovery](rpc-recovery.md#windows)). Pocket on OP spans 10,438–70,538 blocks despite a 10,001-block error, then reports pruned history.
+3. Base's `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev`, and OP's `public.1rpc.io`, pass the deploy-block probe but return `[]` for known announcements. OP has four misses in 50-block pages. The Base probe-informed run switches to Daybreak at block 34,304,282, finds nothing more, and spends its 8,000 requests by block 46,544,282 ([recovery](rpc-recovery.md#windows)). Pocket on OP spans 10,438–70,538 blocks despite a 10,001-block error, then reports pruned history. [Rechecked weekly](#weekly-refresh).
 4. Blockscout v2 misses 13 Sepolia announcements in blocks 11,909,881–11,926,046 because `/transactions/{hash}/logs` returns HTTP 500. Its first Ethereum fetch lacks transaction hashes on 263 of 296 rows. Routescan lags 51–471 blocks.
+
+## Weekly refresh
+
+[`weekly-refresh.yml`](../.github/workflows/weekly-refresh.yml) re-measures this table every Monday. The rest of this page is the 2026-11-26 recording.
+
+<!-- generated:chain-volume-refresh -->
+| Chain | Recorded 2026-11-26 | Latest 2026-11-28 | Per month | Status |
+| --- | ---: | ---: | ---: | --- |
+| Ethereum | 298 | 302 | 12.3 | agree |
+| Base | 679 | 685 | 23.9 | agree |
+| Arbitrum One | 19 | 19 | 2.1 | agree |
+| OP Mainnet | 2 | 2 | 0.5 | agree |
+| Gnosis | 3 | 3 | 0.2 | agree |
+| Polygon PoS | 9 | 9 | 1.3 | agree |
+| Sepolia | 1,039 | 1,040 | 36.1 | agree |
+
+Still silent on 2026-11-28: Base `base.daybreak-rpc.network`, `rpc.baseazul.dev`; OP Mainnet `public.1rpc.io`. Base `rpc.degenprotocol.io` returned every known announcement this time, after empty answers on 2026-11-26. Detail per endpoint and vantage is in [2026-11-28.json](../data/chain-volume/refresh/2026-11-28.json).
+<!-- /generated:chain-volume-refresh -->
 
 ## Wallet guidance
 
@@ -136,6 +154,7 @@ bun run chain-volume --stage retrieve --chains base --strategy parallel --max-re
 bun run chain-volume --stage consistency,verify-deploy  # silent-miss check, deploy block recheck
 bun run chain-volume --stage umbra-reference,umbra-retrieve,umbra-verify-deploy
 bun run chain-volume --stage report                     # summary.md/csv, endpoints.csv, cross-source.csv
+bun run chain-volume:refresh --vantage 'residential, Europe'   # weekly refresh, writes refresh/<date>.json
 ```
 
 

@@ -1,0 +1,3707 @@
+{
+ "kind": "chain-volume-refresh",
+ "version": 1,
+ "date": "2026-11-28",
+ "measuredAt": "2026-11-28T00:40:06.703Z",
+ "runner": "bazzite",
+ "vantage": "residential, Europe",
+ "userAgent": "erc5564-scan-benchmark/phase3 (public keyless log-retrieval study)",
+ "chains": {
+  "ethereum": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 26500210,
+   "toBlock": 26510117,
+   "throughTime": "2026-11-28T00:24:47.000Z",
+   "baselineThroughTime": "2026-11-26T15:16:11.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "gateway.tenderly.co",
+      "mainnet.gateway.tenderly.co",
+      "eth.api.pocket.network",
+      "1.rpc.thirdweb.com"
+     ],
+     "head": 26510192,
+     "success": true,
+     "failure": null,
+     "requests": 1,
+     "count": 4
+    },
+    {
+     "endpoints": [
+      "xrpc.cl",
+      "ethereum.public.blockpi.network",
+      "mainnet.rpc.sentio.xyz",
+      "eth.drpc.org"
+     ],
+     "head": 26510192,
+     "success": true,
+     "failure": null,
+     "requests": 2,
+     "count": 4
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [
+    "26500851:688:0x967912d79e97a7c00a276095a001281d928041ba84a91e2b41bcdbbd34ca4427",
+    "26500853:498:0x804d34f24126c5a09fee11b4e3ee8958358a4c25b608612d6d755f054bc38527",
+    "26500856:632:0x99ce255ee07371ca34fa7630459255142800b84eb88b125554c61e41338f23d7",
+    "26500859:160:0x8b5493881667090995d892eb95e578fe424e40d59f048c3e24534fd4a35e6317"
+   ],
+   "lastTime": "2026-11-26T17:27:11.000Z"
+  },
+  "base": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 62624933,
+   "toBlock": 63176659,
+   "throughTime": "2026-11-28T00:28:27.000Z",
+   "baselineThroughTime": "2026-11-26T17:49:22.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "base.api.pocket.network",
+      "8453.rpc.thirdweb.com",
+      "base.drpc.org",
+      "base-mainnet.public.blastapi.io"
+     ],
+     "head": 63181160,
+     "success": true,
+     "failure": null,
+     "requests": 57,
+     "count": 6
+    },
+    {
+     "endpoints": [
+      "base.gateway.tenderly.co",
+      "gateway.tenderly.co",
+      "base.rpc.sentio.xyz",
+      "base-public.nodies.app"
+     ],
+     "head": 63181159,
+     "success": true,
+     "failure": null,
+     "requests": 563,
+     "count": 6
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [
+    "62671620:27:0x55ddb395f9302bf773f5c0c83b5f99f16a8727c081460c4c1e2e430b94751986",
+    "62671844:17:0x8c97cfb118cfd2d1f528e1026b7cd79f0ac03406d49239911eaf2a49c4bd1651",
+    "62671991:9:0xaf7ceedd77668be77287fd79a7ffe91d7292664ba40dbe3e6024d5acfe4c492d",
+    "62672164:61:0xe19e7b1da03ada4433194419ec5bd7e4e8811622bcd89a3263e8acd17e1db15d",
+    "62677124:46:0x1fe00d2b057911fa749da0dd5063dd41fca2d65596fbf6c6568c1129ae6e4d20",
+    "62949449:0:0x6c0b27928fbedd876ec78e1c1f4fe33dc48996934e3d6a5a5fe70308b5a17f77"
+   ],
+   "lastTime": "2026-11-27T11:51:05.000Z"
+  },
+  "arbitrum": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 527754753,
+   "toBlock": 528149344,
+   "throughTime": "2026-11-28T00:34:23.000Z",
+   "baselineThroughTime": "2026-11-26T14:50:05.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "arbitrum.gateway.tenderly.co",
+      "arb1.arbitrum.io",
+      "42161.rpc.thirdweb.com",
+      "arbitrum-one-mainnet.gateway.tatum.io"
+     ],
+     "head": 528151824,
+     "success": true,
+     "failure": null,
+     "requests": 14,
+     "count": 0
+    },
+    {
+     "endpoints": [
+      "public-arb-mainnet.fastnode.io",
+      "arb-one.api.pocket.network",
+      "arbitrum-one.rpc.sentio.xyz",
+      "arbitrum.drpc.org"
+     ],
+     "head": 528151824,
+     "success": true,
+     "failure": null,
+     "requests": 14,
+     "count": 0
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [],
+   "lastTime": null
+  },
+  "optimism": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 160053463,
+   "toBlock": 160113731,
+   "throughTime": "2026-11-28T00:37:19.000Z",
+   "baselineThroughTime": "2026-11-26T15:08:21.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "optimism.gateway.tenderly.co",
+      "gateway.tenderly.co",
+      "lb.routeme.sh",
+      "10.rpc.thirdweb.com"
+     ],
+     "head": 160114181,
+     "success": true,
+     "failure": null,
+     "requests": 6,
+     "count": 0
+    },
+    {
+     "endpoints": [
+      "mainnet.optimism.io",
+      "optimism.public.blockpi.network",
+      "optimism.rpc.sentio.xyz",
+      "optimism.drpc.org"
+     ],
+     "head": 160114181,
+     "success": true,
+     "failure": null,
+     "requests": 8,
+     "count": 0
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [],
+   "lastTime": null
+  },
+  "gnosis": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 49481254,
+   "toBlock": 49504392,
+   "throughTime": "2026-11-28T00:40:45.000Z",
+   "baselineThroughTime": "2026-11-26T16:01:30.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "rpc.gnosischain.com",
+      "gnosis.api.pocket.network",
+      "gnosis.oat.farm",
+      "100.rpc.thirdweb.com"
+     ],
+     "head": 49504570,
+     "success": true,
+     "failure": null,
+     "requests": 3,
+     "count": 0
+    },
+    {
+     "endpoints": [
+      "rpc.gnosis.gateway.fm",
+      "rpc.ap-southeast-1.gateway.fm",
+      "gnosis-rpc.publicnode.com",
+      "lb.routeme.sh"
+     ],
+     "head": 49504570,
+     "success": true,
+     "failure": null,
+     "requests": 3,
+     "count": 0
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [],
+   "lastTime": null
+  },
+  "polygon": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 98000103,
+   "toBlock": 98080764,
+   "throughTime": "2026-11-28T00:43:44.000Z",
+   "baselineThroughTime": "2026-11-26T15:07:07.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "polygon.gateway.tenderly.co",
+      "gateway.tenderly.co",
+      "rpc-mainnet.matic.quiknode.pro",
+      "matic.rpc.sentio.xyz"
+     ],
+     "head": 98081364,
+     "success": true,
+     "failure": null,
+     "requests": 7,
+     "count": 0
+    },
+    {
+     "endpoints": [
+      "poly.api.pocket.network",
+      "137.rpc.thirdweb.com",
+      "lb.routeme.sh",
+      "polygon.drpc.org"
+     ],
+     "head": 98081364,
+     "success": true,
+     "failure": null,
+     "requests": 51,
+     "count": 0
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [],
+   "lastTime": null
+  },
+  "sepolia": {
+   "status": "agreed",
+   "reason": null,
+   "fromBlock": 12217229,
+   "toBlock": 12226789,
+   "throughTime": "2026-11-28T00:52:12.000Z",
+   "baselineThroughTime": "2026-11-26T15:00:36.000Z",
+   "sets": [
+    {
+     "endpoints": [
+      "gateway.tenderly.co",
+      "sepolia.gateway.tenderly.co",
+      "rpc.sepolia.ethpandaops.io",
+      "0xrpc.io"
+     ],
+     "head": 12226860,
+     "success": true,
+     "failure": null,
+     "requests": 1,
+     "count": 1
+    },
+    {
+     "endpoints": [
+      "eth-sepolia.api.onfinality.io",
+      "eth-sepolia-testnet.api.pocket.network",
+      "lb.routeme.sh",
+      "ethereum-sepolia.gateway.tatum.io"
+     ],
+     "head": 12226860,
+     "success": true,
+     "failure": null,
+     "requests": 2,
+     "count": 1
+    }
+   ],
+   "comparison": {
+    "missing": [],
+    "extra": [],
+    "txMismatch": []
+   },
+   "identities": [
+    "12218263:122:0x9f9406c4ac7c36dae5efaa5195cf1de21f4c5922480669c1570fb078b35b0fbf"
+   ],
+   "lastTime": "2026-11-26T18:35:00.000Z"
+  }
+ },
+ "silent": [
+  {
+   "chain": "base",
+   "host": "rpc.degenprotocol.io",
+   "url": "https://rpc.degenprotocol.io/base",
+   "window": 100,
+   "control": "base.gateway.tenderly.co",
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 2,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
+     "attempt": 2,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    }
+   ],
+   "returned": 6,
+   "empty": 0,
+   "errors": 0,
+   "verdict": "returns all"
+  },
+  {
+   "chain": "base",
+   "host": "base.daybreak-rpc.network",
+   "url": "https://base.daybreak-rpc.network",
+   "window": 100,
+   "control": "base.gateway.tenderly.co",
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 1,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 2,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
+     "attempt": 1,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
+     "attempt": 2,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    }
+   ],
+   "returned": 0,
+   "empty": 6,
+   "errors": 0,
+   "verdict": "still silent"
+  },
+  {
+   "chain": "base",
+   "host": "rpc.baseazul.dev",
+   "url": "https://rpc.baseazul.dev",
+   "window": 100,
+   "control": "base.gateway.tenderly.co",
+   "checks": [
+    {
+     "target": "16819551:257",
+     "attempt": 1,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "16819551:257",
+     "attempt": 2,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "22356541:308",
+     "attempt": 2,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "62245129:76",
+     "attempt": 2,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    }
+   ],
+   "returned": 3,
+   "empty": 3,
+   "errors": 0,
+   "verdict": "still silent"
+  },
+  {
+   "chain": "optimism",
+   "host": "public.1rpc.io",
+   "url": "https://public.1rpc.io/op",
+   "window": 50,
+   "control": "lb.routeme.sh",
+   "checks": [
+    {
+     "target": "154353397:112",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "154353397:112",
+     "attempt": 2,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 1,
+     "outcome": "returned",
+     "control": "returned",
+     "message": null
+    },
+    {
+     "target": "154455081:74",
+     "attempt": 2,
+     "outcome": "empty",
+     "control": "returned",
+     "message": null
+    }
+   ],
+   "returned": 3,
+   "empty": 1,
+   "errors": 0,
+   "verdict": "still silent"
+  }
+ ],
+ "endpoints": [
+  {
+   "chain": "ethereum",
+   "host": "xrpc.cl",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 499999,
+    "outcome": {
+     "ok": false,
+     "kind": "http",
+     "code": -32000,
+     "httpStatus": 503,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc.hostdefi.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 2
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc.nodeflare.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10001,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32602,
+     "httpStatus": 403,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "cloudflare-eth.com",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": -32603,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "eth-mainnet.public.blastapi.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum-public.nodies.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum.public.blockpi.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 5001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "mainnet.eth.cloud.ava.do",
+   "recent": {
+    "ok": false,
+    "kind": "timeout",
+    "code": null,
+    "httpStatus": 0,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereumnodelight.app.runonflux.io",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 503,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc.eth.gateway.fm",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32002,
+    "httpStatus": 402,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "eth.meowrpc.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32000,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "eth.drpc.org",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "mainnet.gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "api.zan.top",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc.polysplit.cloud",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "public-eth.nownodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "timeout",
+    "code": null,
+    "httpStatus": 0,
+    "rateLimitHits": 1
+   },
+   "span": {
+    "blocks": 41,
+    "outcome": {
+     "ok": false,
+     "kind": "timeout",
+     "code": null,
+     "httpStatus": 0,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "0xrpc.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "eth.api.onfinality.io",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum-json-rpc.stakely.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "eth.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 70538,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32602,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "mainnet.rpc.sentio.xyz",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc.swiftnodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc-eth.blockmachine.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32002,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "rpc.driftguard.live",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32600,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "eth.blocktailor.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum-mainnet.rpc.thyme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 127,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32001,
+     "httpStatus": 403,
+     "rateLimitHits": 1
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethras.org",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32601,
+    "httpStatus": 400,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "api.mycryptoapi.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "ethereum-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1023,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "ethereum",
+   "host": "api.blockvectra.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32601,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "ethereum",
+   "host": "1.rpc.thirdweb.com",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32005,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": false,
+     "kind": "rate-limit",
+     "code": -32005,
+     "httpStatus": 429,
+     "rateLimitHits": 4
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "xrpc.cl",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": -32000,
+    "httpStatus": 503,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "rpc.hostdefi.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "rpc.nodeflare.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "mainnet.base.org",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32011,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "developer-access-mainnet.base.org",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 0,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "li-fi-base.intustechno.workers.dev",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": -32603,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "base.public.blockpi.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 5001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 51,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base-public.nodies.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base.meowrpc.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32000,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "base-mainnet.public.blastapi.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "base.gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base.api.onfinality.io",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "base-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "api.zan.top",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32012,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "rpc.numa.network",
+   "recent": {
+    "ok": false,
+    "kind": "timeout",
+    "code": null,
+    "httpStatus": 522,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "base.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 63752,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32602,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base.drpc.org",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base.rpc.sentio.xyz",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "rpc.swiftnodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "rpcfree.com",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "rpc.degenprotocol.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1857,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32602,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "rpc-base.blockmachine.io",
+   "recent": {
+    "ok": false,
+    "kind": "archive-missing",
+    "code": -32002,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 90,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32002,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "base.daybreak-rpc.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 2000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "rpc.driftguard.live",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32600,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "rpc.baseazul.dev",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "rpc.satelink.network",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 404,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "base-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1010,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32601,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "base",
+   "host": "api.blockvectra.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32601,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "base",
+   "host": "8453.rpc.thirdweb.com",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32005,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": false,
+     "kind": "rate-limit",
+     "code": -32005,
+     "httpStatus": 429,
+     "rateLimitHits": 4
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "xrpc.cl",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpc.hostdefi.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpc.nodeflare.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arb1.arbitrum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": -32603,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 51,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum-one-public.nodies.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum-one.public.blastapi.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum-one-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 92,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32602,
+     "httpStatus": 403,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum.meowrpc.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32000,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "api.zan.top",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32012,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum.drpc.org",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum.gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum.api.onfinality.io",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arb-one-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arb-one.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 14633,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "public-arb-mainnet.fastnode.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10140273,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum-one.rpc.sentio.xyz",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpc.swiftnodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpcfree.com",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum-one-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpc-arbitrum.blockmachine.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 92,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32002,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpc.driftguard.live",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32600,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "rpc.satelink.network",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 404,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "arbitrum-one-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1018,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32601,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "host": "api.blockvectra.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32601,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "arbitrum",
+   "host": "42161.rpc.thirdweb.com",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32005,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": false,
+     "kind": "rate-limit",
+     "code": -32005,
+     "httpStatus": 429,
+     "rateLimitHits": 4
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "xrpc.cl",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 3303,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "rpc.hostdefi.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 2
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "rpc.nodeflare.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "mainnet.optimism.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism-mainnet.public.blastapi.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32000,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism-public.nodies.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism.public.blockpi.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 5001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism.api.onfinality.io",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32602,
+     "httpStatus": 403,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "api.zan.top",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32012,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism.drpc.org",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism.gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "op.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32602,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "public-op-mainnet.fastnode.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 12315,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism.rpc.sentio.xyz",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "rpc.swiftnodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "rpc-optimism.blockmachine.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 100,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32002,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism-mainnet.rpc.thyme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 121,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32001,
+     "httpStatus": 403,
+     "rateLimitHits": 1
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "rpc.driftguard.live",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32600,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "optimism",
+   "host": "optimism-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1022,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32601,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "optimism",
+   "host": "10.rpc.thirdweb.com",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32005,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": false,
+     "kind": "rate-limit",
+     "code": -32005,
+     "httpStatus": 429,
+     "rateLimitHits": 4
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 1
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "rpc.gnosischain.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "xdai-archive.blockscout.com",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 404,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis-public.nodies.app",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "rpc.gnosis.gateway.fm",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis-mainnet.public.blastapi.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32000,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "rpc.ap-southeast-1.gateway.fm",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis.api.onfinality.io",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32029,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis.drpc.org",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "endpoints.omniatech.io",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 521,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": -32603,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gno-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10807,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32602,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "rpc.swiftnodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "rpc.ankr.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32000,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis.blockpi.network",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": 100021,
+    "httpStatus": 503,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis.oat.farm",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "gnosis-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "gnosis",
+   "host": "100.rpc.thirdweb.com",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32005,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": false,
+     "kind": "rate-limit",
+     "code": -32005,
+     "httpStatus": 429,
+     "rateLimitHits": 4
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "xrpc.cl",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc.hostdefi.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32030,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 985,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 3
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "public.blazingnode.com",
+   "recent": {
+    "ok": false,
+    "kind": "archive-missing",
+    "code": -32005,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 126,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32005,
+     "httpStatus": 403,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc.nodeflare.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc.ankr.com",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32000,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc-mainnet.matic.quiknode.pro",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon-public.nodies.app",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": null,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon-mainnet.public.blastapi.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32000,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 51,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon-bor-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10001,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon.api.onfinality.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 1
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon.drpc.org",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon.gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "api.zan.top",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32012,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon-mainnet.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "poly.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10438,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc.swiftnodes.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "matic.rpc.sentio.xyz",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "rpcfree.com",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc.satelink.network",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 404,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc-polygon.blockmachine.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 250,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32002,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon-mainnet.rpc.thyme.sh",
+   "recent": {
+    "ok": false,
+    "kind": "archive-missing",
+    "code": -32001,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 119,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32001,
+     "httpStatus": 403,
+     "rateLimitHits": 1
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "rpc.driftguard.live",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32600,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "polygon-bor-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1021,
+    "outcome": {
+     "ok": false,
+     "kind": "archive-missing",
+     "code": -32601,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "polygon",
+   "host": "api.blockvectra.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32601,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "polygon",
+   "host": "137.rpc.thirdweb.com",
+   "recent": {
+    "ok": false,
+    "kind": "rate-limit",
+    "code": -32005,
+    "httpStatus": 429,
+    "rateLimitHits": 4
+   },
+   "span": {
+    "blocks": 1001,
+    "outcome": {
+     "ok": false,
+     "kind": "rate-limit",
+     "code": -32005,
+     "httpStatus": 429,
+     "rateLimitHits": 4
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "xrpc.cl",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "lb.routeme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10000,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32009,
+     "httpStatus": 200,
+     "rateLimitHits": 2
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "eth-sepolia.public.blastapi.io",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": -32000,
+    "httpStatus": 403,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "sepolia.gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "gateway.tenderly.co",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": "whole history",
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "api.zan.top",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "ethereum-sepolia-rpc.publicnode.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "public.1rpc.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 1
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "eth-sepolia.api.onfinality.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 1
+   },
+   "span": {
+    "blocks": 3411988,
+    "outcome": {
+     "ok": false,
+     "kind": "timeout",
+     "code": null,
+     "httpStatus": 0,
+     "rateLimitHits": 1
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "ethereum-sepolia-public.nodies.app",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 50,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "0xrpc.io",
+   "recent": {
+    "ok": false,
+    "kind": "other",
+    "code": -32602,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10001,
+    "outcome": {
+     "ok": false,
+     "kind": "other",
+     "code": -32602,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "ethereum-sepolia.gateway.tatum.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 101,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "eth-sepolia-testnet.api.pocket.network",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 10761,
+    "outcome": {
+     "ok": false,
+     "kind": "range-limit",
+     "code": -32602,
+     "httpStatus": 400,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "sepolia.rpc.sentio.xyz",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 1000,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "ethereum-sepolia.rpc.thyme.sh",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 126,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 1
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "rpc.sepolia.org",
+   "recent": {
+    "ok": false,
+    "kind": "http",
+    "code": null,
+    "httpStatus": 404,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "rpc2.sepolia.org",
+   "recent": {
+    "ok": false,
+    "kind": "timeout",
+    "code": null,
+    "httpStatus": 0,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "rpc.sepolia.ethpandaops.io",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 30000,
+    "outcome": {
+     "ok": false,
+     "kind": "other",
+     "code": -32603,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "sepolia.drpc.org",
+   "recent": {
+    "ok": false,
+    "kind": "auth-required",
+    "code": 35,
+    "httpStatus": 400,
+    "rateLimitHits": 0
+   },
+   "span": null
+  },
+  {
+   "chain": "sepolia",
+   "host": "ethereum-sepolia-rpc.blockreq.com",
+   "recent": {
+    "ok": true,
+    "kind": null,
+    "code": null,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": {
+    "blocks": 500,
+    "outcome": {
+     "ok": true,
+     "kind": null,
+     "code": null,
+     "httpStatus": 200,
+     "rateLimitHits": 0
+    }
+   }
+  },
+  {
+   "chain": "sepolia",
+   "host": "api.blockvectra.com",
+   "recent": {
+    "ok": false,
+    "kind": "unsupported",
+    "code": -32601,
+    "httpStatus": 200,
+    "rateLimitHits": 0
+   },
+   "span": null
+  }
+ ]
+}

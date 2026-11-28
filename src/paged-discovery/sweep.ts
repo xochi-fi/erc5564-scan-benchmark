@@ -400,6 +400,7 @@ export interface SummaryRow {
   profile: string;
   pageBlocks: number;
   engine: string;
+  verifyMode: string;
   repetition: number;
   blocks: number;
   announcements: number;
@@ -432,6 +433,7 @@ export function summaryRow(sample: WalletSample): SummaryRow {
     profile: sample.profile.name,
     pageBlocks: sample.pageBlocks,
     engine: sample.engine,
+    verifyMode: sample.verifyMode ?? 'sequential',
     repetition: sample.repetition,
     blocks: sample.blocksScanned,
     announcements: sample.announcementsScanned,
@@ -564,8 +566,9 @@ async function main(): Promise<void> {
         engine: options.engine,
         startBlock: FIRST_BLOCK,
         profile: LINK_PROFILES[planned.profile],
+        verifyMode: planned.verifyMode ?? 'sequential',
       } as const;
-      const label = `[${planned.order + 1}/${plan.length}] ${fixture.count} ${planned.profile} page ${planned.pageBlocks} rep ${planned.repetition}`;
+      const label = `[${planned.order + 1}/${plan.length}] ${fixture.count} ${planned.profile} page ${planned.pageBlocks} ${wallet.verifyMode} rep ${planned.repetition}`;
       if (planned.scenario === 'catchup') {
         if (!fixture.baseCacheReady) {
           // Prefix sync (recorded, excluded from summaries) that builds this fixture's shared catch-up starting cache.
@@ -574,7 +577,7 @@ async function main(): Promise<void> {
           console.error(`  prefix sync to block ${prefixHead} (${(prefixHead - FIRST_BLOCK + 1) * ENTRIES_PER_BLOCK} announcements), profile ${planned.profile}`);
           await setHead(chain.endpoints.controlUrl, prefixHead);
           try {
-            await measure({ ...wallet, scenario: 'prefix', pageBlocks: options.prefixPages, repetition: 1 }, null);
+            await measure({ ...wallet, scenario: 'prefix', pageBlocks: options.prefixPages, repetition: 1, verifyMode: 'sequential' }, null);
           } finally {
             await setHead(chain.endpoints.controlUrl, null);
           }

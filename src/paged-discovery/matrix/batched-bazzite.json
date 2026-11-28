@@ -1,0 +1,8 @@
+{
+  "description": "Sequential against batched verification on Bazzite: public-profile 100k cold rescans and 64-block catch-ups, and the 1M 256-block cold rescan.",
+  "entries": [
+    { "fixture": "100000-sparse", "scenarios": ["cold"], "profiles": ["public"], "pages": [1, 16, 64, 256], "verifyModes": ["sequential", "batched"] },
+    { "fixture": "100000-sparse", "scenarios": ["catchup"], "profiles": ["public"], "pages": [1, 16, 256], "verifyModes": ["sequential", "batched"] },
+    { "fixture": "1000000-sparse", "scenarios": ["cold"], "profiles": ["public"], "pages": [256], "verifyModes": ["sequential", "batched"] }
+  ]
+}

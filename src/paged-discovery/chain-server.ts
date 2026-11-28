@@ -41,27 +41,41 @@ export async function startChain(fixtureDir: string, profile: LinkProfile): Prom
     idleTimeout: 255,
     async fetch(request) {
       const body = await request.text();
-      let id: string | number | null = null;
-      let method = 'invalid';
-      let payload: string;
-      try {
-        const parsed = rpcRequestSchema.safeParse(JSON.parse(body));
-        if (!parsed.success) throw new RpcError(-32600, 'invalid request');
-        id = parsed.data.id;
-        method = parsed.data.method;
-        const result = await chain.call(method, parsed.data.params);
-        payload = `{"jsonrpc":"2.0","id":${JSON.stringify(id)},"result":${result}}`;
-      } catch (error) {
-        const code = error instanceof RpcError ? error.code : -32603;
-        const message = error instanceof Error ? error.message : String(error);
-        if (!(error instanceof RpcError)) console.error('chain server internal error', error);
-        payload = JSON.stringify({ jsonrpc: '2.0', id, error: { code, message } });
+      let json: unknown;
+      try { json = JSON.parse(body); } catch { json = null; }
+      if (Array.isArray(json) && json.length > 0) {
+        // JSON-RPC batch: answer every call in one response, in request order.
+        const parts: string[] = [];
+        for (const item of json) parts.push(await answer(JSON.stringify(item), item));
+        const bytes = encoder.encode(`[${parts.join(',')}]`);
+        record('batch', encoder.encode(body).byteLength, bytes.byteLength);
+        return new Response(bytes, { headers: { 'content-type': 'application/json' } });
       }
-      const bytes = encoder.encode(payload);
-      record(method, encoder.encode(body).byteLength, bytes.byteLength);
+      const bytes = encoder.encode(await answer(body, json));
       return new Response(bytes, { headers: { 'content-type': 'application/json' } });
     },
   });
+
+  async function answer(body: string, json: unknown): Promise<string> {
+    let id: string | number | null = null;
+    let method = 'invalid';
+    let payload: string;
+    try {
+      const parsed = rpcRequestSchema.safeParse(json);
+      if (!parsed.success) throw new RpcError(-32600, 'invalid request');
+      id = parsed.data.id;
+      method = parsed.data.method;
+      const result = await chain.call(method, parsed.data.params);
+      payload = `{"jsonrpc":"2.0","id":${JSON.stringify(id)},"result":${result}}`;
+    } catch (error) {
+      const code = error instanceof RpcError ? error.code : -32603;
+      const message = error instanceof Error ? error.message : String(error);
+      if (!(error instanceof RpcError)) console.error('chain server internal error', error);
+      payload = JSON.stringify({ jsonrpc: '2.0', id, error: { code, message } });
+    }
+    record(method, encoder.encode(body).byteLength, encoder.encode(payload).byteLength);
+    return payload;
+  }
   const rpcPort = rpc.port;
   if (rpcPort === undefined) throw new Error('RPC server did not bind a port');
   const link = startLinkEmulator(rpcPort, profile);

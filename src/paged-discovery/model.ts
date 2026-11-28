@@ -75,6 +75,8 @@ export const walletOptionsSchema = z.object({
   startBlock: z.number().int().nonnegative(),
   profile: linkProfileSchema,
   repetition: z.number().int().min(1),
+  /** sequential: receipt then balance per candidate. batched: one JSON-RPC batch of every check on a page. */
+  verifyMode: z.enum(['sequential', 'batched']).default('sequential'),
 }).strict();
 export type WalletOptions = z.infer<typeof walletOptionsSchema>;
 
@@ -143,7 +145,9 @@ export interface WalletSample {
   cachedMatchesAtStart: number;
   newMatches: number;
   totalMatches: number;
-  requests: { getLogs: number; blockNumber: number; receipts: number; balances: number };
+  /** Absent in samples recorded before batched verification existed; those are sequential. */
+  verifyMode?: WalletOptions['verifyMode'];
+  requests: { getLogs: number; blockNumber: number; receipts: number; balances: number; verifyRoundTrips?: number };
   timings: {
     totalMs: number;
     networkMs: number;

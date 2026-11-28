@@ -77,6 +77,7 @@ export interface SettingSummary {
   scenario: string;
   profile: string;
   pageBlocks: number;
+  verifyMode: string;
   n: number;
   nodes: string;
   tainted: number;
@@ -89,7 +90,7 @@ export function summarize(rows: readonly SampleRow[]): SettingSummary[] {
   const groups = new Map<string, SampleRow[]>();
   for (const row of rows) {
     if (row.scenario === 'prefix') continue;
-    const key = [row.host, row.count, row.matches, row.scenario, row.profile, row.pageBlocks].join('|');
+    const key = [row.host, row.count, row.matches, row.scenario, row.profile, row.pageBlocks, row.verifyMode].join('|');
     groups.set(key, [...(groups.get(key) ?? []), row]);
   }
   return [...groups.values()].map((group) => {
@@ -103,6 +104,7 @@ export function summarize(rows: readonly SampleRow[]): SettingSummary[] {
       scenario: first.scenario,
       profile: first.profile,
       pageBlocks: first.pageBlocks,
+      verifyMode: first.verifyMode,
       n: group.length,
       nodes: [...new Set(group.map(r => r.node))].sort().join(' '),
       tainted: group.filter(r => r.tainted).length,
@@ -111,7 +113,7 @@ export function summarize(rows: readonly SampleRow[]): SettingSummary[] {
       stats: Object.fromEntries(METRICS.map(m => [m, spread(group.map(r => r[m]))])) as Record<Metric, Spread>,
     };
   }).sort((a, b) => a.host.localeCompare(b.host) || a.count - b.count || a.scenario.localeCompare(b.scenario)
-    || a.profile.localeCompare(b.profile) || a.pageBlocks - b.pageBlocks);
+    || a.profile.localeCompare(b.profile) || a.pageBlocks - b.pageBlocks || a.verifyMode.localeCompare(b.verifyMode));
 }
 
 const cell = (value: unknown): string => {
@@ -186,9 +188,9 @@ async function main(): Promise<void> {
     const lines = [
       'Values are median [min-max] over n samples.',
       '',
-      '| Host | Size | Scenario | Profile | Page blocks | n | Nodes | Network s | Scan s | Verify s | Verify s/payment | Total s | First match s | Wallet peak RSS MiB | Max C | Throttle | Tainted |',
-      '| --- | ---: | --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |',
-      ...summaries.map(s => `| ${s.host} | ${s.count} | ${s.scenario} | ${s.profile} | ${s.pageBlocks} | ${s.n} | ${s.nodes} | ${formatSpread(s.stats.networkS, 1)} | ${formatSpread(s.stats.scanS, 1)} | ${formatSpread(s.stats.verifyS, 2)} | ${formatSpread(s.stats.verifyPerPaymentS, 4)} | ${formatSpread(s.stats.totalS, 1)} | ${formatSpread(s.stats.firstMatchS, 2)} | ${formatSpread(s.stats.peakRssMiB, 0)} | ${fmt(s.maxThermalC, 1)} | ${s.maxThrottleState ?? '-'} | ${s.tainted} |`),
+      '| Host | Size | Scenario | Profile | Page blocks | Verify | n | Nodes | Network s | Scan s | Verify s | Verify s/payment | Total s | First match s | Wallet peak RSS MiB | Max C | Throttle | Tainted |',
+      '| --- | ---: | --- | --- | ---: | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |',
+      ...summaries.map(s => `| ${s.host} | ${s.count} | ${s.scenario} | ${s.profile} | ${s.pageBlocks} | ${s.verifyMode} | ${s.n} | ${s.nodes} | ${formatSpread(s.stats.networkS, 1)} | ${formatSpread(s.stats.scanS, 1)} | ${formatSpread(s.stats.verifyS, 2)} | ${formatSpread(s.stats.verifyPerPaymentS, 4)} | ${formatSpread(s.stats.totalS, 1)} | ${formatSpread(s.stats.firstMatchS, 2)} | ${formatSpread(s.stats.peakRssMiB, 0)} | ${fmt(s.maxThermalC, 1)} | ${s.maxThrottleState ?? '-'} | ${s.tainted} |`),
       '',
       '| Host | Node | Run | Control | 100k crypto scan s | Max C | Throttle | Min wallet MHz | Tainted |',
       '| --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |',

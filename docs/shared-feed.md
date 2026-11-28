@@ -32,6 +32,23 @@ Each chain averaged 0.006–1.2 announcements per day to 2026-11-26, at most 2.1
 
 The budgets are assumptions. At 1M/day, Turing needs 29 min.
 
+## Privacy
+
+Privacy does not change the decision. A feed downloaded in full is the "full-scan" baseline that OMR tries to match at lower cost ([2021/1256](https://eprint.iacr.org/2021/1256) §1). Feed and OMR both hide which announcements are yours. Both still leak IP and timing to their server.
+
+| Path | Observer | Learns | Source |
+| --- | --- | --- | --- |
+| Per-wallet `eth_getLogs` | RPC provider | IP, sync times, block ranges. The filter (announcer, `Announcement` topic) is the same for every wallet | [`wallet.ts`](../src/paged-discovery/wallet.ts) |
+| RPC receipt and balance checks | RPC provider | Each candidate's transaction and stealth address, tied to the IP | [METHODS.md](../METHODS.md), `verifyCandidate` |
+| Full feed download | Feed host, CDN | IP, fetch times, and the first page fetched, which gives the last checkpoint (inferred). URLs carry only the manifest hash and page index | [Method](#method) |
+| Feed retries, later checks | Feed host; RPC provider | A retried window marks a feed disagreement, not a match (inferred). Later balance or spend calls leak as in the RPC row; timing can link the two logs if operators share them (inferred) | — |
+| OMR detection | Detector | Nothing about which messages are pertinent, even if everyone else colludes | 2021/1256 §4.2, Def. 4.1; [2024/204](https://eprint.iacr.org/2024/204) §1; [2024/510](https://eprint.iacr.org/2024/510) §7.1 |
+| OMR keys and queries | Detector | Query time, bound k̄ and IP. These tie to identity if the detection key links to the public clue key, and queries link to each other unless keys are regenerated. OMRp2 and DoS-PerfOMR are full-key-unlinkable. The detection key is ~129 MB, uploaded once. Network anonymity is out of scope | 2021/1256 §9.1, §9.3, §12; 2024/510 Remark 7.3 |
+| OMR DoS | Recipients | Completeness assumes an honest-but-curious detector. Crafted PerfOMR clues match many recipients and overflow them. Overflow forces a retry with larger k̄ or a full download | 2021/1256 §8.1; 2024/510 §5.1, §7.1, §7.4 |
+| ERC-5564 view tag | Everyone | One byte of the hashed shared secret per announcement: 128 → 124 bits, privacy only. A server given the viewing key sees every match, the "detection key" approach OMR replaces | [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) "Parsing considerations"; 2021/1256 §1 |
+
+OMR becomes the private option when a full download stops being practical: past the 60 MB/day feed budget above (~100k announcements/day), wallets would fetch selectively or hand a viewing key to a scanner, and both reveal which announcements are theirs (inferred). The [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) note ("Recommendation (TL;DR)") calls FHE OMR "far-fetched" for near-term deployment and points to Pung-style PIR with an OMR-KEM. Papers read: 2021/1256 rev. 2022-04-14, 2024/204 rev. 2024-11-21, 2024/510 rev. 2025-02-07.
+
 ## Feed against live RPC
 
 <!-- generated:shared-feed -->

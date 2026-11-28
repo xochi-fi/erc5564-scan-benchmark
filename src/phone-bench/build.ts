@@ -1,5 +1,5 @@
-// `bun run phone-bench:build`: writes work/phone-bench/index.html, one self-contained page with the scan
-// bundle and a packed 10,000-announcement seeded fixture inlined. No external requests.
+// `bun run phone-bench:build [OUT]`: writes the static phone bench site (default work/phone-bench/): index.html
+// paints with a tiny inline boot script, then loads app.js; fixture.js and worker.js load when the user taps Run.
 import { createHash } from 'node:crypto';
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { hexToBytes } from 'viem';
@@ -9,7 +9,7 @@ import type { PackedFixture } from './scan.ts';
 export const PHONE_SEED = 'phone-bench:v1';
 export const PHONE_COUNT = 10_000;
 export const PHONE_MATCH_EVERY = 1_000;
-export const PAGE_VERSION = '3';
+export const PAGE_VERSION = '4';
 /** SHA256 of the packed rows of the 10,000-announcement fixture; the record script accepts only this fixture. */
 export const PHONE_PACKED_SHA256 = '59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d';
 const ROOT = new URL('../../', import.meta.url).pathname;
@@ -65,17 +65,35 @@ progress { width: 100%; height: 18px; }
 .ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; }
 details { margin-top: 12px; }`;
 
-export function html(fixture: PackedFixture, bundle: string, workerBundle: string): string {
-  const esc = (s: string) => s.replace(/<\/script/gi, '<\\/script');
+/** Inline boot script: shows each startup step and the details line, loads app.js with a timeout. */
+const BOOT = `(function () {
+  var V = 'v' + PAGE_VERSION, step = 'page painted';
+  function $(id) { return document.getElementById(id); }
+  function details() { $('details').textContent = V + ' · step: ' + step + ' · worker: ' + (typeof Worker !== 'undefined' ? 'yes' : 'no') + ' · ' + navigator.userAgent; }
+  function fail(message) { document.body.setAttribute('data-state', 'error'); $('state').textContent = 'Error'; $('message').textContent = message; step = 'error: ' + message; details(); }
+  window.phoneBoot = { step: function (s) { step = s; details(); }, fail: fail, ready: function () { step = 'ready'; details(); clearTimeout(t); } };
+  window.onerror = function (m) { fail('Startup error: ' + m); };
+  $('version').textContent = V;
+  $('state').textContent = 'Loading';
+  $('message').textContent = 'Loading the app (step 1 of 1)…';
+  step = 'loading app.js'; details();
+  var t = setTimeout(function () { fail('app.js did not start within 30 s. Reload; if it stays, read out the details line below.'); }, 30000);
+  var s = document.createElement('script');
+  s.src = 'app.js?v=' + PAGE_VERSION;
+  s.onerror = function () { clearTimeout(t); fail('app.js failed to load. Reload; if it stays, read out the details line below.'); };
+  document.head.appendChild(s);
+})();`;
+
+export function html(): string {
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; worker-src blob:; child-src blob:; connect-src 'none'; img-src 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; worker-src 'self'; child-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scan bench</title><style>${STYLE}</style></head><body data-state="idle">
-<h1>ERC-5564 scan bench</h1>
+<h1>ERC-5564 scan bench <span id="version" class="muted"></span></h1>
 <p class="muted">Scans a seeded test fixture on this device and checks the result. Nothing leaves the device unless you submit, copy or download it. Test keys only; never fund them.</p>
 <div id="statusbar" role="status" aria-live="polite"><span id="dot"></span><span id="state">Loading</span></div>
-<p id="message" class="muted">If this stays on Loading, the page failed to start: please report your browser.</p>
+<p id="message" class="muted">If this text stays, JavaScript did not start: read out the details line at the bottom.</p>
 <div id="progress-box" hidden>
 <p><span id="spinner"></span><span id="count-done"></span> · <span id="elapsed"></span></p>
 <progress id="bar" value="0" max="1"></progress>
@@ -100,17 +118,28 @@ export function html(fixture: PackedFixture, bundle: string, workerBundle: strin
 <label for="result">Result JSON</label><textarea id="result" readonly></textarea>
 </div>
 <details><summary class="muted">What this page reads</summary><p class="muted" id="signals"></p></details>
-<script>const FIXTURE = ${JSON.stringify(fixture)}; const PAGE_VERSION = ${JSON.stringify(PAGE_VERSION)}; const WORKER_SOURCE = ${esc(JSON.stringify(workerBundle))};</script>
-<script>${esc(bundle)}</script>
+<p class="muted" id="details" style="word-break: break-all">JavaScript has not run.</p>
+<script>var PAGE_VERSION = ${JSON.stringify(PAGE_VERSION)};
+${BOOT}</script>
 </body></html>
 `;
 }
 
 async function bundle(entry: string): Promise<string> {
-  const build = await Bun.build({ entrypoints: [`${ROOT}src/phone-bench/${entry}`], target: 'browser', format: 'iife', minify: true });
+  const build = await Bun.build({ entrypoints: [`${ROOT}src/phone-bench/${entry}`], target: 'browser', format: 'iife', minify: true, define: { PAGE_VERSION: JSON.stringify(PAGE_VERSION) } });
   const [artifact] = build.outputs;
   if (!build.success || !artifact) throw new Error(build.logs.join('\n'));
   return artifact.text();
+}
+
+/** The site's files by name. */
+export async function site(fixture: PackedFixture): Promise<Record<string, string>> {
+  return {
+    'index.html': html(),
+    'app.js': await bundle('page.ts'),
+    'worker.js': await bundle('worker.ts'),
+    'fixture.js': `self.FIXTURE = ${JSON.stringify(fixture)};\n`,
+  };
 }
 
 if (import.meta.main) {
@@ -125,7 +154,8 @@ if (import.meta.main) {
     fixture = await packedFixture(fixtureDir);
   }
   if (fixture.packedSha256 !== PHONE_PACKED_SHA256) throw new Error(`packed fixture ${fixture.packedSha256} differs from the pinned ${PHONE_PACKED_SHA256}`);
-  const page = html(fixture, await bundle('page.ts'), await bundle('worker.ts'));
-  await writeFile(`${out}index.html`, page);
-  console.log(`wrote ${out}index.html (${(page.length / 1024).toFixed(0)} kB), packed ${fixture.packedSha256}`);
+  for (const [name, body] of Object.entries(await site(fixture))) {
+    await writeFile(`${out}${name}`, body);
+    console.log(`wrote ${out}${name} (${(body.length / 1024).toFixed(0)} kB)`);
+  }
 }

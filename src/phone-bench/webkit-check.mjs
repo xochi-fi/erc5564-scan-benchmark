@@ -24,8 +24,9 @@ async function run(context, label, { cancel = false } = {}) {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
-  await page.goto(`file://${file}`);
-  check(`${label}: idle state on load`, await page.textContent('#state') === 'Ready', await page.textContent('#state'));
+  await page.goto(file.startsWith("http") ? file : `file://${file}`);
+  await waitState(page, ['idle', 'error'], 30000);
+  check(`${label}: idle state on load`, await page.textContent('#state') === 'Ready', await page.textContent('#details'));
   check(`${label}: device prefilled`, (await page.inputValue('#device')).length > 0, await page.inputValue('#device'));
   await page.selectOption('#count', count);
   await page.click('#run');

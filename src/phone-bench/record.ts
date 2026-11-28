@@ -13,7 +13,7 @@ export const resultSchema = z.object({
   kind: z.literal('phone-bench'), pageVersion: z.literal(PAGE_VERSION), startedAt: z.string().datetime(),
   device: text(80).min(1), os: text(60), browser: text(60), jit: z.enum(['on', 'off-lockdown', 'off-other', 'unknown']), notes: text(200).nullable(),
   detected: z.object({
-    os: text(40), osVersion: text(40).nullable(), browser: text(40), browserVersion: text(40).nullable(), device: text(80),
+    os: text(40), osVersion: text(40).nullable(), browser: text(40), browserVersion: text(40).nullable(), device: text(80), app: text(60).nullable(),
     deviceCandidates: z.array(text(120)).max(10), jitGuess: z.enum(['on', 'off-lockdown', 'unknown']), jitReason: text(120),
     uaChModel: text(80).nullable(), uaChPlatform: text(40).nullable(), uaChPlatformVersion: text(40).nullable(),
   }).strict(),

@@ -55,3 +55,19 @@ export function jitGuess(os: string, hasWasm: boolean): Pick<Detected, 'jitGuess
   if (hasWasm) return { jitGuess: 'on', jitReason: 'WebAssembly is available; JIT assumed on' };
   return { jitGuess: 'unknown', jitReason: 'No reliable signal' };
 }
+
+/** In-app and privacy browsers that wallet users run, from user-agent markers (Brave from navigator.brave). */
+export function detectApp(ua: string, brave: boolean): string | null {
+  const v = (re: RegExp) => re.exec(ua)?.[1];
+  const markers: [RegExp, string, RegExp?][] = [
+    [/Ddg\//, 'DuckDuckGo', /Ddg\/([\d.]+)/], [/DuckDuckGo\//, 'DuckDuckGo', /DuckDuckGo\/([\d.]+)/],
+    [/Focus\//, 'Firefox Focus', /Focus\/([\d.]+)/], [/MetaMaskMobile/, 'MetaMask (in-app)'], [/CoinbaseWallet/, 'Coinbase Wallet (in-app)'],
+    [/Trust\//, 'Trust Wallet (in-app)'], [/Rainbow/, 'Rainbow (in-app)'], [/Instagram/, 'Instagram (in-app)'], [/FBAN|FBAV/, 'Facebook (in-app)'],
+    [/Twitter|TwitterAndroid/, 'X (in-app)'], [/Telegram/, 'Telegram (in-app)'], [/ Line\//, 'LINE (in-app)'],
+  ];
+  for (const [test, name, version] of markers) if (test.test(ua)) return version && v(version) ? `${name} ${v(version)}` : name;
+  if (brave) return 'Brave';
+  // iOS WebKit without the "Safari/" token is an app's WebView, not Safari.
+  if (/iPhone|iPad/.test(ua) && /AppleWebKit/.test(ua) && !/Safari\//.test(ua)) return 'In-app browser (iOS WebView)';
+  return null;
+}

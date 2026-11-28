@@ -1,8 +1,9 @@
-// Web Worker entry: runs the scan off the main thread and reports progress, the result or the error.
+// worker.js: runs the scan off the main thread. Says hello first so the page knows the worker started.
 import { runScan, type PackedFixture } from './scan.ts';
 
 interface Job { fixture: PackedFixture; engine: string; count: number; chunk: number }
 const post = (message: unknown) => (self as unknown as { postMessage(m: unknown): void }).postMessage(message);
+post({ type: 'hello' });
 
 self.onmessage = async (event: MessageEvent<Job>) => {
   const { fixture, engine, count, chunk } = event.data;

@@ -3,6 +3,7 @@ import { mkdtemp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { html, packedFixture } from '../src/phone-bench/build.ts';
+import { detectApp } from '../src/phone-bench/detect.ts';
 import { runScan } from '../src/phone-bench/scan.ts';
 
 describe('phone bench', () => {
@@ -13,9 +14,9 @@ describe('phone bench', () => {
       expect(r.verified).toBe(true);
       expect(r.matches).toEqual([0, 7, 14, 21, 28, 35, 42, 49, 56]);
     }
-    const page = html(fixture, 'void 0', 'void 0');
+    const page = html();
     expect(page).toContain("connect-src 'none'");
-    expect(page).not.toMatch(/<script[^>]+src=|<link[^>]+href=|https?:\/\/(?!www\.w3)/);
+    expect(page).not.toMatch(/<script[^>]+src=|<link[^>]+href=|https?:\/\//);
   });
 });
 
@@ -27,6 +28,12 @@ describe('phone bench detection', () => {
     const android = parseUserAgent('Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36');
     expect(android).toMatchObject({ os: 'Android', osVersion: '14', browser: 'Chrome', device: 'Pixel 8' });
     expect(parseUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15')).toMatchObject({ os: 'Linux', browser: 'Safari' });
+  });
+  test('labels in-app and privacy browsers', () => {
+    expect(detectApp('Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Ddg/18.1 Safari/604.1', false)).toBe('DuckDuckGo 18.1');
+    expect(detectApp('Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148', false)).toBe('In-app browser (iOS WebView)');
+    expect(detectApp('Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1', true)).toBe('Brave');
+    expect(detectApp('Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1', false)).toBeNull();
   });
   test('maps iPhone screens in either orientation to models', () => {
     expect(iphoneCandidates(393, 852, 3)[0]).toContain('15 Pro');
@@ -46,7 +53,7 @@ import { PAGE_VERSION, PHONE_PACKED_SHA256 } from '../src/phone-bench/build.ts';
 describe('phone bench result validation', () => {
   const good = {
     kind: 'phone-bench', pageVersion: PAGE_VERSION, startedAt: '2026-11-28T01:00:00.000Z', device: 'iPhone 15', os: 'iOS 18.1', browser: 'Safari 18.1', jit: 'on', notes: null,
-    detected: { os: 'iOS', osVersion: '18.1', browser: 'Safari', browserVersion: '18.1', device: 'iPhone', deviceCandidates: ['iPhone 16, 15, 15 Pro, 14 Pro'], jitGuess: 'on', jitReason: 'x', uaChModel: null, uaChPlatform: null, uaChPlatformVersion: null },
+    detected: { os: 'iOS', osVersion: '18.1', browser: 'Safari', browserVersion: '18.1', device: 'iPhone', app: null, deviceCandidates: ['iPhone 16, 15, 15 Pro, 14 Pro'], jitGuess: 'on', jitReason: 'x', uaChModel: null, uaChPlatform: null, uaChPlatformVersion: null },
     userAgent: 'Mozilla/5.0 (iPhone)', screen: { width: 393, height: 852, devicePixelRatio: 3 }, hardwareConcurrency: 6, webAssembly: true, secureContext: true, worker: true,
     engine: 'crypto', count: 1000, chunk: 250, seed: 'phone-bench:v1', fixtureSha256: '63ea0c665c7c8a98fe1643ccddc979c2407fc7748aad87e3addd091c8ff50444', packedSha256: PHONE_PACKED_SHA256,
     scanMs: 1500, msPerAnnouncement: 1.5, matches: 1, expectedMatches: 1, verified: true,

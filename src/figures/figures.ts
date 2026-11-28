@@ -83,7 +83,7 @@ function scanVsVolume(): string {
     text(20, 54, 'seconds, log scale', 'small muted'),
     line(220, 49, 244, 49, 'axis', ' stroke-width="2"'), text(252, 54, 'measured, 100k–1M', 'small muted'),
     line(400, 49, 424, 49, 'axis', ' stroke-width="2" stroke-dasharray="5 4"'),
-    text(432, 54, 'extrapolated at the per-announcement rate', 'small muted'),
+    text(432, 54, 'dashed, dotted: extrapolated per announcement', 'small muted'),
   ];
   for (const d of x.decades.filter((_, i) => i % 2 === 0)) {
     out.push(line(x.scale(d), T, x.scale(d), B, 'grid'));
@@ -151,11 +151,12 @@ function scanVsVolume(): string {
   };
   const times = hosts.map(onLine);
   out.push(line(lx, B, lx, y.scale(Math.max(...times)), 'axis', ' stroke-width="1.5" stroke-dasharray="3 3"'));
-  const duration = (s: number) => (s < 120 ? `${fmt(s)} s` : `${fmt(s / 60, 1)} min`);
+  const duration = (s: number) => (s < 1 ? `${fmt(s, 2)} s` : s < 120 ? `${fmt(s)} s` : `${fmt(s / 60, 1)} min`);
   hosts.forEach((h, i) => out.push(circle(lx, y.scale(times[i]!), 3.5, 'ink', `${series[i]![1]}, Umbra on ${LARGEST} (${fmt(largest)}): ${fmt(times[i]!, 1)} s`)));
   out.push(text(lx - 8, B - 64, `Umbra on ${LARGEST}`, 'label ink', 'end'));
   out.push(text(lx - 8, B - 46, `${fmt(largest)} announcements`, 'small muted', 'end'));
-  hosts.forEach((_, i) => out.push(text(lx - 8, B - 28 + i * 18, `${series[i]![1]}: ${duration(times[i]!)}`, 'small ink', 'end')));
+  hosts.forEach((_, i) => out.push(text(lx - 8, B - 28 + i * 18,
+    `${series[i]![1]}: ${duration(times[i]!)} SDK, ${duration(largest * headlines[i]!.best.seconds)} ${headlines[i]!.best.engine}`, 'small ink', 'end')));
   return svg(W, B + 276, 'Scan time against announcement count, log-log, with each real chain\'s full history', out);
 }
 

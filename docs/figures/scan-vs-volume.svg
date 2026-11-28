@@ -36,7 +36,7 @@
 <line x1="220" y1="49" x2="244" y2="49" class="axis" stroke-width="2"/>
 <text x="252" y="54" class="small muted" text-anchor="start">measured, 100k–1M</text>
 <line x1="400" y1="49" x2="424" y2="49" class="axis" stroke-width="2" stroke-dasharray="5 4"/>
-<text x="432" y="54" class="small muted" text-anchor="start">extrapolated at the per-announcement rate</text>
+<text x="432" y="54" class="small muted" text-anchor="start">dashed, dotted: extrapolated per announcement</text>
 <line x1="96" y1="66" x2="96" y2="420" class="grid"/>
 <text x="96" y="440" class="small muted" text-anchor="middle">1</text>
 <line x1="307.3" y1="66" x2="307.3" y2="420" class="grid"/>
@@ -146,6 +146,6 @@
 <circle cx="625.5" cy="127.8" r="3.5" class="ink"><title>Cortex-A76, Umbra on Polygon PoS (102,552): 179.7 s</title></circle>
 <text x="617.5" y="356" class="label ink" text-anchor="end">Umbra on Polygon PoS</text>
 <text x="617.5" y="374" class="small muted" text-anchor="end">102,552 announcements</text>
-<text x="617.5" y="392" class="small ink" text-anchor="end">i7-13700K: 52 s</text>
-<text x="617.5" y="410" class="small ink" text-anchor="end">Cortex-A76: 3.0 min</text>
+<text x="617.5" y="392" class="small ink" text-anchor="end">i7-13700K: 52 s SDK, 0.87 s native</text>
+<text x="617.5" y="410" class="small ink" text-anchor="end">Cortex-A76: 3.0 min SDK, 5 s native</text>
 </svg>

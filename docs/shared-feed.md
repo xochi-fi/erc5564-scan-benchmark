@@ -38,16 +38,16 @@ Privacy does not change the decision. A full download is OMR's full-scan baselin
 
 | Path | Observer | Learns | Source |
 | --- | --- | --- | --- |
-| Per-wallet `eth_getLogs` | RPC provider | IP, sync times, block ranges; same filter for all | [`wallet.ts`](../src/paged-discovery/wallet.ts) |
+| Per-wallet `eth_getLogs` | RPC provider | IP, sync times, block ranges; every wallet sends the same filter | [`wallet.ts`](../src/paged-discovery/wallet.ts) |
 | RPC receipt, balance | RPC provider | Your stealth addresses, tied to IP | [METHODS.md](../METHODS.md), `verifyCandidate` |
 | Full feed download | Feed host, CDN | IP, fetch times, last checkpoint (inferred) | [Method](#method) |
 | Feed retries, later calls | Feed host; RPC provider | Retries mark feed disagreement; later checks leak as RPC, linkable by timing (inferred) | — |
 | OMR detection | Detector | Nothing about pertinence | 2021/1256 §4.2, Def. 4.1; [2024/204](https://eprint.iacr.org/2024/204) §1; [2024/510](https://eprint.iacr.org/2024/510) §7.1 |
 | OMR keys and queries | Detector | Query time, k̄, IP; identity only if keys link (OMRp2, DoS-PerfOMR: unlinkable); ~129 MB key | 2021/1256 §9.1, §9.3, §12; 2024/510 Remark 7.3 |
-| OMR DoS | Recipients | Honest-but-curious detector assumed; crafted PerfOMR clues overflow recipients into retry or full download | 2021/1256 §8.1; 2024/510 §5.1, §7.1, §7.4 |
-| ERC-5564 view tag | Everyone | 1 secret byte (128 → 124 bits); a viewing-key scanner sees all matches | [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) "Parsing considerations"; 2021/1256 §1 |
+| OMR DoS | Recipients | Completeness needs an honest-but-curious detector; crafted PerfOMR clues overflow recipients into a retry or full download | 2021/1256 §8.1; 2024/510 §5.1, §7.1, §7.4 |
+| ERC-5564 view tag | Everyone | 1 byte of the shared secret (128 → 124 bits); a scanner holding the viewing key sees all matches | [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) "Parsing considerations"; 2021/1256 §1 |
 
-OMR wins past the 60 MB/day feed budget, where wallets would fetch selectively or delegate a viewing key (inferred). [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) ("Recommendation (TL;DR)") calls FHE OMR "far-fetched" near term.
+OMR is more private only past the 60 MB/day feed budget, where wallets would fetch selectively or delegate a viewing key (inferred). [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) ("Recommendation (TL;DR)") calls FHE OMR "far-fetched" near term.
 
 ## Feed against live RPC
 

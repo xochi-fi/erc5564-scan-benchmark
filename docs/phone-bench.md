@@ -10,6 +10,17 @@ No phone result is recorded yet. The page measures it on the visitor's device an
 | No results yet |  |  |  |  |  |  |  |
 <!-- /generated:phone-bench -->
 
+Until phones report, JavaScriptCore without its JIT bounds the iOS Lockdown Mode case. It is a proxy: Bun on a Turing node, not Safari on a phone.
+
+<!-- generated:phone-proxy -->
+| Host | Runtime | JIT | Engine | ms per announcement |
+| --- | --- | --- | --- | ---: |
+| turing-node-3 | bun 1.4.4 | on | crypto | 1.75 |
+| turing-node-3 | bun 1.4.4 | off (`BUN_JSC_useJIT=0`) | crypto | 10.86 |
+| turing-node-3 | bun 1.4.4 | on | sdk | 1.68 |
+| turing-node-3 | bun 1.4.4 | off (`BUN_JSC_useJIT=0`) | sdk | 11.04 |
+<!-- /generated:phone-proxy -->
+
 The page is one static file. It scans the first 1,000, 5,000 or 10,000 announcements of a pinned seeded fixture (`phone-bench:v1`, a match every 1,000) in a Web Worker, or in short main-thread steps where workers are missing, and checks the matches against the fixture schedule. Its Content-Security-Policy blocks every network request. Nothing leaves the device until the user submits, copies or downloads the result.
 
 | Field in a result | Source |

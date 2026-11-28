@@ -1,0 +1,18 @@
+{
+  "kind": "phone-bench-proxy",
+  "pageVersion": "3",
+  "startedAt": "2026-11-28T02:43:19.283Z",
+  "host": "turing-node-3",
+  "cpu": "unknown",
+  "runtime": "bun 1.4.4",
+  "jit": "on",
+  "engine": "sdk",
+  "count": 1000,
+  "chunk": 250,
+  "packedSha256": "59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d",
+  "scanMs": 1675.3,
+  "msPerAnnouncement": 1.6753,
+  "matches": 1,
+  "expectedMatches": 1,
+  "verified": true
+}

@@ -36,8 +36,9 @@ jobs:
             mkdir -p seed && cp -r data/feed/${{ matrix.feed }} seed/
           fi
       - name: Build
-        # A chain that fails keeps its seed pages; the report records why.
-        run: bun run feed:build-${{ matrix.feed }} --seed seed/${{ matrix.feed }} --out out/${{ matrix.feed }} --report out/build-${{ matrix.feed }}.json || true
+        # A chain that fails keeps its seed pages; one that runs out of time publishes its agreed prefix
+        # and continues on the next run. The report records why.
+        run: bun run feed:build-${{ matrix.feed }} --seed seed/${{ matrix.feed }} --out out/${{ matrix.feed }} --report out/build-${{ matrix.feed }}.json --max-minutes 240 || true
       - uses: actions/upload-artifact@v4
         with:
           name: feed-${{ matrix.feed }}

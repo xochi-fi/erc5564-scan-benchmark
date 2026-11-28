@@ -219,9 +219,9 @@ if (import.meta.main) {
   const { SOURCES } = await import('./sources.ts');
   const { values } = parseArgs({ options: {
     out: { type: 'string' }, seed: { type: 'string' }, work: { type: 'string' }, chains: { type: 'string' },
-    report: { type: 'string' },
+    report: { type: 'string' }, 'max-minutes': { type: 'string' },
   } });
-  if (!values.out) throw new Error('Usage: bun run feed:build-a --out DIR [--seed DIR] [--work DIR] [--chains a,b] [--report FILE]');
+  if (!values.out) throw new Error('Usage: bun run feed:build-a --out DIR [--seed DIR] [--work DIR] [--chains a,b] [--report FILE] [--max-minutes N]');
   const keys = values.chains?.split(',') ?? FEED_CHAINS.map(chain => chain.key);
   const chains = FEED_CHAINS.filter(chain => keys.includes(chain.key));
   if (values.work) await mkdir(values.work, { recursive: true });
@@ -229,7 +229,7 @@ if (import.meta.main) {
   const reports = await buildFeedA({
     feed: 'a', transport: new PoliteHttp({ minIntervalMs: 250 }), chains: [...chains], sources: SOURCES.a,
     outDir: values.out, ...(values.seed ? { seedDir: values.seed } : {}), ...(values.work ? { workDir: values.work } : {}),
-    log: line => console.log(line),
+    log: line => console.log(line), ...(values['max-minutes'] ? { maxMs: Number(values['max-minutes']) * 60_000 } : {}),
   });
   if (values.report) await writeFile(values.report, JSON.stringify({ feed: 'a', startedAt, finishedAt: new Date().toISOString(), chains: reports }, null, 1) + '\n');
   if (reports.some(report => report.published === null)) process.exitCode = 1;

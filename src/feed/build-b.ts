@@ -15,6 +15,8 @@ export type Post = (url: string, body: string) => Promise<{ status: number; text
 export interface TargetB { key: string; chainId: number; deployBlock: number; pageBlocks?: number; maxBlock?: number }
 export interface OptionsB {
   post: Post; chains: TargetB[]; sources: Record<string, [Source, Source]>; outDir: string; seedDir?: string;
+  /** Epoch ms after which no new page is started; the agreed prefix is still published. */
+  deadline?: number;
   log?: (line: string) => void; now?: () => string; pause?: (ms: number) => Promise<void>;
 }
 
@@ -209,6 +211,7 @@ export async function buildFeedB(options: OptionsB) {
       const resumed = entries.length;
       const spans = pair.map(source => ({ span: Math.min(source.span, 100_000), cap: source.span }));
       for (const cell of grid.slice(resumed)) {
+        if (options.deadline !== undefined && Date.now() > options.deadline) { report.stop = `time budget, next page ${cell.from}`; break; }
         let [x, y] = await Promise.all(pair.map((source, i) => fetchRange(rpc, source, cell.from, cell.to, spans[i])));
         if (x!.error !== null || y!.error !== null) { report.stop = `fetch failed in ${cell.from}-${cell.to}: ${x!.error ?? y!.error}`; break; }
         let [p, q] = [page(x!.logs, cell.from), page(y!.logs, cell.from)];
@@ -255,8 +258,8 @@ if (import.meta.main) {
   const { parseArgs } = await import('node:util');
   const { FEED_CHAINS } = await import('./format.ts');
   const { SOURCES } = await import('./sources.ts');
-  const { values } = parseArgs({ options: { out: { type: 'string' }, seed: { type: 'string' }, chains: { type: 'string' }, report: { type: 'string' } } });
-  if (!values.out) throw new Error('Usage: bun run feed:build-b --out DIR [--seed DIR] [--chains a,b] [--report FILE]');
+  const { values } = parseArgs({ options: { out: { type: 'string' }, seed: { type: 'string' }, chains: { type: 'string' }, report: { type: 'string' }, 'max-minutes': { type: 'string' } } });
+  if (!values.out) throw new Error('Usage: bun run feed:build-b --out DIR [--seed DIR] [--chains a,b] [--report FILE] [--max-minutes N]');
   const keys = values.chains?.split(',') ?? FEED_CHAINS.map(chain => chain.key);
   const post: Post = async (url, body) => {
     const response = await fetch(url, { method: 'POST', body, signal: AbortSignal.timeout(30_000),
@@ -265,7 +268,8 @@ if (import.meta.main) {
   };
   const startedAt = new Date().toISOString();
   const reports = await buildFeedB({ post, chains: FEED_CHAINS.filter(chain => keys.includes(chain.key)), sources: SOURCES.b,
-    outDir: values.out, ...(values.seed ? { seedDir: values.seed } : {}), log: line => console.log(line) });
+    outDir: values.out, ...(values.seed ? { seedDir: values.seed } : {}), log: line => console.log(line),
+    ...(values['max-minutes'] ? { deadline: Date.now() + Number(values['max-minutes']) * 60_000 } : {}) });
   for (const report of reports) console.log(`[b:${report.chain}] published ${report.published} stop ${report.stop}`);
   if (values.report) await writeFile(values.report, JSON.stringify({ feed: 'b', startedAt, finishedAt: new Date().toISOString(), chains: reports }, null, 1) + '\n');
   if (reports.some(report => report.published === null)) process.exitCode = 1;

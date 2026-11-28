@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
-  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
+  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, scanEngines, perAnnouncement, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -47,6 +47,38 @@ function scanCostTable() {
       return [SCAN_HOST_LABELS[h.host] ?? h.host, range(h.before.toFixed(3), h.after.toFixed(3), '–'), h.million.toFixed(3),
         range((h.million / high).toFixed(2), (h.million / low).toFixed(2), '–')];
     }));
+}
+
+const ENGINE_HOST_LABELS: Record<string, string> = { bazzite: 'Bazzite', 'turing-node-1': 'Turing node 1' };
+const ENGINE_LABELS: Record<string, string> = {
+  sdk: 'ScopeLift SDK', crypto: 'SDK `checkStealthAddress`', noble: 'noble (same curve, lean loop)',
+  wasm: 'libsecp256k1 WASM', native: 'libsecp256k1 native',
+};
+function scanEnginesTable() {
+  const rows = scanEngines();
+  const out: string[][] = [];
+  for (const host of [...new Set(rows.map(r => r.host))]) {
+    const sdk = perAnnouncement(rows, host, 'sdk', 1)!;
+    const scenarios = rows.filter(r => r.host === host && !r.run.startsWith('control'));
+    const keys = [...new Map(scenarios.map(r => [`${r.engine}/${r.threads}`, r])).values()];
+    for (const { engine, threads } of keys) {
+      const cell = (count: number, kind: string) => {
+        const r = scenarios.find(x => x.engine === engine && x.threads === threads && x.count === count && x.case === kind);
+        if (!r) return '–';
+        return r.samples === 1 ? fixed(r.medianMs / 1000, 2) : `${fixed(r.medianMs / 1000, 2)} [${fixed(r.minMs / 1000, 2)}–${fixed(r.maxMs / 1000, 2)}]`;
+      };
+      const wall = perAnnouncement(rows, host, engine, threads)!;
+      const cpu = perAnnouncement(rows, host, engine, threads, true)!;
+      out.push([ENGINE_HOST_LABELS[host] ?? host, ENGINE_LABELS[engine] ?? engine, String(threads),
+        cell(1e5, 'zero'), cell(1e5, 'sparse'), cell(1e6, 'zero'), cell(1e6, 'sparse'),
+        fixed(wall * 1e6, 1), fixed(cpu * 1e6, 1), `${fixed(sdk / wall, 1)}×`]);
+    }
+    const control = (run: string) => rows.find(r => r.host === host && r.run === run)!;
+    out.push([ENGINE_HOST_LABELS[host] ?? host, 'Control: crypto, before / after', '1',
+      `${fixed(control('control-before').medianMs / 1000, 2)} / ${fixed(control('control-after').medianMs / 1000, 2)}`, '–', '–', '–', '–', '–', '–']);
+  }
+  return table(['Host', 'Engine', 'Threads', '100k zero, s', '100k sparse, s', '1M zero, s', '1M sparse, s', 'µs each, wall', 'µs each, CPU', 'vs SDK'],
+    ['l', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'], out);
 }
 
 // ---- paged discovery ----------------------------------------------------------
@@ -358,6 +390,7 @@ function feedControlsTable() {
 
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-cost': ['docs/scan-cost.md', scanCostTable],
+  'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
   'paged-catchup': ['docs/paged-discovery.md', pagedCatchupTable],
   'paged-single-controls': ['docs/paged-discovery.md', pagedSingleControlsTable],

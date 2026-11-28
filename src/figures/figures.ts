@@ -5,7 +5,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, STRATEGIES, bestRetrieval, chainLatest, chainVolume, consistency, feedBytesLog, feedEvidence, feedControls, feedSummary, num,
-  pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, scanCost, type Strategy,
+  pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, scanCost, engineHeadlines, perAnnouncement, scanEngines, type Strategy,
 } from './data.ts';
 import { FAULTS } from './tables.ts';
 import { circle, decadeLabel, dotKey, legend, line, linearScale, logScale, rect, svg, text } from './svg.ts';
@@ -19,11 +19,14 @@ const logTick = (d: number) => (d >= 1 ? decadeLabel(d) : String(d));
 // ---- 1. scan time against real announcement volume ----------------------------
 
 function scanVsVolume(): string {
-  const W = 760, L = 96, R = 730, T = 66, B = 300;
+  const W = 760, L = 96, R = 730, T = 66, B = 420;
   const x = logScale(1, 1e6, L, R);
-  const y = logScale(1e-4, 1e4, B, T);
+  const y = logScale(1e-6, 1e4, B, T);
   const hosts = scanCost();
   const chains = chainVolume();
+  const engines = scanEngines();
+  const headlines = engineHeadlines();
+  const keys: [cls: string, style: string, label: string][] = [];
   const out: string[] = [
     text(20, 30, 'Scan time vs announcements', 'title ink'),
     text(20, 54, 'seconds, log scale', 'small muted'),
@@ -52,10 +55,29 @@ function scanVsVolume(): string {
       out.push(circle(x.scale(n), y.scale(s), 4.5, cls, `${label}, ${what}: ${fmt(s, 3)} s`, ' stroke-width="2"'));
       out.push(circle(x.scale(n), y.scale(s), 2, 'hollow'));
     }
-    // Slower host labelled above its line, faster host below, so labels never sit between the lines.
-    out.push(i === 0
-      ? text(x.scale(2e3), at(2e3) + 26, `${label}: ${fmt(perAnnouncement * 1000, 2)} ms each`, 'label ink', 'start')
-      : text(x.scale(2e3), at(2e3) - 14, `${label}: ${fmt(perAnnouncement * 1000, 2)} ms each`, 'label ink', 'end'));
+    keys.push([cls, ' stroke-width="2" stroke-dasharray="5 4"', `${label}, ScopeLift SDK: ${fmt(perAnnouncement * 1000, 2)} ms each`]);
+  });
+  // Best measured engine per host: the fastest wall-clock scenario, measured at 100k and 1M.
+  headlines.forEach((h, i) => {
+    const [cls, label] = series[i]!;
+    const { engine, threads } = h.best;
+    const point = (count: number) => engines.find(r => r.host === h.host && r.engine === engine && r.threads === threads && r.count === count && r.case === 'zero')!;
+    const small = point(1e5).medianMs / 1000, large = point(1e6).medianMs / 1000;
+    const each = small / 1e5;
+    const at = (n: number) => y.scale(n * each);
+    out.push(line(x.scale(1), at(1), x.scale(1e5), at(1e5), cls, ' stroke-width="1.5" stroke-dasharray="2 3" fill="none"'));
+    out.push(line(x.scale(1e5), y.scale(small), x.scale(1e6), y.scale(large), cls, ' stroke-width="1.5" fill="none"'));
+    const what = `libsecp256k1 ${engine}, ${threads} thread${threads === 1 ? '' : 's'}`;
+    for (const [n, sec] of [[1e5, small], [1e6, large]] as const) {
+      out.push(circle(x.scale(n), y.scale(sec), 4, `${cls} hollow`, `${label}, ${what}, ${kilo(n)}: ${fmt(sec, 3)} s`, ' stroke-width="2"'));
+    }
+    keys.push([cls, ' stroke-width="1.5" stroke-dasharray="2 3"', `${label}, libsecp256k1 ${engine} × ${threads} threads: ${fmt(h.best.seconds * 1e6, 1)} µs each`]);
+  });
+  // Key in the empty upper-left corner: the lines are parallel, so inline labels would cross them.
+  [...keys].reverse().forEach(([cls, style, label], k) => {
+    const ky = T + 22 + k * 22;
+    out.push(line(L + 14, ky - 5, L + 44, ky - 5, cls, style));
+    out.push(text(L + 52, ky, label, 'label ink'));
   });
 
   // Rugs: each chain's full history, canonical Announcer and Umbra.
@@ -445,7 +467,7 @@ const PERFOMR2_DETECTOR_S_PER_MESSAGE = 0.0215;
 
 
 function scanBudget(): string {
-  const W = 760, L = 96, R = 590, T = 66, B = 320;
+  const W = 800, L = 96, R = 590, T = 66, B = 320;
   const x = logScale(1e-3, 1e7, L, R);
   const y = logScale(1e-5, 1e6, B, T);
   const hosts = scanCost();
@@ -469,7 +491,7 @@ function scanBudget(): string {
   };
   // Every line runs to the right edge; its label sits there, spread so labels never overlap.
   const ends: [y: number, label: string, cls: string][] = [];
-  const labels: [string, string][] = [['s1', 'i7-13700K'], ['s2', 'Cortex-A76']];
+  const labels: [string, string][] = [['s1', 'i7-13700K, SDK'], ['s2', 'Cortex-A76, SDK']];
   const rates = hosts.map(h => (h.before + h.after) / 2 / 1e5);
   hosts.forEach((_, i) => {
     clipLine(rates[i]!, labels[i]![0]);
@@ -480,8 +502,15 @@ function scanBudget(): string {
   ends.push([y.scale(OMR_CLIENT_S), 'DoS-PerfOMR recipient', 'small muted']);
   const a76 = rates[1]!;
   const cross = OMR_CLIENT_S / a76;
-  out.push(circle(x.scale(cross), y.scale(OMR_CLIENT_S), 4, 's2', `A76 scan passes DoS-PerfOMR recipient runtime at ${fmt(cross, 1)} announcements`));
-  out.push(text(x.scale(cross) + 10, y.scale(OMR_CLIENT_S) + 20, `~${fmt(Math.ceil(cross))}/day`, 'small ink', 'start'));
+  out.push(circle(x.scale(cross), y.scale(OMR_CLIENT_S), 4, 's2', `A76 SDK scan passes DoS-PerfOMR recipient runtime at ${fmt(cross, 1)} announcements`));
+  out.push(text(x.scale(cross) - 8, y.scale(OMR_CLIENT_S) - 10, `~${fmt(Math.ceil(cross))}/day`, 'small ink', 'end'));
+  // Best measured engine on the A76: single-thread libsecp256k1 CPU time (threads cut wall time, not CPU).
+  const fast = perAnnouncement(scanEngines(), 'turing-node-1', 'native', 1, true)!;
+  clipLine(fast, 's2', ' stroke-dasharray="2 3"');
+  ends.push([y.scale(1e7 * fast), 'Cortex-A76, libsecp256k1', 'label ink']);
+  const fastCross = OMR_CLIENT_S / fast;
+  out.push(circle(x.scale(fastCross), y.scale(OMR_CLIENT_S), 4, 's2 hollow', `A76 libsecp256k1 scan passes DoS-PerfOMR recipient runtime at ${fmt(fastCross, 1)} announcements`, ' stroke-width="2"'));
+  out.push(text(x.scale(fastCross) + 10, y.scale(OMR_CLIENT_S) + 20, `~${fmt(Math.ceil(fastCross))}/day`, 'small ink', 'start'));
   const detector = (perMessage: number, dash: string, label: string) => {
     const end = Math.min(1e7, 1e6 / perMessage);
     out.push(line(x.scale(1e-3), y.scale(1e-3 * perMessage), x.scale(end), y.scale(end * perMessage), 'axis', ` stroke-width="1.5" stroke-dasharray="${dash}"`));
@@ -499,7 +528,8 @@ function scanBudget(): string {
   const bx = x.scale(PHONE_BUDGET_PER_DAY);
   out.push(line(bx, T, bx, B, 'axis', ' stroke-width="1.5" stroke-dasharray="4 3"'));
   out.push(text(bx - 8, T + 16, `~${decadeLabel(PHONE_BUDGET_PER_DAY)}/day budget (assumed)`, 'small ink', 'end'));
-  out.push(circle(x.scale(1e6), y.scale(1e6 * a76), 4, 's2', `1M/day on the A76: ${fmt(1e6 * a76 / 60, 0)} min CPU`));
+  out.push(circle(x.scale(1e6), y.scale(1e6 * a76), 4, 's2', `1M/day on the A76, SDK: ${fmt(1e6 * a76 / 60, 0)} min CPU`));
+  out.push(circle(x.scale(1e6), y.scale(1e6 * fast), 4, 's2 hollow', `1M/day on the A76, libsecp256k1: ${fmt(1e6 * fast / 60, 1)} min CPU`, ' stroke-width="2"'));
   // Real ERC-5564 rates per chain.
   const chains = chainVolume().map(c => [CHAIN_LABELS[c.chain]!, perMonth(bestRetrieval(c.chain)) / 30.44] as [string, number]);
   const lo = Math.min(...chains.map(([, v]) => v)), hi = Math.max(...chains.map(([, v]) => v));

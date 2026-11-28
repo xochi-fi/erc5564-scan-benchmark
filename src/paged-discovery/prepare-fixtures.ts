@@ -42,7 +42,7 @@ async function verified(directory: string, name: string): Promise<boolean> {
   return (await fileSha256(join(directory, 'announcements.jsonl'))) === pinned;
 }
 
-async function prepare(name: string, output: string, reuse: readonly string[]): Promise<{ name: string; path: string; source: string }> {
+export async function prepare(name: string, output: string, reuse: readonly string[]): Promise<{ name: string; path: string; source: string }> {
   const pinned = PINNED_SHA256[name];
   const match = /^(\d+)-(zero|sparse)$/.exec(name);
   if (pinned === undefined || match?.[1] === undefined) throw new Error(`no pinned digest for fixture ${name}`);

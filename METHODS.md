@@ -118,6 +118,8 @@ Each engine, mode and repetition runs in a fresh Bun process, in fixed order. `s
 | --- | --- |
 | `sdk` | Unmodified `getAnnouncementsForUser`, no sender filter or client, eager promises and result allocation included. |
 | `crypto` | `checkStealthAddress`: ECDH and hash per entry, then the view-tag check. |
+| `noble`, `wasm`, `native` | The same check ([`engines.ts`](src/shared/engines.ts)) on `@noble/secp256k1` 2.3.0 (the SDK's curve), `tiny-secp256k1` 2.2.5 (libsecp256k1 compiled to WebAssembly) or `secp256k1` 5.0.2 (libsecp256k1 N-API addon). keccak256 is `@noble/hashes` 1.8.0 in all three. |
+| threads | `noble`, `wasm`, `native` on 2 or 4 Bun workers, one contiguous slice each. Starting workers and copying slices (`threadSetupMs`) is outside `scanMs`. CPU time covers all threads. |
 | `full` | Scans the whole array once. Models a lost scan checkpoint with retained viewing keys. |
 | `incremental` | Scans contiguous batches of retained history, batch and result overhead included. |
 
@@ -130,6 +132,22 @@ Each engine, mode and repetition runs in a fresh Bun process, in fixed order. `s
 | `fixtures/<count>-<case>/manifest.json` | Test viewing keys, destination schedule, tag counts, file digest, synthetic response size |
 | `samples.jsonl` | Unrounded verified timings, throughput, CPU time, memory, fixture and lockfile digests, dependency versions, Bun version, OS, CPU and RAM |
 | `summary.json` | Per-scenario median/min/max ms, throughput at the median, max lifetime RSS. A single-sample summary is a smoke observation. |
+
+### Scan engines
+
+`scripts/scan-engines.sh bazzite|turing|smoke`, pinned as in [Hosts](#hosts-and-software). `scripts/record-scan-engines.sh RUN LABEL` copies the run to `data/scan-cost/engines/`.
+
+| Step | Engines | Fixtures | Repetitions |
+| --- | --- | --- | --- |
+| Controls, before and after | `crypto` | 100k zero | 1 |
+| SDK and pure JS | `sdk`, `crypto`, `noble` | 100k zero, sparse | 1 |
+| libsecp256k1, 1/2/4 threads | `wasm`, `native` | 100k zero, sparse | 3 |
+| | `wasm`, `native` | 1M zero, sparse | 1 |
+
+| Setting | Use |
+| --- | --- |
+| `REUSE_FIXTURES` | Comma-separated fixture directories, SHA256-checked against the pinned digests |
+| `secp256k1` addon | x86-64: the package's prebuild. aarch64: built by `bun install` (`trustedDependencies`) |
 
 ### Profiling
 
@@ -201,7 +219,7 @@ bun run tables
 | `src/browser-discovery/`, `src/rpc-recovery/` | Browser harnesses |
 | `src/shared-feed/` | Feed builder, benchmark, verifier and format search |
 | `src/figures/` | `bun run figures` and `bun run tables`: README figures and the generated result tables, from `data/` |
-| `scripts/` | `paged-discovery.sh`, the paged-discovery host runner |
+| `scripts/` | `paged-discovery.sh` and `scan-engines.sh`, the host runners; `record-scan-engines.sh` copies a scan-engines run into `data/` |
 | `test/` | `bun test` suites and recorded fixtures |
 | `data/<experiment>/` | Recorded results ([data/README.md](data/README.md)) |
 | `docs/<experiment>.md` | Results per experiment. Tables between `<!-- generated:… -->` markers come from `bun run tables`. |

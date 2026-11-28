@@ -1,0 +1,156 @@
+Linux bazzite 7.3.4-ogc6.1.fc45.x86_64 #1 SMP PREEMPT_DYNAMIC Sun Nov 15 18:05:50 UTC 2026 x86_64 GNU/Linux
+24
+               total        used        free      shared  buff/cache   available
+Mem:           31837       16418         883         563       15551       15418
+Swap:          15918       12399        3518
+ 01:25:45 up 1 day,  7:43,  1 user,  load average: 2.04, 1.97, 1.95
+1.4.4
+bun install v1.4.4 (38afee6c8)
+
+Checked 38 installs across 58 packages (no changes) [2.00ms]
+$ tsc --noEmit
+bun test v1.4.4 (38afee6c8)
+
+ 323 pass
+ 0 fail
+ 759 expect() calls
+Ran 323 tests across 5 files. [4.92s]
+
+=== control-before (2026-11-28T01:25:50+01:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures,~/CODE/stealth-scan-phase2/work/fixtures" --output "~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/control-before" --sizes "100000" --cases zero --engines crypto --modes full --repetitions "1"
+Fixture 100000-zero: reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: crypto/full/1t (1/1)
+┌───┬────────┬──────┬────────┬──────┬─────────┬─────────┬──────┬───────────┬──────────────┐
+│   │ count  │ case │ engine │ mode │ threads │ matches │ runs │ median ms │ peak RSS MiB │
+├───┼────────┼──────┼────────┼──────┼─────────┼─────────┼──────┼───────────┼──────────────┤
+│ 0 │ 100000 │ zero │ crypto │ full │ 1       │ 0       │ 1    │ 47398.378 │ 686.38       │
+└───┴────────┴──────┴────────┴──────┴─────────┴─────────┴──────┴───────────┴──────────────┘
+Verified 1 isolated samples. Results: ~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/control-before
+
+=== sdk-crypto-noble (2026-11-28T01:26:43+01:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures,~/CODE/stealth-scan-phase2/work/fixtures" --output "~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/sdk-crypto-noble" --sizes "100000" --engines "sdk,crypto,noble" --modes full --repetitions "1"
+Fixture 100000-zero: reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: sdk/full/1t (1/1)
+Scanning 100000 zero: crypto/full/1t (1/1)
+Scanning 100000 zero: noble/full/1t (1/1)
+Fixture 100000-sparse: reused ~/CODE/stealth-scan-phase2/work/fixtures/100000-sparse (SHA256 verified against manifest and pinned digest)
+Scanning 100000 sparse: sdk/full/1t (1/1)
+Scanning 100000 sparse: crypto/full/1t (1/1)
+Scanning 100000 sparse: noble/full/1t (1/1)
+┌───┬────────┬────────┬────────┬──────┬─────────┬─────────┬──────┬───────────┬──────────────┐
+│   │ count  │ case   │ engine │ mode │ threads │ matches │ runs │ median ms │ peak RSS MiB │
+├───┼────────┼────────┼────────┼──────┼─────────┼─────────┼──────┼───────────┼──────────────┤
+│ 0 │ 100000 │ zero   │ sdk    │ full │ 1       │ 0       │ 1    │ 48523.297 │ 694.39       │
+│ 1 │ 100000 │ zero   │ crypto │ full │ 1       │ 0       │ 1    │ 48465.425 │ 695.52       │
+│ 2 │ 100000 │ zero   │ noble  │ full │ 1       │ 0       │ 1    │ 47989.602 │ 690.14       │
+│ 3 │ 100000 │ sparse │ sdk    │ full │ 1       │ 100     │ 1    │ 48198.09  │ 699.35       │
+│ 4 │ 100000 │ sparse │ crypto │ full │ 1       │ 100     │ 1    │ 47933.784 │ 697.89       │
+│ 5 │ 100000 │ sparse │ noble  │ full │ 1       │ 100     │ 1    │ 48281.054 │ 695.88       │
+└───┴────────┴────────┴────────┴──────┴─────────┴─────────┴──────┴───────────┴──────────────┘
+Verified 6 isolated samples. Results: ~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/sdk-crypto-noble
+
+=== fast-small (2026-11-28T01:32:04+01:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures,~/CODE/stealth-scan-phase2/work/fixtures" --output "~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/fast-small" --sizes "100000" --engines "wasm,native" --modes full --threads "1,2,4" --repetitions "3"
+Fixture 100000-zero: reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: wasm/full/1t (1/3)
+Scanning 100000 zero: wasm/full/1t (2/3)
+Scanning 100000 zero: wasm/full/1t (3/3)
+Scanning 100000 zero: wasm/full/2t (1/3)
+Scanning 100000 zero: wasm/full/2t (2/3)
+Scanning 100000 zero: wasm/full/2t (3/3)
+Scanning 100000 zero: wasm/full/4t (1/3)
+Scanning 100000 zero: wasm/full/4t (2/3)
+Scanning 100000 zero: wasm/full/4t (3/3)
+Scanning 100000 zero: native/full/1t (1/3)
+Scanning 100000 zero: native/full/1t (2/3)
+Scanning 100000 zero: native/full/1t (3/3)
+Scanning 100000 zero: native/full/2t (1/3)
+Scanning 100000 zero: native/full/2t (2/3)
+Scanning 100000 zero: native/full/2t (3/3)
+Scanning 100000 zero: native/full/4t (1/3)
+Scanning 100000 zero: native/full/4t (2/3)
+Scanning 100000 zero: native/full/4t (3/3)
+Fixture 100000-sparse: reused ~/CODE/stealth-scan-phase2/work/fixtures/100000-sparse (SHA256 verified against manifest and pinned digest)
+Scanning 100000 sparse: wasm/full/1t (1/3)
+Scanning 100000 sparse: wasm/full/1t (2/3)
+Scanning 100000 sparse: wasm/full/1t (3/3)
+Scanning 100000 sparse: wasm/full/2t (1/3)
+Scanning 100000 sparse: wasm/full/2t (2/3)
+Scanning 100000 sparse: wasm/full/2t (3/3)
+Scanning 100000 sparse: wasm/full/4t (1/3)
+Scanning 100000 sparse: wasm/full/4t (2/3)
+Scanning 100000 sparse: wasm/full/4t (3/3)
+Scanning 100000 sparse: native/full/1t (1/3)
+Scanning 100000 sparse: native/full/1t (2/3)
+Scanning 100000 sparse: native/full/1t (3/3)
+Scanning 100000 sparse: native/full/2t (1/3)
+Scanning 100000 sparse: native/full/2t (2/3)
+Scanning 100000 sparse: native/full/2t (3/3)
+Scanning 100000 sparse: native/full/4t (1/3)
+Scanning 100000 sparse: native/full/4t (2/3)
+Scanning 100000 sparse: native/full/4t (3/3)
+┌────┬────────┬────────┬────────┬──────┬─────────┬─────────┬──────┬───────────┬──────────────┐
+│    │ count  │ case   │ engine │ mode │ threads │ matches │ runs │ median ms │ peak RSS MiB │
+├────┼────────┼────────┼────────┼──────┼─────────┼─────────┼──────┼───────────┼──────────────┤
+│  0 │ 100000 │ zero   │ wasm   │ full │ 1       │ 0       │ 3    │ 12587.082 │ 659.89       │
+│  1 │ 100000 │ zero   │ wasm   │ full │ 2       │ 0       │ 3    │ 6265.479  │ 599.06       │
+│  2 │ 100000 │ zero   │ wasm   │ full │ 4       │ 0       │ 3    │ 3309.979  │ 611.14       │
+│  3 │ 100000 │ zero   │ native │ full │ 1       │ 0       │ 3    │ 3132.952  │ 648.91       │
+│  4 │ 100000 │ zero   │ native │ full │ 2       │ 0       │ 3    │ 1556.244  │ 589.05       │
+│  5 │ 100000 │ zero   │ native │ full │ 4       │ 0       │ 3    │ 853.471   │ 622.46       │
+│  6 │ 100000 │ sparse │ wasm   │ full │ 1       │ 100     │ 3    │ 12380.794 │ 581.37       │
+│  7 │ 100000 │ sparse │ wasm   │ full │ 2       │ 100     │ 3    │ 6356.917  │ 630.41       │
+│  8 │ 100000 │ sparse │ wasm   │ full │ 4       │ 100     │ 3    │ 3480.631  │ 620.77       │
+│  9 │ 100000 │ sparse │ native │ full │ 1       │ 100     │ 3    │ 3131.192  │ 644.3        │
+│ 10 │ 100000 │ sparse │ native │ full │ 2       │ 100     │ 3    │ 1572.013  │ 639.99       │
+│ 11 │ 100000 │ sparse │ native │ full │ 4       │ 100     │ 3    │ 861.833   │ 624.48       │
+└────┴────────┴────────┴────────┴──────┴─────────┴─────────┴──────┴───────────┴──────────────┘
+Verified 36 isolated samples. Results: ~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/fast-small
+
+=== fast-large (2026-11-28T01:38:02+01:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures,~/CODE/stealth-scan-phase2/work/fixtures" --output "~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/fast-large" --sizes "1000000" --engines "wasm,native" --modes full --threads "1,2,4" --repetitions "1"
+Fixture 1000000-zero: reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/1000000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 1000000 zero: wasm/full/1t (1/1)
+Scanning 1000000 zero: wasm/full/2t (1/1)
+Scanning 1000000 zero: wasm/full/4t (1/1)
+Scanning 1000000 zero: native/full/1t (1/1)
+Scanning 1000000 zero: native/full/2t (1/1)
+Scanning 1000000 zero: native/full/4t (1/1)
+Fixture 1000000-sparse: reused ~/CODE/stealth-scan-phase2/work/fixtures/1000000-sparse (SHA256 verified against manifest and pinned digest)
+Scanning 1000000 sparse: wasm/full/1t (1/1)
+Scanning 1000000 sparse: wasm/full/2t (1/1)
+Scanning 1000000 sparse: wasm/full/4t (1/1)
+Scanning 1000000 sparse: native/full/1t (1/1)
+Scanning 1000000 sparse: native/full/2t (1/1)
+Scanning 1000000 sparse: native/full/4t (1/1)
+┌────┬─────────┬────────┬────────┬──────┬─────────┬─────────┬──────┬────────────┬──────────────┐
+│    │ count   │ case   │ engine │ mode │ threads │ matches │ runs │ median ms  │ peak RSS MiB │
+├────┼─────────┼────────┼────────┼──────┼─────────┼─────────┼──────┼────────────┼──────────────┤
+│  0 │ 1000000 │ zero   │ wasm   │ full │ 1       │ 0       │ 1    │ 123649.948 │ 5724.44      │
+│  1 │ 1000000 │ zero   │ wasm   │ full │ 2       │ 0       │ 1    │ 71324.164  │ 5223.4       │
+│  2 │ 1000000 │ zero   │ wasm   │ full │ 4       │ 0       │ 1    │ 33404.831  │ 5407.16      │
+│  3 │ 1000000 │ zero   │ native │ full │ 1       │ 0       │ 1    │ 31365.566  │ 5413.79      │
+│  4 │ 1000000 │ zero   │ native │ full │ 2       │ 0       │ 1    │ 15656.288  │ 5162.03      │
+│  5 │ 1000000 │ zero   │ native │ full │ 4       │ 0       │ 1    │ 8364.174   │ 5153.95      │
+│  6 │ 1000000 │ sparse │ wasm   │ full │ 1       │ 1000    │ 1    │ 125137.69  │ 6049.7       │
+│  7 │ 1000000 │ sparse │ wasm   │ full │ 2       │ 1000    │ 1    │ 62662.537  │ 5748.45      │
+│  8 │ 1000000 │ sparse │ wasm   │ full │ 4       │ 1000    │ 1    │ 33322.912  │ 5328.83      │
+│  9 │ 1000000 │ sparse │ native │ full │ 1       │ 1000    │ 1    │ 31308.708  │ 5876.05      │
+│ 10 │ 1000000 │ sparse │ native │ full │ 2       │ 1000    │ 1    │ 15608.613  │ 5434.08      │
+│ 11 │ 1000000 │ sparse │ native │ full │ 4       │ 1000    │ 1    │ 7930.591   │ 5569.11      │
+└────┴─────────┴────────┴────────┴──────┴─────────┴─────────┴──────┴────────────┴──────────────┘
+Verified 12 isolated samples. Results: ~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/fast-large
+
+=== control-after (2026-11-28T01:58:08+01:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures,~/CODE/stealth-scan-phase2/work/fixtures" --output "~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/control-after" --sizes "100000" --cases zero --engines crypto --modes full --repetitions "1"
+Fixture 100000-zero: reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: crypto/full/1t (1/1)
+┌───┬────────┬──────┬────────┬──────┬─────────┬─────────┬──────┬───────────┬──────────────┐
+│   │ count  │ case │ engine │ mode │ threads │ matches │ runs │ median ms │ peak RSS MiB │
+├───┼────────┼──────┼────────┼──────┼─────────┼─────────┼──────┼───────────┼──────────────┤
+│ 0 │ 100000 │ zero │ crypto │ full │ 1       │ 0       │ 1    │ 47263.804 │ 698.68       │
+└───┴────────┴──────┴────────┴──────┴─────────┴─────────┴──────┴───────────┴──────────────┘
+Verified 1 isolated samples. Results: ~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z/control-after
+ 01:59:00 up 1 day,  8:17,  1 user,  load average: 2.38, 2.73, 3.07
+
+Results: ~/orca/workspaces/erc5564-scan-benchmark/fast-scan-engines/results/scan-engines/bazzite-20261128T002545Z

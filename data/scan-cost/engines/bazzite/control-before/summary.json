@@ -1,0 +1,16 @@
+[
+  {
+    "count": 100000,
+    "case": "zero",
+    "engine": "crypto",
+    "mode": "full",
+    "threads": 1,
+    "matches": 0,
+    "samples": 1,
+    "medianMs": 47398.378,
+    "minMs": 47398.378,
+    "maxMs": 47398.378,
+    "announcementsPerSecondAtMedian": 2110,
+    "maxProcessLifetimeRssMiB": 686.38
+  }
+]

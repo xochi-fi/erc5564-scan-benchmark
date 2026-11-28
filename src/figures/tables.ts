@@ -3,8 +3,8 @@
 // Pass --check to fail instead of writing when a file would change.
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
-  CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
-  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, scanEngines, perAnnouncement, spreadOf, type FeedKey, type FeedSummary, type Row,
+  CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
+  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -301,61 +301,37 @@ function recoveryFaultTable() {
 
 // ---- shared feed --------------------------------------------------------------
 
-const FEED_PATH: Record<string, string> = { rpc: 'Live RPC', dual: 'Dual feed, loopback' };
 const MODE: Record<string, string> = { cold: 'Cold', warm: 'Warm' };
 const one = (values: number[], what: string) => {
   if (new Set(values).size !== 1) throw new Error(`shared-feed: ${what} varies across samples: ${values}`);
   return values[0]!;
 };
 const feedMedian = (values: number[]) => ms(median(values)!);
-const feedCatchUp = (s: FeedSummary) => {
-  const { median, min, max } = spreadOf(s.elapsedMs);
+const feedSpread = (values: number[]) => {
+  const { median, min, max } = spreadOf(values);
   return `${ms(median)} [${ms(min)}–${ms(max)}]`;
 };
+const REMOTE_LABEL: Record<string, [label: string, rpcDir: string]> = { bazzite: ['Bazzite', ''], 'turing-node-3': ['Turing node 3', 'turing-node-3'] };
+/** Remote feed (sequential and concurrent GETs) against live RPC without its pacing wait, per host and mode. */
 function feedTable() {
-  const summaries = feedSummary();
-  const keys: FeedKey[] = ['rpc-cold', 'dual-cold', 'rpc-warm', 'dual-warm'];
-  return table(['Path', 'Mode', 'Exact logs in sampled range', 'POST / GET', 'Request / response body bytes', 'Fetch (ms)', 'Scan (ms)',
-    'Page verification (ms)', 'First synthetic match (ms)', 'Catch-up (ms), median [min–max]'],
-  ['l', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'],
-  keys.map(key => {
-    const s = summaries[key];
-    const [path, mode] = key.split('-') as [string, string];
-    return [FEED_PATH[path]!, MODE[mode]!, `${one(s.observed, 'observed')}/${one(s.expected, 'expected')}`,
-      `${one(s.posts, 'posts')} / ${one(s.gets, 'gets')}`,
-      `${fixed(one(s.requestBytes, 'request bytes'), 0)} / ${fixed(one(s.responseBytes, 'response bytes'), 0)}`,
-      feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), feedMedian(s.firstSyntheticMatchMs), feedCatchUp(s)];
-  }));
-}
-function feedHostsTable() {
-  const hosts: [string, string][] = [['', 'Bazzite'], ['turing-node-1', 'node 1'], ['turing-node-2', 'node 2'], ['turing-node-3', 'node 3']];
-  const byHost = hosts.map(([dir, label]) => [label, feedSummary(dir)] as const);
   const rows: string[][] = [];
-  for (const mode of ['cold', 'warm']) {
-    for (const path of ['rpc', 'dual']) {
-      for (const [label, summaries] of byHost) {
-        const s = summaries[`${path}-${mode}` as FeedKey];
-        rows.push([FEED_PATH[path]!, MODE[mode]!, label, feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs),
-          feedMedian(s.firstSyntheticMatchMs), feedCatchUp(s)]);
-      }
+  for (const host of REMOTE_HOSTS) {
+    const [label, rpcDir] = REMOTE_LABEL[host]!;
+    const remote = remoteSummary(host);
+    const rpc = feedSummary(rpcDir);
+    for (const mode of ['cold', 'warm'] as const) {
+      const seq = remote[`remote-${mode}`];
+      const con = remote[`remote-concurrent-${mode}`];
+      const r = rpc[`rpc-${mode}`];
+      rows.push([label, MODE[mode]!, feedSpread(seq.elapsedMs), feedSpread(con.elapsedMs), feedSpread(rpcUnpaced(rpcDir)[mode].map(row => row.busyMs)),
+        `${one(seq.gets, 'gets')} / ${one(r.posts, 'posts')}`,
+        `${fixed(one(seq.wireBytes, 'wire bytes'), 0)} / ${fixed(one(r.responseBytes, 'response bytes'), 0)}`]);
     }
   }
-  return table(['Path', 'Mode', 'Host', 'Fetch (ms)', 'Scan (ms)', 'Page verification (ms)', 'First synthetic match (ms)', 'Catch-up (ms), median [min–max]'],
-    ['l', 'l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
+  return table(['Host', 'Mode', 'Feed, sequential GETs (ms)', 'Feed, concurrent GETs (ms)', 'RPC without pacing (ms)', 'GET / POST',
+    'Bytes, feed compressed / RPC'], ['l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
 }
 
-function feedControlsTable() {
-  const controls = feedControls();
-  const { expected } = recoveryReference();
-  const samples = readJson('data/shared-feed/evidence.json').samples;
-  const committed = (key: string) => `${samples[key].next}/${samples[key].limit}`;
-  return table(['Control', 'Committed groups', 'Missed / recovered logs', 'GETs', 'Elapsed (ms)'], ['l', 'r', 'l', 'r', 'r'], [
-    ['Empty feed alone', committed('omission-single'), `${controls.omit.expected - controls.omit.observed} missed`, String(controls.omit.gets), ms(controls.omit.elapsedMs)],
-    ['Empty feed plus independent source', committed('omission-hold'), `${expected - controls.hold.expected} pending`, String(controls.hold.gets), ms(controls.hold.elapsedMs)],
-    ['Resume with corrected source', committed('omission-resume'), `${controls.resume.observed} recovered`, String(controls.resume.gets), ms(controls.resume.elapsedMs)],
-    ['Same identities, altered ABI data', committed('payload-hold'), `${expected - controls.altered.expected} pending`, String(controls.altered.gets), ms(controls.altered.elapsedMs)],
-  ]);
-}
 
 // ---- README summary tables ----------------------------------------------------
 
@@ -374,8 +350,6 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
-  'shared-feed-hosts': ['docs/shared-feed.md', feedHostsTable],
-  'shared-feed-controls': ['docs/shared-feed.md', feedControlsTable],
 };
 
 export function renderTables(): Map<string, string> {

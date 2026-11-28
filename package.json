@@ -25,6 +25,9 @@
     "shared-feed": "bun run src/shared-feed/run.ts",
     "shared-feed:verify": "bun run src/shared-feed/verify.ts",
     "shared-feed:tune": "bun run src/shared-feed/tune.ts",
+    "shared-feed:static": "bun run src/shared-feed/static.ts",
+    "shared-feed:remote": "bun run src/shared-feed/remote.ts",
+    "shared-feed:remote-verify": "bun run src/shared-feed/remote-verify.ts",
     "figures": "bun run src/figures/figures.ts",
     "tables": "bun run src/figures/tables.ts"
   },

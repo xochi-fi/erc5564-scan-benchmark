@@ -191,6 +191,19 @@ After the timers stop, each sample checks its result and persisted cache against
 | `HOST_GATE`, `ALLOW_BUSY_HOST` | Enable the host gate (default for `repeat-bazzite*`), or run anyway and log the override |
 | `GATE_MIN_AVAILABLE_GIB`, `GATE_MAX_SWAP_PAGES_PER_S`, `GATE_MAX_PSI_AVG60` | Defaults 8 GiB, 100 pages/s, PSI some avg60 1.0 |
 
+## Spam cost
+
+`bun run spam-cost` writes `data/spam-cost/<chain>.json` and `prices.json`. Nothing is signed or sent.
+
+| Quantity | Source |
+| --- | --- |
+| Direct gas | `eth_estimateGas` of `announce`, 33-byte ephemeral key, 1-byte metadata |
+| Batched gas | `eth_estimateGas` with a state override: a loop contract forwarding the call 1 and 101 times; marginal gas plus the fixed cost spread over 1,000 |
+| Fee per gas | Median base fee and median 10th-percentile tip, last 1,024 blocks (`eth_feeHistory`) |
+| L1 fee | OP Mainnet, Base: `GasPriceOracle.getL1Fee` of one direct call, spread over 1,000. Arbitrum: included in `eth_estimateGas` |
+| Block gas | Latest `gasLimit` × blocks per day. Not a cap on Arbitrum |
+| Price | One CoinGecko quote |
+
 ## Commands
 
 Runs write under ignored `results/` or `work/` and exit nonzero on an oracle miss. After changing `data/`, regenerate figures and tables. CI fails on stale output.

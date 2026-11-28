@@ -15,6 +15,7 @@ For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance))
 3. 0 of 48: Base announcements Daybreak returns, without error. Two providers recover all.
 4. 0.34 s vs 6.9 s: cold rescan, two remote feeds vs live RPC without pacing.
 5. $435 a day buys 1M spam announcements on any measured chain.
+5. $435 a day buys 1M spam announcements on any measured chain.
 
 ![Outcome per strategy, fault and endpoint](docs/figures/outcome-matrix.svg)
 <sub>Hollow: one provider, blind to omissions.</sub>

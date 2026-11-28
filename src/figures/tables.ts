@@ -3,7 +3,7 @@
 // Pass --check to fail instead of writing when a file would change.
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
-  CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
+  CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
@@ -332,18 +332,6 @@ function feedTable() {
     'Bytes, feed compressed / RPC'], ['l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
 }
 
-function feedControlsTable() {
-  const controls = feedControls();
-  const { expected } = recoveryReference();
-  const samples = readJson('data/shared-feed/evidence.json').samples;
-  const committed = (key: string) => `${samples[key].next}/${samples[key].limit}`;
-  return table(['Control', 'Committed groups', 'Missed / recovered logs', 'GETs', 'Elapsed (ms)'], ['l', 'r', 'l', 'r', 'r'], [
-    ['Empty feed alone', committed('omission-single'), `${controls.omit.expected - controls.omit.observed} missed`, String(controls.omit.gets), ms(controls.omit.elapsedMs)],
-    ['Empty feed plus independent source', committed('omission-hold'), `${expected - controls.hold.expected} pending`, String(controls.hold.gets), ms(controls.hold.elapsedMs)],
-    ['Resume with corrected source', committed('omission-resume'), `${controls.resume.observed} recovered`, String(controls.resume.gets), ms(controls.resume.elapsedMs)],
-    ['Same identities, altered ABI data', committed('payload-hold'), `${expected - controls.altered.expected} pending`, String(controls.altered.gets), ms(controls.altered.elapsedMs)],
-  ]);
-}
 
 // ---- README summary tables ----------------------------------------------------
 
@@ -362,7 +350,6 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
-  'shared-feed-controls': ['docs/shared-feed.md', feedControlsTable],
 };
 
 export function renderTables(): Map<string, string> {

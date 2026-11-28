@@ -30,7 +30,11 @@
     "shared-feed:remote-verify": "bun run src/shared-feed/remote-verify.ts",
     "figures": "bun run src/figures/figures.ts",
     "tables": "bun run src/figures/tables.ts",
-    "spam-cost": "bun run src/spam-cost/run.ts"
+    "spam-cost": "bun run src/spam-cost/run.ts",
+    "omission-cause": "bun run src/omission-cause/run.ts",
+    "phone-bench:build": "bun run src/phone-bench/build.ts",
+    "phone-bench:serve": "bun run src/phone-bench/serve.ts",
+    "phone-bench:record": "bun run src/phone-bench/record.ts"
   },
   "dependencies": {
     "@noble/hashes": "1.8.0",

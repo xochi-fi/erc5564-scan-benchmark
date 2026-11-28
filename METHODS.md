@@ -60,6 +60,7 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | Experiment | Pacing per provider |
 | --- | --- |
 | Chain volume | ≤4 requests/s |
+| Feed builds | ≤4 requests/s per host |
 | RPC recovery | ≥270 ms between request starts |
 | Browser-discovery reference, shared feed, spam cost, omission cause, freshness, real announcements | ≥275 ms between request starts |
 | Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |

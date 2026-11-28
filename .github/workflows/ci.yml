@@ -19,6 +19,11 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun run check
       - run: bun test
+      - name: Recorded evidence verifies offline
+        run: |
+          bun run shared-feed:verify data/shared-feed/evidence.json
+          bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/evidence.json
+          bun run rpc-recovery:verify data/rpc-recovery/reference.json data/rpc-recovery
       - name: Generated figures and tables are up to date
         run: |
           bun run figures

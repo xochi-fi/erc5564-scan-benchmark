@@ -346,7 +346,10 @@ function feedHostsTable() {
   for (const mode of ['cold', 'warm'] as const) {
     for (const path of ['remote', 'unpaced', 'loopback', 'paced'] as const) {
       for (const [dir, label] of hosts) {
-        if (path === 'remote' && !REMOTE_HOSTS.includes(dir || 'bazzite')) continue;
+        if (path === 'remote' && !REMOTE_HOSTS.includes(dir || 'bazzite')) {
+          if (dir === 'turing-node-1') rows.push([FEED_PATH[path], MODE[mode]!, 'Turing node', 'pending', 'pending', 'pending', 'pending', 'pending']);
+          continue;
+        }
         const { s, catchUp, first } = feedCells(path, mode, dir);
         rows.push([FEED_PATH[path], MODE[mode]!, label, feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), first, catchUp]);
       }

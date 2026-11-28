@@ -48,15 +48,27 @@ Sources: [2021/1256](https://eprint.iacr.org/2021/1256) §1, §4.2, §8.1, §9.1
 ## Feed against live RPC
 
 <!-- generated:shared-feed -->
-| Path | Mode | Exact logs in sampled range | POST / GET | Request / response body bytes | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Live RPC | Cold | 48/48 | 71 / 0 | 16,679 / 83,147 | 6,834 | 41.4 | 4.8 | 3,928 | 19,327 [19,316–19,491] |
-| Dual feed, loopback | Cold | 48/48 | 0 / 36 | 0 / 92,134 | 3.9 | 32.2 | 1.2 | 4.4 | 38.8 [38.4–51.1] |
-| Live RPC | Warm | 28/28 | 39 / 0 | 8,935 / 58,987 | 3,833 | 23.6 | 2.8 | 2,829 | 10,530 [10,525–10,563] |
-| Dual feed, loopback | Warm | 28/28 | 0 / 20 | 0 / 55,492 | 2.7 | 20.6 | 1.0 | 6.0 | 25.4 [25.1–30.9] |
+| Path | Mode | Exact logs in sampled range | POST / GET | Request / response body bytes | Compressed bytes | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Dual feed, remote | Cold | 48/48 | 0 / 36 | 0 / 92,134 | 22,302 | 2,027 | 47.5 | 2.5 | 637.1 | 1,775 [430.5–3,774] |
+| Live RPC, excluding pacing | Cold | 48/48 | 71 / 0 | 16,679 / 83,147 | — | 6,834 | 41.4 | 4.8 | — | 6,895 [6,652–8,020] |
+| Dual feed, loopback | Cold | 48/48 | 0 / 36 | 0 / 92,134 | — | 3.9 | 32.2 | 1.2 | 4.4 | 38.8 [38.4–51.1] |
+| Live RPC, paced | Cold | 48/48 | 71 / 0 | 16,679 / 83,147 | — | 6,834 | 41.4 | 4.8 | 3,928 | 19,327 [19,316–19,491] |
+| Dual feed, remote | Warm | 28/28 | 0 / 20 | 0 / 55,492 | 12,976 | 2,154 | 24.3 | 1.5 | 487.3 | 1,964 [256.9–2,138] |
+| Live RPC, excluding pacing | Warm | 28/28 | 39 / 0 | 8,935 / 58,987 | — | 3,833 | 23.6 | 2.8 | — | 3,860 [3,808–4,021] |
+| Dual feed, loopback | Warm | 28/28 | 0 / 20 | 0 / 55,492 | — | 2.7 | 20.6 | 1.0 | 6.0 | 25.4 [25.1–30.9] |
+| Live RPC, paced | Warm | 28/28 | 39 / 0 | 8,935 / 58,987 | — | 3,833 | 23.6 | 2.8 | 2,829 | 10,530 [10,525–10,563] |
 <!-- /generated:shared-feed -->
 
-Bazzite, 2026-11-27: live Tenderly from the Bun client against two loopback feeds, medians of three. The browser client takes 70 POSTs for the same windows ([RPC recovery](rpc-recovery.md)). Feed times exclude remote hosting, caching and compression. Bytes are decoded bodies without headers.
+Over the network, two feeds take 1.8 s for a cold rescan and live RPC without pacing takes 6.9 s, 3.9× slower. On loopback against paced RPC the gap was 498×.
+
+| Row | Measured |
+| --- | --- |
+| Dual feed, remote | 2026-11-28 on Bazzite, shared with another worker's benchmark (every sample passed the 70 °C gate). Same pages as loopback, on raw.githubusercontent.com and jsDelivr at commit `7b78192`, TLS, gzip and brotli. Each sample is a fresh process. Fetch sums both feeds, fetched in parallel. The first cold sample met empty CDN caches (3.8 s) |
+| Live RPC, excluding pacing | The 2026-11-27 samples minus the client's ≥275 ms start-to-start wait: recorded request, scan and verification time, which run in sequence. No new RPC requests |
+| Dual feed, loopback; Live RPC, paced | 2026-11-27, Tenderly from the Bun client, two loopback feeds without TLS or compression |
+
+Medians of three. Bytes are decoded bodies; compressed bytes are `Content-Length` as served. The browser client takes 70 POSTs for the same windows ([RPC recovery](rpc-recovery.md)).
 
 ## Omission and resume controls
 
@@ -78,22 +90,34 @@ Nodes 1–3 ran in sequence, 2026-11-27 17:20–17:36 UTC. Each sample starts be
 <!-- generated:shared-feed-hosts -->
 | Path | Mode | Host | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Live RPC | Cold | Bazzite | 6,834 | 41.4 | 4.8 | 3,928 | 19,327 [19,316–19,491] |
-| Live RPC | Cold | node 1 | 8,331 | 127.0 | 8.9 | 3,948 | 19,414 [19,400–19,687] |
-| Live RPC | Cold | node 2 | 12,183 | 121.5 | 8.2 | 4,182 | 19,865 [19,713–20,139] |
-| Live RPC | Cold | node 3 | 8,354 | 118.5 | 9.3 | 3,948 | 19,443 [19,424–19,874] |
+| Dual feed, remote | Cold | Bazzite | 2,027 | 47.5 | 2.5 | 637.1 | 1,775 [430.5–3,774] |
+| Dual feed, remote | Cold | Turing node | pending | pending | pending | pending | pending |
+| Live RPC, excluding pacing | Cold | Bazzite | 6,834 | 41.4 | 4.8 | — | 6,895 [6,652–8,020] |
+| Live RPC, excluding pacing | Cold | node 1 | 8,331 | 127.0 | 8.9 | — | 8,467 [7,505–9,085] |
+| Live RPC, excluding pacing | Cold | node 2 | 12,183 | 121.5 | 8.2 | — | 12,312 [11,663–12,689] |
+| Live RPC, excluding pacing | Cold | node 3 | 8,354 | 118.5 | 9.3 | — | 8,482 [8,454–9,698] |
 | Dual feed, loopback | Cold | Bazzite | 3.9 | 32.2 | 1.2 | 4.4 | 38.8 [38.4–51.1] |
 | Dual feed, loopback | Cold | node 1 | 13.6 | 119.4 | 4.4 | 15.7 | 139.9 [129.9–160.2] |
 | Dual feed, loopback | Cold | node 2 | 14.4 | 116.9 | 4.2 | 15.3 | 140.3 [125.8–150.9] |
 | Dual feed, loopback | Cold | node 3 | 14.4 | 109.5 | 3.3 | 15.1 | 129.4 [123.3–152.0] |
-| Live RPC | Warm | Bazzite | 3,833 | 23.6 | 2.8 | 2,829 | 10,530 [10,525–10,563] |
-| Live RPC | Warm | node 1 | 3,817 | 82.3 | 5.0 | 2,854 | 10,548 [10,540–11,040] |
-| Live RPC | Warm | node 2 | 6,291 | 69.5 | 4.8 | 2,912 | 10,931 [10,604–11,023] |
-| Live RPC | Warm | node 3 | 4,340 | 67.9 | 5.1 | 2,863 | 10,640 [10,611–10,709] |
+| Live RPC, paced | Cold | Bazzite | 6,834 | 41.4 | 4.8 | 3,928 | 19,327 [19,316–19,491] |
+| Live RPC, paced | Cold | node 1 | 8,331 | 127.0 | 8.9 | 3,948 | 19,414 [19,400–19,687] |
+| Live RPC, paced | Cold | node 2 | 12,183 | 121.5 | 8.2 | 4,182 | 19,865 [19,713–20,139] |
+| Live RPC, paced | Cold | node 3 | 8,354 | 118.5 | 9.3 | 3,948 | 19,443 [19,424–19,874] |
+| Dual feed, remote | Warm | Bazzite | 2,154 | 24.3 | 1.5 | 487.3 | 1,964 [256.9–2,138] |
+| Dual feed, remote | Warm | Turing node | pending | pending | pending | pending | pending |
+| Live RPC, excluding pacing | Warm | Bazzite | 3,833 | 23.6 | 2.8 | — | 3,860 [3,808–4,021] |
+| Live RPC, excluding pacing | Warm | node 1 | 3,817 | 82.3 | 5.0 | — | 3,904 [3,841–6,757] |
+| Live RPC, excluding pacing | Warm | node 2 | 6,291 | 69.5 | 4.8 | — | 6,365 [5,892–6,964] |
+| Live RPC, excluding pacing | Warm | node 3 | 4,340 | 67.9 | 5.1 | — | 4,413 [3,989–5,141] |
 | Dual feed, loopback | Warm | Bazzite | 2.7 | 20.6 | 1.0 | 6.0 | 25.4 [25.1–30.9] |
 | Dual feed, loopback | Warm | node 1 | 5.5 | 60.3 | 1.7 | 16.0 | 68.5 [65.3–89.4] |
 | Dual feed, loopback | Warm | node 2 | 5.5 | 63.3 | 1.7 | 16.7 | 71.6 [67.8–73.1] |
 | Dual feed, loopback | Warm | node 3 | 6.1 | 61.3 | 1.7 | 16.4 | 70.5 [66.2–71.7] |
+| Live RPC, paced | Warm | Bazzite | 3,833 | 23.6 | 2.8 | 2,829 | 10,530 [10,525–10,563] |
+| Live RPC, paced | Warm | node 1 | 3,817 | 82.3 | 5.0 | 2,854 | 10,548 [10,540–11,040] |
+| Live RPC, paced | Warm | node 2 | 6,291 | 69.5 | 4.8 | 2,912 | 10,931 [10,604–11,023] |
+| Live RPC, paced | Warm | node 3 | 4,340 | 67.9 | 5.1 | 2,863 | 10,640 [10,611–10,709] |
 <!-- /generated:shared-feed-hosts -->
 
 | Turing against Bazzite | Value |
@@ -140,6 +164,9 @@ mkdir -p results
 bun run shared-feed results/shared-feed-replay
 bun run shared-feed:verify results/shared-feed-replay/evidence.json
 bun run shared-feed:verify data/shared-feed/evidence.json
+bun run shared-feed:static                                                      # rewrite data/shared-feed/static
+taskset -c 0,2,4,6 bun run shared-feed:remote results/remote https://raw.githubusercontent.com/xochi-fi/erc5564-scan-benchmark/COMMIT/data/shared-feed/static/tenderly/ https://cdn.jsdelivr.net/gh/xochi-fi/erc5564-scan-benchmark@COMMIT/data/shared-feed/static/sentio/
+bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/evidence.json
 taskset -c 4-7 bun run shared-feed results/shared-feed-replay                # Turing node N, host name turing-node-N
 bun run shared-feed:verify data/shared-feed/turing-node-N/evidence.json
 taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9   # format search, no RPC

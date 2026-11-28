@@ -39,7 +39,7 @@
 <rect x="141.2" y="47" width="12" height="12" class="s3" rx="2"></rect>
 <text x="159.2" y="58" class="label ink" text-anchor="start">feed, optimized</text>
 <rect x="289.2" y="47" width="12" height="12" class="muted" rx="2"></rect>
-<text x="307.2" y="58" class="label ink" text-anchor="start">gzip</text>
+<text x="307.2" y="58" class="label ink" text-anchor="start">gzip / as served</text>
 <line x1="230" y1="80" x2="230" y2="294" class="grid"/>
 <text x="230" y="314" class="small muted" text-anchor="middle">0k</text>
 <line x1="455" y1="80" x2="455" y2="294" class="grid"/>
@@ -54,6 +54,7 @@
 <text x="497.2" y="130" class="small ink" text-anchor="start">58k</text>
 <text x="220" y="160" class="label ink" text-anchor="end">Two feeds, cold</text>
 <rect x="230" y="146" width="414.6" height="16" class="s1" rx="2"><title>Two feeds, cold: 92,134 bytes</title></rect>
+<rect x="230" y="163" width="100.4" height="5" class="muted"><title>Two feeds, cold, gzip: 22,302 bytes</title></rect>
 <text x="652.6" y="160" class="small ink" text-anchor="start">92k</text>
 <text x="220" y="190" class="label ink" text-anchor="end">One feed, cold</text>
 <rect x="230" y="176" width="196.7" height="16" class="s1" rx="2"><title>One feed, cold: 43,719 bytes</title></rect>
@@ -68,6 +69,7 @@
 <text x="503.4" y="250" class="small ink" text-anchor="start">59k</text>
 <text x="220" y="280" class="label ink" text-anchor="end">Two feeds, warm</text>
 <rect x="230" y="266" width="249.7" height="16" class="s1" rx="2"><title>Two feeds, warm: 55,492 bytes</title></rect>
+<rect x="230" y="283" width="58.4" height="5" class="muted"><title>Two feeds, warm, gzip: 12,976 bytes</title></rect>
 <text x="487.7" y="280" class="small ink" text-anchor="start">55k</text>
 <text x="20" y="344" class="label ink" text-anchor="start">Format search, one feed's cold pages</text>
 <line x1="230" y1="516" x2="680" y2="516" class="grid"/>

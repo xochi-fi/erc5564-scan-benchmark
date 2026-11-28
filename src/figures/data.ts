@@ -214,12 +214,11 @@ export function scanEngines(): EngineRow[] {
   }));
 }
 
-/** Seconds per announcement for one engine and thread count: the 1M zero scan if recorded, else 100k zero. */
+/** Seconds per announcement for one engine and thread count: the median over its 100k and 1M, zero and sparse scans. */
 export function perAnnouncement(rows: readonly EngineRow[], host: string, engine: string, threads: number, cpu = false): number | null {
-  const pick = (count: number) => rows.find(r => r.host === host && r.run !== 'control-before' && r.run !== 'control-after'
-    && r.count === count && r.case === 'zero' && r.engine === engine && r.threads === threads);
-  const row = pick(1e6) ?? pick(1e5);
-  return row === undefined ? null : (cpu ? row.cpuMsMedian : row.medianMs) / 1000 / row.count;
+  const values = rows.filter(r => r.host === host && !r.run.startsWith('control') && r.engine === engine && r.threads === threads)
+    .map(r => (cpu ? r.cpuMsMedian : r.medianMs) / 1000 / r.count);
+  return values.length === 0 ? null : median(values)!;
 }
 
 export interface EngineHeadline { host: string; sdk: number; wasm: number; native: number; best: { engine: string; threads: number; seconds: number } }

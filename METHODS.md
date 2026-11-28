@@ -64,7 +64,18 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | Browser-discovery reference, shared feed | ≥275 ms between request starts |
 | Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |
 
-Refreshed weekly: chain-volume announcement counts, rates, last announcement and the silent-omission recheck ([tables](docs/chain-volume.md#weekly-refresh)). Fixed recordings: everything else, including every hardware timing (scan cost, paged discovery, browser discovery, RPC recovery, feed latency), endpoint probes, cold-start costs and Umbra counts.
+### Weekly refresh
+
+| Item | Rule |
+| --- | --- |
+| Refreshed | Chain-volume counts, rates, last announcement, silent recheck, endpoint checks ([tables](docs/chain-volume.md#weekly-refresh)) |
+| Fixed | Everything else, including every hardware timing, the 2026-11-26 probes, cold-start costs and Umbra counts |
+| Range | Last agreed block + 1 to the lower of two heads minus 15 min of blocks |
+| Endpoint sets | Two, no provider in common, silent hosts excluded, widest recorded span first |
+| Accept | Same block, log index and tx hash in both sets. Otherwise the count holds and the pull request says why. |
+| Silent recheck | Recorded targets and windows, two attempts, beside a control that returned all of them on 2026-11-26 |
+| Endpoint check | Every endpoint probed on 2026-11-26: 10 recent blocks, then its recorded span |
+| Vantage | Runner kind and cloud region (Azure instance metadata), or `--vantage`; never an address |
 
 ## Browser runs
 

@@ -36,15 +36,28 @@ export interface SilentCheck {
   verdict: SilentVerdict;
 }
 
+/** One request's outcome. Codes and kinds as in rpc.ts; no addresses or bodies beyond a trimmed message. */
+export interface CallOutcome { ok: boolean; kind: string | null; code: number | null; httpStatus: number; rateLimitHits: number }
+
+/** Same checks from every vantage: 10 recent blocks, then the span the 2026-11-26 probe found (whole history from the deploy block). */
+export interface EndpointCheck {
+  chain: string; host: string;
+  recent: CallOutcome;
+  span: { blocks: number | 'whole history'; outcome: CallOutcome } | null;
+}
+
 export interface RefreshSnapshot {
   kind: 'chain-volume-refresh';
   version: 1;
   date: string;
   measuredAt: string;
   runner: string;
+  /** Where the requests came from, e.g. "residential, Europe" or "GitHub-hosted runner, Azure eastus". Never an IP address. */
+  vantage: string;
   userAgent: string;
   chains: Record<string, RefreshChain>;
   silent: SilentCheck[];
+  endpoints: EndpointCheck[];
 }
 
 export interface Baseline {
@@ -135,6 +148,41 @@ export function silentVerdict(checks: SilentCheck['checks']): SilentVerdict {
   if (comparable.some(check => check.outcome === 'empty')) return 'still silent';
   if (comparable.every(check => check.outcome === 'returned')) return 'returns all';
   return 'errors';
+}
+
+// ---- vantage comparison -------------------------------------------------------
+
+export const outcomeLabel = (o: CallOutcome) =>
+  `${o.ok ? 'OK' : `${o.kind ?? 'error'}${o.code !== null ? ` ${o.code}` : ''}${o.httpStatus !== 200 && o.httpStatus !== 0 ? ` (HTTP ${o.httpStatus})` : ''}`}${o.rateLimitHits > 0 ? `, ${o.rateLimitHits}× 429` : ''}`;
+
+export interface VantageRow { chain: string; host: string; measure: string; cells: string[] }
+
+/**
+ * The newest snapshot per vantage, oldest vantage first, and the checks whose results differ between them.
+ * Fewer than two vantages: no rows.
+ */
+export function vantageComparison(snapshots: RefreshSnapshot[]): { columns: Array<{ vantage: string; date: string }>; rows: VantageRow[] } {
+  const latest = new Map<string, RefreshSnapshot>();
+  for (const snapshot of [...snapshots].sort((a, b) => a.date.localeCompare(b.date))) if (snapshot.vantage && snapshot.endpoints) latest.set(snapshot.vantage, snapshot);
+  const picked = [...latest.values()];
+  const columns = picked.map(s => ({ vantage: s.vantage, date: s.date }));
+  if (picked.length < 2) return { columns, rows: [] };
+  const cells = new Map<string, { chain: string; host: string; measure: string; cells: string[] }>();
+  const put = (i: number, chain: string, host: string, measure: string, value: string) => {
+    const key = `${chain}\u0000${host}\u0000${measure}`;
+    const row = cells.get(key) ?? { chain, host, measure, cells: picked.map(() => 'not checked') };
+    row.cells[i] = value;
+    cells.set(key, row);
+  };
+  picked.forEach((snapshot, i) => {
+    for (const e of snapshot.endpoints) {
+      put(i, e.chain, e.host, 'getLogs, 10 recent blocks', outcomeLabel(e.recent));
+      if (e.span) put(i, e.chain, e.host, `getLogs, recorded span (${typeof e.span.blocks === 'number' ? e.span.blocks.toLocaleString('en-US') : e.span.blocks})`, outcomeLabel(e.span.outcome));
+    }
+    for (const c of snapshot.silent) put(i, c.chain, c.host, 'silent recheck', c.verdict);
+  });
+  const rows = [...cells.values()].filter(row => new Set(row.cells).size > 1);
+  return { columns, rows };
 }
 
 // ---- loading ------------------------------------------------------------------

@@ -15,8 +15,8 @@ import type { ProbeFile } from './run.ts';
 import { compareSets, formatKeyed, parseKeyed, retrieveHistory } from './retrieve.ts';
 import { getLogsParams, quantity, rpc, rpcLogsSchema, toHex } from './rpc.ts';
 import {
-  REFRESH_DIR, chainState, disjointSets, loadBaseline, loadSnapshots, providerKey, silentVerdict, statePerMonth, stateSinceBaseline,
-  type RefreshChain, type RefreshSet, type RefreshSnapshot, type SilentCheck,
+  REFRESH_DIR, chainState, vantageComparison, disjointSets, loadBaseline, loadSnapshots, providerKey, silentVerdict, statePerMonth, stateSinceBaseline,
+  type CallOutcome, type EndpointCheck, type RefreshChain, type RefreshSet, type RefreshSnapshot, type SilentCheck,
 } from './refresh-state.ts';
 
 const log = (line: string) => process.stderr.write(`${new Date().toISOString().slice(11, 19)} ${line}\n`);
@@ -147,11 +147,52 @@ async function recheckSilent(transport: Transport, dir: string, chain: ChainConf
   }));
 }
 
+/** Every endpoint the 2026-11-26 probe tried: 10 recent blocks, then its recorded span. Comparable across vantages. */
+async function checkEndpoints(transport: Transport, dir: string, chain: ChainConfig, head: number): Promise<EndpointCheck[]> {
+  const probe = readJson(join(dir, 'probe', `${chain.key}.json`)) as ProbeFile;
+  const call = async (url: string, from: number, to: number): Promise<CallOutcome> => {
+    const r = await rpc(transport, url, 'eth_getLogs', getLogsParams(from, to), rpcLogsSchema);
+    return { ok: r.error === null, kind: r.error?.kind ?? null, code: r.error?.code ?? null, httpStatus: r.http.status, rateLimitHits: r.http.rateLimitHits };
+  };
+  const checks: EndpointCheck[] = [];
+  let next = 0;
+  // Six at a time; pacing stays per provider in the transport.
+  await Promise.all(Array.from({ length: 6 }, async () => {
+    while (next < probe.endpoints.length) {
+      const e = probe.endpoints[next++]!;
+      const recent = await call(e.url, head - 9, head);
+      const range = e.status === 'usable' ? e.range : null;
+      let span: EndpointCheck['span'] = null;
+      if (range?.unbounded) span = { blocks: 'whole history', outcome: await call(e.url, probe.deployBlock, head) };
+      else if (range && range.maxOk > 10) span = { blocks: range.maxOk, outcome: await call(e.url, head - range.maxOk + 1, head) };
+      checks.push({ chain: chain.key, host: e.host, recent, span });
+    }
+  }));
+  const order = new Map(probe.endpoints.map((e, i) => [e.host, i]));
+  checks.sort((a, b) => order.get(a.host)! - order.get(b.host)!);
+  log(`[${chain.key}] endpoints: ${checks.filter(c => c.recent.ok).length} of ${checks.length} answer getLogs; recorded span holds on ${checks.filter(c => c.span?.outcome.ok).length} of ${checks.filter(c => c.span).length}`);
+  return checks;
+}
+
+/** Runner kind and cloud region, never an address. GitHub-hosted runners are Azure VMs; the region comes from the instance metadata service. */
+async function detectVantage(flag: string | undefined): Promise<string> {
+  if (flag) return flag;
+  if (process.env.GITHUB_ACTIONS !== 'true') return 'unknown (pass --vantage)';
+  const kind = process.env.RUNNER_ENVIRONMENT === 'github-hosted' ? 'GitHub-hosted runner' : 'self-hosted runner';
+  try {
+    const response = await fetch('http://169.254.169.254/metadata/instance/compute/location?api-version=2021-02-01&format=text',
+      { headers: { Metadata: 'true' }, signal: AbortSignal.timeout(2000) });
+    const region = (await response.text()).trim();
+    if (response.ok && /^[a-z0-9]{2,30}$/.test(region)) return `${kind}, Azure ${region}`;
+  } catch { /* not on Azure, or metadata blocked */ }
+  return `${kind}, region unknown`;
+}
+
 const n = (value: number) => value.toLocaleString('en-US');
 
 function report(dir: string, snapshot: RefreshSnapshot): string {
   const lines = [
-    `Weekly chain-volume refresh, ${snapshot.date} (${snapshot.runner}). Keyless, read-only; new blocks fetched from two endpoint sets with no provider in common.`,
+    `Chain-volume refresh, ${snapshot.date}, from ${snapshot.vantage}.`,
     '', '| Chain | Status | Announcements | New this run | Checked through | Requests A + B | Note |', '| --- | --- | ---: | ---: | --- | ---: | --- |',
   ];
   const problems: string[] = [];
@@ -168,8 +209,16 @@ function report(dir: string, snapshot: RefreshSnapshot): string {
     if (check.verdict === 'inconclusive' || check.verdict === 'errors') problems.push(`- ${check.host} (${check.chain}): ${check.verdict}; the control did not return the targets or the host errored.`);
     if (check.verdict === 'returns all') problems.push(`- ${check.host} (${check.chain}) now returns every known announcement. Review the chain-volume findings before merging.`);
   }
+  const answered = (chain: string) => snapshot.endpoints.filter(e => e.chain === chain && e.recent.ok).length;
+  lines.push('', `Endpoints answering getLogs from this vantage: ${Object.keys(snapshot.chains).map(c => `${chainByKey(c).name} ${answered(c)}/${snapshot.endpoints.filter(e => e.chain === c).length}`).join(', ')}.`);
+  const { columns, rows } = vantageComparison([...loadSnapshots(dir, snapshot.date), snapshot]);
+  if (rows.length > 0) {
+    lines.push('', `${rows.length} checks differ between vantages:`, '',
+      `| Chain | Endpoint | Check | ${columns.map(c => `${c.vantage} (${c.date})`).join(' | ')} |`, `| --- | --- | --- | ${columns.map(() => '---').join(' | ')} |`,
+      ...rows.slice(0, 40).map(r => `| ${chainByKey(r.chain).name} | ${r.host} | ${r.measure} | ${r.cells.join(' | ')} |`));
+    if (rows.length > 40) lines.push(`\n${rows.length - 40} more in docs/chain-volume.md.`);
+  } else if (columns.length < 2) lines.push('', 'One vantage recorded; nothing to compare.');
   if (problems.length > 0) lines.push('', '**Needs review**', '', ...problems);
-  lines.push('', 'Hardware timings (scan cost, paged discovery, feed latency) are fixed recordings and are not refreshed.');
   return `${lines.join('\n')}\n`;
 }
 
@@ -184,6 +233,7 @@ async function main(): Promise<void> {
       'per-set': { type: 'string', default: '4' },
       report: { type: 'string' },
       runner: { type: 'string', default: process.env.GITHUB_ACTIONS === 'true' ? 'github-actions' : hostname().split('.')[0]! },
+      vantage: { type: 'string' },
     },
   });
   const dir = resolve(values.output);
@@ -194,7 +244,8 @@ async function main(): Promise<void> {
   log(`User-Agent: ${USER_AGENT}; budget ${budget.requests} requests per set per chain, ${budget.minutes} min`);
   const chains = values.chains.split(',').map(chainByKey);
   const snapshot: RefreshSnapshot = {
-    kind: 'chain-volume-refresh', version: 1, date, measuredAt: new Date().toISOString(), runner: values.runner, userAgent: USER_AGENT, chains: {}, silent: [],
+    kind: 'chain-volume-refresh', version: 1, date, measuredAt: new Date().toISOString(), runner: values.runner, vantage: await detectVantage(values.vantage),
+    userAgent: USER_AGENT, chains: {}, silent: [], endpoints: [],
   };
   // Chains one after another: a provider serving several chains sees one paced stream.
   for (const chain of chains) {
@@ -207,6 +258,9 @@ async function main(): Promise<void> {
       };
     }
     snapshot.silent.push(...await recheckSilent(transport, dir, chain));
+    const heads = (snapshot.chains[chain.key]?.sets ?? []).map(set => set.head).filter((h): h is number => h !== null);
+    const head = heads.length > 0 ? Math.min(...heads) : null;
+    if (head !== null) snapshot.endpoints.push(...await checkEndpoints(transport, dir, chain, head));
   }
   await mkdir(join(dir, REFRESH_DIR), { recursive: true });
   await writeFile(join(dir, REFRESH_DIR, `${date}.json`), `${JSON.stringify(snapshot, null, 1)}\n`);

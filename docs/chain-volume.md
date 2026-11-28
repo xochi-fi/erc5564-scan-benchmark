@@ -36,30 +36,36 @@ One run on 2026-11-26 under the [live RPC rules](../METHODS.md#live-rpc), from t
 
 ## Weekly refresh
 
-Counts, rates and the silent-omission recheck below are re-measured every Monday by [`weekly-refresh.yml`](../.github/workflows/weekly-refresh.yml), which opens a pull request. Everything else on this page is the 2026-11-26 recording.
+[`weekly-refresh.yml`](../.github/workflows/weekly-refresh.yml) re-measures these tables every Monday. The rest of this page is the 2026-11-26 recording.
 
 <!-- generated:chain-volume-refresh -->
 | Chain | Announcements, 2026-11-26 | Announcements, 2026-11-28 | Per day since 2026-11-26 | Per month (since first) | Last announcement | Checked through block | Run of 2026-11-28 |
 | --- | ---: | ---: | ---: | ---: | --- | --- | --- |
-| Ethereum | 298 | **302** | 2.93 (1.4 days) | 12.3 | 26,500,859 (2026-11-26) | 26,509,992 (2026-11-27) | two provider sets agree (4 new) |
-| Base | 679 | **685** | 4.77 (1.3 days) | 23.9 | 62,949,449 (2026-11-27) | 63,168,284 (2026-11-28) | two provider sets agree (6 new) |
-| Arbitrum One | 19 | **19** | 0.00 (1.4 days) | 2.1 | 522,929,374 (2026-11-10) | 528,143,941 (2026-11-28) | two provider sets agree (0 new) |
-| OP Mainnet | 2 | **2** | 0.00 (1.4 days) | 0.5 | 154,455,081 (2026-07-20) | 160,112,701 (2026-11-28) | two provider sets agree (0 new) |
-| Gnosis | 3 | **3** | 0.00 (1.3 days) | 0.2 | 41,054,058 (2025-07-12) | 49,503,957 (2026-11-28) | two provider sets agree (0 new) |
-| Polygon PoS | 9 | **9** | 0.00 (1.4 days) | 1.3 | 95,895,782 (2026-10-21) | 98,079,171 (2026-11-28) | two provider sets agree (0 new) |
-| Sepolia | 1,039 | **1,040** | 0.73 (1.4 days) | 36.1 | 12,218,263 (2026-11-26) | 12,226,572 (2026-11-28) | two provider sets agree (1 new) |
+| Ethereum | 298 | **302** | 2.90 (1.4 days) | 12.3 | 26,500,859 (2026-11-26) | 26,510,117 (2026-11-28) | sets agree |
+| Base | 679 | **685** | 4.70 (1.3 days) | 23.9 | 62,949,449 (2026-11-27) | 63,176,659 (2026-11-28) | sets agree |
+| Arbitrum One | 19 | **19** | 0.00 (1.4 days) | 2.1 | 522,929,374 (2026-11-10) | 528,149,344 (2026-11-28) | sets agree |
+| OP Mainnet | 2 | **2** | 0.00 (1.4 days) | 0.5 | 154,455,081 (2026-07-20) | 160,113,731 (2026-11-28) | sets agree |
+| Gnosis | 3 | **3** | 0.00 (1.4 days) | 0.2 | 41,054,058 (2025-07-12) | 49,504,392 (2026-11-28) | sets agree |
+| Polygon PoS | 9 | **9** | 0.00 (1.4 days) | 1.3 | 95,895,782 (2026-10-21) | 98,080,764 (2026-11-28) | sets agree |
+| Sepolia | 1,039 | **1,040** | 0.71 (1.4 days) | 36.1 | 12,218,263 (2026-11-26) | 12,226,789 (2026-11-28) | sets agree |
 <!-- /generated:chain-volume-refresh -->
 
 <!-- generated:chain-volume-silent -->
 | Chain | Endpoint | 2026-11-26: returned / empty / errors | 2026-11-28: returned / empty / errors | 2026-11-28 | Control |
 | --- | --- | --- | --- | --- | --- |
-| Base | `rpc.degenprotocol.io` | 4 / 2 / 0 | 4 / 2 / 0 | still silent | `base.gateway.tenderly.co` |
+| Base | `rpc.degenprotocol.io` | 4 / 2 / 0 | 6 / 0 / 0 | returns all | `base.gateway.tenderly.co` |
 | Base | `base.daybreak-rpc.network` | 0 / 6 / 0 | 0 / 6 / 0 | still silent | `base.gateway.tenderly.co` |
-| Base | `rpc.baseazul.dev` | 2 / 3 / 1 | 2 / 2 / 2 | still silent | `base.gateway.tenderly.co` |
-| OP Mainnet | `public.1rpc.io` | 0 / 4 / 0 | 1 / 3 / 0 | still silent | `lb.routeme.sh` |
+| Base | `rpc.baseazul.dev` | 2 / 3 / 1 | 3 / 3 / 0 | still silent | `base.gateway.tenderly.co` |
+| OP Mainnet | `public.1rpc.io` | 0 / 4 / 0 | 3 / 1 / 0 | still silent | `lb.routeme.sh` |
 <!-- /generated:chain-volume-silent -->
 
-Each run resumes from the last agreed block and stops 15 min of blocks short of the lower head. Two endpoint sets with no provider in common fetch the range; silent hosts are left out. New announcements count only when both sets match on block, log index and transaction hash. A disagreement or failure holds the count at the last agreed block and is reported in the pull request. The recheck asks each silent host for the recorded targets in the recorded windows, two attempts each, beside a control endpoint that returned all of them on 2026-11-26. Indexers are not rechecked. Scheduled runs come from GitHub datacenter IPs, not the residential IP of the baseline.
+Checks that differ between vantages ([method](../METHODS.md#weekly-refresh)):
+
+<!-- generated:chain-volume-vantage -->
+Only one vantage recorded so far (residential, Europe, 2026-11-28). The first scheduled run after merge adds the GitHub-hosted runner.
+<!-- /generated:chain-volume-vantage -->
+
+A new announcement counts only when two endpoint sets with no provider in common both return it. The job skips the indexers.
 
 ## Wallet guidance
 
@@ -163,7 +169,7 @@ bun run chain-volume --stage retrieve --chains base --strategy parallel --max-re
 bun run chain-volume --stage consistency,verify-deploy  # silent-miss check, deploy block recheck
 bun run chain-volume --stage umbra-reference,umbra-retrieve,umbra-verify-deploy
 bun run chain-volume --stage report                     # summary.md/csv, endpoints.csv, cross-source.csv
-bun run chain-volume:refresh                            # weekly refresh: new blocks since the last agreed one, silent recheck; writes refresh/<date>.json
+bun run chain-volume:refresh --vantage 'residential, Europe'   # weekly refresh, writes refresh/<date>.json
 ```
 
 

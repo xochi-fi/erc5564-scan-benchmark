@@ -7,7 +7,7 @@ import {
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
-import { statePerMonth, stateSinceBaseline } from '../chain-volume/refresh-state.ts';
+import { statePerMonth, stateSinceBaseline, vantageComparison } from '../chain-volume/refresh-state.ts';
 
 // ---- formatting ---------------------------------------------------------------
 
@@ -201,8 +201,8 @@ function chainRefreshTable() {
     const rate = statePerMonth(state);
     const entry = state.latest;
     const run = entry === null || entry.date !== latest.date ? 'not run'
-      : entry.status === 'agreed' ? `two provider sets agree (${n(entry.identities.length)} new)`
-        : `**${entry.status}**: ${entry.reason}; count held at the last agreed block`;
+      : entry.status === 'agreed' ? `sets agree${entry.reason ? ` (${entry.reason})` : ''}`
+        : `**${entry.status}**: ${entry.reason}; count held`;
     return [CHAIN_LABELS[chain]!, n(bestRetrieval(chain).result.count), `**${n(state.count)}**`,
       since === null ? '-' : `${fixed(since.perDay, 2)} (${fixed(since.days, 1)} days)`, rate === null ? '-' : rate.toFixed(1),
       `${n(state.lastBlock)} (${state.lastTime.slice(0, 10)})`,
@@ -219,6 +219,14 @@ function silentRecheckTable() {
       const recorded = readJson(`data/chain-volume/consistency/${check.chain}.json`).endpoints.find((e: any) => e.host === check.host);
       return [CHAIN_LABELS[check.chain]!, `\`${check.host}\``, counts(recorded), counts(check), check.verdict, check.control ? `\`${check.control}\`` : 'none'];
     }));
+}
+
+function vantageTable() {
+  const { columns, rows } = vantageComparison(refreshSnapshots());
+  if (columns.length < 2) return `Only one vantage recorded so far${columns[0] ? ` (${columns[0].vantage}, ${columns[0].date})` : ''}. The first scheduled run after merge adds the GitHub-hosted runner.`;
+  if (rows.length === 0) return `Every check agrees between ${columns.map(c => `${c.vantage} (${c.date})`).join(' and ')}.`;
+  return table(['Chain', 'Endpoint', 'Check', ...columns.map(c => `${c.vantage}, ${c.date}`)], ['l', 'l', 'l', ...columns.map(() => 'l' as const)],
+    rows.map(r => [CHAIN_LABELS[r.chain]!, `\`${r.host}\``, r.measure, ...r.cells]));
 }
 
 // ---- browser discovery --------------------------------------------------------
@@ -370,6 +378,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'chain-volume': ['docs/chain-volume.md', chainVolumeTable],
   'chain-volume-refresh': ['docs/chain-volume.md', chainRefreshTable],
   'chain-volume-silent': ['docs/chain-volume.md', silentRecheckTable],
+  'chain-volume-vantage': ['docs/chain-volume.md', vantageTable],
   'browser-discovery': ['docs/browser-discovery.md', browserTable],
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],

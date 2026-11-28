@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import {
-  chainState, disjointSets, providerKey, silentVerdict, statePerMonth, stateSinceBaseline,
-  type Baseline, type RefreshChain, type RefreshSnapshot,
+  chainState, disjointSets, vantageComparison, providerKey, silentVerdict, statePerMonth, stateSinceBaseline,
+  type Baseline, type CallOutcome, type RefreshChain, type RefreshSnapshot,
 } from '../src/chain-volume/refresh-state.ts';
 
 const baseline: Baseline = {
@@ -13,7 +13,7 @@ const entry = (over: Partial<RefreshChain>): RefreshChain => ({
   sets: [], comparison: null, identities: [], lastTime: null, ...over,
 });
 const snap = (date: string, chain: RefreshChain): RefreshSnapshot => ({
-  kind: 'chain-volume-refresh', version: 1, date, measuredAt: `${date}T00:00:00.000Z`, runner: 'test', userAgent: 'test', chains: { base: chain }, silent: [],
+  kind: 'chain-volume-refresh', version: 1, date, measuredAt: `${date}T00:00:00.000Z`, runner: 'test', vantage: 'test', userAgent: 'test', chains: { base: chain }, silent: [], endpoints: [],
 });
 
 describe('weekly refresh state', () => {
@@ -71,4 +71,20 @@ describe('silent recheck verdict', () => {
   test('all returned: returns all', () => expect(silentVerdict([check('returned', 'returned')])).toBe('returns all'));
   test('errors only: errors', () => expect(silentVerdict([check('error: http', 'returned')])).toBe('errors'));
   test('control failed: inconclusive', () => expect(silentVerdict([check('empty', 'error: timeout')])).toBe('inconclusive'));
+});
+
+describe('vantage comparison', () => {
+  const ok: CallOutcome = { ok: true, kind: null, code: null, httpStatus: 200, rateLimitHits: 0 };
+  const limited: CallOutcome = { ok: false, kind: 'rate-limit', code: null, httpStatus: 429, rateLimitHits: 4 };
+  const at = (date: string, vantage: string, recent: CallOutcome): RefreshSnapshot => ({
+    ...snap(date, entry({})), vantage, endpoints: [{ chain: 'base', host: 'a.example', recent, span: null }, { chain: 'base', host: 'b.example', recent: ok, span: null }],
+  });
+  test('one vantage: nothing to compare', () => {
+    expect(vantageComparison([at('2026-11-28', 'home', ok), at('2026-12-07', 'home', limited)]).rows).toEqual([]);
+  });
+  test('newest run per vantage; only differing checks', () => {
+    const { columns, rows } = vantageComparison([at('2026-11-28', 'home', limited), at('2026-12-01', 'home', ok), at('2026-12-07', 'cloud', limited)]);
+    expect(columns).toEqual([{ vantage: 'home', date: '2026-12-01' }, { vantage: 'cloud', date: '2026-12-07' }]);
+    expect(rows).toEqual([{ chain: 'base', host: 'a.example', measure: 'getLogs, 10 recent blocks', cells: ['OK', 'rate-limit (HTTP 429), 4× 429'] }]);
+  });
 });

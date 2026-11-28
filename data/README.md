@@ -14,6 +14,7 @@ One directory per experiment, with home paths shown as `~` ([hosts](../METHODS.m
 | [freshness/](freshness/) | [Freshness](../docs/freshness.md). Per chain: 12-s samples of `latest` and `finalized` headers and the Announcer tail poll between them. |
 | [phone-bench/](phone-bench/) | [Phone bench](../docs/phone-bench.md). Accepted results, one file each; `proxy/`: JavaScriptCore runs on Turing. |
 | [real-announcements/](real-announcements/) | [Real announcements](../docs/real-announcements.md). `scan.json`: engine results; `timing-<host>.json`: real against synthetic. Raw logs come from `bun run real-announcements:fetch`. |
+| [seed-recovery/](seed-recovery/) | [Seed recovery](../docs/seed-recovery.md). `derive.json`: key derivations from the test mnemonic, recomputed by `bun test`. `<chain>.json`: feed rediscovery and asset-discovery counts, no addresses. |
 | [feed/](feed/) | [Feed format](../docs/feed-format.md). One packed file per feed and chain, the workflow's first seed. |
 | [shared-feed/](shared-feed/) | [Shared feed](../docs/shared-feed.md). Request metrics, page digests, sample timings, checkpoint controls, per-node evidence and the feed format search. `static/` and `remote/`: the benchmark feeds as files and runs fetching them over the network. |
 

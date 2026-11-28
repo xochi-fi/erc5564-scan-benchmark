@@ -7,6 +7,7 @@ import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
   spamCost, omissionCause, freshness, realScan, phoneResults, phoneProxies, realTiming,
+  seedDerive, seedRecovery,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -475,6 +476,30 @@ function phoneTable() {
     `${fixed(r.count, 0)}${r.scanMs < 2000 ? ` (${fixed(r.scanMs / 1000, 2)} s run)` : ''}`, fixed(r.msPerAnnouncement, r.msPerAnnouncement < 0.1 ? 3 : 2), r.source ?? '-']));
 }
 
+// ---- seed recovery ---------------------------------------------------------------
+
+function seedRecoveryTable() {
+  const chains = seedRecovery(), base = chains.find(c => c.chain === 'base')!;
+  const sum = (f: (c: Record<string, any>) => number) => chains.reduce((n, c) => n + f(c), 0);
+  const n = (v: number) => fixed(v, 0);
+  const sec = (ms: number) => `${fixed(ms / 1000, 1)} s`;
+  const meta = (k: string) => sum(c => c.assets.metadata[k] ?? 0);
+  const scheme1 = sum(c => Object.values(c.assets.metadata as Record<string, number>).reduce((x, y) => x + y, 0));
+  const t = base.assets.transfers;
+  const random = seedDerive().rows.filter(r => /Hedged|P-256/.test(r.variant)).every(r => r.distinctKeys === r.derivations);
+  return table(['Step', 'From seed alone', 'Cost', 'What breaks it'], ['l', 'l', 'l', 'l'], [
+    ['Keys, signature-derived (SDK example, Umbra, Fluidkey)', 'depends', 'One signature', random ? 'Each wallet signs its own message' : 'Signer not deterministic'],
+    ['Keys, BIP-32 (kohaku-cli)', 'yes', 'No signature', 'Path must be known'],
+    ['Announcements, keyless RPC', 'depends', '[Chain volume](chain-volume.md)', '[Silent omissions](rpc-recovery.md)'],
+    ['Announcements, both feeds', 'yes', `${sum(c => c.feed.requests)} GETs, ${sec(Math.max(...chains.map(c => c.feed.fetchMs)))}`, 'Finalized blocks only ([freshness](freshness.md))'],
+    ['Scan, SDK', 'yes', sec(sum(c => c.feed.scanMs)), 'Other scheme ids ([real announcements](real-announcements.md))'],
+    ['Native balances', 'yes', `${sum(c => c.assets.native.requests)} Multicall3 requests`, 'Provider sees 100 addresses per request'],
+    ['Tokens named in announcements', 'depends', '-', `${n(meta('token') + meta('token, 54-byte layout'))} of ${n(scheme1)} announcements name one`],
+    ['Tokens never announced', 'depends', `Base: ${n(2 * Math.ceil((t.to - t.from + 1) / t.finalSpan))} requests per address`, `${n(sum(c => c.assets.transfers.addressesWithUnannounced))} of ${n(sum(c => c.assets.stealthAddresses))} addresses got one`],
+    ['Payment never announced', 'no', '-', 'No ephemeral key to scan'],
+  ]);
+}
+
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
@@ -497,6 +522,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'real-scan': ['docs/real-announcements.md', realScanTable],
   'real-timing': ['docs/real-announcements.md', realTimingTable],
   feed: ['docs/feed-format.md', feedBuildTable],
+  'seed-recovery': ['docs/seed-recovery.md', seedRecoveryTable],
 };
 
 export function renderTables(): Map<string, string> {

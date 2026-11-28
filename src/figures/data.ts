@@ -408,3 +408,8 @@ export function phoneResults(): Record<string, any>[] {
 /** JavaScriptCore runs of the page's scan code outside a browser (bun run phone-bench:cli). */
 export const phoneProxies = (): Record<string, any>[] =>
   readdirSync(path('data/phone-bench/proxy')).filter(f => f.endsWith('.json')).sort().map(f => readJson(`data/phone-bench/proxy/${f}`));
+
+// ---- seed recovery ----------------------------------------------------------------
+
+export const seedDerive = () => readJson<{ rows: { wallet: string; variant: string; derivations: number; distinctKeys: number; accepted: number; findsPayment: boolean }[] }>('data/seed-recovery/derive.json');
+export const seedRecovery = (): Record<string, any>[] => Object.keys(CHAIN_LABELS).map(c => readJson(`data/seed-recovery/${c}.json`));

@@ -41,12 +41,16 @@
     "phone-bench:build": "bun run src/phone-bench/build.ts",
     "phone-bench:serve": "bun run src/phone-bench/serve.ts",
     "phone-bench:record": "bun run src/phone-bench/record.ts",
-    "phone-bench:cli": "bun run src/phone-bench/cli.ts"
+    "phone-bench:cli": "bun run src/phone-bench/cli.ts",
+    "seed-recovery": "bun run src/seed-recovery/run.ts",
+    "seed-recovery:derive": "bun run src/seed-recovery/derive.ts"
   },
   "dependencies": {
     "@noble/hashes": "1.8.0",
+    "@noble/curves": "1.9.1",
     "@noble/secp256k1": "2.3.0",
     "@scopelift/stealth-address-sdk": "1.0.0-beta.5",
+    "@scure/bip39": "1.6.0",
     "secp256k1": "5.0.2",
     "tiny-secp256k1": "2.2.5",
     "viem": "2.58.0",

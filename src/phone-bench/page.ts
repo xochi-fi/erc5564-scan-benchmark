@@ -88,6 +88,13 @@ if (typeof document !== 'undefined') {
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const ua = navigator.userAgent;
   const cores = navigator.hardwareConcurrency ?? null;
+  // Hook for scripted runs (orca eval): same code path as the Run button, minus the DOM.
+  (window as unknown as { phoneBench: unknown }).phoneBench = {
+    run: async (engine: string, count: number) => {
+      const r = await runScan(FIXTURE, engine, count, 250);
+      return { pageVersion: PAGE_VERSION, userAgent: ua, hardwareConcurrency: cores, engine, count, scanMs: r.scanMs, msPerAnnouncement: r.scanMs / count, matches: r.matches.length, expectedMatches: r.expected.length, verified: r.verified };
+    },
+  };
   $('ua').textContent = ua;
   $('cores').textContent = String(cores ?? 'unknown');
   $('run').addEventListener('click', async () => {

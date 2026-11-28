@@ -9,7 +9,7 @@ import type { PackedFixture } from './page.ts';
 export const PHONE_SEED = 'phone-bench:v1';
 export const PHONE_COUNT = 10_000;
 export const PHONE_MATCH_EVERY = 1_000;
-export const PAGE_VERSION = '1';
+export const PAGE_VERSION = '2';
 /** SHA256 of the packed rows of the 10,000-announcement fixture; the record script accepts only this fixture. */
 export const PHONE_PACKED_SHA256 = '59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d';
 const ROOT = new URL('../../', import.meta.url).pathname;

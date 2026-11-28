@@ -7,16 +7,16 @@ What does a wallet fetch instead of `eth_getLogs`?
 <!-- generated:feed -->
 | Chain | Announcements, A / B | Finalized block, A / B | Non-empty pages | Page kB, raw / gzip | Build requests, A / B | Agreed through block |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| Ethereum | 302 / pending | 26,510,107 / pending | 5 of 7 | 95.5 / 47.6 | — / pending | pending |
-| Base | pending / pending | pending / pending | pending | pending | pending / pending | pending |
-| Arbitrum One | 19 / pending | 528,147,108 / pending | 7 of 309 | 8.5 / 5.2 | — / pending | pending |
-| OP Mainnet | 2 / pending | 160,113,052 / pending | 1 of 40 | 0.7 / 0.6 | — / pending | pending |
-| Gnosis | 3 / pending | 49,504,316 / pending | 1 of 16 | 0.8 / 0.5 | — / pending | pending |
-| Polygon PoS | 9 / pending | 98,080,522 / pending | 5 of 41 | 3.3 / 2.4 | — / pending | pending |
-| Sepolia | 1,040 / 1,040 | 12,226,639 / 12,226,700 | 7 of 7 | 415.8 / 204.8 | — / — | 12,226,639 |
+| Ethereum | 302 / 302 | 26,510,107 / 26,510,138 | 5 of 7 | 95.5 / 47.6 | 1,312 / 11,410 | 26,510,107 |
+| Base | 692 / 692 | 63,238,119 / 63,170,964 | 23 of 48 | 231.0 / 119.3 | 52,643 / 54,923 | 63,170,964 |
+| Arbitrum One | 19 / 19 | 528,147,108 / 528,148,229 | 7 of 309 | 8.5 / 5.2 | 110 / 82,607 | 528,147,108 |
+| OP Mainnet | 2 / 2 | 160,113,052 / 160,121,325 | 1 of 40 | 0.7 / 0.6 | 3,931 / 46,839 | 160,113,052 |
+| Gnosis | 3 / 3 | 49,504,316 / 49,507,477 | 1 of 16 | 0.8 / 0.5 | 1,539 / 9,837 | 49,504,316 |
+| Polygon PoS | 9 / 9 | 98,080,522 / 98,080,901 | 5 of 41 | 3.3 / 2.4 | 4,049 / 121,037 | 98,080,522 |
+| Sepolia | 1,040 / 1,040 | 12,226,639 / 12,226,700 | 7 of 7 | 415.8 / 204.8 | 263 / 713 | 12,226,639 |
 <!-- /generated:feed -->
 
-`pending` rows were still backfilling. Feeds A and B use disjoint providers except Base, where both use Pocket (keyless Base full history has three providers; thirdweb answers HTTP 429). B shares no code with A, but one operator runs both.
+Built 2026-11-28. Feeds A and B use disjoint providers except Base, where both use Pocket (keyless Base full history has three providers; thirdweb answers HTTP 429). B shares no code with A, but one operator runs both.
 
 | Item | Rule |
 | --- | --- |

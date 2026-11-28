@@ -344,11 +344,11 @@ function feedBuildTable() {
   const rows = verify.map(result => {
     const side = (i: 0 | 1) => {
       const feed = i ? 'b' : 'a';
-      const dir = `data/feed/${feed}/v1/${result.chainId}`;
       if (result.finalized[i] === null) return null;
-      const manifest = readJson(`${dir}/manifest.json`);
-      const pages = (manifest.pages as { count: number; sha256: string }[]).filter(page => page.count > 0);
-      const bodies = pages.map(page => readFileSync(`${ROOT}${dir}/p/${page.sha256}.json`));
+      const [head, ...lines] = readFileSync(`${ROOT}data/feed/${feed}/${result.chainId}.jsonl`, 'utf8').trim().split('\n');
+      const manifest = JSON.parse(head!);
+      const pages = (manifest.pages as { count: number }[]).filter(page => page.count > 0);
+      const bodies = lines.map(line => Buffer.from(line));
       const built = builds[feed].find((chain: any) => chain.chain === result.chain);
       const requests: number[] | undefined = i ? built?.requests : built?.retrievals.map((r: any) => r.requests);
       return { pages: `${pages.length} / ${manifest.pages.length}`, raw: bodies.reduce((sum, body) => sum + body.byteLength, 0),

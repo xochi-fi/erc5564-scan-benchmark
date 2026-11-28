@@ -1,5 +1,7 @@
 // Live, keyless: records the RPC exchanges behind test/fixtures/feed and builds both fixture feeds.
-import { rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { packTree } from './pack.ts';
 import { PoliteHttp, type Transport } from '../chain-volume/http.ts';
 import { buildFeedA } from './build-a.ts';
 import { buildFeedB, type Post } from './build-b.ts';
@@ -21,10 +23,11 @@ const post: Post = async (url, body) => {
   return { status: result.status, text: result.text };
 };
 const sources = { gnosis: SOURCES.a.gnosis };
-await rm(`${FIXTURE_DIR}/a`, { recursive: true, force: true });
-await rm(`${FIXTURE_DIR}/b`, { recursive: true, force: true });
-const a = await buildFeedA({ feed: 'a', transport, chains: [FIXTURE_TARGET], sources, outDir: `${FIXTURE_DIR}/a`, now: () => FIXTURE_TIME });
-const b = await buildFeedB({ post, chains: [FIXTURE_TARGET], sources: { gnosis: SOURCES.b.gnosis }, outDir: `${FIXTURE_DIR}/b`, now: () => FIXTURE_TIME });
+const work = await mkdtemp(`${tmpdir()}/feed-fixture-`);
+const a = await buildFeedA({ feed: 'a', transport, chains: [FIXTURE_TARGET], sources, outDir: `${work}/a`, now: () => FIXTURE_TIME });
+const b = await buildFeedB({ post, chains: [FIXTURE_TARGET], sources: { gnosis: SOURCES.b.gnosis }, outDir: `${work}/b`, now: () => FIXTURE_TIME });
+for (const feed of ['a', 'b']) await packTree(`${work}/${feed}`, `${FIXTURE_DIR}/${feed}`);
+await rm(work, { recursive: true, force: true });
 console.log(JSON.stringify({ a, b }, null, 1));
 await writeFile(`${FIXTURE_DIR}/rpc.json`, JSON.stringify({ recordedAt: new Date().toISOString(), target: FIXTURE_TARGET, exchanges }, null, 1) + '\n');
 await writeFile(`${FIXTURE_DIR}/targets.json`, JSON.stringify([FIXTURE_TARGET]) + '\n');

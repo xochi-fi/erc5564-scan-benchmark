@@ -33,7 +33,7 @@ jobs:
           if git fetch --depth=1 origin feed && git cat-file -e FETCH_HEAD:${{ matrix.feed }}/v1; then
             mkdir -p seed && git archive FETCH_HEAD ${{ matrix.feed }} | tar -x -C seed
           else
-            mkdir -p seed && cp -r data/feed/${{ matrix.feed }} seed/
+            bun run src/feed/pack.ts unpack data/feed/${{ matrix.feed }} seed/${{ matrix.feed }}
           fi
       - name: Build
         # A chain that fails keeps its seed pages; one that runs out of time publishes its agreed prefix

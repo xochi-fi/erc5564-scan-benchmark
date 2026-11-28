@@ -11,8 +11,12 @@ import {
 } from '../src/feed/format.ts';
 import { SOURCES } from '../src/feed/sources.ts';
 import { verifyFeeds } from '../src/feed/verify.ts';
+import { unpackTree } from '../src/feed/pack.ts';
 
 const recorded = JSON.parse(await readFile(`${FIXTURE_DIR}/rpc.json`, 'utf8')) as { exchanges: Exchange[] };
+// The fixture feeds are committed packed; tests work on unpacked trees.
+const FIX = await mkdtemp(join(tmpdir(), 'feed-fixture-'));
+for (const feed of ['a', 'b']) await unpackTree(join(FIXTURE_DIR, feed), join(FIX, feed));
 const chainDir = (root: string) => join(root, 'v1', String(FIXTURE_TARGET.chainId));
 
 async function tree(root: string) {
@@ -73,7 +77,7 @@ describe('builders on recorded RPC', () => {
         const [report] = await build(feed, join(work, feed));
         expect(report!.stop).toBeNull();
         expect(report!.published).toBe(FIXTURE_TARGET.maxBlock);
-        expect(await tree(join(work, feed))).toEqual(await tree(join(FIXTURE_DIR, feed)));
+        expect(await tree(join(work, feed))).toEqual(await tree(join(FIX, feed)));
       }
       const a = await tree(join(work, 'a'));
       const b = await tree(join(work, 'b'));
@@ -109,13 +113,13 @@ describe('builders on recorded RPC', () => {
       const { transport } = replay(recorded.exchanges);
       const [report] = await buildFeedA({
         feed: 'a', sources: { gnosis: SOURCES.a.gnosis }, chains: [FIXTURE_TARGET], outDir: join(work, 'a'),
-        seedDir: join(FIXTURE_DIR, 'a'), now: () => FIXTURE_TIME,
+        seedDir: join(FIX, 'a'), now: () => FIXTURE_TIME,
         transport: { request: (url, init) => { asked.push(init.body ?? ''); return transport.request(url, init); } },
       });
       expect(report!.stop).toBeNull();
       // Whole fixture pages are reused, so nothing is fetched: only chain id, finalized and nothing else.
       expect(asked.filter(body => body.includes('eth_getLogs'))).toEqual([]);
-      expect(await tree(join(work, 'a'))).toEqual(await tree(join(FIXTURE_DIR, 'a')));
+      expect(await tree(join(work, 'a'))).toEqual(await tree(join(FIX, 'a')));
     } finally {
       await rm(work, { recursive: true, force: true });
     }
@@ -124,7 +128,7 @@ describe('builders on recorded RPC', () => {
 
 describe('verifier', () => {
   test('the committed fixture feeds agree', async () => {
-    const [result] = await verifyFeeds(join(FIXTURE_DIR, 'a'), join(FIXTURE_DIR, 'b'), [FIXTURE_TARGET]);
+    const [result] = await verifyFeeds(join(FIX, 'a'), join(FIX, 'b'), [FIXTURE_TARGET]);
     expect(result).toMatchObject({ agreedTo: FIXTURE_TARGET.maxBlock, agreedAnnouncements: 3, announcements: [3, 3], disagreement: null });
   });
 
@@ -132,19 +136,19 @@ describe('verifier', () => {
     const work = await mkdtemp(join(tmpdir(), 'feed-'));
     try {
       const read = (root: string) => (path: string) => readFile(join(chainDir(root), path), 'utf8');
-      const a = manifestSchema.parse(JSON.parse(await readFile(join(chainDir(join(FIXTURE_DIR, 'a')), 'manifest.json'), 'utf8')));
+      const a = manifestSchema.parse(JSON.parse(await readFile(join(chainDir(join(FIX, 'a')), 'manifest.json'), 'utf8')));
       const last = a.pages.findLastIndex(page => page.count > 0);
       const altered: Manifest = structuredClone(a);
       const page = altered.pages[last]!;
-      const body = await read(join(FIXTURE_DIR, 'a'))(pagePath(page));
+      const body = await read(join(FIX, 'a'))(pagePath(page));
       const rows = decodePage(body, page.from, page.to);
       rows[0]!.data = rows[0]!.data.slice(0, -2) + (rows[0]!.data.endsWith('00') ? '01' : '00');
       const changed = encodePage(rows, page.from, page.to);
       page.sha256 = sha256(changed);
       await Bun.write(join(chainDir(work), pagePath(page)), changed);
-      for (const p of a.pages) await Bun.write(join(chainDir(work), pagePath(p)), await read(join(FIXTURE_DIR, 'a'))(pagePath(p)));
+      for (const p of a.pages) await Bun.write(join(chainDir(work), pagePath(p)), await read(join(FIX, 'a'))(pagePath(p)));
       await writeFile(join(chainDir(work), 'manifest.json'), JSON.stringify(altered));
-      const result = await agree(a, altered, read(join(FIXTURE_DIR, 'a')), read(work));
+      const result = await agree(a, altered, read(join(FIX, 'a')), read(work));
       expect(result.disagreement).toEqual({ from: page.from, to: page.to, reason: 'digest' });
       expect(result.agreedTo).toBe(page.from - 1);
 
@@ -152,7 +156,7 @@ describe('verifier', () => {
       behind.pages = behind.pages.slice(0, 2);
       behind.pages[1] = { ...behind.pages[1]!, to: behind.pages[1]!.from + 10 };
       behind.finalized.number = behind.pages[1]!.to;
-      const lag = await agree(a, behind, read(join(FIXTURE_DIR, 'a')), read(join(FIXTURE_DIR, 'a')));
+      const lag = await agree(a, behind, read(join(FIX, 'a')), read(join(FIX, 'a')));
       expect(lag.disagreement).toBeNull();
       expect(lag.agreedTo).toBe(behind.pages[1]!.to);
     } finally {

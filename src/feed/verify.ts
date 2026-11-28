@@ -1,6 +1,8 @@
 // Checks two erc5564-feed/1 trees (directories or base URLs) against the spec and against each other.
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { existsSync } from 'node:fs';
+import { readPacked } from './pack.ts';
 import { agree, checkManifest, decodePage, FEED_CHAINS, manifestSchema, pagePath, sha256, type Fetch, type Manifest } from './format.ts';
 
 export interface VerifyTarget { key: string; chainId: number; deployBlock: number }
@@ -14,7 +16,18 @@ export function reader(root: string): (chainId: number) => Fetch {
       return response.text();
     };
   }
-  return chainId => path => readFile(join(root, 'v1', String(chainId), path), 'utf8');
+  // A packed directory (see pack.ts) holds <chainId>.jsonl instead of a tree.
+  return chainId => {
+    const packed = join(root, `${chainId}.jsonl`);
+    if (!existsSync(packed)) return path => readFile(join(root, 'v1', String(chainId), path), 'utf8');
+    const loaded = readPacked(packed);
+    return async path => {
+      const { manifest, pages } = await loaded;
+      const body = path === 'manifest.json' ? JSON.stringify(manifest) : pages.get(path);
+      if (body === undefined) throw new Error(`${packed}: no ${path}`);
+      return body;
+    };
+  };
 }
 
 const count = (manifest: Manifest) => manifest.pages.reduce((sum, page) => sum + page.count, 0);

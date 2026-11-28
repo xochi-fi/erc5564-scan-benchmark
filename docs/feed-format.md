@@ -40,7 +40,7 @@ The [feed workflow](../.github/workflows/feed.yml) rebuilds both feeds every 6 h
 
 ## Reproduce
 
-Builds are keyless and read-only, ≤4 requests/s per host ([sources](../src/feed/sources.ts)).
+Builds follow the [live RPC rules](../METHODS.md#live-rpc) ([sources](../src/feed/sources.ts)).
 
 ```sh
 bun test test/feed.test.ts                  # recorded Gnosis RPC, no network

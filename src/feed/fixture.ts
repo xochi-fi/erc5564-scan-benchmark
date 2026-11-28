@@ -1,5 +1,4 @@
-// Recorded-RPC fixture for the feed tests: real keyless responses for a small Gnosis range
-// (blocks 40,950,000-41,059,999, all three Gnosis announcements), replayed without network.
+// Recorded Gnosis RPC for the feed tests, replayed without network.
 import type { HttpResult, Transport } from '../chain-volume/http.ts';
 import type { Post } from './build-b.ts';
 

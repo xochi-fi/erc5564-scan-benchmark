@@ -1,5 +1,4 @@
-// Copies a built feed tree to a publish directory: each chain's manifest and only the pages it lists.
-// Used by the feed workflow and to refresh data/feed/.
+// Copies each chain's manifest and the pages it lists.
 import { cp, mkdir, readdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';

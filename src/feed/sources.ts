@@ -1,6 +1,4 @@
-// Keyless sources per feed and chain. Every URL returned all known announcements in the
-// chain-volume consistency check (data/chain-volume/consistency/). Spans are the probed caps.
-// Feed A and feed B use disjoint providers on each chain except Base (see below).
+// Sources that passed the chain-volume consistency check; spans are probed caps.
 import type { FeedChain } from './format.ts';
 
 export interface Source { name: string; url: string; span: number }
@@ -27,7 +25,7 @@ export const SOURCES: Record<'a' | 'b', Record<Key, [Source, Source]>> = {
   b: {
     ethereum: [{ name: 'pocket', url: 'https://eth.api.pocket.network', span: 50_000 },
       { name: 'sentio', url: 'https://mainnet.rpc.sentio.xyz', span: 1_000 }],
-    // Keyless Base has three usable full-history providers; thirdweb answers HTTP 429. Pocket serves both feeds here.
+    // thirdweb answers HTTP 429, so Pocket serves both feeds on Base.
     base: [{ name: 'sentio', url: 'https://base.rpc.sentio.xyz', span: 1_000 },
       { name: 'pocket', url: 'https://base.api.pocket.network', span: 10_000 }],
     arbitrum: [{ name: 'fastnode', url: 'https://public-arb-mainnet.fastnode.io', span: 250_000 },

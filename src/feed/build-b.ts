@@ -1,7 +1,4 @@
-// Feed B: an independent producer of the same format. It shares no code with feed A or
-// src/feed/format.ts: its own JSON-RPC client, pager, pacing, codec and checks. It imports only
-// the source list, the chain list and node built-ins, so a bug in one producer's pipeline does
-// not reach the other's output. Both producers are still run by one operator (docs/feed-format.md).
+// Feed B: the same format from separate code (client, pager, codec); imports only the source and chain lists.
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';

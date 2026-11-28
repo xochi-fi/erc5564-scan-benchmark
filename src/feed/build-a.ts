@@ -1,5 +1,4 @@
-// Feed A: full-history pages from two keyless sources per chain, retrieved with the chain-volume
-// pager. A page is published only when both sources return identical rows for it.
+// Feed A: full history from two sources per chain via the chain-volume pager.
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -97,8 +96,7 @@ async function retrieve(options: BuildOptions, chain: ChainTarget, source: Sourc
     log: line => options.log?.(`[${options.feed}:${chain.key}:${source.name}]${line}`),
   });
   let result = await run(resume);
-  // The pager gives up on an endpoint after a few transient errors; one source is all this
-  // retrieval has, so resume from its checkpoint after a pause.
+  // The pager abandons an endpoint after a few transient errors; resume after a pause.
   for (let attempt = 1; !result.success && attempt <= 6 && !/budget/.test(result.failure ?? ''); attempt++) {
     options.log?.(`[${options.feed}:${chain.key}:${source.name}] retry ${attempt} at ${result.checkpoint}: ${result.failure}`);
     await (options.pause ?? Bun.sleep)(30_000 * attempt);

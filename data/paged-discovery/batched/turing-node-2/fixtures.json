@@ -1,0 +1,12 @@
+[
+  {
+    "name": "100000-zero",
+    "path": "~/erc5564-batched/work/fixtures/100000-zero",
+    "source": "existing"
+  },
+  {
+    "name": "100000-sparse",
+    "path": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "source": "existing"
+  }
+]

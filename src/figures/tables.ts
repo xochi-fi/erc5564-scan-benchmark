@@ -408,19 +408,19 @@ function realTimingTable() {
 
 // ---- batched verification ---------------------------------------------------------
 
-export function pagedBatchedTable() {
+function pagedBatchedTable() {
   const rows = readCsv('data/paged-discovery/batched.csv');
   const key = (r: Row) => [r.host, r.count, r.scenario, r.pageBlocks].join('|');
   const groups = new Map<string, Row[]>();
   for (const r of rows) groups.set(key(r), [...(groups.get(key(r)) ?? []), r]);
   const cell = (r: Row | undefined, m: string, digits: number) => (r ? `${fixed(num(r[`${m}Median`])!, digits)} [${fixed(num(r[`${m}Min`])!, digits)}-${fixed(num(r[`${m}Max`])!, digits)}]` : 'pending');
-  return table(['Host', 'Size', 'Scenario', 'Page blocks', 'Payments', 'Verify s, sequential', 'Verify s, batched', 'Total s, sequential', 'Total s, batched'],
-    ['l', 'r', 'l', 'r', 'r', 'r', 'r', 'r', 'r'],
+  return table(['Host', 'Size', 'Scenario', 'Page blocks', 'Payments', 'Verify s, sequential', 'Verify s, batched', 'Total s, sequential', 'Total s, batched', 'Tainted'],
+    ['l', 'r', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r'],
     [...groups.values()].map(g => {
       const seq = g.find(r => r.verifyMode === 'sequential'), bat = g.find(r => r.verifyMode === 'batched');
       const r = (seq ?? bat)!;
       return [({ bazzite: 'Bazzite i7-13700K', turing: 'Turing RK1 A76 (nodes 2-3)' } as Record<string, string>)[r.host!] ?? r.host!, fixed(Number(r.count), 0), r.scenario === 'cold' ? 'cold rescan' : '64-block catch-up', r.pageBlocks!, r.matches!,
-        cell(seq, 'verifyS', 2), cell(bat, 'verifyS', 2), cell(seq, 'totalS', 1), cell(bat, 'totalS', 1)];
+        cell(seq, 'verifyS', 2), cell(bat, 'verifyS', 2), cell(seq, 'totalS', 1), cell(bat, 'totalS', 1), `${Number(seq?.tainted ?? 0) + Number(bat?.tainted ?? 0)}/${Number(seq?.n ?? 0) + Number(bat?.n ?? 0)}`];
     }));
 }
 
@@ -456,6 +456,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'spam-cost': ['docs/spam-cost.md', spamTable],
   'omission-cause': ['docs/omission-cause.md', omissionTable],
   'freshness': ['docs/freshness.md', freshnessTable],
+  'paged-batched': ['docs/paged-discovery.md', pagedBatchedTable],
   'phone-bench': ['docs/phone-bench.md', phoneTable],
   'phone-proxy': ['docs/phone-bench.md', phoneProxyTable],
   'real-scan': ['docs/real-announcements.md', realScanTable],

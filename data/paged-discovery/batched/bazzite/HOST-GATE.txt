@@ -1,0 +1,8 @@
+date: 2026-11-28T02:01:50+01:00
+MemAvailable MiB: 18336
+swap used MiB: 12782
+swap in+out pages/s (10 s): 15.1
+memory PSI some avg60: 0.00
+loadavg: 1.61 2.18 2.80
+limits: MemAvailable >= 8 GiB, swap <= 100 pages/s, PSI avg60 <= 1.0
+result: PASS

@@ -1,0 +1,254 @@
+[
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 0
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 1
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 2
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 3
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 4
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 5
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 6
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 7
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 8
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 9
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 10
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 11
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 12
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 13
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 14
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 15
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 16
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 17
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 18
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 19
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 20
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 21
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 22
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 23
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 24
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 25
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 26
+  },
+  {
+    "fixtureDir": "~/erc5564-batched/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 27
+  }
+]

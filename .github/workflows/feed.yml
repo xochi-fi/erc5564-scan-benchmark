@@ -1,0 +1,93 @@
+name: Feed
+
+# Rebuilds feeds A and B (docs/feed-format.md) and pushes them to the `feed` branch.
+# Schedules run only from the default branch, so this takes effect once merged.
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: feed
+  cancel-in-progress: false
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        feed: [a, b]
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Seed from the published feed, else the recorded build
+        run: |
+          if git fetch --depth=1 origin feed && git cat-file -e FETCH_HEAD:${{ matrix.feed }}/v1; then
+            mkdir -p seed && git archive FETCH_HEAD ${{ matrix.feed }} | tar -x -C seed
+          else
+            mkdir -p seed && cp -r data/feed/${{ matrix.feed }} seed/
+          fi
+      - name: Build
+        # A chain that fails keeps its seed pages; the report records why.
+        run: bun run feed:build-${{ matrix.feed }} --seed seed/${{ matrix.feed }} --out out/${{ matrix.feed }} --report out/build-${{ matrix.feed }}.json || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: feed-${{ matrix.feed }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: feed-*
+          path: out
+          merge-multiple: true
+      - name: Verify
+        # Exit 2 is a disagreement between the feeds: publish both, clients hold their checkpoint.
+        run: |
+          set +e
+          bun run feed:verify out/a out/b > out/verify.json
+          code=$?
+          cat out/verify.json
+          if [ "$code" = 2 ]; then echo "::warning::Feeds disagree; see verify.json"; elif [ "$code" != 0 ]; then exit "$code"; fi
+      - name: Push to the feed branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          site="$RUNNER_TEMP/site"
+          if git fetch --depth=1 origin feed; then
+            git worktree add "$site" FETCH_HEAD
+          else
+            git worktree add --detach "$site" && git -C "$site" checkout --orphan feed && git -C "$site" rm -rfq .
+          fi
+          for feed in a b; do
+            # Each chain's manifest and only the pages it lists.
+            bun run src/feed/publish.ts "out/$feed" "$site/$feed"
+            cp "out/build-$feed.json" "$site/$feed/build.json"
+          done
+          cp out/verify.json "$site/verify.json"
+          cd "$site"
+          git add -A
+          if git diff --cached --quiet; then echo 'No change'; exit 0; fi
+          git commit -qm "Feed rebuild $(date -u +%FT%TZ) from ${GITHUB_SHA::7}"
+          git push origin HEAD:feed

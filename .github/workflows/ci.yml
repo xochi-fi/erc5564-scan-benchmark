@@ -24,6 +24,10 @@ jobs:
           bun run shared-feed:verify data/shared-feed/evidence.json
           for f in data/shared-feed/remote/*/samples.jsonl; do bun run shared-feed:remote-verify "$f" > /dev/null; done
           bun run rpc-recovery:verify data/rpc-recovery/reference.json data/rpc-recovery
+      - name: Recorded feeds verify
+        run: |
+          bun run feed:verify test/fixtures/feed/a test/fixtures/feed/b --targets test/fixtures/feed/targets.json
+          bun run feed:verify data/feed/a data/feed/b
       - name: Generated figures and tables are up to date
         run: |
           bun run figures

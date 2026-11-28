@@ -1,7 +1,8 @@
 // `bun run tables`: regenerates result tables from data/ and writes them between
 // `<!-- generated:NAME -->` and `<!-- /generated:NAME -->` markers in docs/*.md.
 // Pass --check to fail instead of writing when a file would change.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
@@ -334,6 +335,40 @@ function feedTable() {
 }
 
 
+// ---- feed ---------------------------------------------------------------------
+
+function feedBuildTable() {
+  const report = (feed: string) => existsSync(`${ROOT}data/feed/build-${feed}.json`) ? readJson(`data/feed/build-${feed}.json`).chains as any[] : [];
+  const builds = { a: report('a'), b: report('b') };
+  const verify = readJson<any[]>('data/feed/verify.json');
+  const rows = verify.map(result => {
+    const side = (i: 0 | 1) => {
+      const feed = i ? 'b' : 'a';
+      const dir = `data/feed/${feed}/v1/${result.chainId}`;
+      if (result.finalized[i] === null) return null;
+      const manifest = readJson(`${dir}/manifest.json`);
+      const pages = (manifest.pages as { count: number; sha256: string }[]).filter(page => page.count > 0);
+      const bodies = pages.map(page => readFileSync(`${ROOT}${dir}/p/${page.sha256}.json`));
+      const built = builds[feed].find((chain: any) => chain.chain === result.chain);
+      const requests: number[] | undefined = i ? built?.requests : built?.retrievals.map((r: any) => r.requests);
+      return { pages: `${pages.length} / ${manifest.pages.length}`, raw: bodies.reduce((sum, body) => sum + body.byteLength, 0),
+        gzip: bodies.reduce((sum, body) => sum + gzipSync(body).byteLength, 0),
+        requests: requests ? fixed(requests.reduce((x, y) => x + y, 0), 0) : '—' };
+    };
+    const [a, b] = [side(0), side(1)];
+    const n = (v: number | null) => v === null ? 'pending' : fixed(v, 0);
+    const agreed = result.pending ? 'pending' : result.disagreement === null ? fixed(result.agreedTo, 0)
+      : `${fixed(result.agreedTo, 0)}, then ${result.disagreement.reason} differs`;
+    const shown = a ?? b;
+    return [CHAIN_LABELS[result.chain]!, `${n(result.announcements[0])} / ${n(result.announcements[1])}`,
+      `${n(result.finalized[0])} / ${n(result.finalized[1])}`, shown ? shown.pages.replace(' / ', ' of ') : 'pending',
+      shown ? `${fixed(shown.raw / 1000, 1)} / ${fixed(shown.gzip / 1000, 1)}` : 'pending',
+      `${a?.requests ?? 'pending'} / ${b?.requests ?? 'pending'}`, agreed];
+  });
+  return table(['Chain', 'Announcements, A / B', 'Finalized block, A / B', 'Non-empty pages', 'Page kB, raw / gzip',
+    'Build requests, A / B', 'Agreed through block'], ['l', 'r', 'r', 'r', 'r', 'r', 'l'], rows);
+}
+
 // ---- README summary tables ----------------------------------------------------
 
 // ---- writer -------------------------------------------------------------------
@@ -461,6 +496,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'phone-proxy': ['docs/phone-bench.md', phoneProxyTable],
   'real-scan': ['docs/real-announcements.md', realScanTable],
   'real-timing': ['docs/real-announcements.md', realTimingTable],
+  feed: ['docs/feed-format.md', feedBuildTable],
 };
 
 export function renderTables(): Map<string, string> {

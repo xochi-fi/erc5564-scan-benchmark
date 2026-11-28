@@ -1,0 +1,65 @@
+{
+ "format": "erc5564-feed/1",
+ "chainId": 1,
+ "contract": "0x55649e01b5df198d18d95b5cc5051630cfd45564",
+ "topic0": "0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7",
+ "deployBlock": 20042207,
+ "pageBlocks": 1000000,
+ "finalized": {
+  "number": 26510107,
+  "hash": "0x007a5ceb459650be361c8ce537fbd3f42871d3fcc12a83e7badac80c1fbc7cbb"
+ },
+ "pages": [
+  {
+   "from": 20042207,
+   "to": 21042206,
+   "count": 0,
+   "sha256": "1f6931c925674dba9b7190945a6ee268271c9804dce70a73823092119ab4a106"
+  },
+  {
+   "from": 21042207,
+   "to": 22042206,
+   "count": 1,
+   "sha256": "bb492892f6cd1d827aec52c77e8b668aa6ec96fc814cf5b04b5d7ef336ac0a96"
+  },
+  {
+   "from": 22042207,
+   "to": 23042206,
+   "count": 31,
+   "sha256": "5f5bad0a2ff78313e43e646cc09674443b1cb691f11802dcfd8e3de40eab91bf"
+  },
+  {
+   "from": 23042207,
+   "to": 24042206,
+   "count": 4,
+   "sha256": "84e77c1b634a21b9acf402256f60f6871403d12daea1491fc7b8698adf0d9134"
+  },
+  {
+   "from": 24042207,
+   "to": 25042206,
+   "count": 0,
+   "sha256": "1f6931c925674dba9b7190945a6ee268271c9804dce70a73823092119ab4a106"
+  },
+  {
+   "from": 25042207,
+   "to": 26042206,
+   "count": 193,
+   "sha256": "f624fe733d13f04d887f27179ac8586cecb41d49b43c482efb2b2380f3c2c8e1"
+  },
+  {
+   "from": 26042207,
+   "to": 26510107,
+   "count": 73,
+   "sha256": "cfc8072837c8a51205ab81d75b87f6dd32e1a469ccc95aa281a5b36a917e861c"
+  }
+ ],
+ "producer": {
+  "feed": "a",
+  "sources": [
+   "https://gateway.tenderly.co/public/mainnet",
+   "https://ethereum.public.blockpi.network/v1/rpc/public"
+  ],
+  "builtAt": "2026-11-28T00:44:50.938Z",
+  "code": "src/feed/build-a.ts"
+ }
+}

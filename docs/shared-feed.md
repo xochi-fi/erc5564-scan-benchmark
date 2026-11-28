@@ -12,12 +12,12 @@ No DoS-resistant OMR variant runs in production.
 
 | Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
 | --- | ---: | ---: | ---: | --- |
-| [OMRp2](https://eprint.iacr.org/2021/1256) | 59.8 / 30.1 | 11 | 956 | Yes (proven in 2024/510, Lemma 4.3) |
-| [PerfOMR1](https://eprint.iacr.org/2024/204) | 4.1 / 2.1 | 21 | 2,181 | No (attacks in 2024/510, Section 5.1) |
+| [OMRp2](https://eprint.iacr.org/2021/1256) | 59.8 / 30.1 | 11 | 956 | Yes (2024/510 Lemma 4.3, §7.3) |
+| [PerfOMR1](https://eprint.iacr.org/2024/204) | 4.1 / 2.1 | 21 | 2,181 | No (attacks in 2024/510 §5.1, §7.4, §8) |
 | [PerfOMR2](https://eprint.iacr.org/2024/204) | 21.5 / 11.3 | 11 | 583 | No |
-| [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (Theorem 5.3) |
+| [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (2024/510 Theorem 7.2) |
 
-Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one GCP n4-standard-8 with SEAL HEXL / AVX512-IFMA52. Detector time is per scanned message, for one recipient's digest. Table 2 gives DoS-PerfOMR 4.95 ms/msg amortized. [2021/1256](https://eprint.iacr.org/2021/1256) puts server cost at ~$1 per million messages. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4× the speed of PerfOMR.
+Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one GCP n4-standard-8 with SEAL HEXL / AVX512-IFMA52. Detector time is per scanned message, for one recipient's digest. Table 2 gives DoS-PerfOMR 4.95 ms/msg amortized. Table 1 cites Theorem 5.3, the snake-eye resistance of LWEmongrass that Theorem 7.2 builds on. Section, lemma, theorem and table numbers on this page refer to 2021/1256 rev. 2022-04-14, 2024/204 rev. 2024-11-21 and 2024/510 rev. 2025-02-07, the latest of its five revisions. [2021/1256](https://eprint.iacr.org/2021/1256) puts server cost at ~$1 per million messages. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4× the speed of PerfOMR.
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
 <sub>Solid lines scale the scan-cost controls. Dashed OMR lines are single-thread literature values on one cloud AVX512 core.</sub>
@@ -47,7 +47,7 @@ Privacy does not change the decision. A feed downloaded in full is the "full-sca
 | OMR DoS | Recipients | Completeness assumes an honest-but-curious detector. Crafted PerfOMR clues match many recipients and overflow them. Overflow forces a retry with larger k̄ or a full download | 2021/1256 §8.1; 2024/510 §5.1, §7.1, §7.4 |
 | ERC-5564 view tag | Everyone | One byte of the hashed shared secret per announcement: 128 → 124 bits, privacy only. A server given the viewing key sees every match, the "detection key" approach OMR replaces | [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) "Parsing considerations"; 2021/1256 §1 |
 
-OMR becomes the private option when a full download stops being practical: past the 60 MB/day feed budget above (~100k announcements/day), wallets would fetch selectively or hand a viewing key to a scanner, and both reveal which announcements are theirs (inferred). The [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) note ("Recommendation (TL;DR)") calls FHE OMR "far-fetched" for near-term deployment and points to Pung-style PIR with an OMR-KEM. Papers read: 2021/1256 rev. 2022-04-14, 2024/204 rev. 2024-11-21, 2024/510 rev. 2025-02-07.
+OMR becomes the private option when a full download stops being practical: past the 60 MB/day feed budget above (~100k announcements/day), wallets would fetch selectively or hand a viewing key to a scanner, and both reveal which announcements are theirs (inferred). The [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) note ("Recommendation (TL;DR)") calls FHE OMR "far-fetched" for near-term deployment and points to Pung-style PIR with an OMR-KEM.
 
 ## Feed against live RPC
 

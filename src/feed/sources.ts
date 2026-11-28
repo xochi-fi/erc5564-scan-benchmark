@@ -31,7 +31,7 @@ export const SOURCES: Record<'a' | 'b', Record<Key, [Source, Source]>> = {
     arbitrum: [{ name: 'fastnode', url: 'https://public-arb-mainnet.fastnode.io', span: 250_000 },
       { name: 'pocket', url: 'https://arb-one.api.pocket.network', span: 10_000 }],
     optimism: [{ name: 'blockpi', url: 'https://optimism.public.blockpi.network/v1/rpc/public', span: 5_000 },
-      { name: 'routeme', url: 'https://lb.routeme.sh/rpc/evm/10', span: 10_000 }],
+      { name: 'sentio', url: 'https://optimism.rpc.sentio.xyz', span: 1_000 }],
     gnosis: [{ name: 'oat.farm', url: 'https://gnosis.oat.farm', span: 10_000 },
       { name: 'pocket', url: 'https://gnosis.api.pocket.network', span: 10_000 }],
     polygon: [{ name: 'pocket', url: 'https://poly.api.pocket.network', span: 10_000 },

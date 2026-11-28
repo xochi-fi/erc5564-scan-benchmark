@@ -17,7 +17,8 @@ export function parseUserAgent(ua: string): Pick<Detected, 'os' | 'osVersion' | 
   else if (/Linux/.test(ua)) { os = 'Linux'; device = 'PC'; }
   let browser = 'unknown', browserVersion: string | null = null;
   const pick = (name: string, re: RegExp) => { browser = name; browserVersion = m(re); };
-  if (/EdgA?\//.test(ua)) pick('Edge', /EdgA?\/([\d.]+)/);
+  if (/Ddg\//.test(ua)) pick('DuckDuckGo', /Ddg\/([\d.]+)/);
+  else if (/EdgA?\//.test(ua)) pick('Edge', /EdgA?\/([\d.]+)/);
   else if (/SamsungBrowser\//.test(ua)) pick('Samsung Internet', /SamsungBrowser\/([\d.]+)/);
   else if (/CriOS\//.test(ua)) pick('Chrome (iOS)', /CriOS\/([\d.]+)/);
   else if (/FxiOS\//.test(ua)) pick('Firefox (iOS)', /FxiOS\/([\d.]+)/);

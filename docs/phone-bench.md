@@ -2,15 +2,16 @@
 
 How fast does a phone browser scan announcements?
 
-No phone result is recorded yet. The page measures it on the visitor's device and anyone with a GitHub account can submit the result.
+An iPhone 17 Pro in DuckDuckGo scans 10,000 announcements at 0.54 ms each with the JavaScript `crypto` engine; the hosts are in [scan cost](scan-cost.md). The 1,000-announcement run is short and may include JIT warm-up. No-JIT is unmeasured on a phone: a run labelled Lockdown Mode still had WebAssembly, so Lockdown was off, and it is left out.
 
 <!-- generated:phone-bench -->
 | Device | OS | Browser | JIT | Engine | Announcements | ms per announcement | Credit |
 | --- | --- | --- | --- | --- | ---: | ---: | --- |
-| No results yet |  |  |  |  |  |  |  |
+| iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | crypto | 1,000 | 0.60 | owner |
+| iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | crypto | 10,000 | 0.54 | owner |
 <!-- /generated:phone-bench -->
 
-Until phones report, JavaScriptCore without its JIT bounds the iOS Lockdown Mode case. It is a proxy: Bun on a Turing node, not Safari on a phone.
+JavaScriptCore without its JIT bounds the Lockdown Mode case until a phone measures it. It is a proxy: Bun on a Turing node, not Safari on a phone.
 
 <!-- generated:phone-proxy -->
 | Host | Runtime | JIT | Engine | ms per announcement |
@@ -21,12 +22,12 @@ Until phones report, JavaScriptCore without its JIT bounds the iOS Lockdown Mode
 | turing-node-3 | bun 1.4.4 | off (`BUN_JSC_useJIT=0`) | sdk | 11.04 |
 <!-- /generated:phone-proxy -->
 
-The page is one static file. It scans the first 1,000, 5,000 or 10,000 announcements of a pinned seeded fixture (`phone-bench:v1`, a match every 1,000) in a Web Worker, or in short main-thread steps where workers are missing, and checks the matches against the fixture schedule. Its Content-Security-Policy blocks every network request. Nothing leaves the device until the user submits, copies or downloads the result.
+The page is a few static files. It scans the first 1,000, 5,000 or 10,000 announcements of a pinned seeded fixture (`phone-bench:v1`, a match every 1,000) with the SDK, its `checkStealthAddress` (`crypto`) or libsecp256k1 in WASM, in a Web Worker or in short main-thread steps where workers are missing, and checks the matches against the fixture schedule. Its Content-Security-Policy blocks every network request. Nothing leaves the device until the user submits, copies or downloads the result.
 
 | Field in a result | Source |
 | --- | --- |
 | `device`, `os`, `browser`, `jit`, `notes` | What the user confirmed or typed, prefilled from detection |
-| `detected` | OS, browser and versions parsed from the user agent; iPhone models matching the screen; Client Hints `model`, `platform`, `platformVersion` where offered; a JIT guess (off only when iOS lacks WebAssembly, as in Lockdown Mode) |
+| `detected` | OS, browser and versions parsed from the user agent; iPhone models matching the screen; Client Hints `model`, `platform`, `platformVersion` where offered; a JIT guess (off only when iOS lacks WebAssembly, as in Lockdown Mode); a Lockdown label with WebAssembly present is rejected |
 | `userAgent`, `screen`, `hardwareConcurrency`, `webAssembly`, `secureContext`, `worker` | The browser, as exposed to any page |
 | `engine`, `count`, fixture digests, `scanMs`, `msPerAnnouncement`, matches, `verified` | The run |
 

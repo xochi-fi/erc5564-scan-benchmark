@@ -66,7 +66,7 @@ describe('phone bench result validation', () => {
     expect(validate(parsed.json).ok).toBe(true);
   });
   test('rejects tampered or implausible results', () => {
-    for (const change of [{ verified: false }, { matches: 2 }, { msPerAnnouncement: 0.5 }, { packedSha256: '0'.repeat(64) }, { count: 2000 }, { extra: 1 }]) {
+    for (const change of [{ jit: 'off-lockdown' }, { verified: false }, { matches: 2 }, { msPerAnnouncement: 0.5 }, { packedSha256: '0'.repeat(64) }, { count: 2000 }, { extra: 1 }]) {
       expect(validate(JSON.stringify({ ...good, ...change })).ok).toBe(false);
     }
   });

@@ -9,7 +9,7 @@ import type { PackedFixture } from './scan.ts';
 export const PHONE_SEED = 'phone-bench:v1';
 export const PHONE_COUNT = 10_000;
 export const PHONE_MATCH_EVERY = 1_000;
-export const PAGE_VERSION = '4';
+export const PAGE_VERSION = '5';
 /** SHA256 of the packed rows of the 10,000-announcement fixture; the record script accepts only this fixture. */
 export const PHONE_PACKED_SHA256 = '59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d';
 const ROOT = new URL('../../', import.meta.url).pathname;
@@ -87,7 +87,7 @@ const BOOT = `(function () {
 export function html(): string {
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; worker-src 'self'; child-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; worker-src 'self'; child-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scan bench</title><style>${STYLE}</style></head><body data-state="idle">
 <h1>ERC-5564 scan bench <span id="version" class="muted"></span></h1>
@@ -106,8 +106,8 @@ export function html(): string {
 <p id="candidates" class="muted"></p>
 <div class="row"><div><label for="os">OS</label><input id="os" autocomplete="off"></div><div><label for="browser">Browser</label><input id="browser" autocomplete="off"></div></div>
 <label for="jit">JavaScript JIT</label><select id="jit"><option value="on">On (normal)</option><option value="off-lockdown">Off: iOS Lockdown Mode</option><option value="off-other">Off: other</option><option value="unknown">Unknown</option></select>
-<p id="jit-reason" class="muted"></p>
-<div class="row"><div><label for="engine">Engine</label><select id="engine"><option value="crypto">crypto</option><option value="sdk">sdk (250 per call)</option></select></div>
+<p id="jit-reason" class="muted"></p><p id="jit-warning" class="bad"></p>
+<div class="row"><div><label for="engine">Engine</label><select id="engine"><option value="crypto">crypto</option><option value="sdk">sdk (250 per call)</option><option value="wasm">wasm (libsecp256k1)</option></select></div>
 <div><label for="count">Announcements</label><select id="count"><option value="1000">1,000</option><option value="5000">5,000</option><option value="10000">10,000</option></select></div></div>
 <label for="notes">Notes (optional: charging, low power mode, temperature)</label><input id="notes" autocomplete="off">
 <div id="share">
@@ -125,8 +125,16 @@ ${BOOT}</script>
 `;
 }
 
+// tiny-secp256k1's browser loader imports the .wasm as a module; swap in a loader that reads wasm-bytes.js.
+const wasmLoader: import('bun').BunPlugin = {
+  name: 'tiny-secp256k1-wasm',
+  setup(build) {
+    build.onResolve({ filter: /wasm_loader(\.browser)?\.js$/ }, () => ({ path: `${ROOT}src/phone-bench/wasm-loader.ts` }));
+  },
+};
+
 async function bundle(entry: string): Promise<string> {
-  const build = await Bun.build({ entrypoints: [`${ROOT}src/phone-bench/${entry}`], target: 'browser', format: 'iife', minify: true, define: { PAGE_VERSION: JSON.stringify(PAGE_VERSION) } });
+  const build = await Bun.build({ entrypoints: [`${ROOT}src/phone-bench/${entry}`], target: 'browser', format: 'iife', minify: true, define: { PAGE_VERSION: JSON.stringify(PAGE_VERSION) }, plugins: [wasmLoader] });
   const [artifact] = build.outputs;
   if (!build.success || !artifact) throw new Error(build.logs.join('\n'));
   return artifact.text();
@@ -139,6 +147,8 @@ export async function site(fixture: PackedFixture): Promise<Record<string, strin
     'app.js': await bundle('page.ts'),
     'worker.js': await bundle('worker.ts'),
     'fixture.js': `self.FIXTURE = ${JSON.stringify(fixture)};\n`,
+    'worker-wasm.js': `importScripts('wasm-bytes.js?v=${PAGE_VERSION}');\n${await bundle('worker-wasm.ts')}`,
+    'wasm-bytes.js': `self.SECP256K1_WASM = ${JSON.stringify(Buffer.from(await Bun.file(`${ROOT}node_modules/tiny-secp256k1/lib/secp256k1.wasm`).arrayBuffer()).toString('base64'))};\n`,
   };
 }
 

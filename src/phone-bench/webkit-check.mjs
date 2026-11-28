@@ -20,7 +20,7 @@ async function waitState(page, states, ms) {
   }
 }
 
-async function run(context, label, { cancel = false } = {}) {
+async function run(context, label, { cancel = false, engine = 'crypto' } = {}) {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -29,6 +29,7 @@ async function run(context, label, { cancel = false } = {}) {
   check(`${label}: idle state on load`, await page.textContent('#state') === 'Ready', await page.textContent('#details'));
   check(`${label}: device prefilled`, (await page.inputValue('#device')).length > 0, await page.inputValue('#device'));
   await page.selectOption('#count', count);
+  await page.selectOption('#engine', engine);
   await page.click('#run');
   await waitState(page, ['running'], 5000);
   check(`${label}: running state visible`, await page.isVisible('#progress-box') && await page.isDisabled('#run') && await page.isVisible('#cancel'));
@@ -53,6 +54,7 @@ async function run(context, label, { cancel = false } = {}) {
 await run(await browser.newContext(), 'worker');
 if (engineName === 'webkit') await run(await browser.newContext({ ...devices['iPhone 15'] }), 'emulated iPhone 15');
 await run(await browser.newContext(), 'cancel', { cancel: true });
+await run(await browser.newContext(), 'wasm engine', { engine: 'wasm' });
 const noWorker = await browser.newContext();
 await noWorker.addInitScript(() => { delete window.Worker; });
 await run(noWorker, 'no-worker fallback');

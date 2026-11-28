@@ -9,7 +9,7 @@ export const REPO = 'xochi-fi/erc5564-scan-benchmark';
 const CHUNK = 250;
 const FALLBACK_CHUNK = 10;
 const FIXTURE_TIMEOUT_MS = 60_000;
-const WORKER_TIMEOUT_MS = 8_000;
+const WORKER_TIMEOUT_MS = 30_000;
 
 type State = 'idle' | 'running' | 'done' | 'error';
 type Boot = { step(name: string): void; fail(message: string): void; ready(): void };
@@ -55,6 +55,14 @@ input('device').value = candidates.length ? `${candidates.length === 1 ? candida
 input('os').value = [parsed.os, parsed.osVersion].filter(Boolean).join(' ');
 input('browser').value = app ?? [parsed.browser, parsed.browserVersion].filter(Boolean).join(' ');
 $<HTMLSelectElement>('jit').value = jit.jitGuess;
+/** Lockdown Mode removes WebAssembly; picking it while WebAssembly works means Lockdown is not active here. */
+const lockdownMismatch = () => $<HTMLSelectElement>('jit').value === 'off-lockdown' && hasWasm;
+function checkJit() {
+  $('jit-warning').textContent = lockdownMismatch()
+    ? 'Lockdown Mode does not appear to be active in this browser: WebAssembly still works. Turn it on in Settings > Privacy & Security > Lockdown Mode, restart, and check this browser is not excluded. Results labelled this way cannot be submitted.'
+    : '';
+}
+$('jit').addEventListener('change', checkJit);
 $('jit-reason').textContent = `Prefilled: ${jit.jitReason}.`;
 $('candidates').textContent = candidates.length ? 'iPhones do not report their model; these share your screen size. Edit the field to your model.' : '';
 const hints = (navigator as unknown as { userAgentData?: { getHighEntropyValues(k: string[]): Promise<Record<string, string>> } }).userAgentData;
@@ -81,12 +89,12 @@ function loadFixture(): Promise<PackedFixture> {
 }
 
 /** Starts worker.js and waits for its hello; null when workers are missing, blocked or silent. */
-function startWorker(): Promise<Worker | null> {
+function startWorker(engine: string): Promise<Worker | null> {
   return new Promise(resolve => {
     let w: Worker;
     try {
       if (typeof Worker === 'undefined') return resolve(null);
-      w = new Worker(`worker.js?v=${PAGE_VERSION}`);
+      w = new Worker(`${engine === 'wasm' ? 'worker-wasm.js' : 'worker.js'}?v=${PAGE_VERSION}`);
     } catch { return resolve(null); }
     const t = setTimeout(() => { w.terminate(); resolve(null); }, WORKER_TIMEOUT_MS);
     w.onmessage = e => { if ((e.data as { type?: string })?.type === 'hello') { clearTimeout(t); resolve(w); } };
@@ -134,11 +142,13 @@ $('run').addEventListener('click', async () => {
     $('verdict').className = r.verified ? 'ok' : 'bad';
     $<HTMLTextAreaElement>('result').value = JSON.stringify(lastResult, null, 2);
     setState('done', r.verified ? 'Submit, copy or download the result below.' : 'Do not submit this result.');
-    $<HTMLButtonElement>('submit').disabled = !r.verified;
+    $<HTMLButtonElement>('submit').disabled = !r.verified || lockdownMismatch();
     boot.step(`done (${usedWorker ? 'worker' : 'main thread'})`);
   };
 
-  worker = await startWorker();
+  if (engine === 'wasm' && typeof WebAssembly !== 'object') return fail('This browser has no WebAssembly (Lockdown Mode turns it off). Pick crypto or sdk.');
+  boot.step(engine === 'wasm' ? 'starting WASM worker (loads 1.7 MB)' : 'starting worker');
+  worker = await startWorker(engine);
   if (cancelled) { stop(); return; }
   if (worker) {
     boot.step('scanning (worker)');
@@ -150,6 +160,8 @@ $('run').addEventListener('click', async () => {
     };
     worker.onerror = e => { e.preventDefault(); fail(`Worker error: ${e.message || 'unknown'}`); };
     worker.postMessage({ fixture, engine, count, chunk: CHUNK });
+  } else if (engine === 'wasm') {
+    fail('The WASM engine needs a Web Worker, and this browser did not start one. Pick crypto or sdk.');
   } else {
     boot.step('scanning (main thread)');
     $('message').textContent = 'This browser did not start a Web Worker, so the scan runs on the page in small steps. Keep this tab open.';

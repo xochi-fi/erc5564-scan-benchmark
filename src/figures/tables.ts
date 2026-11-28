@@ -436,7 +436,7 @@ function phoneTable() {
   const header = ['Device', 'OS', 'Browser', 'JIT', 'Engine', 'Announcements', 'ms per announcement', 'Credit'];
   if (rows.length === 0) return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], [['No results yet', '', '', '', '', '', '', '']]);
   return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], rows.map(r => [r.device, r.os, r.browser, r.jit, r.engine, fixed(r.count, 0),
-    fixed(r.msPerAnnouncement, 2), r.source ? `@${r.source}` : '-']));
+    fixed(r.msPerAnnouncement, 2), r.source ?? '-']));
 }
 
 const TABLES: Record<string, [file: string, render: () => string]> = {

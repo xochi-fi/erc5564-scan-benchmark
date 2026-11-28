@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
-  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, scanEngines, perAnnouncement, spreadOf, type FeedKey, type FeedSummary, type Row,
+  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -301,42 +301,54 @@ function recoveryFaultTable() {
 
 // ---- shared feed --------------------------------------------------------------
 
-const FEED_PATH: Record<string, string> = { rpc: 'Live RPC', dual: 'Dual feed, loopback' };
 const MODE: Record<string, string> = { cold: 'Cold', warm: 'Warm' };
 const one = (values: number[], what: string) => {
   if (new Set(values).size !== 1) throw new Error(`shared-feed: ${what} varies across samples: ${values}`);
   return values[0]!;
 };
 const feedMedian = (values: number[]) => ms(median(values)!);
-const feedCatchUp = (s: FeedSummary) => {
-  const { median, min, max } = spreadOf(s.elapsedMs);
+const feedSpread = (values: number[]) => {
+  const { median, min, max } = spreadOf(values);
   return `${ms(median)} [${ms(min)}–${ms(max)}]`;
 };
+type FeedPath = 'remote' | 'unpaced' | 'loopback' | 'paced';
+const FEED_PATH: Record<FeedPath, string> = {
+  remote: 'Dual feed, remote', unpaced: 'Live RPC, excluding pacing', loopback: 'Dual feed, loopback', paced: 'Live RPC, paced',
+};
+/** One row's cells after Path and Mode; `host` is '' for Bazzite or a Turing node directory. */
+function feedCells(path: FeedPath, mode: 'cold' | 'warm', host: string) {
+  if (path === 'remote') {
+    const s = remoteSummary(host || 'bazzite')[`remote-${mode}`];
+    return { s, wire: fixed(one(s.wireBytes, 'wire bytes'), 0), catchUp: feedSpread(s.elapsedMs), first: feedMedian(s.firstSyntheticMatchMs) };
+  }
+  const s = feedSummary(host)[`${path === 'loopback' ? 'dual' : 'rpc'}-${mode}` as FeedKey];
+  const elapsed = path === 'unpaced' ? rpcUnpaced(host)[mode].map(row => row.busyMs) : s.elapsedMs;
+  return { s, wire: '—', catchUp: feedSpread(elapsed), first: path === 'unpaced' ? '—' : feedMedian(s.firstSyntheticMatchMs) };
+}
 function feedTable() {
-  const summaries = feedSummary();
-  const keys: FeedKey[] = ['rpc-cold', 'dual-cold', 'rpc-warm', 'dual-warm'];
-  return table(['Path', 'Mode', 'Exact logs in sampled range', 'POST / GET', 'Request / response body bytes', 'Fetch (ms)', 'Scan (ms)',
-    'Page verification (ms)', 'First synthetic match (ms)', 'Catch-up (ms), median [min–max]'],
-  ['l', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'],
-  keys.map(key => {
-    const s = summaries[key];
-    const [path, mode] = key.split('-') as [string, string];
-    return [FEED_PATH[path]!, MODE[mode]!, `${one(s.observed, 'observed')}/${one(s.expected, 'expected')}`,
-      `${one(s.posts, 'posts')} / ${one(s.gets, 'gets')}`,
-      `${fixed(one(s.requestBytes, 'request bytes'), 0)} / ${fixed(one(s.responseBytes, 'response bytes'), 0)}`,
-      feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), feedMedian(s.firstSyntheticMatchMs), feedCatchUp(s)];
-  }));
+  const rows: string[][] = [];
+  for (const mode of ['cold', 'warm'] as const) {
+    for (const path of ['remote', 'unpaced', 'loopback', 'paced'] as const) {
+      const { s, wire, catchUp, first } = feedCells(path, mode, '');
+      rows.push([FEED_PATH[path], MODE[mode]!, `${one(s.observed, 'observed')}/${one(s.expected, 'expected')}`,
+        `${one(s.posts, 'posts')} / ${one(s.gets, 'gets')}`,
+        `${fixed(one(s.requestBytes, 'request bytes'), 0)} / ${fixed(one(s.responseBytes, 'response bytes'), 0)}`, wire,
+        feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), first, catchUp]);
+    }
+  }
+  return table(['Path', 'Mode', 'Exact logs in sampled range', 'POST / GET', 'Request / response body bytes', 'Compressed bytes',
+    'Fetch (ms)', 'Scan (ms)', 'Page verification (ms)', 'First synthetic match (ms)', 'Catch-up (ms), median [min–max]'],
+  ['l', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'], rows);
 }
 function feedHostsTable() {
   const hosts: [string, string][] = [['', 'Bazzite'], ['turing-node-1', 'node 1'], ['turing-node-2', 'node 2'], ['turing-node-3', 'node 3']];
-  const byHost = hosts.map(([dir, label]) => [label, feedSummary(dir)] as const);
   const rows: string[][] = [];
-  for (const mode of ['cold', 'warm']) {
-    for (const path of ['rpc', 'dual']) {
-      for (const [label, summaries] of byHost) {
-        const s = summaries[`${path}-${mode}` as FeedKey];
-        rows.push([FEED_PATH[path]!, MODE[mode]!, label, feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs),
-          feedMedian(s.firstSyntheticMatchMs), feedCatchUp(s)]);
+  for (const mode of ['cold', 'warm'] as const) {
+    for (const path of ['remote', 'unpaced', 'loopback', 'paced'] as const) {
+      for (const [dir, label] of hosts) {
+        if (path === 'remote' && !REMOTE_HOSTS.includes(dir || 'bazzite')) continue;
+        const { s, catchUp, first } = feedCells(path, mode, dir);
+        rows.push([FEED_PATH[path], MODE[mode]!, label, feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), first, catchUp]);
       }
     }
   }

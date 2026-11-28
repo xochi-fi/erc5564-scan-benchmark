@@ -184,6 +184,28 @@ export const feedBytesLog = () => readFileSync(path('data/shared-feed/autoresear
 export const feedSummary = (host = '') =>
   readJson<{ summaries: Record<FeedKey, FeedSummary> }>(`data/shared-feed/${host ? `${host}/` : ''}summary.json`).summaries;
 
+/** Hosts with a remote-feed run, as directory names under data/shared-feed/remote/. */
+export const REMOTE_HOSTS = ['bazzite', 'turing-node-1'];
+export type RemoteSummary = FeedSummary & { wireBytes: number[]; compressed: number[]; cacheHits: number[] };
+export const remoteSummary = (host: string) =>
+  readJson<{ summaries: Record<'remote-cold' | 'remote-warm', RemoteSummary> }>(`data/shared-feed/remote/${host}/summary.json`).summaries;
+export const remoteEvidence = (host: string) => readJson(`data/shared-feed/remote/${host}/evidence.json`);
+
+/**
+ * Live RPC samples without the client's own pacing: the recorded request, scan and verification
+ * time, which are sequential in rpc mode. What is left of the wall time is the ≥275 ms start-to-start
+ * wait (plus checkpoint writes, under 1 ms per page).
+ */
+export function rpcUnpaced(host = '') {
+  const samples = feedEvidence(host).samples as Record<string, { elapsedMs: number; scanMs: number; verificationMs: number; requests: { fetchMs: number }[] }>;
+  const of = (mode: 'cold' | 'warm') => [1, 2, 3].map(round => {
+    const s = samples[`rpc-${mode}-${round}`]!;
+    const busyMs = s.requests.reduce((sum, r) => sum + r.fetchMs, 0) + s.scanMs + s.verificationMs;
+    return { busyMs, waitMs: s.elapsedMs - busyMs, elapsedMs: s.elapsedMs };
+  });
+  return { cold: of('cold'), warm: of('warm') };
+}
+
 // ---- scan engines -------------------------------------------------------------
 
 export const ENGINE_HOSTS = ['bazzite', 'turing-node-1'] as const;

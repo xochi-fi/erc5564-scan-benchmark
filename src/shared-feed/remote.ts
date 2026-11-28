@@ -21,7 +21,7 @@ const [command, ...args] = Bun.argv.slice(2);
 
 async function child(output: string, name: string, limit: number, urls: string[]) {
   const feed = await loadReference();
-  const fixtureDir = `${output}/synthetic`;
+  const fixtureDir = `${output}/synthetic/${name}-${limit}`;
   // kept: recorded evidence depends on it
   const synthetic = await generateFixture(fixtureDir, { seed: 'phase6:base:v1', count: 4, matchEvery: 2 });
   const fixtures = (await Bun.file(`${fixtureDir}/announcements.jsonl`).text()).trim().split('\n')

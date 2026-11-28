@@ -5,7 +5,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, STRATEGIES, bestRetrieval, chainLatest, chainVolume, consistency, feedBytesLog, feedEvidence, feedControls, feedSummary, num,
-  pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, scanCost, engineHeadlines, perAnnouncement, scanEngines, type Strategy,
+  pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, remoteSummary, rpcUnpaced, scanCost, engineHeadlines, perAnnouncement, scanEngines, type Strategy,
 } from './data.ts';
 import { FAULTS } from './tables.ts';
 import { circle, decadeLabel, dotKey, legend, line, linearScale, logScale, rect, svg, text } from './svg.ts';
@@ -264,21 +264,22 @@ function outcomeMatrix(): string {
 function costFrontier(): string {
   const { expected } = recoveryReference();
   const feed = feedSummary();
+  const remote = remoteSummary('bazzite')['remote-cold'];
   const sec = (ms: number) => `${fmt(ms / 1000, 2)} s`;
   type Place = 'above' | 'below' | 'none';
   interface Point { label: string; requests: number; unit: string; found: number; verified: boolean; time: string; place: Place }
   const live = (label: string, name: string, mode: string, place: Place): Point => {
     const run = recoveryRun(name, mode);
-    return { label, requests: run.requests, unit: 'POST', found: run.observed, verified: mode !== 'single', time: sec(run.elapsedMs), place };
+    return { label, requests: run.requests, unit: 'POST', found: run.observed, verified: mode !== 'single', time: `${sec(run.elapsedMs)} paced`, place };
   };
   const one = (values: number[]) => median(values)!;
   const points: Point[] = [
-    { label: 'Two feeds', requests: one(feed['dual-cold'].gets), unit: 'GET', found: one(feed['dual-cold'].observed), verified: true,
-      time: `${fmt(one(feed['dual-cold'].elapsedMs), 1)} ms on loopback`, place: 'above' },
+    { label: 'Two feeds', requests: one(remote.gets), unit: 'GET', found: one(remote.observed), verified: true,
+      time: `${sec(one(remote.elapsedMs))} over the network (${fmt(one(feed['dual-cold'].elapsedMs), 1)} ms on loopback)`, place: 'above' },
     live('Tenderly alone', 'live-healthy-single', 'single', 'above'),
     // The Bun client run sits one request from the browser run; the shared label covers both.
     { label: 'Tenderly alone, Bun client', requests: one(feed['rpc-cold'].posts), unit: 'POST', found: one(feed['rpc-cold'].observed), verified: false,
-      time: `${sec(one(feed['rpc-cold'].elapsedMs))} median`, place: 'none' },
+      time: `${sec(one(rpcUnpaced().cold.map(row => row.busyMs)))} excluding pacing (${sec(one(feed['rpc-cold'].elapsedMs))} paced)`, place: 'none' },
     live('Tenderly × Sentio', 'live-healthy-cross', 'cross', 'above'),
     live('Daybreak × Tenderly', 'live-daybreak-cross', 'cross', 'below'),
     live('Daybreak alone', 'live-daybreak-single', 'single', 'above'),
@@ -386,18 +387,18 @@ function feedBytes(): string {
   const bars: [label: string, raw: number, gzip: number | null, cls: string][] = [
     ['RPC, cold', one(summary['rpc-cold'].responseBytes), null, 's2'],
     ['RPC, cold, eth_getLogs only', sum(rpc.filter(r => r.operation === 'eth_getLogs')), null, 's2'],
-    ['Two feeds, cold', one(summary['dual-cold'].responseBytes), null, 's1'],
+    ['Two feeds, cold', one(summary['dual-cold'].responseBytes), one(remoteSummary('bazzite')['remote-cold'].wireBytes), 's1'],
     ['One feed, cold', baseline.metric, Number(baseline.metrics.cold_gzip_bytes), 's1'],
     ['One feed, cold, optimized', best.metric, Number(best.metrics.cold_gzip_bytes), 's3'],
     ['RPC, warm', one(summary['rpc-warm'].responseBytes), null, 's2'],
-    ['Two feeds, warm', one(summary['dual-warm'].responseBytes), null, 's1'],
+    ['Two feeds, warm', one(summary['dual-warm'].responseBytes), one(remoteSummary('bazzite')['remote-warm'].wireBytes), 's1'],
   ];
   const W = 760, L = 230, R = 680, T = 76, rowH = 30, barH = 16;
   const max = Math.ceil(Math.max(...bars.map(b => b[1])) / 50000) * 50000;
   const xs = linearScale(0, max, L, R);
   const out: string[] = [
     text(20, 30, 'Response bytes: feeds vs RPC', 'title ink'),
-    ...legend(20, 58, [['s2', 'RPC'], ['s1', 'feed'], ['s3', 'feed, optimized'], ['muted', 'gzip']]),
+    ...legend(20, 58, [['s2', 'RPC'], ['s1', 'feed'], ['s3', 'feed, optimized'], ['muted', 'gzip / as served']]),
   ];
   const B1 = T + 8 + bars.length * rowH;
   for (let t = 0; t <= max; t += 50000) {

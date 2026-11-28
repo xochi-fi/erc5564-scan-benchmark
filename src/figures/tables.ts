@@ -4,9 +4,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
-  bestRetrieval, chainRetrieval, perMonth, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
+  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
+import { statePerMonth, stateSinceBaseline } from '../chain-volume/refresh-state.ts';
 
 // ---- formatting ---------------------------------------------------------------
 
@@ -184,6 +185,42 @@ function chainVolumeTable() {
   }));
 }
 
+// Weekly refresh: counts and rates move; everything in chainVolumeTable stays the 2026-11-26 recording.
+const BASELINE_DATE = '2026-11-26';
+function chainRefreshTable() {
+  const snapshots = refreshSnapshots();
+  const latest = snapshots.at(-1);
+  if (latest === undefined) return 'No refresh recorded yet.';
+  const n = (value: number) => fixed(value, 0);
+  return table(['Chain', `Announcements, ${BASELINE_DATE}`, `Announcements, ${latest.date}`, `Per day since ${BASELINE_DATE}`, 'Per month (since first)',
+    'Last announcement', 'Checked through block', `Run of ${latest.date}`],
+  ['l', 'r', 'r', 'r', 'r', 'l', 'l', 'l'],
+  Object.keys(CHAIN_LABELS).map(chain => {
+    const state = chainLatest(chain);
+    const since = stateSinceBaseline(state);
+    const rate = statePerMonth(state);
+    const entry = state.latest;
+    const run = entry === null || entry.date !== latest.date ? 'not run'
+      : entry.status === 'agreed' ? `two provider sets agree (${n(entry.identities.length)} new)`
+        : `**${entry.status}**: ${entry.reason}; count held at the last agreed block`;
+    return [CHAIN_LABELS[chain]!, n(bestRetrieval(chain).result.count), `**${n(state.count)}**`,
+      since === null ? '-' : `${fixed(since.perDay, 2)} (${fixed(since.days, 1)} days)`, rate === null ? '-' : rate.toFixed(1),
+      `${n(state.lastBlock)} (${state.lastTime.slice(0, 10)})`,
+      `${n(state.throughBlock)}${state.throughTime ? ` (${state.throughTime.slice(0, 10)})` : ''}`, run];
+  }));
+}
+function silentRecheckTable() {
+  const latest = refreshSnapshots().at(-1);
+  if (latest === undefined) return 'No recheck recorded yet.';
+  const counts = (e: { returned: number; empty: number; errors: number }) => `${e.returned} / ${e.empty} / ${e.errors}`;
+  return table(['Chain', 'Endpoint', `${BASELINE_DATE}: returned / empty / errors`, `${latest.date}: returned / empty / errors`, `${latest.date}`, 'Control'],
+    ['l', 'l', 'l', 'l', 'l', 'l'],
+    latest.silent.map(check => {
+      const recorded = readJson(`data/chain-volume/consistency/${check.chain}.json`).endpoints.find((e: any) => e.host === check.host);
+      return [CHAIN_LABELS[check.chain]!, `\`${check.host}\``, counts(recorded), counts(check), check.verdict, check.control ? `\`${check.control}\`` : 'none'];
+    }));
+}
+
 // ---- browser discovery --------------------------------------------------------
 
 const BROWSER_ENDPOINTS: [string, string, string][] = [
@@ -331,6 +368,8 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'paged-single-cold': ['docs/paged-discovery.md', pagedSingleColdTable],
   'paged-single-catchup': ['docs/paged-discovery.md', pagedSingleCatchupTable],
   'chain-volume': ['docs/chain-volume.md', chainVolumeTable],
+  'chain-volume-refresh': ['docs/chain-volume.md', chainRefreshTable],
+  'chain-volume-silent': ['docs/chain-volume.md', silentRecheckTable],
   'browser-discovery': ['docs/browser-discovery.md', browserTable],
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],

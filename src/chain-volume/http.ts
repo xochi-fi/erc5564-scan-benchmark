@@ -47,6 +47,8 @@ export interface PoliteOptions {
   timeoutMs?: number;
   max429Retries?: number;
   maxBackoffMs?: number;
+  /** Pacing key; defaults to the host. Pass a provider key to pace hostnames of one operator together. */
+  keyOf?: (url: URL) => string;
 }
 
 /** Real network transport. Not used by tests. */
@@ -56,12 +58,14 @@ export class PoliteHttp implements Transport {
   private readonly timeoutMs: number;
   private readonly max429Retries: number;
   private readonly maxBackoffMs: number;
+  private readonly keyOf: (url: URL) => string;
 
   constructor(options: PoliteOptions = {}) {
     this.minIntervalMs = options.minIntervalMs ?? 250;
     this.timeoutMs = options.timeoutMs ?? 25_000;
     this.max429Retries = options.max429Retries ?? 3;
     this.maxBackoffMs = options.maxBackoffMs ?? 30_000;
+    this.keyOf = options.keyOf ?? (url => url.host);
   }
 
   private async slot(host: string, extraDelayMs = 0): Promise<void> {
@@ -72,7 +76,7 @@ export class PoliteHttp implements Transport {
   }
 
   async request(url: string, init: { method: 'GET' | 'POST'; body?: string }): Promise<HttpResult> {
-    const host = new URL(url).host;
+    const host = this.keyOf(new URL(url));
     let rateLimitHits = 0;
     let backoff = 0;
     for (let attempt = 1; ; attempt++) {

@@ -1,0 +1,76 @@
+name: Weekly refresh
+
+# Re-measures the live-network values (chain-volume counts and rates, silent-omission recheck),
+# regenerates tables and figures, and opens or updates one pull request. Never pushes to main.
+# Hardware timings are not refreshed: GitHub runners are not the recorded hosts.
+
+on:
+  schedule:
+    - cron: '23 4 * * 1'   # Mondays 04:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write          # push the refresh branch
+  pull-requests: write     # open or edit its pull request
+
+concurrency:
+  group: weekly-refresh
+  cancel-in-progress: false
+
+env:
+  BRANCH: automation/weekly-refresh
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false   # the push below uses GH_TOKEN
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+
+      - name: Refresh chain volume and recheck silent omissions
+        # Read-only, keyless, ≤4 requests/s per provider, up to 6,000 requests per endpoint set per chain.
+        # Writes data/chain-volume/refresh/<date>.json; disagreements and failures go to the report, not the counts.
+        run: bun run chain-volume:refresh --report "$RUNNER_TEMP/refresh-report.md"
+
+      - name: Regenerate tables and figures
+        run: |
+          bun run tables
+          bun run figures
+
+      - name: Check
+        run: |
+          bun run check
+          bun test
+          bun run tables --check
+          bun run figures --check
+
+      - name: Open or update the pull request
+        env:
+          # GITHUB_TOKEN works, but pull requests it opens do not trigger the CI workflow.
+          # Set a REFRESH_TOKEN secret (fine-grained, contents + pull requests write) to have CI run on them.
+          GH_TOKEN: ${{ secrets.REFRESH_TOKEN || github.token }}
+        run: |
+          date=$(date -u +%F)
+          {
+            cat "$RUNNER_TEMP/refresh-report.md"
+            echo
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$RUNNER_TEMP/body.md"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -B "$BRANCH"
+          git add data/chain-volume/refresh docs
+          git commit -m "Weekly refresh, $date"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$BRANCH"
+          if [ -n "$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[].number')" ]; then
+            gh pr edit "$BRANCH" --title "Weekly refresh, $date" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --head "$BRANCH" --base main --title "Weekly refresh, $date" --body-file "$RUNNER_TEMP/body.md"
+          fi

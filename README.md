@@ -6,6 +6,9 @@
 
 > **Never fund the [test keys](METHODS.md#test-keys).**
 
+Wallet and SDK developers: [retrieval guidance](docs/chain-volume.md#wallet-guidance), [SDK block-0 default](docs/chain-volume.md#scopelift-sdk-default). RPC and indexer operators: [silent omissions](docs/rpc-recovery.md), [rechecked weekly](docs/chain-volume.md#weekly-refresh).\
+Stealth-address and OMR researchers: [scan cost](docs/scan-cost.md), [feed vs OMR](docs/shared-feed.md#decision).
+
 ## Findings
 
 1. 0.5 ms (Bazzite), 1.7 ms (Turing) per announcement: scanning is cheap.

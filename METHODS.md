@@ -62,6 +62,9 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | Chain volume | ≤4 requests/s |
 | RPC recovery | ≥270 ms between request starts |
 | Browser-discovery reference, shared feed | ≥275 ms between request starts |
+| Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |
+
+Refreshed weekly: chain-volume announcement counts, rates, last announcement and the silent-omission recheck ([tables](docs/chain-volume.md#weekly-refresh)). Fixed recordings: everything else, including every hardware timing (scan cost, paged discovery, browser discovery, RPC recovery, feed latency), endpoint probes, cold-start costs and Umbra counts.
 
 ## Browser runs
 

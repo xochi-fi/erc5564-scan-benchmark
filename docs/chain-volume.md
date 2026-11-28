@@ -31,8 +31,35 @@ One run on 2026-11-26 under the [live RPC rules](../METHODS.md#live-rpc), from t
 
 1. Tenderly serves whole-history queries on five chains, and rpc.gnosischain.com and gateway.fm on Gnosis. A sequential Base backfill at 1,000 blocks per page needs ~47,000 requests and over 3 h.
 2. publicnode requires a token for history on five chains. blockreq serves the last 1,024 blocks, blockmachine 100–10,000, thyme and blazingnode 128. Per chain, 28–53% of probed endpoints fail `eth_getLogs`.
-3. Base's `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev`, and OP's `public.1rpc.io`, pass the deploy-block probe but return `[]` for known announcements. OP has four misses in 50-block pages. The Base probe-informed run switches to Daybreak at block 34,304,282, finds nothing more, and spends its 8,000 requests by block 46,544,282 ([recovery](rpc-recovery.md#windows)). Pocket on OP spans 10,438–70,538 blocks despite a 10,001-block error, then reports pruned history.
+3. Base's `base.daybreak-rpc.network`, `rpc.degenprotocol.io` and `rpc.baseazul.dev`, and OP's `public.1rpc.io`, pass the deploy-block probe but return `[]` for known announcements. OP has four misses in 50-block pages. The Base probe-informed run switches to Daybreak at block 34,304,282, finds nothing more, and spends its 8,000 requests by block 46,544,282 ([recovery](rpc-recovery.md#windows)). Pocket on OP spans 10,438–70,538 blocks despite a 10,001-block error, then reports pruned history. [Rechecked weekly](#weekly-refresh).
 4. Blockscout v2 misses 13 Sepolia announcements in blocks 11,909,881–11,926,046 because `/transactions/{hash}/logs` returns HTTP 500. Its first Ethereum fetch lacks transaction hashes on 263 of 296 rows. Routescan lags 51–471 blocks.
+
+## Weekly refresh
+
+Counts, rates and the silent-omission recheck below are re-measured every Monday by [`weekly-refresh.yml`](../.github/workflows/weekly-refresh.yml), which opens a pull request. Everything else on this page is the 2026-11-26 recording.
+
+<!-- generated:chain-volume-refresh -->
+| Chain | Announcements, 2026-11-26 | Announcements, 2026-11-28 | Per day since 2026-11-26 | Per month (since first) | Last announcement | Checked through block | Run of 2026-11-28 |
+| --- | ---: | ---: | ---: | ---: | --- | --- | --- |
+| Ethereum | 298 | **302** | 2.93 (1.4 days) | 12.3 | 26,500,859 (2026-11-26) | 26,509,992 (2026-11-27) | two provider sets agree (4 new) |
+| Base | 679 | **685** | 4.77 (1.3 days) | 23.9 | 62,949,449 (2026-11-27) | 63,168,284 (2026-11-28) | two provider sets agree (6 new) |
+| Arbitrum One | 19 | **19** | 0.00 (1.4 days) | 2.1 | 522,929,374 (2026-11-10) | 528,143,941 (2026-11-28) | two provider sets agree (0 new) |
+| OP Mainnet | 2 | **2** | 0.00 (1.4 days) | 0.5 | 154,455,081 (2026-07-20) | 160,112,701 (2026-11-28) | two provider sets agree (0 new) |
+| Gnosis | 3 | **3** | 0.00 (1.3 days) | 0.2 | 41,054,058 (2025-07-12) | 49,503,957 (2026-11-28) | two provider sets agree (0 new) |
+| Polygon PoS | 9 | **9** | 0.00 (1.4 days) | 1.3 | 95,895,782 (2026-10-21) | 98,079,171 (2026-11-28) | two provider sets agree (0 new) |
+| Sepolia | 1,039 | **1,040** | 0.73 (1.4 days) | 36.1 | 12,218,263 (2026-11-26) | 12,226,572 (2026-11-28) | two provider sets agree (1 new) |
+<!-- /generated:chain-volume-refresh -->
+
+<!-- generated:chain-volume-silent -->
+| Chain | Endpoint | 2026-11-26: returned / empty / errors | 2026-11-28: returned / empty / errors | 2026-11-28 | Control |
+| --- | --- | --- | --- | --- | --- |
+| Base | `rpc.degenprotocol.io` | 4 / 2 / 0 | 4 / 2 / 0 | still silent | `base.gateway.tenderly.co` |
+| Base | `base.daybreak-rpc.network` | 0 / 6 / 0 | 0 / 6 / 0 | still silent | `base.gateway.tenderly.co` |
+| Base | `rpc.baseazul.dev` | 2 / 3 / 1 | 2 / 2 / 2 | still silent | `base.gateway.tenderly.co` |
+| OP Mainnet | `public.1rpc.io` | 0 / 4 / 0 | 1 / 3 / 0 | still silent | `lb.routeme.sh` |
+<!-- /generated:chain-volume-silent -->
+
+Each run resumes from the last agreed block and stops 15 min of blocks short of the lower head. Two endpoint sets with no provider in common fetch the range; silent hosts are left out. New announcements count only when both sets match on block, log index and transaction hash. A disagreement or failure holds the count at the last agreed block and is reported in the pull request. The recheck asks each silent host for the recorded targets in the recorded windows, two attempts each, beside a control endpoint that returned all of them on 2026-11-26. Indexers are not rechecked. Scheduled runs come from GitHub datacenter IPs, not the residential IP of the baseline.
 
 ## Wallet guidance
 
@@ -136,6 +163,7 @@ bun run chain-volume --stage retrieve --chains base --strategy parallel --max-re
 bun run chain-volume --stage consistency,verify-deploy  # silent-miss check, deploy block recheck
 bun run chain-volume --stage umbra-reference,umbra-retrieve,umbra-verify-deploy
 bun run chain-volume --stage report                     # summary.md/csv, endpoints.csv, cross-source.csv
+bun run chain-volume:refresh                            # weekly refresh: new blocks since the last agreed one, silent recheck; writes refresh/<date>.json
 ```
 
 

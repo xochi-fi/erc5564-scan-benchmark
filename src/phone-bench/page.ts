@@ -64,7 +64,7 @@ function checkJit() {
 }
 $('jit').addEventListener('change', checkJit);
 // WASM is fast enough that 1,000 announcements take well under a second; default it to the longest run.
-$('engine').addEventListener('change', () => { if ($<HTMLSelectElement>('engine').value === 'wasm') $<HTMLSelectElement>('count').value = '10000'; });
+$('engine').addEventListener('change', () => { if ($<HTMLSelectElement>('engine').value === 'wasm') $<HTMLSelectElement>('count').value = '100000'; });
 $('jit-reason').textContent = `Prefilled: ${jit.jitReason}.`;
 $('candidates').textContent = candidates.length ? 'iPhones do not report their model; these share your screen size. Edit the field to your model.' : '';
 const hints = (navigator as unknown as { userAgentData?: { getHighEntropyValues(k: string[]): Promise<Record<string, string>> } }).userAgentData;
@@ -143,12 +143,13 @@ $('run').addEventListener('click', async () => {
     $('verdict').textContent = r.verified ? 'Oracle check passed' : 'ORACLE CHECK FAILED: this result is invalid';
     $('verdict').className = r.verified ? 'ok' : 'bad';
     $<HTMLTextAreaElement>('result').value = JSON.stringify(lastResult, null, 2);
-    const short = r.scanMs < 2000 ? 'Short run (under 2 s): run 10,000 announcements for a steadier number. ' : '';
+    const short = r.scanMs < 2000 ? 'Short run (under 2 s): pick a larger count for a steadier number. ' : '';
     setState('done', r.verified ? `${short}Submit, copy or download the result below.` : 'Do not submit this result.');
     $<HTMLButtonElement>('submit').disabled = !r.verified || lockdownMismatch();
     boot.step(`done (${usedWorker ? 'worker' : 'main thread'})`);
   };
 
+  if (count > 10_000 && engine !== 'wasm') return fail('100,000 repeats the fixture and is only for the wasm engine. Pick 10,000.');
   if (engine === 'wasm' && typeof WebAssembly !== 'object') return fail('This browser has no WebAssembly (Lockdown Mode turns it off). Pick crypto or sdk.');
   boot.step(engine === 'wasm' ? 'starting WASM worker (loads 1.7 MB)' : 'starting worker');
   worker = await startWorker(engine);

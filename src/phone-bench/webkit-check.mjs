@@ -20,7 +20,7 @@ async function waitState(page, states, ms) {
   }
 }
 
-async function run(context, label, { cancel = false, engine = 'crypto' } = {}) {
+async function run(context, label, { cancel = false, engine = 'crypto', runCount = count } = {}) {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -28,8 +28,8 @@ async function run(context, label, { cancel = false, engine = 'crypto' } = {}) {
   await waitState(page, ['idle', 'error'], 30000);
   check(`${label}: idle state on load`, await page.textContent('#state') === 'Ready', await page.textContent('#details'));
   check(`${label}: device prefilled`, (await page.inputValue('#device')).length > 0, await page.inputValue('#device'));
-  await page.selectOption('#count', count);
   await page.selectOption('#engine', engine);
+  await page.selectOption('#count', runCount);
   await page.click('#run');
   await waitState(page, ['running'], 5000);
   check(`${label}: running state visible`, await page.isVisible('#progress-box') && await page.isDisabled('#run') && await page.isVisible('#cancel'));
@@ -44,7 +44,7 @@ async function run(context, label, { cancel = false, engine = 'crypto' } = {}) {
     await waitState(page, ['done', 'error'], 600000);
     const result = await page.evaluate(() => window.phoneBench.result());
     check(`${label}: done and verified`, await page.evaluate(() => document.body.dataset.state) === 'done' && result?.verified === true,
-      result ? { msPerAnnouncement: result.msPerAnnouncement, worker: result.worker, device: result.device, browser: result.browser } : await page.textContent('#message'));
+      result ? { count: result.count, matches: result.matches, msPerAnnouncement: result.msPerAnnouncement, worker: result.worker, device: result.device, browser: result.browser } : await page.textContent('#message'));
     check(`${label}: submit enabled`, !(await page.isDisabled('#submit')));
   }
   check(`${label}: no uncaught errors`, errors.length === 0, errors);
@@ -55,6 +55,7 @@ await run(await browser.newContext(), 'worker');
 if (engineName === 'webkit') await run(await browser.newContext({ ...devices['iPhone 15'] }), 'emulated iPhone 15');
 await run(await browser.newContext(), 'cancel', { cancel: true });
 await run(await browser.newContext(), 'wasm engine', { engine: 'wasm' });
+await run(await browser.newContext(), 'wasm engine, 100,000 (10 passes)', { engine: 'wasm', runCount: '100000' });
 const noWorker = await browser.newContext();
 await noWorker.addInitScript(() => { delete window.Worker; });
 await run(noWorker, 'no-worker fallback');

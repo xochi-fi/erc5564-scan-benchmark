@@ -435,9 +435,9 @@ function phoneTable() {
   const rows = phoneResults();
   const header = ['Device', 'OS', 'Browser', 'JIT', 'Engine', 'Announcements', 'ms per announcement', 'Credit'];
   if (rows.length === 0) return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], [['No results yet', '', '', '', '', '', '', '']]);
-  // Runs under 2 s are marked short: timer resolution and JIT warm-up weigh more there.
+  // Runs under 2 s show their length: timer resolution and JIT warm-up weigh more there.
   return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], rows.map(r => [r.device, r.os, r.browser, r.jit, r.engine,
-    `${fixed(r.count, 0)}${r.scanMs < 2000 ? ' (short)' : ''}`, fixed(r.msPerAnnouncement, r.msPerAnnouncement < 0.1 ? 3 : 2), r.source ?? '-']));
+    `${fixed(r.count, 0)}${r.scanMs < 2000 ? ` (${fixed(r.scanMs / 1000, 2)} s run)` : ''}`, fixed(r.msPerAnnouncement, r.msPerAnnouncement < 0.1 ? 3 : 2), r.source ?? '-']));
 }
 
 const TABLES: Record<string, [file: string, render: () => string]> = {

@@ -10,7 +10,7 @@ export const PHONE_FIXTURE_SHA256 = '63ea0c665c7c8a98fe1643ccddc979c2407fc7748aa
 const text = (max: number) => z.string().max(max);
 
 export const resultSchema = z.object({
-  kind: z.literal('phone-bench'), pageVersion: z.enum(['4', '5', '6', PAGE_VERSION]), startedAt: z.string().datetime(),
+  kind: z.literal('phone-bench'), pageVersion: z.enum(['4', '5', '6', '7', PAGE_VERSION]), startedAt: z.string().datetime(),
   device: text(80).min(1), os: text(60), browser: text(60), jit: z.enum(['on', 'off-lockdown', 'off-other', 'unknown']), notes: text(200).nullable(),
   detected: z.object({
     os: text(40), osVersion: text(40).nullable(), browser: text(40), browserVersion: text(40).nullable(), device: text(80), app: text(60).nullable(),
@@ -19,13 +19,13 @@ export const resultSchema = z.object({
   }).strict(),
   userAgent: text(400), screen: z.object({ width: z.number().int().positive().max(10000), height: z.number().int().positive().max(10000), devicePixelRatio: z.number().positive().max(10) }).strict(),
   hardwareConcurrency: z.number().int().positive().max(512).nullable(), webAssembly: z.boolean(), secureContext: z.boolean(), worker: z.boolean(),
-  engine: z.enum(['crypto', 'sdk', 'wasm']), count: z.union([z.literal(1000), z.literal(5000), z.literal(10000)]), chunk: z.union([z.literal(250), z.literal(10)]),
+  engine: z.enum(['crypto', 'sdk', 'wasm']), count: z.union([z.literal(1000), z.literal(5000), z.literal(10000), z.literal(100000)]), chunk: z.union([z.literal(250), z.literal(10)]),
   seed: z.literal(PHONE_SEED), fixtureSha256: z.literal(PHONE_FIXTURE_SHA256), packedSha256: z.literal(PHONE_PACKED_SHA256),
   scanMs: z.number().positive(), msPerAnnouncement: z.number().min(0.05).max(2000),
   matches: z.number().int(), expectedMatches: z.number().int(), verified: z.literal(true),
 }).strict().superRefine((r, ctx) => {
   const expected = Math.floor((r.count - 1) / PHONE_MATCH_EVERY) + 1;
-  if (r.count > PHONE_COUNT) ctx.addIssue({ code: 'custom', message: 'count exceeds the fixture' });
+  if (r.count > PHONE_COUNT && r.engine !== 'wasm') ctx.addIssue({ code: 'custom', message: 'counts above the fixture repeat it and are for the wasm engine only' });
   if (r.matches !== expected || r.expectedMatches !== expected) ctx.addIssue({ code: 'custom', message: `matches must equal the fixture schedule (${expected})` });
   if (Math.abs(r.scanMs / r.count - r.msPerAnnouncement) > 0.001 + r.msPerAnnouncement * 0.001) ctx.addIssue({ code: 'custom', message: 'msPerAnnouncement does not equal scanMs / count' });
   if (Date.parse(r.startedAt) > Date.now() + 86_400_000) ctx.addIssue({ code: 'custom', message: 'startedAt is in the future' });

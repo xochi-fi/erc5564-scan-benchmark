@@ -9,7 +9,7 @@ import type { PackedFixture } from './scan.ts';
 export const PHONE_SEED = 'phone-bench:v1';
 export const PHONE_COUNT = 10_000;
 export const PHONE_MATCH_EVERY = 1_000;
-export const PAGE_VERSION = '7';
+export const PAGE_VERSION = '8';
 /** SHA256 of the packed rows of the 10,000-announcement fixture; the record script accepts only this fixture. */
 export const PHONE_PACKED_SHA256 = '59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d';
 const ROOT = new URL('../../', import.meta.url).pathname;
@@ -114,7 +114,7 @@ export function html(): string {
 <label for="jit">JavaScript JIT</label><select id="jit"><option value="on">On (normal)</option><option value="off-lockdown">Off: iOS Lockdown Mode</option><option value="off-other">Off: other</option><option value="unknown">Unknown</option></select>
 <p id="jit-reason" class="muted"></p><p id="jit-warning" class="bad"></p>
 <div class="row"><div><label for="engine">Engine</label><select id="engine"><option value="crypto">crypto</option><option value="sdk">sdk (250 per call)</option><option value="wasm">wasm (libsecp256k1)</option></select></div>
-<div><label for="count">Announcements</label><select id="count"><option value="1000">1,000</option><option value="5000">5,000</option><option value="10000">10,000</option></select></div></div>
+<div><label for="count">Announcements</label><select id="count"><option value="1000">1,000</option><option value="5000">5,000</option><option value="10000">10,000</option><option value="100000">100,000 (wasm only: 10 passes)</option></select></div></div>
 <label for="notes">Notes (optional: charging, low power mode, temperature)</label><input id="notes" autocomplete="off">
 <div id="share">
 <button id="submit" disabled>Submit result (opens a GitHub issue)</button>

@@ -1,4 +1,4 @@
-// Phone bench scan core, shared by the page's Web Worker, its main-thread fallback, the CLI and tests.
+// Device bench scan core, shared by the page's Web Worker, its main-thread fallback, the CLI and tests.
 import { checkStealthAddress, getAnnouncementsForUser, getViewTagFromMetadata, type AnnouncementLog } from '@scopelift/stealth-address-sdk';
 import type { Hex } from 'viem';
 

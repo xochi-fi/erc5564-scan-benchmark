@@ -1,4 +1,4 @@
-// `bun run phone-bench:serve [--host IP] [--port N] [--dir DIR]`: serves the built phone bench site and
+// `bun run phone-bench:serve [--host IP] [--port N] [--dir DIR]`: serves the built device bench site and
 // nothing else, reading each file on every request. Default 127.0.0.1; never binds every interface.
 // Logs method, path, status, bytes and user agent to stdout.
 import { parseArgs } from 'node:util';

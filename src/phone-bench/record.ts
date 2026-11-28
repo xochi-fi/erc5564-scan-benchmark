@@ -1,19 +1,22 @@
-// `bun run phone-bench:record FILE [--issue] [--author LOGIN]`: validates a phone bench result (a JSON file,
-// or with --issue the body of a "Phone bench result" issue) and writes it to data/phone-bench/. Exits 1 with
+// `bun run phone-bench:record FILE [--issue] [--author LOGIN]`: validates a device bench result (a JSON file,
+// or with --issue the body of a "Device bench result" issue) and writes it to data/phone-bench/. Exits 1 with
 // the reasons when the result is rejected. Checks what can be checked: schema, pinned fixture digests, the
 // oracle, and plausible ranges. A fabricated timing that passes these checks cannot be detected.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { z } from 'zod';
+import { DEVICE_CLASSES } from './detect.ts';
 import { PAGE_VERSION, PHONE_COUNT, PHONE_MATCH_EVERY, PHONE_PACKED_SHA256, PHONE_SEED } from './build.ts';
 
 export const PHONE_FIXTURE_SHA256 = '63ea0c665c7c8a98fe1643ccddc979c2407fc7748aad87e3addd091c8ff50444';
 const text = (max: number) => z.string().max(max);
 
+// Floor 0.01 ms: a third of native libsecp256k1 on one i7-13700K thread (docs/scan-cost.md); the page scans on one thread.
 export const resultSchema = z.object({
-  kind: z.literal('phone-bench'), pageVersion: z.enum(['4', '5', '6', '7', PAGE_VERSION]), startedAt: z.string().datetime(),
-  device: text(80).min(1), os: text(60), browser: text(60), jit: z.enum(['on', 'off-lockdown', 'off-other', 'unknown']), notes: text(200).nullable(),
+  kind: z.literal('phone-bench'), pageVersion: z.enum(['4', '5', '6', '7', '8', PAGE_VERSION]), startedAt: z.string().datetime(),
+  device: text(80).min(1), deviceClass: z.enum(DEVICE_CLASSES).optional(), os: text(60), browser: text(60), jit: z.enum(['on', 'off-lockdown', 'off-other', 'unknown']), notes: text(200).nullable(),
   detected: z.object({
     os: text(40), osVersion: text(40).nullable(), browser: text(40), browserVersion: text(40).nullable(), device: text(80), app: text(60).nullable(),
+    deviceClass: z.enum(DEVICE_CLASSES).optional(), arch: text(20).nullable().optional(),
     deviceCandidates: z.array(text(120)).max(10), jitGuess: z.enum(['on', 'off-lockdown', 'unknown']), jitReason: text(120),
     uaChModel: text(80).nullable(), uaChPlatform: text(40).nullable(), uaChPlatformVersion: text(40).nullable(),
   }).strict(),
@@ -21,9 +24,10 @@ export const resultSchema = z.object({
   hardwareConcurrency: z.number().int().positive().max(512).nullable(), webAssembly: z.boolean(), secureContext: z.boolean(), worker: z.boolean(),
   engine: z.enum(['crypto', 'sdk', 'wasm']), count: z.union([z.literal(1000), z.literal(5000), z.literal(10000), z.literal(100000)]), chunk: z.union([z.literal(250), z.literal(10)]),
   seed: z.literal(PHONE_SEED), fixtureSha256: z.literal(PHONE_FIXTURE_SHA256), packedSha256: z.literal(PHONE_PACKED_SHA256),
-  scanMs: z.number().positive(), msPerAnnouncement: z.number().min(0.05).max(2000),
+  scanMs: z.number().positive(), msPerAnnouncement: z.number().min(0.01).max(2000),
   matches: z.number().int(), expectedMatches: z.number().int(), verified: z.literal(true),
 }).strict().superRefine((r, ctx) => {
+  if (Number(r.pageVersion) >= 9 && (!r.deviceClass || !r.detected.deviceClass)) ctx.addIssue({ code: 'custom', message: 'pages from v9 record deviceClass' });
   const expected = Math.floor((r.count - 1) / PHONE_MATCH_EVERY) + 1;
   if (r.count > PHONE_COUNT && r.engine !== 'wasm') ctx.addIssue({ code: 'custom', message: 'counts above the fixture repeat it and are for the wasm engine only' });
   if (r.matches !== expected || r.expectedMatches !== expected) ctx.addIssue({ code: 'custom', message: `matches must equal the fixture schedule (${expected})` });

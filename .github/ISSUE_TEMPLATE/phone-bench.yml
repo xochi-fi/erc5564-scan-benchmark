@@ -1,6 +1,6 @@
-name: Phone bench result
-description: A result from the phone bench page. The page fills this in; a workflow validates it and opens a pull request.
-title: "Phone bench: "
+name: Device bench result
+description: A result from the device bench page. The page fills this in; a workflow validates it and opens a pull request.
+title: "Device bench: "
 labels: [phone-bench]
 body:
   - type: textarea

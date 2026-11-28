@@ -28,5 +28,7 @@ describe('figures and tables', () => {
     for (const label of ['Real chains, total announcements to date', 'ERC-5564 Announcer', 'Umbra contract', 'Umbra on Polygon PoS']) {
       expect(svg).toContain(label);
     }
+    expect(svg).toContain('extrapolated at the per-announcement rate');
+    expect(FIGURES['scan-budget.svg']!()).toContain('Real chains, average announcements per day to date');
   });
 });

@@ -18,7 +18,7 @@ Clients fetch every finalized feed page, scan locally, resume from a checkpoint,
 Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1 (N = 2^19, γ = γ̄ = 50, one GCP n4-standard-8, AVX512-IFMA52; revisions 2021/1256 2022-04-14, 2024/204 2024-11-21, 2024/510 2025-02-07). No DoS-resistant variant runs in production.
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
-<sub>Solid lines scale the scan-cost controls; dotted is single-thread native libsecp256k1 on Turing ([scan cost](scan-cost.md)). Dashed OMR lines are single-thread literature values on one cloud AVX512 core.</sub>
+<sub>Solid lines scale the scan-cost controls; dotted is single-thread native libsecp256k1 on Turing ([scan cost](scan-cost.md)). Dashed OMR lines are single-thread literature values on one cloud AVX512 core. Ticks: each chain's average daily rate.</sub>
 
 | Revisit when | Assumed budget | Breaks at |
 | --- | --- | ---: |

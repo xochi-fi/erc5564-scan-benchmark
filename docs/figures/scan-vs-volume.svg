@@ -33,6 +33,10 @@
 <rect class="bg" x="0" y="0" width="760" height="696" rx="6"/>
 <text x="20" y="30" class="title ink" text-anchor="start">Scan time vs announcements</text>
 <text x="20" y="54" class="small muted" text-anchor="start">seconds, log scale</text>
+<line x1="220" y1="49" x2="244" y2="49" class="axis" stroke-width="2"/>
+<text x="252" y="54" class="small muted" text-anchor="start">measured, 100k–1M</text>
+<line x1="400" y1="49" x2="424" y2="49" class="axis" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="432" y="54" class="small muted" text-anchor="start">extrapolated at the per-announcement rate</text>
 <line x1="96" y1="66" x2="96" y2="420" class="grid"/>
 <text x="96" y="440" class="small muted" text-anchor="middle">1</text>
 <line x1="307.3" y1="66" x2="307.3" y2="420" class="grid"/>
@@ -107,13 +111,13 @@
 <text x="236.2" y="588" class="small ink" text-anchor="middle">Arbitrum One 19</text>
 <line x1="395.6" y1="565" x2="395.6" y2="574" class="axis" stroke-width="1"/>
 <text x="395.6" y="588" class="small ink" text-anchor="middle">Base 685</text>
-<rect x="126.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, OP Mainnet: 2 announcements</title></rect>
-<rect x="144.9" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Gnosis: 3 announcements</title></rect>
-<rect x="195.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Polygon PoS: 9 announcements</title></rect>
-<rect x="229.6" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Arbitrum One: 19 announcements</title></rect>
-<rect x="356.6" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Ethereum: 302 announcements</title></rect>
-<rect x="394.1" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Base: 685 announcements</title></rect>
-<rect x="413.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Sepolia: 1,040 announcements</title></rect>
+<rect x="126.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, OP Mainnet: 2</title></rect>
+<rect x="144.9" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Gnosis: 3</title></rect>
+<rect x="195.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Polygon PoS: 9</title></rect>
+<rect x="229.6" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Arbitrum One: 19</title></rect>
+<rect x="356.6" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Ethereum: 302</title></rect>
+<rect x="394.1" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Base: 685</title></rect>
+<rect x="413.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Sepolia: 1,040</title></rect>
 <text x="20" y="616" class="small muted" text-anchor="start">Umbra contract</text>
 <rect x="339.6" y="647" width="285.9" height="14" class="band" rx="3"></rect>
 <line x1="339.6" y1="645" x2="315.2" y2="637" class="axis" stroke-width="1"/>
@@ -130,13 +134,13 @@
 <text x="530" y="686" class="small ink" text-anchor="middle">Ethereum 25,558</text>
 <line x1="624.4" y1="663" x2="668" y2="672" class="axis" stroke-width="1"/>
 <text x="668" y="686" class="small ink" text-anchor="middle">Arbitrum One 100,196</text>
-<rect x="338.1" y="646" width="3" height="16" class="muted"><title>Umbra contract, Gnosis: 202 announcements</title></rect>
-<rect x="506.7" y="646" width="3" height="16" class="muted"><title>Umbra contract, Base: 7,955 announcements</title></rect>
-<rect x="515.7" y="646" width="3" height="16" class="muted"><title>Umbra contract, Sepolia: 9,690 announcements</title></rect>
-<rect x="560.2" y="646" width="3" height="16" class="muted"><title>Umbra contract, Ethereum: 25,558 announcements</title></rect>
-<rect x="607.9" y="646" width="3" height="16" class="muted"><title>Umbra contract, OP Mainnet: 72,277 announcements</title></rect>
-<rect x="622.9" y="646" width="3" height="16" class="muted"><title>Umbra contract, Arbitrum One: 100,196 announcements</title></rect>
-<rect x="624" y="646" width="3" height="16" class="ink"><title>Umbra contract, Polygon PoS: 102,552 announcements</title></rect>
+<rect x="338.1" y="646" width="3" height="16" class="muted"><title>Umbra contract, Gnosis: 202</title></rect>
+<rect x="506.7" y="646" width="3" height="16" class="muted"><title>Umbra contract, Base: 7,955</title></rect>
+<rect x="515.7" y="646" width="3" height="16" class="muted"><title>Umbra contract, Sepolia: 9,690</title></rect>
+<rect x="560.2" y="646" width="3" height="16" class="muted"><title>Umbra contract, Ethereum: 25,558</title></rect>
+<rect x="607.9" y="646" width="3" height="16" class="muted"><title>Umbra contract, OP Mainnet: 72,277</title></rect>
+<rect x="622.9" y="646" width="3" height="16" class="muted"><title>Umbra contract, Arbitrum One: 100,196</title></rect>
+<rect x="624" y="646" width="3" height="16" class="ink"><title>Umbra contract, Polygon PoS: 102,552</title></rect>
 <line x1="625.5" y1="420" x2="625.5" y2="127.8" class="axis" stroke-width="1.5" stroke-dasharray="3 3"/>
 <circle cx="625.5" cy="147" r="3.5" class="ink"><title>i7-13700K, Umbra on Polygon PoS (102,552): 51.5 s</title></circle>
 <circle cx="625.5" cy="127.8" r="3.5" class="ink"><title>Cortex-A76, Umbra on Polygon PoS (102,552): 179.7 s</title></circle>

@@ -2,14 +2,15 @@
 
 How fast does a phone browser scan announcements?
 
-An iPhone 17 Pro in DuckDuckGo scans 10,000 announcements at 0.54 ms each, with the SDK and its `crypto` path alike; the hosts are in [scan cost](scan-cost.md). The 1,000-announcement run is short and may include JIT warm-up. No-JIT is unmeasured on a phone: a run labelled Lockdown Mode still had WebAssembly, so Lockdown was off, and it is left out.
+An iPhone 17 Pro in DuckDuckGo scans 10,000 announcements at 0.54 ms each with the SDK and with its `crypto` path. libsecp256k1 in WASM takes about 0.09 ms each on the same phone, from a short 1,000-announcement run. Host rates for each engine are in [scan cost](scan-cost.md). No-JIT is unmeasured on a phone: a run labelled Lockdown Mode still had WebAssembly, so Lockdown was off, and it is left out.
 
 <!-- generated:phone-bench -->
 | Device | OS | Browser | JIT | Engine | Announcements | ms per announcement | Credit |
 | --- | --- | --- | --- | --- | ---: | ---: | --- |
-| iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | crypto | 1,000 | 0.60 | owner |
+| iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | crypto | 1,000 (short) | 0.60 | owner |
 | iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | crypto | 10,000 | 0.54 | owner |
 | iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | sdk | 10,000 | 0.54 | owner |
+| iPhone 17 Pro | iOS 18.7 | DuckDuckGo 27.2 | on | wasm | 1,000 (short) | 0.093 | owner |
 <!-- /generated:phone-bench -->
 
 JavaScriptCore without its JIT bounds the Lockdown Mode case until a phone measures it. It is a proxy: Bun on a Turing node, not Safari on a phone.

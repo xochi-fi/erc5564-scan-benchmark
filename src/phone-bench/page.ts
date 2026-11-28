@@ -63,6 +63,8 @@ function checkJit() {
     : '';
 }
 $('jit').addEventListener('change', checkJit);
+// WASM is fast enough that 1,000 announcements take well under a second; default it to the longest run.
+$('engine').addEventListener('change', () => { if ($<HTMLSelectElement>('engine').value === 'wasm') $<HTMLSelectElement>('count').value = '10000'; });
 $('jit-reason').textContent = `Prefilled: ${jit.jitReason}.`;
 $('candidates').textContent = candidates.length ? 'iPhones do not report their model; these share your screen size. Edit the field to your model.' : '';
 const hints = (navigator as unknown as { userAgentData?: { getHighEntropyValues(k: string[]): Promise<Record<string, string>> } }).userAgentData;
@@ -137,11 +139,12 @@ $('run').addEventListener('click', async () => {
       scanMs: Number(r.scanMs.toFixed(1)), msPerAnnouncement: Number(ms.toFixed(4)),
       matches: r.matches, expectedMatches: r.expected, verified: r.verified,
     };
-    $('big').textContent = `${ms.toFixed(2)} ms per announcement`;
+    $('big').textContent = `${ms.toFixed(ms < 0.1 ? 3 : 2)} ms per announcement`;
     $('verdict').textContent = r.verified ? 'Oracle check passed' : 'ORACLE CHECK FAILED: this result is invalid';
     $('verdict').className = r.verified ? 'ok' : 'bad';
     $<HTMLTextAreaElement>('result').value = JSON.stringify(lastResult, null, 2);
-    setState('done', r.verified ? 'Submit, copy or download the result below.' : 'Do not submit this result.');
+    const short = r.scanMs < 2000 ? 'Short run (under 2 s): run 10,000 announcements for a steadier number. ' : '';
+    setState('done', r.verified ? `${short}Submit, copy or download the result below.` : 'Do not submit this result.');
     $<HTMLButtonElement>('submit').disabled = !r.verified || lockdownMismatch();
     boot.step(`done (${usedWorker ? 'worker' : 'main thread'})`);
   };

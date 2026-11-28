@@ -10,7 +10,7 @@ export const PHONE_FIXTURE_SHA256 = '63ea0c665c7c8a98fe1643ccddc979c2407fc7748aa
 const text = (max: number) => z.string().max(max);
 
 export const resultSchema = z.object({
-  kind: z.literal('phone-bench'), pageVersion: z.enum(['4', '5', PAGE_VERSION]), startedAt: z.string().datetime(),
+  kind: z.literal('phone-bench'), pageVersion: z.enum(['4', '5', '6', PAGE_VERSION]), startedAt: z.string().datetime(),
   device: text(80).min(1), os: text(60), browser: text(60), jit: z.enum(['on', 'off-lockdown', 'off-other', 'unknown']), notes: text(200).nullable(),
   detected: z.object({
     os: text(40), osVersion: text(40).nullable(), browser: text(40), browserVersion: text(40).nullable(), device: text(80), app: text(60).nullable(),

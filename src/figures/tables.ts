@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
+  spamCost,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -337,6 +338,25 @@ function feedTable() {
 
 // ---- writer -------------------------------------------------------------------
 
+// ---- spam cost ------------------------------------------------------------------
+
+const gwei = (wei: number) => {
+  const g = wei / 1e9;
+  return g === 0 ? '0' : g >= 1 ? fixed(g, 0) : g >= 0.001 ? fixed(g, 3) : g.toExponential(1);
+};
+const usd = (value: number) => (value >= 100 ? `$${fixed(value, 0)}` : value >= 1 ? `$${fixed(value, 2)}` : value >= 0.01 ? `$${fixed(value, 2)}` : `<$0.01`);
+function spamTable() {
+  const { chains } = spamCost();
+  return table(['Chain', 'Gas, direct / batched', 'Base + p10 tip (gwei)', 'Native (USD)', '100k/day', '1M/day', 'Block gas at 1M/day'],
+    ['l', 'r', 'r', 'r', 'r', 'r', 'r'],
+    chains.map(c => [CHAIN_LABELS[c.chain]!, `${fixed(c.directGas, 0)} / ${fixed(c.batchedGas, 0)}`,
+      `${gwei(c.baseFeeWei)} + ${gwei(c.tipWei)}`,
+      c.native ? `${c.native} ${c.nativeUsd! >= 1 ? fixed(c.nativeUsd!, 2) : fixed(c.nativeUsd!, 3)}` : 'testnet',
+      c.usdPerAnnouncement === null ? 'free' : usd(1e5 * c.usdPerAnnouncement),
+      c.usdPerAnnouncement === null ? 'free' : usd(1e6 * c.usdPerAnnouncement),
+      c.blockShareAt1M === null ? '—' : `${fixed(100 * c.blockShareAt1M, 1)}%`]));
+}
+
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
@@ -350,6 +370,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
+  'spam-cost': ['docs/spam-cost.md', spamTable],
 };
 
 export function renderTables(): Map<string, string> {

@@ -26,7 +26,7 @@ Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1 (N = 2^19, 
 | Daily feed bytes | 60 MB at ~620 B (2 × best format) | ~100k/day |
 | Wallets cover Umbra-scale streams | — | ~100k per chain |
 
-The budgets are assumptions. A Turing scan passes DoS-PerfOMR's 20 ms recipient time at ~12/day with the SDK and ~120/day with native libsecp256k1 ([rates](scan-cost.md)).
+The budgets are assumptions. A Turing scan passes DoS-PerfOMR's 20 ms recipient time at ~12/day with the SDK and ~120/day with native libsecp256k1 ([rates](scan-cost.md)). Spam can buy these volumes cheaply ([spam cost](spam-cost.md)).
 
 ## Privacy
 

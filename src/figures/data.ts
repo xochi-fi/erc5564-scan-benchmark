@@ -258,3 +258,53 @@ export function engineHeadlines(): EngineHeadline[] {
     return { host, sdk: get('sdk'), wasm: get('wasm'), native: get('native'), best };
   });
 }
+
+// ---- spam cost ------------------------------------------------------------------
+
+export const SPAM_CHAIN_ORDER = ['ethereum', 'base', 'arbitrum', 'optimism', 'gnosis', 'polygon', 'sepolia'] as const;
+const SPAM_NATIVE: Record<string, string | null> = {
+  ethereum: 'ethereum', base: 'ethereum', arbitrum: 'ethereum', optimism: 'ethereum', gnosis: 'xdai', polygon: 'polygon-ecosystem-token', sepolia: null,
+};
+const SPAM_NATIVE_LABEL: Record<string, string> = { ethereum: 'ETH', xdai: 'xDAI', 'polygon-ecosystem-token': 'POL' };
+/** Announcements per batch transaction assumed for the batched cost; the fixed per-transaction gas is spread over it. */
+export const SPAM_BATCH = 1000;
+const BLOCK_SECONDS: Record<string, number> = { ethereum: 12, base: 2, arbitrum: 0.25, optimism: 2, gnosis: 5, polygon: 2, sepolia: 12 };
+
+export interface SpamCost {
+  chain: string; measuredAt: string; url: string;
+  directGas: number; marginalGas: number; batchedGas: number; receiptGas: number[];
+  baseFeeWei: number; tipWei: number; l1FeeWeiPerTx: number; native: string | null; nativeUsd: number | null;
+  /** USD per announcement, batched; null on a testnet. */
+  usdPerAnnouncement: number | null;
+  /** Share of the chain's daily block gas limit used by 1M batched announcements; null when the limit is not a throughput cap. */
+  blockShareAt1M: number | null;
+}
+
+/** Cost of one batched announcement per chain, from data/spam-cost/ (bun run spam-cost). */
+export function spamCost(): { chains: SpamCost[]; pricesAt: string; priceSource: string } {
+  const prices = readJson('data/spam-cost/prices.json');
+  const chains = SPAM_CHAIN_ORDER.map(chain => {
+    const d = readJson(`data/spam-cost/${chain}.json`);
+    if (d.failed) throw new Error(`spam-cost: ${chain} has no successful probe`);
+    const gas = (x: any) => Number(BigInt(x.result));
+    const directGas = gas(d.direct);
+    const one = gas(d.batch['1']), many = gas(d.batch['101']);
+    const marginalGas = (many - one) / 100;
+    const batchedGas = marginalGas + (one - marginalGas) / SPAM_BATCH;
+    const baseFeeWei = median(d.fees.result.baseFeePerGas.slice(0, -1).map((h: string) => Number(BigInt(h))))!;
+    const tipWei = median(d.fees.result.reward.map((r: string[]) => Number(BigInt(r[0]!))))!;
+    const l1FeeWeiPerTx = d.l1 ? Number(BigInt(d.l1.getL1Fee.result)) : 0;
+    const native = SPAM_NATIVE[chain]!;
+    const nativeUsd = native ? prices.body[native].usd as number : null;
+    const wei = batchedGas * (baseFeeWei + tipWei) + l1FeeWeiPerTx / SPAM_BATCH;
+    const daily = (d.head.gasLimit as number) * 86400 / BLOCK_SECONDS[chain]!;
+    return {
+      chain, measuredAt: d.measuredAt, url: d.url, directGas, marginalGas, batchedGas,
+      receiptGas: d.receipts.filter((r: any) => r.gasUsed && r.to === '0x55649e01b5df198d18d95b5cc5051630cfd45564' && r.announcerLogs === 1).map((r: any) => r.gasUsed),
+      baseFeeWei, tipWei, l1FeeWeiPerTx, native: native ? SPAM_NATIVE_LABEL[native]! : null, nativeUsd,
+      usdPerAnnouncement: nativeUsd === null ? null : wei / 1e18 * nativeUsd,
+      blockShareAt1M: chain === 'arbitrum' ? null : 1e6 * batchedGas / daily,
+    };
+  });
+  return { chains, pricesAt: prices.fetchedAt, priceSource: prices.source };
+}

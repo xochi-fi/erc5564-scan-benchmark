@@ -1,0 +1,1 @@
+{"source":"https://api.coingecko.com/api/v3/simple/price?ids=ethereum,polygon-ecosystem-token,xdai&vs_currencies=usd&include_last_updated_at=true","fetchedAt":"2026-11-28T00:30:38.842Z","status":200,"body":{"ethereum":{"usd":1663.21,"last_updated_at":1795825825},"polygon-ecosystem-token":{"usd":0.077928,"last_updated_at":1795825814},"xdai":{"usd":1,"last_updated_at":1795825814}}}

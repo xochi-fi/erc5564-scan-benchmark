@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
-  spamCost, omissionCause, freshness, realScan, phoneResults,
+  spamCost, omissionCause, freshness, realScan, phoneResults, phoneProxies, realTiming,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -396,6 +396,16 @@ function realScanTable() {
       total(c => c.defects['no-view-tag'] ?? 0), total(c => c.scheme1KeyBytes['65'] ?? 0), total(c => c.crypto.errors), rows.every(c => c.sdkWholeBatch.ok) ? 'completes' : 'throws']]);
 }
 
+function realTimingTable() {
+  const t = realTiming('turing-node-3').timing;
+  const each = (ms: number[], n: number) => { const s = spreadOf(ms.map(v => v / n)); return `${fixed(s.median, 3)} [${fixed(s.min, 3)}-${fixed(s.max, 3)}]`; };
+  return table(['Host', 'Input', 'Announcements', 'ms each, median [min-max]'], ['l', 'l', 'r', 'r'], [
+    ['Turing node 3', 'Real, scheme 1 without defects', fixed(t.clean, 0), each(t.cleanMs, t.clean)],
+    ['Turing node 3', 'Synthetic, same count', fixed(t.clean, 0), each(t.syntheticMs, t.clean)],
+    ['Turing node 3', 'Real, all (defects throw early)', fixed(t.all, 0), each(t.allMs, t.all)],
+  ]);
+}
+
 // ---- batched verification ---------------------------------------------------------
 
 export function pagedBatchedTable() {
@@ -415,6 +425,11 @@ export function pagedBatchedTable() {
 }
 
 // ---- phone bench -----------------------------------------------------------------
+
+function phoneProxyTable() {
+  return table(['Host', 'Runtime', 'JIT', 'Engine', 'ms per announcement'], ['l', 'l', 'l', 'l', 'r'],
+    phoneProxies().map((r: Record<string, any>) => [r.host, r.runtime, r.jit === 'on' ? 'on' : 'off (`BUN_JSC_useJIT=0`)', r.engine, fixed(r.msPerAnnouncement, 2)]));
+}
 
 function phoneTable() {
   const rows = phoneResults();
@@ -441,7 +456,9 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'omission-cause': ['docs/omission-cause.md', omissionTable],
   'freshness': ['docs/freshness.md', freshnessTable],
   'phone-bench': ['docs/phone-bench.md', phoneTable],
+  'phone-proxy': ['docs/phone-bench.md', phoneProxyTable],
   'real-scan': ['docs/real-announcements.md', realScanTable],
+  'real-timing': ['docs/real-announcements.md', realTimingTable],
 };
 
 export function renderTables(): Map<string, string> {

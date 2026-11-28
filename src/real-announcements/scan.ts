@@ -11,10 +11,11 @@ import { loadFixture } from '../shared/fixtures.ts';
 
 const ROOT = new URL('../../', import.meta.url).pathname;
 export const CHAINS = ['ethereum', 'base', 'arbitrum', 'optimism', 'gnosis', 'polygon', 'sepolia'];
-// Public test-only keys from the scan-cost fixtures' generator domain; nothing real matches them.
+// The scan-cost 100k zero-match fixture's test recipient (data/scan-cost/baseline-100k-1m/fixtures/100000-zero); nothing real matches it.
+// A full-size viewing key matters: a tiny one makes the ECDH cheap and the timing meaningless.
 const RECIPIENT = {
-  spendingPublicKey: '0x02c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5',
-  viewingPrivateKey: '0x0000000000000000000000000000000000000000000000000000000000000003',
+  spendingPublicKey: '0x03b790fa25d152286e031a9f45fbda836e51daaed14d2818ac4248b6e048bd9f49',
+  viewingPrivateKey: '0x1244ed4b491a7d778dbd171a5efe9403d45661d3e09cbfca2fa0380b75e08f68',
 } as const;
 
 /** `other-scheme`: schemeId ≠ 1, not secp256k1 with view tags, so out of scope rather than malformed. */

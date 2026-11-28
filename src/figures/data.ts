@@ -405,3 +405,6 @@ export function phoneResults(): Record<string, any>[] {
   try { files = readdirSync(path('data/phone-bench')).filter(f => f.endsWith('.json')).sort(); } catch { return []; }
   return files.map(f => readJson(`data/phone-bench/${f}`));
 }
+/** JavaScriptCore runs of the page's scan code outside a browser (bun run phone-bench:cli). */
+export const phoneProxies = (): Record<string, any>[] =>
+  readdirSync(path('data/phone-bench/proxy')).filter(f => f.endsWith('.json')).sort().map(f => readJson(`data/phone-bench/proxy/${f}`));

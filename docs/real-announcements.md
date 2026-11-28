@@ -19,7 +19,14 @@ All 2,049 recorded announcements decode. 489 use another scheme and 89 scheme-1 
 
 Raw logs from Tenderly (rpc.gnosischain.com for Gnosis), 2026-11-28, matching every identity in [chain volume](chain-volume.md). Scheme 1 accepts compressed (33-byte) and uncompressed (65-byte) keys. A test recipient matches none.
 
+Real input costs the same as synthetic: `crypto` engine, 20 interleaved repetitions, `taskset -c 4-7`.
+
 <!-- generated:real-timing -->
+| Host | Input | Announcements | ms each, median [min-max] |
+| --- | --- | ---: | ---: |
+| Turing node 3 | Real, scheme 1 without defects | 1,471 | 1.614 [1.602-1.651] |
+| Turing node 3 | Synthetic, same count | 1,471 | 1.624 [1.610-1.659] |
+| Turing node 3 | Real, all (defects throw early) | 2,049 | 1.161 [1.150-1.186] |
 <!-- /generated:real-timing -->
 
 ```sh

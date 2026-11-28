@@ -22,7 +22,7 @@ For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance))
 <sub>Feeds over the network.</sub>
 
 ![Scan time against announcements](docs/figures/scan-vs-volume.svg)
-<sub>Synthetic; rugs are real chains.</sub>
+<sub>Lines: synthetic fixtures. Ticks: each real chain's full history.</sub>
 
 [Scan cost](docs/scan-cost.md) · [Paged discovery](docs/paged-discovery.md) · [Chain volume](docs/chain-volume.md) · [Browser discovery](docs/browser-discovery.md) · [RPC recovery](docs/rpc-recovery.md) · [Shared feed](docs/shared-feed.md) · [Methods](METHODS.md) · [Data](data/README.md)
 

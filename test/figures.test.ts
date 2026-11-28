@@ -22,4 +22,11 @@ describe('figures and tables', () => {
       expect(svg).not.toContain('NaN');
     }
   });
+
+  test('scan-vs-volume names its tick rows and the largest real history', () => {
+    const svg = FIGURES['scan-vs-volume.svg']!();
+    for (const label of ['Real chains, total announcements to date', 'ERC-5564 Announcer', 'Umbra contract', 'Umbra on Polygon PoS']) {
+      expect(svg).toContain(label);
+    }
+  });
 });

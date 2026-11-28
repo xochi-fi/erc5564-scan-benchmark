@@ -80,18 +80,79 @@ function scanVsVolume(): string {
     out.push(text(L + 52, ky, label, 'label ink'));
   });
 
-  // Rugs: each chain's full history, canonical Announcer and Umbra.
-  const rug = (rowY: number, label: string, counts: [string, number][]) => {
-    const values = counts.map(([, n]) => n);
-    const lo = Math.min(...values), hi = Math.max(...values);
-    out.push(rect(x.scale(lo), rowY - 7, x.scale(hi) - x.scale(lo), 14, 'band', undefined, ' rx="3"'));
-    for (const [chain, n] of counts) out.push(rect(x.scale(n) - 1.5, rowY - 8, 3, 16, 'muted', `${chain}: ${fmt(n)} announcements`));
-    out.push(text(L - 8, rowY + 5, label, 'small ink', 'end'));
+  // Ticks: each real chain's full announcement history, read against the x-axis as a full-history scan.
+  // Labels alternate above and below the ticks and are spread apart (dodge) so text never overlaps.
+  const labelWidth = (s: string) => s.length * 7.2;
+  const dodge = (want: number[], widths: number[], lo: number, hi: number, gap = 12) => {
+    let groups = want.map((c, i) => ({ items: [i], left: c - widths[i]! / 2, width: widths[i]! }));
+    const place = (g: typeof groups[number]) => {
+      let offset = 0;
+      const shifts = g.items.map(i => { const s = want[i]! - offset - widths[i]! / 2; offset += widths[i]! + gap; return s; });
+      g.width = offset - gap;
+      g.left = Math.min(Math.max(shifts.reduce((a, b) => a + b, 0) / shifts.length, lo), hi - g.width);
+    };
+    for (let merged = true; merged;) {
+      merged = false;
+      for (let i = 1; i < groups.length; i++) {
+        const a = groups[i - 1]!, b = groups[i]!;
+        if (a.left + a.width + gap > b.left) {
+          groups.splice(i - 1, 2, { items: [...a.items, ...b.items], left: 0, width: 0 });
+          place(groups[i - 1]!);
+          merged = true;
+          break;
+        }
+      }
+    }
+    const centers: number[] = [];
+    for (const g of groups) {
+      let at = g.left;
+      for (const i of g.items) { centers[i] = at + widths[i]! / 2; at += widths[i]! + gap; }
+    }
+    return centers;
   };
+  const LARGEST = 'Polygon PoS';
+  const rug = (top: number, label: string, counts: [string, number][]) => {
+    const sorted = [...counts].sort((a, b) => a[1] - b[1]);
+    const rowY = top + 38;
+    const values = sorted.map(([, n]) => n);
+    out.push(text(20, top, label, 'small muted'));
+    out.push(rect(x.scale(values[0]!), rowY - 7, x.scale(values.at(-1)!) - x.scale(values[0]!), 14, 'band', undefined, ' rx="3"'));
+    for (const side of [0, 1]) {
+      const picked = sorted.filter((_, i) => i % 2 === side);
+      const names = picked.map(([chain, n]) => `${chain} ${fmt(n)}`);
+      const centers = dodge(picked.map(([, n]) => x.scale(n)), names.map(labelWidth), 20, W - 20);
+      const labelY = side === 0 ? rowY - 22 : rowY + 32;
+      picked.forEach(([chain, n], i) => {
+        const tx = x.scale(n);
+        out.push(line(tx, side === 0 ? rowY - 9 : rowY + 9, centers[i]!, side === 0 ? labelY + 5 : labelY - 14, 'axis', ' stroke-width="1"'));
+        out.push(text(centers[i]!, labelY, names[i]!, 'small ink', 'middle'));
+      });
+    }
+    for (const [chain, n] of sorted) {
+      const key = label.startsWith('Umbra') && chain === LARGEST;
+      out.push(rect(x.scale(n) - 1.5, rowY - 8, 3, 16, key ? 'ink' : 'muted', `${label}, ${chain}: ${fmt(n)} announcements`));
+    }
+  };
+  out.push(text(20, B + 72, 'Real chains, total announcements to date', 'label ink'));
   // ERC-5564 counts follow the weekly refresh; Umbra stays at the 2026-11-26 recording.
-  rug(B + 70, 'ERC-5564', chains.map(c => [CHAIN_LABELS[c.chain]!, chainLatest(c.chain).count]));
-  rug(B + 96, 'Umbra', chains.filter(c => c.umbra !== null).map(c => [CHAIN_LABELS[c.chain]!, c.umbra!]));
-  return svg(W, B + 116, 'Scan time against announcement count, log-log', out);
+  rug(B + 98, 'ERC-5564 Announcer', chains.map(c => [CHAIN_LABELS[c.chain]!, chainLatest(c.chain).count]));
+  rug(B + 196, 'Umbra contract', chains.filter(c => c.umbra !== null).map(c => [CHAIN_LABELS[c.chain]!, c.umbra!]));
+
+  // The largest real history, Umbra on Polygon PoS, read off each host's line.
+  const largest = chains.find(c => CHAIN_LABELS[c.chain] === LARGEST)!.umbra!;
+  const lx = x.scale(largest);
+  const onLine = (h: typeof hosts[number]) => {
+    const start = (h.before + h.after) / 2;
+    return start * (h.million / start) ** Math.log10(largest / 1e5);
+  };
+  const times = hosts.map(onLine);
+  out.push(line(lx, B, lx, y.scale(Math.max(...times)), 'axis', ' stroke-width="1.5" stroke-dasharray="3 3"'));
+  const duration = (s: number) => (s < 120 ? `${fmt(s)} s` : `${fmt(s / 60, 1)} min`);
+  hosts.forEach((h, i) => out.push(circle(lx, y.scale(times[i]!), 3.5, 'ink', `${series[i]![1]}, Umbra on ${LARGEST} (${fmt(largest)}): ${fmt(times[i]!, 1)} s`)));
+  out.push(text(lx - 8, B - 64, `Umbra on ${LARGEST}`, 'label ink', 'end'));
+  out.push(text(lx - 8, B - 46, `${fmt(largest)} announcements`, 'small muted', 'end'));
+  hosts.forEach((_, i) => out.push(text(lx - 8, B - 28 + i * 18, `${series[i]![1]}: ${duration(times[i]!)}`, 'small ink', 'end')));
+  return svg(W, B + 276, 'Scan time against announcement count, log-log, with each real chain\'s full history', out);
 }
 
 // ---- 2. cold-start requests per chain by strategy -----------------------------

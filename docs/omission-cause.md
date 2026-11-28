@@ -18,8 +18,8 @@ Daybreak and Base Azul (below block 62.5M) answer `[]` for history they do not h
 | Wallet check | Cost on the [Daybreak replay](rpc-recovery.md#windows) | Catches |
 | --- | ---: | --- |
 | One Transfer canary on a busy block at startup | +1 POST | Daybreak, pruned ranges |
-| Transfer canary per window | 70 → 138 POST (derived: one per 68 windows) | Daybreak, 1rpc, most pruned ranges |
-| Two-provider cross-check | 70 → 181 POST | Every omission in the replay |
+| Transfer canary per window | +1 POST per window, 68 on the replay | Daybreak, 1rpc, most pruned ranges |
+| [Two-provider cross-check](rpc-recovery.md) | See the replay table | Every omission in the replay |
 
 ```sh
 bun run omission-cause     # ≥275 ms between requests per provider

@@ -2,7 +2,7 @@
 
 What does it cost an attacker to push a chain past the [revisit thresholds](shared-feed.md#decision)?
 
-At most $435 a day buys 1M announcements on any chain measured; OP Mainnet and Gnosis cost under $1. Each wallet then spends 29 min of Turing CPU and ~620 MB a day, and a DoS-PerfOMR detector 82 min per recipient digest (4.9 ms/msg, [2024/510](https://eprint.iacr.org/2024/510) Table 1), so spam does not favour OMR. The thresholds are attack prices.
+At most $435 a day buys 1M announcements on any chain measured; OP Mainnet and Gnosis cost under $1. Every wallet then pays the scan time and bytes of the [shared-feed budgets](shared-feed.md#decision) at that volume, and a DoS-PerfOMR detector pays its per-message time ([scheme table](shared-feed.md#decision)) for each recipient, so spam does not favour OMR. The thresholds are attack prices.
 
 <!-- generated:spam-cost -->
 | Chain | Gas, direct / batched | Base + p10 tip (gwei) | Native (USD) | 100k/day | 1M/day | Block gas at 1M/day |

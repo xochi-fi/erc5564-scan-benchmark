@@ -1,0 +1,143 @@
+// Dual-feed cold rescan and warm catch-up against the static benchmark feeds over the public
+// network (TLS, CDN, compression). Same pages, checks and scan as the loopback rows in run.ts;
+// each sample runs in a fresh process, so it opens its own connections.
+import { mkdir, readFile, rename } from 'node:fs/promises';
+import { hostname, release } from 'node:os';
+import { getAnnouncementsForUser } from '@scopelift/stealth-address-sdk';
+import { generateFixture } from '../shared/fixtures.ts';
+import { decodeAnnouncements, type RawLog } from '../shared/raw-logs.ts';
+import { scope } from '../shared/base-windows.ts';
+import { waitForCooldown } from '../shared/host.ts';
+import { compact, digest, expand, loadReference, warmPage, type Feed } from './feed.ts';
+
+type Request = {
+  source: string; operation: string; status: number; responseBytes: number; wireBytes: number | null;
+  encoding: string | null; cache: string | null; fetchMs: number;
+};
+type PageSummary = { index: number; count: number; digest: string; syntheticMatches: number; canonicalMatches: number };
+type Checkpoint = { id: string; next: number; block: number; pages: PageSummary[] };
+
+const [command, ...args] = Bun.argv.slice(2);
+
+async function child(output: string, name: string, limit: number, urls: string[]) {
+  const feed = await loadReference();
+  const fixtureDir = `${output}/synthetic`;
+  // kept: recorded evidence depends on it
+  const synthetic = await generateFixture(fixtureDir, { seed: 'phase6:base:v1', count: 4, matchEvery: 2 });
+  const fixtures = (await Bun.file(`${fixtureDir}/announcements.jsonl`).text()).trim().split('\n')
+    .map(line => JSON.parse(line) as RawLog);
+  const fixturePages = [2, 2, warmPage + 1, warmPage + 1];
+  const requests: Request[] = [];
+  async function read<T>(source: number, path: string, operation: string): Promise<T> {
+    const start = performance.now();
+    const response = await fetch(new URL(path, urls[source]), {
+      credentials: 'omit', redirect: 'error', signal: AbortSignal.timeout(30_000),
+    });
+    const bytes = await response.arrayBuffer();
+    const length = response.headers.get('content-length');
+    requests.push({
+      source: `feed-${source + 1}`, operation, status: response.status, responseBytes: bytes.byteLength,
+      wireBytes: length === null ? null : Number(length), encoding: response.headers.get('content-encoding'),
+      cache: response.headers.get('x-cache') ?? response.headers.get('cf-cache-status'), fetchMs: performance.now() - start,
+    });
+    if (!response.ok) throw new Error(`feed-${source + 1} ${operation} HTTP ${response.status}`);
+    return JSON.parse(new TextDecoder().decode(bytes)) as T;
+  }
+
+  const checkpointPath = `${output}/${name}.checkpoint.json`;
+  const file = Bun.file(checkpointPath);
+  const state: Checkpoint = await file.exists() ? await file.json() : { id: feed.id, next: 0, block: scope.start - 1, pages: [] };
+  const initialNext = state.next;
+  const initialBlock = state.block;
+  let verificationMs = 0;
+  let scanMs = 0;
+  let firstSyntheticMatchMs: number | null = null;
+  let stop: string | null = null;
+  const attemptPages: number[] = [];
+  const retries: number[] = [];
+  const start = performance.now();
+  try {
+    await Promise.all([0, 1].map(async source => {
+      if (digest(await read<unknown>(source, 'manifest.json', 'manifest')) !== feed.id) throw new Error('Wrong feed manifest');
+    }));
+    for (let index = state.next; index < limit; index++) {
+      const windows = feed.manifest.pages[index]!;
+      const getPage = async () => {
+        attemptPages.push(index);
+        const pages = await Promise.all([0, 1].map(source => read<Feed['primary'][number]>(source, `${feed.id}/${index}.json`, 'page')));
+        const verify = performance.now();
+        try {
+          const [first, second] = pages.map(page => {
+            if (page.id !== feed.id || page.index !== index) throw new Error('Wrong page');
+            return compact(expand(page.rows), windows);
+          });
+          if (JSON.stringify(first) !== JSON.stringify(second)) throw new Error('Feed disagreement');
+          return first!;
+        } finally {
+          verificationMs += performance.now() - verify;
+        }
+      };
+      let rows;
+      try {
+        rows = await getPage();
+      } catch {
+        retries.push(index);
+        rows = await getPage();
+      }
+      const beganScan = performance.now();
+      const discover = (logs: RawLog[]) => getAnnouncementsForUser({ ...synthetic.recipient, announcements: decodeAnnouncements(logs) });
+      const canonicalMatches = (await discover(expand(rows))).length;
+      const matches = await discover(fixtures.filter((_, i) => fixturePages[i] === index));
+      if (matches.length && firstSyntheticMatchMs === null) firstSyntheticMatchMs = performance.now() - start;
+      scanMs += performance.now() - beganScan;
+      const expected = synthetic.expectedIndices.filter(i => fixturePages[i] === index).map(i => fixtures[i]!.transactionHash);
+      if (JSON.stringify(matches.map(match => match.transactionHash)) !== JSON.stringify(expected)) throw new Error('Incorrect synthetic matches');
+      state.pages.push({ index, count: rows.length, digest: digest(rows), syntheticMatches: matches.length, canonicalMatches });
+      state.next = index + 1;
+      state.block = windows.at(-1)!.to;
+      await Bun.write(`${checkpointPath}.tmp`, JSON.stringify(state));
+      await rename(`${checkpointPath}.tmp`, checkpointPath);
+    }
+  } catch (error) {
+    stop = String(error);
+  }
+  const elapsedMs = performance.now() - start;
+  const committed = await Bun.file(checkpointPath).exists()
+    ? JSON.parse(await readFile(checkpointPath, 'utf8')) as Checkpoint : { next: 0, block: scope.start - 1, pages: [] };
+  return { name, limit, initialNext, initialBlock, ...committed, retries, attemptPages, stop, elapsedMs,
+    catchUpMs: committed.next === feed.primary.length && stop === null ? elapsedMs : null,
+    scanMs, verificationMs, firstSyntheticMatchMs, requests };
+}
+
+if (command === 'child') {
+  const [output, name, limit, ...urls] = args;
+  console.log(JSON.stringify(await child(output!, name!, Number(limit), urls)));
+} else {
+  const [output, ...urls] = [command, ...args];
+  if (!output || urls.length !== 2 || !/^(bazzite|turing-node-[123])$/.test(hostname()) || !urls.every(url => url.startsWith('https://') && url.endsWith('/'))) {
+    throw new Error('Usage on Bazzite or a Turing node: bun run shared-feed:remote NEW_OUTPUT_DIR HTTPS_FEED_1/ HTTPS_FEED_2/');
+  }
+  await mkdir(output, { recursive: false });
+  const feed = await loadReference();
+  const cooldownC = Number(process.env.COOLDOWN_C ?? 70);
+  const allowed = (await Bun.file('/proc/self/status').text()).match(/^Cpus_allowed_list:\s*(\S+)$/m)?.[1] ?? null;
+  const evidence = { startedAt: new Date().toISOString(), host: hostname(), kernel: release(), bun: Bun.version,
+    cpusAllowed: allowed, cooldownC, feedId: feed.id, urls, samples: {} as Record<string, unknown> };
+  async function sample(label: string, name: string, limit: number) {
+    const thermal = await waitForCooldown(cooldownC);
+    const proc = Bun.spawn([process.execPath, import.meta.path, 'child', output!, name, String(limit), ...urls], { stdout: 'pipe', stderr: 'inherit' });
+    const text = await new Response(proc.stdout).text();
+    if (await proc.exited !== 0) throw new Error(`${label} failed`);
+    const result = { ...JSON.parse(text), thermal };
+    evidence.samples[label] = result;
+    await Bun.write(`${output}/evidence.json`, JSON.stringify(evidence, null, 2) + '\n');
+    console.log(label, result.next, result.stop ?? result.elapsedMs.toFixed(1));
+    if (result.stop) throw new Error(result.stop);
+  }
+  const end = feed.primary.length;
+  for (let round = 1; round <= 3; round++) {
+    await sample(`remote-cold-${round}`, `remote-cold-${round}`, end);
+    await sample(`remote-warm-${round}-seed`, `remote-warm-${round}`, warmPage);
+    await sample(`remote-warm-${round}`, `remote-warm-${round}`, end);
+  }
+}

@@ -308,3 +308,36 @@ export function spamCost(): { chains: SpamCost[]; pricesAt: string; priceSource:
   });
   return { chains, pricesAt: prices.fetchedAt, priceSource: prices.source };
 }
+
+// ---- omission cause ---------------------------------------------------------------
+
+export interface OmissionRow { chain: string; host: string; probes: number; omitted: number; noReceipt: number; canaryEmpty: number; caught: number; otherSizes: number }
+/** Per suspect provider: how often it omitted a known announcement, and how often a Transfer canary in the same block was empty too. */
+export function omissionCause(): OmissionRow[] {
+  return ['base', 'optimism'].flatMap(chain => {
+    const d = readJson(`data/omission-cause/${chain}.json`);
+    const control = new Map<string, any>();
+    for (const p of d.providers) if (p.control) for (const q of p.probes) control.set(`${p.pass}:${q.block}`, q);
+    const empty = (x: any) => typeof x?.count !== 'number' || x.count === 0;
+    const rows = new Map<string, OmissionRow>();
+    for (const p of d.providers) {
+      if (p.control) continue;
+      const host = new URL(p.url).host;
+      const row = rows.get(host) ?? { chain, host, probes: 0, omitted: 0, noReceipt: 0, canaryEmpty: 0, caught: 0, otherSizes: 0 };
+      for (const q of p.probes) {
+        const c = control.get(`${p.pass}:${q.block}`);
+        if (!c?.announcerOneBlock?.hasTarget || empty(c.canaryTransfers)) throw new Error(`omission-cause: control failed at ${q.block}`);
+        row.probes++;
+        const omitted = !q.announcerOneBlock?.hasTarget;
+        const canary = empty(q.canaryTransfers);
+        if (omitted) row.omitted++;
+        if (!q.receipt?.hasTarget) row.noReceipt++;
+        if (canary) row.canaryEmpty++;
+        if (omitted && canary) row.caught++;
+        if (omitted && [q.announcer50, q.announcer1000, q.announcerByHash, q.topicOnlyOneBlock].some(x => x?.hasTarget)) row.otherSizes++;
+      }
+      rows.set(host, row);
+    }
+    return [...rows.values()];
+  });
+}

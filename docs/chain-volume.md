@@ -58,6 +58,7 @@ Still silent on 2026-11-28: Base `base.daybreak-rpc.network`, `rpc.baseazul.dev`
 2. On range, size or timeout errors, use the reported limit or halve the page. 1,000 blocks works on most historical endpoints.
 3. Try the user's RPC first, then fallbacks by cap. Record which endpoint served each range.
 4. [Cross-check](rpc-recovery.md) empty pages against a second provider.
+5. At startup, reject a provider whose Transfer logs in a busy block come back empty (one POST; [omission cause](omission-cause.md)).
 
 | Chain | Observed starting spans |
 | --- | --- |

@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
-  spamCost,
+  spamCost, omissionCause,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -357,6 +357,21 @@ function spamTable() {
       c.blockShareAt1M === null ? '—' : `${fixed(100 * c.blockShareAt1M, 1)}%`]));
 }
 
+// ---- omission cause -------------------------------------------------------------
+
+const OMISSION_CLASS: Record<string, string> = {
+  'base.daybreak-rpc.network': 'No receipts or logs: headers only, `[]` for every filter, `block not found` by hash',
+  'rpc.degenprotocol.io': 'Intermittent: one pass drops the 1- and 50-block answers, keeps the 1,000-block one',
+  'rpc.baseazul.dev': 'Pruned below block 62.5M, served as `[]`, an error or a partial answer',
+  'public.1rpc.io': 'Filter bug: `[]` for one block, found in 50 blocks; receipts and canaries vary',
+};
+function omissionTable() {
+  return table(['Provider', 'Known announcements omitted', 'Receipt missing', 'Omissions with an empty Transfer canary', 'Found by another query', 'Class'],
+    ['l', 'r', 'r', 'r', 'r', 'l'],
+    omissionCause().map(r => [`${r.host} (${CHAIN_LABELS[r.chain]})`, `${r.omitted}/${r.probes}`, `${r.noReceipt}/${r.probes}`,
+      `${r.caught}/${r.omitted}`, `${r.otherSizes}/${r.omitted}`, OMISSION_CLASS[r.host] ?? '?']));
+}
+
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
@@ -371,6 +386,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
   'spam-cost': ['docs/spam-cost.md', spamTable],
+  'omission-cause': ['docs/omission-cause.md', omissionTable],
 };
 
 export function renderTables(): Map<string, string> {

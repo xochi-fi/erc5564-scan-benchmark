@@ -50,14 +50,15 @@ Sources: [2021/1256](https://eprint.iacr.org/2021/1256) §1, §4.2, §8.1, §9.1
 <!-- generated:shared-feed -->
 | Host | Mode | Feed, sequential GETs (ms) | Feed, concurrent GETs (ms) | RPC without pacing (ms) | GET / POST | Bytes, feed compressed / RPC |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Bazzite | Cold | 351.6 [336.7–4,272] | 337.3 [329.6–341.0] | 6,895 [6,652–8,020] | 36 / 71 | 22,302 / 83,147 |
+| Bazzite | Warm | 212.6 [201.7–1,687] | 198.3 [194.1–206.7] | 3,860 [3,808–4,021] | 20 / 39 | 12,976 / 58,987 |
 | Turing node 3 | Cold | 492.4 [463.9–526.0] | 476.6 [452.7–505.2] | 8,482 [8,454–9,698] | 36 / 71 | 22,302 / 83,561 |
 | Turing node 3 | Warm | 315.7 [282.8–906.8] | 283.1 [247.8–373.8] | 4,413 [3,989–5,141] | 20 / 39 | 12,976 / 59,401 |
-| Bazzite | Cold, warm | pending | pending | 6,895 [6,652–8,020] | — | — |
 <!-- /generated:shared-feed -->
 
-Medians [min–max] of 9 samples per mode. The README uses sequential GETs, as the RPC client does. Bazzite reruns are pending while another benchmark holds the host. The remote feed is the same pages on raw.githubusercontent.com and jsDelivr at commit `7b78192`, fetched over TLS with gzip or brotli, a fresh process per sample. Concurrent mode requests every page of both feeds at once. RPC without pacing is the 2026-11-27 Tenderly samples minus the client's ≥275 ms start-to-start wait, from recorded request, scan and verification times, with no new requests.
+Medians [min–max] of 9 samples per mode. The README uses concurrent GETs on Bazzite, as a wallet would fetch pages; RPC stays sequential, as a polite keyless client does. The remote feed is the same pages on raw.githubusercontent.com and jsDelivr at commit `7b78192`, fetched over TLS with gzip or brotli, a fresh process per sample, with no other benchmark on either host. Concurrent mode requests every page of both feeds at once. RPC without pacing is the 2026-11-27 Tenderly samples minus the client's ≥275 ms start-to-start wait, from recorded request, scan and verification times, with no new requests.
 
-On loopback without TLS, the same pages take 38.8 ms cold against 19.3 s of paced RPC ([Bazzite](../data/shared-feed/summary.json), [nodes 1–3](../data/shared-feed/)). Three-sample runs before these hit a raw GitHub edge that took ~210 ms per cache hit for whole samples, spreading cold rescans over 0.4–4.2 s ([first runs](../data/shared-feed/remote/)). Each request now records the edge that served it.
+On loopback without TLS, the same pages take 38.8 ms cold against 19.3 s of paced RPC ([Bazzite](../data/shared-feed/summary.json), [nodes 1–3](../data/shared-feed/)). Sequential maxima come from samples in which raw GitHub answered every request, cache hits included, in ~210 ms instead of ~12 ms, from both its Madrid edges: 2 of 18 on Bazzite, none on node 3, 6 of 18 in [earlier three-sample runs](../data/shared-feed/remote/). jsDelivr stayed near 18 ms.
 
 ## Omission and resume controls
 

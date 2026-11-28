@@ -264,7 +264,7 @@ function outcomeMatrix(): string {
 function costFrontier(): string {
   const { expected } = recoveryReference();
   const feed = feedSummary();
-  const remote = remoteSummary(REMOTE_HOSTS[0]!)['remote-cold'];
+  const remote = remoteSummary(REMOTE_HOSTS[0]!)['remote-concurrent-cold'];
   const sec = (ms: number) => `${fmt(ms / 1000, 2)} s`;
   type Place = 'above' | 'below' | 'none';
   interface Point { label: string; requests: number; unit: string; found: number; verified: boolean; time: string; place: Place }

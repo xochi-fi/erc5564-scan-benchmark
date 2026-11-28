@@ -13,7 +13,7 @@ For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance))
 1. 0.5 ms (Bazzite), 1.7 ms (Turing) per announcement with the ScopeLift SDK, 10–15× less with native libsecp256k1: scanning is cheap.
 2. 28 min, 16,296 requests: keyless Base backfill. Other chains take seconds.
 3. 0 of 48: Base announcements Daybreak returns, without error. Two providers recover all.
-4. 0.49 s [0.46–0.53] vs 8.5 s [8.5–9.7]: cold rescan on a Turing node, two feeds over the network vs live RPC without pacing.
+4. 0.34 s [0.33–0.34] vs 6.9 s [6.7–8.0]: cold rescan, two feeds over the network vs live RPC without pacing.
 
 ![Outcome per strategy, fault and endpoint](docs/figures/outcome-matrix.svg)
 <sub>Hollow: one provider, blind to omissions.</sub>

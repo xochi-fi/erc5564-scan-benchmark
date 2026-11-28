@@ -328,7 +328,6 @@ function feedTable() {
         `${fixed(one(seq.wireBytes, 'wire bytes'), 0)} / ${fixed(one(r.responseBytes, 'response bytes'), 0)}`]);
     }
   }
-  rows.push(['Bazzite', 'Cold, warm', 'pending', 'pending', feedSpread(rpcUnpaced('').cold.map(row => row.busyMs)), '—', '—']);
   return table(['Host', 'Mode', 'Feed, sequential GETs (ms)', 'Feed, concurrent GETs (ms)', 'RPC without pacing (ms)', 'GET / POST',
     'Bytes, feed compressed / RPC'], ['l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
 }

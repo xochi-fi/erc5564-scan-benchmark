@@ -1,0 +1,114 @@
+[
+ {
+  "chain": "ethereum",
+  "chainId": 1,
+  "finalized": [
+   26513717,
+   26513717
+  ],
+  "announcements": [
+   302,
+   302
+  ],
+  "agreedTo": 26513717,
+  "agreedAnnouncements": 302,
+  "disagreement": null,
+  "pending": false
+ },
+ {
+  "chain": "base",
+  "chainId": 8453,
+  "finalized": [
+   63389864,
+   63391707
+  ],
+  "announcements": [
+   693,
+   693
+  ],
+  "agreedTo": 63389864,
+  "agreedAnnouncements": 693,
+  "disagreement": null,
+  "pending": false
+ },
+ {
+  "chain": "arbitrum",
+  "chainId": 42161,
+  "finalized": [
+   528279494,
+   528279494
+  ],
+  "announcements": [
+   19,
+   19
+  ],
+  "agreedTo": 528279494,
+  "agreedAnnouncements": 19,
+  "disagreement": null,
+  "pending": false
+ },
+ {
+  "chain": "optimism",
+  "chainId": 10,
+  "finalized": [
+   160134792,
+   160134976
+  ],
+  "announcements": [
+   2,
+   2
+  ],
+  "agreedTo": 160134792,
+  "agreedAnnouncements": 2,
+  "disagreement": null,
+  "pending": false
+ },
+ {
+  "chain": "gnosis",
+  "chainId": 100,
+  "finalized": [
+   49512901,
+   49512901
+  ],
+  "announcements": [
+   3,
+   3
+  ],
+  "agreedTo": 49512901,
+  "agreedAnnouncements": 3,
+  "disagreement": null,
+  "pending": false
+ },
+ {
+  "chain": "polygon",
+  "chainId": 137,
+  "finalized": [
+   98109588,
+   98109592
+  ],
+  "announcements": [
+   9,
+   9
+  ],
+  "agreedTo": 98109588,
+  "agreedAnnouncements": 9,
+  "disagreement": null,
+  "pending": false
+ },
+ {
+  "chain": "sepolia",
+  "chainId": 11155111,
+  "finalized": [
+   12226639,
+   12226700
+  ],
+  "announcements": [
+   1040,
+   1040
+  ],
+  "agreedTo": 12226639,
+  "agreedAnnouncements": 1040,
+  "disagreement": null,
+  "pending": false
+ }
+]

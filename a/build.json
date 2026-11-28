@@ -1,0 +1,274 @@
+{
+ "feed": "a",
+ "startedAt": "2026-11-28T12:44:24.592Z",
+ "finishedAt": "2026-11-28T12:48:14.459Z",
+ "chains": [
+  {
+   "chain": "ethereum",
+   "chainId": 1,
+   "sources": [
+    "https://gateway.tenderly.co/public/mainnet",
+    "https://ethereum.public.blockpi.network/v1/rpc/public"
+   ],
+   "target": 26513717,
+   "seedFinalized": 26510107,
+   "published": 26513717,
+   "newPages": 1,
+   "refetched": [],
+   "stop": null,
+   "retrievals": [
+    {
+     "source": "https://gateway.tenderly.co/public/mainnet",
+     "fromBlock": 26042207,
+     "toBlock": 26513717,
+     "checkpoint": 26513718,
+     "success": true,
+     "failure": null,
+     "requests": 5,
+     "okRequests": 5,
+     "responseBytes": 86394,
+     "fetchMs": 1626.611418,
+     "totalMs": 1653.312413
+    },
+    {
+     "source": "https://ethereum.public.blockpi.network/v1/rpc/public",
+     "fromBlock": 26042207,
+     "toBlock": 26513717,
+     "checkpoint": 26513718,
+     "success": true,
+     "failure": null,
+     "requests": 95,
+     "okRequests": 95,
+     "responseBytes": 89792,
+     "fetchMs": 15718.806017000012,
+     "totalMs": 23760.881535
+    }
+   ]
+  },
+  {
+   "chain": "base",
+   "chainId": 8453,
+   "sources": [
+    "https://base.gateway.tenderly.co",
+    "https://base.api.pocket.network"
+   ],
+   "target": 63389864,
+   "seedFinalized": 63238119,
+   "published": 63389864,
+   "newPages": 1,
+   "refetched": [],
+   "stop": null,
+   "retrievals": [
+    {
+     "source": "https://base.gateway.tenderly.co",
+     "fromBlock": 62502414,
+     "toBlock": 63389864,
+     "checkpoint": 63389865,
+     "success": true,
+     "failure": null,
+     "requests": 892,
+     "okRequests": 888,
+     "responseBytes": 42222,
+     "fetchMs": 103305.10626499963,
+     "totalMs": 228339.825508
+    },
+    {
+     "source": "https://base.api.pocket.network",
+     "fromBlock": 62502414,
+     "toBlock": 63389864,
+     "checkpoint": 63389865,
+     "success": true,
+     "failure": null,
+     "requests": 89,
+     "okRequests": 89,
+     "responseBytes": 11787,
+     "fetchMs": 14207.330404000006,
+     "totalMs": 22262.137885
+    }
+   ]
+  },
+  {
+   "chain": "arbitrum",
+   "chainId": 42161,
+   "sources": [
+    "https://arbitrum.gateway.tenderly.co",
+    "https://arb1.arbitrum.io/rpc"
+   ],
+   "target": 528279494,
+   "seedFinalized": 528147108,
+   "published": 528279494,
+   "newPages": 1,
+   "refetched": [],
+   "stop": null,
+   "retrievals": [
+    {
+     "source": "https://arbitrum.gateway.tenderly.co",
+     "fromBlock": 527468264,
+     "toBlock": 528279494,
+     "checkpoint": 528279495,
+     "success": true,
+     "failure": null,
+     "requests": 7,
+     "okRequests": 7,
+     "responseBytes": 259,
+     "fetchMs": 972.2326950000005,
+     "totalMs": 1800.4732249999997
+    },
+    {
+     "source": "https://arb1.arbitrum.io/rpc",
+     "fromBlock": 527468264,
+     "toBlock": 528279494,
+     "checkpoint": 528279495,
+     "success": true,
+     "failure": null,
+     "requests": 7,
+     "okRequests": 7,
+     "responseBytes": 266,
+     "fetchMs": 282.9089559999999,
+     "totalMs": 1725.9063530000003
+    }
+   ]
+  },
+  {
+   "chain": "optimism",
+   "chainId": 10,
+   "sources": [
+    "https://optimism.gateway.tenderly.co",
+    "https://mainnet.optimism.io"
+   ],
+   "target": 160134792,
+   "seedFinalized": 160113052,
+   "published": 160134792,
+   "newPages": 1,
+   "refetched": [],
+   "stop": null,
+   "retrievals": [
+    {
+     "source": "https://optimism.gateway.tenderly.co",
+     "fromBlock": 160097390,
+     "toBlock": 160134792,
+     "checkpoint": 160134793,
+     "success": true,
+     "failure": null,
+     "requests": 1,
+     "okRequests": 1,
+     "responseBytes": 37,
+     "fetchMs": 91.08255999999994,
+     "totalMs": 183.62213199999997
+    },
+    {
+     "source": "https://mainnet.optimism.io",
+     "fromBlock": 160097390,
+     "toBlock": 160134792,
+     "checkpoint": 160134793,
+     "success": true,
+     "failure": null,
+     "requests": 4,
+     "okRequests": 4,
+     "responseBytes": 152,
+     "fetchMs": 755.3091550000001,
+     "totalMs": 1081.8007010000001
+    }
+   ]
+  },
+  {
+   "chain": "gnosis",
+   "chainId": 100,
+   "sources": [
+    "https://rpc.gnosischain.com",
+    "https://gnosis-rpc.publicnode.com"
+   ],
+   "target": 49512901,
+   "seedFinalized": 49504316,
+   "published": 49512901,
+   "newPages": 1,
+   "refetched": [],
+   "stop": null,
+   "retrievals": [
+    {
+     "source": "https://rpc.gnosischain.com",
+     "fromBlock": 49349356,
+     "toBlock": 49512901,
+     "checkpoint": 49512902,
+     "success": true,
+     "failure": null,
+     "requests": 2,
+     "okRequests": 2,
+     "responseBytes": 74,
+     "fetchMs": 369.47187600000007,
+     "totalMs": 435.62068499999987
+    },
+    {
+     "source": "https://gnosis-rpc.publicnode.com",
+     "fromBlock": 49349356,
+     "toBlock": 49512901,
+     "checkpoint": 49512902,
+     "success": true,
+     "failure": null,
+     "requests": 17,
+     "okRequests": 17,
+     "responseBytes": 640,
+     "fetchMs": 2212.8001190000004,
+     "totalMs": 4084.6143420000008
+    }
+   ]
+  },
+  {
+   "chain": "polygon",
+   "chainId": 137,
+   "sources": [
+    "https://polygon.gateway.tenderly.co",
+    "https://rpc-mainnet.matic.quiknode.pro"
+   ],
+   "target": 98109588,
+   "seedFinalized": 98080522,
+   "published": 98109588,
+   "newPages": 1,
+   "refetched": [],
+   "stop": null,
+   "retrievals": [
+    {
+     "source": "https://polygon.gateway.tenderly.co",
+     "fromBlock": 97888814,
+     "toBlock": 98109588,
+     "checkpoint": 98109589,
+     "success": true,
+     "failure": null,
+     "requests": 3,
+     "okRequests": 3,
+     "responseBytes": 113,
+     "fetchMs": 13433.432492,
+     "totalMs": 13441.682109000001
+    },
+    {
+     "source": "https://rpc-mainnet.matic.quiknode.pro",
+     "fromBlock": 97888814,
+     "toBlock": 98109588,
+     "checkpoint": 98109589,
+     "success": true,
+     "failure": null,
+     "requests": 23,
+     "okRequests": 23,
+     "responseBytes": 888,
+     "fetchMs": 2705.542751999999,
+     "totalMs": 5767.470505
+    }
+   ]
+  },
+  {
+   "chain": "sepolia",
+   "chainId": 11155111,
+   "sources": [
+    "https://sepolia.gateway.tenderly.co",
+    "https://rpc.sepolia.ethpandaops.io"
+   ],
+   "target": null,
+   "seedFinalized": 12226639,
+   "published": 12226639,
+   "newPages": 0,
+   "refetched": [],
+   "stop": "Error: ethpandaops: finalized block context canceled",
+   "retrievals": []
+  }
+ ]
+}

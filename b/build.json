@@ -1,0 +1,112 @@
+{
+ "feed": "b",
+ "startedAt": "2026-11-28T12:44:30.853Z",
+ "finishedAt": "2026-11-28T12:48:24.104Z",
+ "chains": [
+  {
+   "chain": "ethereum",
+   "sources": [
+    "https://eth.api.pocket.network",
+    "https://mainnet.rpc.sentio.xyz"
+   ],
+   "published": 26513717,
+   "newPages": 1,
+   "stop": null,
+   "requests": [
+    61,
+    475
+   ],
+   "elapsedMs": 124473.75142
+  },
+  {
+   "chain": "base",
+   "sources": [
+    "https://base.rpc.sentio.xyz",
+    "https://base.api.pocket.network"
+   ],
+   "published": 63391707,
+   "newPages": 1,
+   "stop": null,
+   "requests": [
+    893,
+    92
+   ],
+   "elapsedMs": 233249.017109
+  },
+  {
+   "chain": "arbitrum",
+   "sources": [
+    "https://public-arb-mainnet.fastnode.io",
+    "https://arb-one.api.pocket.network"
+   ],
+   "published": 528279494,
+   "newPages": 1,
+   "stop": null,
+   "requests": [
+    10,
+    85
+   ],
+   "elapsedMs": 25354.493006
+  },
+  {
+   "chain": "optimism",
+   "sources": [
+    "https://optimism.public.blockpi.network/v1/rpc/public",
+    "https://optimism.rpc.sentio.xyz"
+   ],
+   "published": 160134976,
+   "newPages": 1,
+   "stop": null,
+   "requests": [
+    11,
+    41
+   ],
+   "elapsedMs": 11753.392781
+  },
+  {
+   "chain": "gnosis",
+   "sources": [
+    "https://gnosis.oat.farm",
+    "https://gnosis.api.pocket.network"
+   ],
+   "published": 49512901,
+   "newPages": 1,
+   "stop": null,
+   "requests": [
+    20,
+    20
+   ],
+   "elapsedMs": 6010.546432
+  },
+  {
+   "chain": "polygon",
+   "sources": [
+    "https://poly.api.pocket.network",
+    "https://matic.rpc.sentio.xyz"
+   ],
+   "published": 98109592,
+   "newPages": 1,
+   "stop": null,
+   "requests": [
+    68,
+    224
+   ],
+   "elapsedMs": 66929.384849
+  },
+  {
+   "chain": "sepolia",
+   "sources": [
+    "https://eth-sepolia.api.onfinality.io/public",
+    "https://0xrpc.io/sep"
+   ],
+   "published": 12226700,
+   "newPages": 0,
+   "stop": "Error: bad quantity undefined",
+   "requests": [
+    3,
+    5
+   ],
+   "elapsedMs": 16952.238269999998
+  }
+ ]
+}

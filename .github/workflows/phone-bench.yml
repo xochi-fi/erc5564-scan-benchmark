@@ -1,6 +1,6 @@
-name: Phone bench result
+name: Device bench result
 
-# Validates a result submitted through the "Phone bench result" issue form and, if it passes, opens a pull
+# Validates a result submitted through the "Device bench result" issue form and, if it passes, opens a pull
 # request that adds it under data/phone-bench/. Never pushes to main. The issue body is untrusted: it reaches
 # the validator through a file, never through the shell.
 on:
@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   record:
-    if: contains(github.event.issue.labels.*.name, 'phone-bench') || startsWith(github.event.issue.title, 'Phone bench:')
+    if: contains(github.event.issue.labels.*.name, 'phone-bench') || startsWith(github.event.issue.title, 'Device bench:') || startsWith(github.event.issue.title, 'Phone bench:')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,10 +49,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
           git add data/phone-bench docs/phone-bench.md
-          git commit -m "Record phone bench result from #$NUMBER"
+          git commit -m "Record device bench result from #$NUMBER"
           git push --force origin "$branch"
           gh pr view "$branch" > /dev/null 2>&1 || gh pr create --base main --head "$branch" \
-            --title "Record phone bench result from #$NUMBER" --body "Validated result from #$NUMBER. Closes #$NUMBER."
+            --title "Record device bench result from #$NUMBER" --body "Validated result from #$NUMBER. Closes #$NUMBER."
           echo "Accepted. A pull request adds it: $(gh pr view "$branch" --json url -q .url)" > "$RUNNER_TEMP/comment.txt"
       - name: Report rejection
         if: steps.validate.outputs.code != '0'

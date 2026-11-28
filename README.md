@@ -25,7 +25,7 @@ For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance))
 ![Scan time against announcements](docs/figures/scan-vs-volume.svg)
 <sub>Lines: synthetic fixtures. Ticks: each real chain's full history.</sub>
 
-[Scan cost](docs/scan-cost.md) · [Paged discovery](docs/paged-discovery.md) · [Chain volume](docs/chain-volume.md) · [Browser discovery](docs/browser-discovery.md) · [RPC recovery](docs/rpc-recovery.md) · [Shared feed](docs/shared-feed.md) · [Feed format](docs/feed-format.md) · [Spam cost](docs/spam-cost.md) · [Phone bench](docs/phone-bench.md) · [Omission cause](docs/omission-cause.md) · [Freshness](docs/freshness.md) · [Real announcements](docs/real-announcements.md) · [Methods](METHODS.md) · [Data](data/README.md)
+[Scan cost](docs/scan-cost.md) · [Paged discovery](docs/paged-discovery.md) · [Chain volume](docs/chain-volume.md) · [Browser discovery](docs/browser-discovery.md) · [RPC recovery](docs/rpc-recovery.md) · [Shared feed](docs/shared-feed.md) · [Feed format](docs/feed-format.md) · [Spam cost](docs/spam-cost.md) · [Device bench](docs/phone-bench.md) · [Omission cause](docs/omission-cause.md) · [Freshness](docs/freshness.md) · [Real announcements](docs/real-announcements.md) · [Methods](METHODS.md) · [Data](data/README.md)
 
 ## Quickstart
 

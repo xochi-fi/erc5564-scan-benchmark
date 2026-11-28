@@ -1,6 +1,6 @@
 // Drives the built page in Playwright WebKit (or another engine) and checks the run states, responsiveness
 // during a run, Cancel, and the no-Worker fallback. Usage, inside the Playwright image:
-//   node webkit-check.mjs /work/index.html [webkit|chromium|firefox] [count]
+//   node webkit-check.mjs http://127.0.0.1:8790/ [webkit|chromium|firefox] [count]   (or a file path)
 import { chromium, devices, firefox, webkit } from 'playwright';
 
 const [file, engineName = 'webkit', count = '1000'] = process.argv.slice(2);
@@ -27,7 +27,9 @@ async function run(context, label, { cancel = false, engine = 'crypto', runCount
   await page.goto(file.startsWith("http") ? file : `file://${file}`);
   await waitState(page, ['idle', 'error'], 30000);
   check(`${label}: idle state on load`, await page.textContent('#state') === 'Ready', await page.textContent('#details'));
-  check(`${label}: device prefilled`, (await page.inputValue('#device')).length > 0, await page.inputValue('#device'));
+  await new Promise(r => setTimeout(r, 300));
+  const prefill = { device: await page.inputValue('#device'), class: await page.inputValue('#class'), os: await page.inputValue('#os'), browser: await page.inputValue('#browser') };
+  check(`${label}: device and class prefilled`, prefill.device.length > 0 && prefill.class !== 'unknown', prefill);
   await page.selectOption('#engine', engine);
   await page.selectOption('#count', runCount);
   await page.click('#run');
@@ -46,6 +48,7 @@ async function run(context, label, { cancel = false, engine = 'crypto', runCount
     check(`${label}: done and verified`, await page.evaluate(() => document.body.dataset.state) === 'done' && result?.verified === true,
       result ? { count: result.count, matches: result.matches, msPerAnnouncement: result.msPerAnnouncement, worker: result.worker, device: result.device, browser: result.browser } : await page.textContent('#message'));
     check(`${label}: submit enabled`, !(await page.isDisabled('#submit')));
+    check(`${label}: result has deviceClass`, result?.deviceClass === prefill.class && result?.detected?.deviceClass !== undefined, result?.deviceClass);
   }
   check(`${label}: no uncaught errors`, errors.length === 0, errors);
   await page.close();

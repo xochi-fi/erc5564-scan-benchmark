@@ -10,6 +10,7 @@ import {
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
+import { parseUserAgent } from '../phone-bench/detect.ts';
 
 // ---- formatting ---------------------------------------------------------------
 
@@ -459,7 +460,7 @@ function pagedBatchedTable() {
     }));
 }
 
-// ---- phone bench -----------------------------------------------------------------
+// ---- device bench ----------------------------------------------------------------
 
 function phoneProxyTable() {
   return table(['Host', 'Runtime', 'JIT', 'Engine', 'ms per announcement'], ['l', 'l', 'l', 'l', 'r'],
@@ -468,10 +469,11 @@ function phoneProxyTable() {
 
 function phoneTable() {
   const rows = phoneResults();
-  const header = ['Device', 'OS', 'Browser', 'JIT', 'Engine', 'Announcements', 'ms per announcement', 'Credit'];
-  if (rows.length === 0) return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], [['No results yet', '', '', '', '', '', '', '']]);
-  // Runs under 2 s show their length: timer resolution and JIT warm-up weigh more there.
-  return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], rows.map(r => [r.device, r.os, r.browser, r.jit, r.engine,
+  const header = ['Device', 'Class', 'OS', 'Browser', 'JIT', 'Engine', 'Announcements', 'ms per announcement', 'Credit'];
+  const align: ('l' | 'r')[] = ['l', 'l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'];
+  if (rows.length === 0) return table(header, align, [['No results yet', '', '', '', '', '', '', '', '']]);
+  // Runs under 2 s show their length: timer resolution and JIT warm-up weigh more there. Pages before v9 had no class field.
+  return table(header, align, rows.map(r => [r.device, r.deviceClass ?? parseUserAgent(r.userAgent).deviceClass, r.os, r.browser, r.jit, r.engine,
     `${fixed(r.count, 0)}${r.scanMs < 2000 ? ` (${fixed(r.scanMs / 1000, 2)} s run)` : ''}`, fixed(r.msPerAnnouncement, r.msPerAnnouncement < 0.1 ? 3 : 2), r.source ?? '-']));
 }
 

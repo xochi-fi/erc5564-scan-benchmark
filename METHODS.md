@@ -99,6 +99,7 @@ Recorded fixtures, seeds and evidence use these phase strings.
 | `phase4:base:browser:v1` | Browser discovery | Synthetic fixture seed in `src/browser-discovery/serve.ts` | Reproduces the two recorded matches and decoys |
 | `phase4-checkpoint`, `phase5:<name>` | Browser discovery, RPC recovery | localStorage keys during the recorded runs (not stored in `data/`) | Recorded runs only; the code uses `browser-discovery-checkpoint` and `rpc-recovery:<name>` |
 | `phase6:base:v1` | Shared feed | Synthetic fixture seed in `src/shared-feed/run.ts` and `tune.ts` | Reproduces the recorded synthetic matches |
+| `phone-bench` | Device bench | Result `kind`, fixture seed `phone-bench:v1`, issue label and template, workflow and docs file names, `data/phone-bench/`, `src/phone-bench/`, `phone-bench:*` scripts, `PHONE_BENCH_PAGES` | Recorded results, the result workflow's trigger and published links use them |
 
 ## Synthetic fixtures
 
@@ -228,7 +229,7 @@ bun run tables
 | `src/freshness/` | Header and tail sampler; hybrid checkpoint logic |
 | `src/real-announcements/` | Raw-log fetch and engine scan over real announcements |
 | `src/omission-cause/` | Per-provider queries about known omitted announcements |
-| `src/phone-bench/` | Phone bench page build, server and result recorder |
+| `src/phone-bench/` | Device bench page build, server and result recorder |
 | `src/figures/` | `bun run figures` and `bun run tables`: README figures and the generated result tables, from `data/` |
 | `scripts/` | `paged-discovery.sh` and `scan-engines.sh`, the host runners |
 | `test/` | `bun test` suites and recorded fixtures |

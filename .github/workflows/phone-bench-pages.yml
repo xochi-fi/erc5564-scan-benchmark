@@ -1,6 +1,6 @@
-name: Phone bench page
+name: Device bench page
 
-# Publishes the phone bench page to GitHub Pages from main. Needs Settings → Pages → Source: GitHub Actions,
+# Publishes the device bench page to GitHub Pages from main. Needs Settings → Pages → Source: GitHub Actions,
 # and the repository variable PHONE_BENCH_PAGES=true; until both are set this does nothing.
 on:
   push:

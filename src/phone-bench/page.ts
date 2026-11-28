@@ -1,7 +1,7 @@
-// Phone bench app, loaded as app.js after the static page has painted. The fixture (fixture.js) and the
+// Device bench app, loaded as app.js after the static page has painted. The fixture (fixture.js) and the
 // worker (worker.js) load only when the user taps Run, each as a visible step with a timeout. If the worker
 // cannot start, the scan runs on the page in small steps.
-import { detectApp, iphoneCandidates, jitGuess, parseUserAgent } from './detect.ts';
+import { detectApp, deviceLabel, fromHints, iphoneCandidates, jitGuess, parseUserAgent } from './detect.ts';
 import { runScan, type PackedFixture } from './scan.ts';
 
 declare const PAGE_VERSION: string;
@@ -45,14 +45,16 @@ window.addEventListener('unhandledrejection', e => fail(`Page error: ${e.reason 
 
 // ---- detection: user agent, client hints, screen size; every field stays editable ----
 const ua = navigator.userAgent;
-const parsed = parseUserAgent(ua);
+const parsed = parseUserAgent(ua, navigator.maxTouchPoints ?? 0);
 const app = detectApp(ua, 'brave' in navigator);
 const hasWasm = typeof WebAssembly === 'object';
 const candidates = parsed.device === 'iPhone' ? iphoneCandidates(screen.width, screen.height, devicePixelRatio) : [];
 const jit = jitGuess(parsed.os, hasWasm);
 const detected: Record<string, unknown> = { ...parsed, app, deviceCandidates: candidates, ...jit, uaChModel: null, uaChPlatform: null, uaChPlatformVersion: null };
-input('device').value = candidates.length ? `${candidates.length === 1 ? candidates[0] : candidates.join(' or ')} (guess: pick one)` : parsed.device;
+input('device').value = candidates.length ? `${candidates.length === 1 ? candidates[0] : candidates.join(' or ')} (guess: pick one)` : deviceLabel(parsed.device, parsed.arch);
 input('os').value = [parsed.os, parsed.osVersion].filter(Boolean).join(' ');
+$<HTMLSelectElement>('class').value = parsed.deviceClass;
+const prefilled = { device: input('device').value, os: input('os').value };
 input('browser').value = app ?? [parsed.browser, parsed.browserVersion].filter(Boolean).join(' ');
 $<HTMLSelectElement>('jit').value = jit.jitGuess;
 /** Lockdown Mode removes WebAssembly; picking it while WebAssembly works means Lockdown is not active here. */
@@ -68,9 +70,14 @@ $('engine').addEventListener('change', () => { if ($<HTMLSelectElement>('engine'
 $('jit-reason').textContent = `Prefilled: ${jit.jitReason}.`;
 $('candidates').textContent = candidates.length ? 'iPhones do not report their model; these share your screen size. Edit the field to your model.' : '';
 const hints = (navigator as unknown as { userAgentData?: { getHighEntropyValues(k: string[]): Promise<Record<string, string>> } }).userAgentData;
-hints?.getHighEntropyValues(['model', 'platform', 'platformVersion']).then(v => {
+hints?.getHighEntropyValues(['model', 'platform', 'platformVersion', 'architecture', 'bitness']).then(v => {
   detected.uaChModel = v.model || null; detected.uaChPlatform = v.platform || null; detected.uaChPlatformVersion = v.platformVersion || null;
-  if (v.model) input('device').value = v.model;
+  const h = fromHints(parsed.os, v);
+  if (h.arch) detected.arch = h.arch;
+  // Overwrite only what the user has not edited yet.
+  const device = input('device'), os = input('os');
+  if (device.value === prefilled.device && !candidates.length) device.value = v.model || deviceLabel(parsed.device, h.arch ?? parsed.arch);
+  if (h.osVersion && os.value === prefilled.os) os.value = `${parsed.os} ${h.osVersion}`;
 }).catch(() => {});
 $('signals').textContent = `${ua} · screen ${screen.width}×${screen.height} @${devicePixelRatio}x · ${navigator.hardwareConcurrency ?? '?'} cores · WebAssembly ${hasWasm ? 'yes' : 'no'}`;
 
@@ -131,7 +138,7 @@ $('run').addEventListener('click', async () => {
     const ms = r.scanMs / count;
     lastResult = {
       kind: 'phone-bench', pageVersion: PAGE_VERSION, startedAt,
-      device: input('device').value.trim(), os: input('os').value.trim(), browser: input('browser').value.trim(),
+      device: input('device').value.trim(), deviceClass: $<HTMLSelectElement>('class').value, os: input('os').value.trim(), browser: input('browser').value.trim(),
       jit: $<HTMLSelectElement>('jit').value, notes: input('notes').value.trim() || null,
       detected, userAgent: ua, screen: { width: screen.width, height: screen.height, devicePixelRatio },
       hardwareConcurrency: navigator.hardwareConcurrency ?? null, webAssembly: hasWasm, secureContext: window.isSecureContext, worker: usedWorker,
@@ -183,7 +190,7 @@ $('cancel').addEventListener('click', () => { cancelled = true; stop(); setState
 const json = () => $<HTMLTextAreaElement>('result').value;
 $('submit').addEventListener('click', () => {
   if (!lastResult) return;
-  const url = `https://github.com/${REPO}/issues/new?template=phone-bench.yml&title=${encodeURIComponent(`Phone bench: ${String(lastResult.device)}`)}&result=${encodeURIComponent(json())}`;
+  const url = `https://github.com/${REPO}/issues/new?template=phone-bench.yml&title=${encodeURIComponent(`Device bench: ${String(lastResult.device)}`)}&result=${encodeURIComponent(json())}`;
   window.open(url, '_blank', 'noopener');
 });
 $('copy').addEventListener('click', async () => {
@@ -195,10 +202,10 @@ $('copy').addEventListener('click', async () => {
 $('download').addEventListener('click', () => {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([json()], { type: 'application/json' }));
-  a.download = `phone-bench-${Date.now()}.json`;
+  a.download = `device-bench-${Date.now()}.json`;
   a.click();
 });
 
 (window as unknown as { phoneBench: unknown }).phoneBench = { result: () => lastResult, state: () => document.body.dataset.state };
-setState('idle', 'Tap Run. Keep this tab open while it runs; the default run takes seconds on a recent phone.');
+setState('idle', 'Tap or click Run. Keep this tab open while it runs; the default run takes seconds on a recent phone or computer.');
 boot.ready();

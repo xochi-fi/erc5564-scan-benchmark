@@ -397,9 +397,9 @@ export const realScan = () => readJson<{ measuredAt: string; chains: {
 }[] }>('data/real-announcements/scan.json');
 export const realTiming = (host: string) => readJson<{ host: string; timing: { clean: number; all: number; reps: number; cpu: string; cleanMs: number[]; syntheticMs: number[]; allMs: number[] } }>(`data/real-announcements/timing-${host}.json`);
 
-// ---- phone bench ----------------------------------------------------------------
+// ---- device bench ---------------------------------------------------------------
 
-/** Accepted phone bench results in data/phone-bench/ (bun run phone-bench:record). */
+/** Accepted device bench results in data/phone-bench/ (bun run phone-bench:record). */
 export function phoneResults(): Record<string, any>[] {
   let files: string[] = [];
   try { files = readdirSync(path('data/phone-bench')).filter(f => f.endsWith('.json')).sort(); } catch { return []; }

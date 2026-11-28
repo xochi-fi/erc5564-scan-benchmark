@@ -1,4 +1,4 @@
-// Checks a remote-feed evidence file and prints its summary (medians of three, as verify.ts).
+// Checks a remote-feed evidence file and prints its summary.
 import { strict as assert } from 'node:assert';
 import { scope } from '../shared/base-windows.ts';
 import { digest, loadReference, warmPage } from './feed.ts';
@@ -59,10 +59,8 @@ function check(label: string, initial: number, next: number) {
     expected: feed.primary.slice(initial, next).reduce((total, page) => total + page.rows.length, 0),
     observed: sample.pages.slice(initial).reduce((total, page) => total + page.count, 0),
     posts: 0, gets: sample.requests.length, requestBytes: 0, responseBytes: sum(sample.requests, 'responseBytes'),
-    // Content-Length of compressed responses; null when any response lacked it.
     wireBytes: sample.requests.every(row => row.wireBytes !== null) ? sample.requests.reduce((total, row) => total + row.wireBytes!, 0) : null,
     compressed: compressed.length, cacheHits: sample.requests.filter(row => /HIT/i.test(row.cache ?? '')).length,
-    // Median page time per feed: separates a slow CDN edge (every request slow) from single misses.
     feed1PageMs: medianOf(sample.requests.filter(row => row.source === 'feed-1' && row.operation === 'page').map(row => row.fetchMs)),
     feed2PageMs: medianOf(sample.requests.filter(row => row.source === 'feed-2' && row.operation === 'page').map(row => row.fetchMs)),
     fetchMs: sum(sample.requests, 'fetchMs'), scanMs: sample.scanMs, verificationMs: sample.verificationMs,
@@ -80,7 +78,7 @@ for (const tag of tags) {
   }
 }
 assert.equal(Object.keys(evidence.samples).length, tags.length * rounds * 3);
-// [median, min, max] per field, as verify.ts (an odd sample count, so the median is a sample).
+// [median, min, max] per field.
 const stats = (values: (number | null)[]) => {
   const sorted = [...values].sort((a, b) => (a ?? 0) - (b ?? 0));
   return [sorted[(sorted.length - 1) / 2], sorted[0], sorted.at(-1)];

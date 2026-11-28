@@ -55,9 +55,7 @@ Sources: [2021/1256](https://eprint.iacr.org/2021/1256) §1, §4.2, §8.1, §9.1
 | Bazzite | Cold, warm | pending | pending | 6,895 [6,652–8,020] | — | — |
 <!-- /generated:shared-feed -->
 
-Over the network, a cold rescan from two feeds takes 0.49 s [0.46–0.53] on a Turing node, against 8.5 s [8.5–9.7] for RPC without pacing. That headline uses sequential GETs, as the RPC client does, and concurrent GETs save 3–10%. Bazzite reruns are pending while another benchmark holds the host.
-
-Medians [min–max] of 9 samples per mode. The remote feed is the same pages on raw.githubusercontent.com and jsDelivr at commit `7b78192`, fetched over TLS with gzip or brotli, a fresh process per sample. Concurrent mode requests every page of both feeds at once. RPC without pacing is the 2026-11-27 Tenderly samples minus the client's ≥275 ms start-to-start wait, from recorded request, scan and verification times, with no new requests.
+Medians [min–max] of 9 samples per mode. The README uses sequential GETs, as the RPC client does. Bazzite reruns are pending while another benchmark holds the host. The remote feed is the same pages on raw.githubusercontent.com and jsDelivr at commit `7b78192`, fetched over TLS with gzip or brotli, a fresh process per sample. Concurrent mode requests every page of both feeds at once. RPC without pacing is the 2026-11-27 Tenderly samples minus the client's ≥275 ms start-to-start wait, from recorded request, scan and verification times, with no new requests.
 
 On loopback without TLS, the same pages take 38.8 ms cold against 19.3 s of paced RPC ([Bazzite](../data/shared-feed/summary.json), [nodes 1–3](../data/shared-feed/)). Three-sample runs before these hit a raw GitHub edge that took ~210 ms per cache hit for whole samples, spreading cold rescans over 0.4–4.2 s ([first runs](../data/shared-feed/remote/)). Each request now records the edge that served it.
 

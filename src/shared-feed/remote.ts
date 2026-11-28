@@ -1,6 +1,4 @@
-// Dual-feed cold rescan and warm catch-up against the static benchmark feeds over the public
-// network (TLS, CDN, compression). Same pages, checks and scan as the loopback rows in run.ts;
-// each sample runs in a fresh process, so it opens its own connections.
+// run.ts's dual-feed scan against the static feeds over the network, one process per sample.
 import { mkdir, readFile, rename } from 'node:fs/promises';
 import { hostname, release } from 'node:os';
 import { getAnnouncementsForUser } from '@scopelift/stealth-address-sdk';
@@ -39,7 +37,6 @@ async function child(output: string, name: string, limit: number, fetchMode: str
       source: `feed-${source + 1}`, operation, status: response.status, responseBytes: bytes.byteLength,
       wireBytes: length === null ? null : Number(length), encoding: response.headers.get('content-encoding'),
       cache: response.headers.get('x-cache') ?? response.headers.get('cf-cache-status'),
-      // CDN edge that answered (Fastly x-served-by, Cloudflare cf-ray), to separate slow edges from cache misses.
       servedBy: response.headers.get('x-served-by') ?? response.headers.get('cf-ray'), age: response.headers.get('age'),
       fetchMs: performance.now() - start,
     });
@@ -137,7 +134,6 @@ if (command === 'child') {
   const allowed = (await Bun.file('/proc/self/status').text()).match(/^Cpus_allowed_list:\s*(\S+)$/m)?.[1] ?? null;
   const evidence = { startedAt: new Date().toISOString(), host: hostname(), kernel: release(), bun: Bun.version,
     cpusAllowed: allowed, cooldownC, feedId: feed.id, urls, rounds: Number(process.env.ROUNDS ?? 9),
-    // Set SHARED_HOST to a description when another benchmark runs on this host.
     sharedHost: process.env.SHARED_HOST ?? null, samples: {} as Record<string, unknown> };
   async function sample(label: string, name: string, limit: number, fetchMode: string) {
     const thermal = await waitForCooldown(cooldownC);

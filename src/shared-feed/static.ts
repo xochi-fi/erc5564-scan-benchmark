@@ -1,7 +1,4 @@
-// Writes the two benchmark feeds as static files: the loopback server's bodies at
-// <root>/<feed>/manifest.json and <root>/<feed>/<manifest id>/<page index>.json (the extension
-// makes CDNs send a compressible content type). Deterministic from
-// data/rpc-recovery/reference.json, so `git diff` after a rerun shows nothing.
+// The two benchmark feeds as static files; `.json` makes CDNs compress them.
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { loadReference } from './feed.ts';

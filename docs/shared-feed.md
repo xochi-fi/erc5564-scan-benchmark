@@ -107,7 +107,7 @@ bun run shared-feed:verify results/shared-feed-replay/evidence.json
 bun run shared-feed:verify data/shared-feed/evidence.json
 bun run shared-feed:static                                                      # rewrite data/shared-feed/static
 taskset -c 0,2,4,6 bun run shared-feed:remote results/remote https://raw.githubusercontent.com/xochi-fi/erc5564-scan-benchmark/COMMIT/data/shared-feed/static/tenderly/ https://cdn.jsdelivr.net/gh/xochi-fi/erc5564-scan-benchmark@COMMIT/data/shared-feed/static/sentio/
-bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/evidence.json   # or turing-node-3
+bun run shared-feed:remote-verify data/shared-feed/remote/turing-node-3/evidence.json
 taskset -c 4-7 bun run shared-feed results/shared-feed-replay                # Turing node N, host name turing-node-N
 bun run shared-feed:verify data/shared-feed/turing-node-N/evidence.json
 taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9   # format search, no RPC

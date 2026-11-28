@@ -1,0 +1,26 @@
+{
+ "chain": "gnosis",
+ "chainId": 100,
+ "url": "https://gnosis-rpc.publicnode.com",
+ "measuredAt": "2026-11-28T13:17:32.101Z",
+ "block": 49513330,
+ "token": "0x2a22f9c3b484c3629090FeED35F17Ff8F88f76F0",
+ "tokenName": "Bridged USDC (Gnosis)",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 21000,
+  "erc20Transfer": 57155,
+  "permitRelay": 127716,
+  "umbraRelay": 82223,
+  "aaSponsoredFirstUse": 152535,
+  "aaSponsored": 130035,
+  "aaTokenFeeFirstUse": 165893,
+  "aaTokenFee": 143393
+ },
+ "l1": null,
+ "attempts": []
+}

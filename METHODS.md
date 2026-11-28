@@ -63,6 +63,7 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | Feed builds | ≤4 requests/s per host |
 | RPC recovery | ≥270 ms between request starts |
 | Browser-discovery reference, shared feed, spam cost, omission cause, freshness, real announcements | ≥275 ms between request starts |
+| Stealth gas | ≥275 ms between request starts; retries after 2–64 s on HTTP 429 or 5xx |
 | Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |
 
 ### Weekly refresh
@@ -204,6 +205,20 @@ After the timers stop, each sample checks its result and persisted cache against
 | L1 fee | OP Mainnet, Base: `GasPriceOracle.getL1Fee` of one direct call, spread over 1,000. Arbitrum: included in `eth_estimateGas` |
 | Block gas | Latest `gasLimit` × blocks per day. Not a cap on Arbitrum |
 | Price | One CoinGecko quote |
+
+## Stealth gas
+
+| Quantity | Source |
+| --- | --- |
+| Runs | `bun run stealth-gas` and `stealth-gas:usage` write `data/stealth-gas/`. Nothing is sent or signed with a funded key |
+| Gas | `eth_simulateV1` `gasUsed` at one block, state overrides giving the [test](#test-keys) stealth address 100 USDC (Gnosis: bridged USDC); `eth_estimateGas` would follow a UserOperation's declared limits |
+| Baseline | The stealth address sending the USDC itself to an empty address; ETH funding is one 1-wei transfer |
+| Relayers | Umbra `withdrawTokenOnBehalf`; ERC-2612 `permit` and two `transferFrom` through Multicall3, standing in for a relayer contract |
+| ERC-4337 | Simple7702Account through EntryPoint v0.8; a paymaster stub that accepts everything (no signature check); first spend carries the EIP-7702 authorization |
+| L1 fee, fees, price | OP Stack `getL1Fee`, Arbitrum `NodeInterface.gasEstimateL1Component` per transaction; fee per gas and price from [spam cost](#spam-cost) |
+| ERC-5564 sample | Every recorded scheme-1 announcement; paid if its transaction moves a token to the stealth address or leaves it ETH. Up to 20 paid addresses per chain, evenly over history. Spend and funding blocks by bisecting nonce and balances on archive state |
+| Umbra sample | Up to 20 latest `TokenWithdrawal` logs per chain; relayed when the sender is not the stealth address |
+| Linked | Kovács and Seres heuristics 6.1 (destination registered in ERC-6538 or Umbra's registry), 6.2 (destination is the payer), 6.3 (two stealth addresses, one destination); or a funder other than the payer that is the destination, registered, or funds two |
 
 ## Commands
 

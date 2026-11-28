@@ -1,0 +1,26 @@
+{
+ "chain": "sepolia",
+ "chainId": 11155111,
+ "url": "https://ethereum-sepolia-rpc.publicnode.com",
+ "measuredAt": "2026-11-28T13:17:48.730Z",
+ "block": 12230266,
+ "token": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+ "tokenName": "USDC",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 204600,
+  "erc20Transfer": 139959,
+  "permitRelay": 307072,
+  "umbraRelay": 173211,
+  "aaSponsoredFirstUse": 544647,
+  "aaSponsored": 311941,
+  "aaTokenFeeFirstUse": 568520,
+  "aaTokenFee": 335814
+ },
+ "l1": null,
+ "attempts": []
+}

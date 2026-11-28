@@ -309,6 +309,64 @@ export function spamCost(): { chains: SpamCost[]; pricesAt: string; priceSource:
   return { chains, pricesAt: prices.fetchedAt, priceSource: prices.source };
 }
 
+// ---- stealth gas -----------------------------------------------------------------
+
+/** Ways to pay a token spend's gas, as [transaction measured, transaction it replaces or adds to] in data/stealth-gas/<chain>.json. */
+export const STEALTH_GAS_OPTIONS = {
+  fund: ['ethTransfer', null], umbra: ['umbraRelay', 'erc20Transfer'], permit: ['permitRelay', 'erc20Transfer'],
+  aaSponsored: ['aaSponsoredFirstUse', 'erc20Transfer'], aaTokenFee: ['aaTokenFeeFirstUse', 'erc20Transfer'],
+  aaSponsoredLater: ['aaSponsored', 'erc20Transfer'], aaTokenFeeLater: ['aaTokenFee', 'erc20Transfer'],
+} as const;
+export type StealthGasOption = keyof typeof STEALTH_GAS_OPTIONS;
+
+/** Extra gas and fee per option and chain over the stealth address paying its own ERC-20 transfer, at spam-cost fees. */
+export function stealthGas() {
+  const fees = new Map(spamCost().chains.map(c => [c.chain, c]));
+  return SPAM_CHAIN_ORDER.map(chain => {
+    const d = readJson(`data/stealth-gas/${chain}.json`);
+    if (d.failed) throw new Error(`stealth-gas: ${chain} has no successful probe`);
+    const f = fees.get(chain)!;
+    const price = f.baseFeeWei + f.tipWei;
+    const gas = (key: string) => {
+      const g = d.gasUsed[key];
+      if (typeof g !== 'number') throw new Error(`stealth-gas: ${chain} ${key} failed`);
+      return g + (d.l1?.unit === 'gas' ? d.l1[key] as number : 0);
+    };
+    const wei = (key: string) => gas(key) * price + (d.l1?.unit === 'wei' ? d.l1[key] as number : 0);
+    const extra = Object.fromEntries(Object.entries(STEALTH_GAS_OPTIONS).map(([option, [key, baseline]]) => {
+      const extraWei = wei(key) - (baseline ? wei(baseline) : 0);
+      return [option, { gas: d.gasUsed[key] - (baseline ? d.gasUsed[baseline] : 0), usd: f.nativeUsd === null ? null : extraWei / 1e18 * f.nativeUsd }];
+    })) as Record<StealthGasOption, { gas: number; usd: number | null }>;
+    return { chain, measuredAt: d.measuredAt as string, transferGas: d.gasUsed.erc20Transfer as number, extra };
+  });
+}
+
+export interface StealthSpend {
+  chain: string; kind: 'erc5564' | 'umbra'; s: string; route: string; payer?: string; dest?: string; funder?: string | null; spendFrom?: string;
+  destRegistrant: boolean | null; funderRegistrant: boolean | null;
+}
+/**
+ * Recorded spends (bun run stealth-gas:usage). `link` ties the spend to a known address: Kovács and Seres heuristics
+ * 6.1 (registrant) and 6.2 (same sender), the payer submitting the spend, or a gas funder. `clustered`: heuristic 6.3.
+ */
+export function stealthSpends(): (StealthSpend & { link: string | null; clustered: boolean })[] {
+  const rows: StealthSpend[] = readdirSync(path('data/stealth-gas')).filter(f => f.startsWith('usage-')).sort()
+    .flatMap(f => readFileSync(path(`data/stealth-gas/${f}`), 'utf8').trim().split('\n').map(l => JSON.parse(l)));
+  const count = (key: (r: StealthSpend) => string | null | undefined) => {
+    const m = new Map<string, Set<string>>();
+    for (const r of rows) { const k = key(r); if (k?.startsWith('0x')) m.set(`${r.chain}:${r.kind}:${k}`, (m.get(`${r.chain}:${r.kind}:${k}`) ?? new Set()).add(r.s)); }
+    return (r: StealthSpend, k: string | null | undefined) => (k ? m.get(`${r.chain}:${r.kind}:${k}`)?.size ?? 0 : 0);
+  };
+  const byDest = count(r => r.dest), byFunder = count(r => (r.funder !== r.payer ? r.funder : null));
+  return rows.map(r => {
+    const ownFunder = r.funder?.startsWith('0x') && r.funder !== r.payer ? r.funder : null;
+    const link = r.destRegistrant ? 'registrant' : r.dest && r.dest === r.payer ? 'same sender'
+      : r.payer && r.spendFrom === r.payer ? 'payer submits'
+      : ownFunder && (ownFunder === r.dest || r.funderRegistrant || byFunder(r, ownFunder) > 1) ? 'gas funder' : null;
+    return { ...r, link, clustered: byDest(r, r.dest) > 1 };
+  });
+}
+
 // ---- omission cause ---------------------------------------------------------------
 
 export interface OmissionRow { chain: string; host: string; probes: number; omitted: number; noReceipt: number; canaryEmpty: number; caught: number; otherSizes: number }

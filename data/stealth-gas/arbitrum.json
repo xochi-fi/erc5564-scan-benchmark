@@ -1,0 +1,36 @@
+{
+ "chain": "arbitrum",
+ "chainId": 42161,
+ "url": "https://arb1.arbitrum.io/rpc",
+ "measuredAt": "2026-11-28T13:17:11.079Z",
+ "block": 528289333,
+ "token": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+ "tokenName": "USD Coin",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 21000,
+  "erc20Transfer": 57155,
+  "permitRelay": 127736,
+  "umbraRelay": 82223,
+  "aaSponsoredFirstUse": 152535,
+  "aaSponsored": 130035,
+  "aaTokenFeeFirstUse": 165893,
+  "aaTokenFee": 143393
+ },
+ "l1": {
+  "unit": "gas",
+  "ethTransfer": 140,
+  "erc20Transfer": 208,
+  "permitRelay": 475,
+  "umbraRelay": 396,
+  "aaSponsoredFirstUse": 489,
+  "aaSponsored": 489,
+  "aaTokenFeeFirstUse": 519,
+  "aaTokenFee": 519
+ },
+ "attempts": []
+}

@@ -1,0 +1,26 @@
+{
+ "chain": "ethereum",
+ "chainId": 1,
+ "url": "https://ethereum-rpc.publicnode.com",
+ "measuredAt": "2026-11-28T13:16:52.112Z",
+ "block": 26513971,
+ "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+ "tokenName": "USD Coin",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 21000,
+  "erc20Transfer": 57244,
+  "permitRelay": 128059,
+  "umbraRelay": 82389,
+  "aaSponsoredFirstUse": 152612,
+  "aaSponsored": 130112,
+  "aaTokenFeeFirstUse": 166071,
+  "aaTokenFee": 143571
+ },
+ "l1": null,
+ "attempts": []
+}

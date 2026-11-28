@@ -12,14 +12,14 @@ import { compact, digest, expand, loadReference, warmPage, type Feed } from './f
 
 type Request = {
   source: string; operation: string; status: number; responseBytes: number; wireBytes: number | null;
-  encoding: string | null; cache: string | null; fetchMs: number;
+  encoding: string | null; cache: string | null; servedBy: string | null; age: string | null; fetchMs: number;
 };
 type PageSummary = { index: number; count: number; digest: string; syntheticMatches: number; canonicalMatches: number };
 type Checkpoint = { id: string; next: number; block: number; pages: PageSummary[] };
 
 const [command, ...args] = Bun.argv.slice(2);
 
-async function child(output: string, name: string, limit: number, urls: string[]) {
+async function child(output: string, name: string, limit: number, fetchMode: string, urls: string[]) {
   const feed = await loadReference();
   const fixtureDir = `${output}/synthetic/${name}-${limit}`;
   // kept: recorded evidence depends on it
@@ -38,7 +38,10 @@ async function child(output: string, name: string, limit: number, urls: string[]
     requests.push({
       source: `feed-${source + 1}`, operation, status: response.status, responseBytes: bytes.byteLength,
       wireBytes: length === null ? null : Number(length), encoding: response.headers.get('content-encoding'),
-      cache: response.headers.get('x-cache') ?? response.headers.get('cf-cache-status'), fetchMs: performance.now() - start,
+      cache: response.headers.get('x-cache') ?? response.headers.get('cf-cache-status'),
+      // CDN edge that answered (Fastly x-served-by, Cloudflare cf-ray), to separate slow edges from cache misses.
+      servedBy: response.headers.get('x-served-by') ?? response.headers.get('cf-ray'), age: response.headers.get('age'),
+      fetchMs: performance.now() - start,
     });
     if (!response.ok) throw new Error(`feed-${source + 1} ${operation} HTTP ${response.status}`);
     return JSON.parse(new TextDecoder().decode(bytes)) as T;
@@ -60,11 +63,22 @@ async function child(output: string, name: string, limit: number, urls: string[]
     await Promise.all([0, 1].map(async source => {
       if (digest(await read<unknown>(source, 'manifest.json', 'manifest')) !== feed.id) throw new Error('Wrong feed manifest');
     }));
+    const fetchPair = (index: number) => Promise.all([0, 1].map(source => read<Feed['primary'][number]>(source, `${feed.id}/${index}.json`, 'page')));
+    // Concurrent mode requests every remaining page of both feeds at once, then verifies and scans in order.
+    const ahead = new Map<number, ReturnType<typeof fetchPair>>();
+    if (fetchMode === 'concurrent') {
+      for (let index = state.next; index < limit; index++) {
+        const pair = fetchPair(index);
+        pair.catch(() => undefined);
+        ahead.set(index, pair);
+      }
+    }
     for (let index = state.next; index < limit; index++) {
       const windows = feed.manifest.pages[index]!;
       const getPage = async () => {
         attemptPages.push(index);
-        const pages = await Promise.all([0, 1].map(source => read<Feed['primary'][number]>(source, `${feed.id}/${index}.json`, 'page')));
+        const pages = await (ahead.get(index) ?? fetchPair(index));
+        ahead.delete(index);
         const verify = performance.now();
         try {
           const [first, second] = pages.map(page => {
@@ -110,8 +124,8 @@ async function child(output: string, name: string, limit: number, urls: string[]
 }
 
 if (command === 'child') {
-  const [output, name, limit, ...urls] = args;
-  console.log(JSON.stringify(await child(output!, name!, Number(limit), urls)));
+  const [output, name, limit, fetchMode, ...urls] = args;
+  console.log(JSON.stringify(await child(output!, name!, Number(limit), fetchMode!, urls)));
 } else {
   const [output, ...urls] = [command, ...args];
   if (!output || urls.length !== 2 || !/^(bazzite|turing-node-[123])$/.test(hostname()) || !urls.every(url => url.startsWith('https://') && url.endsWith('/'))) {
@@ -122,10 +136,12 @@ if (command === 'child') {
   const cooldownC = Number(process.env.COOLDOWN_C ?? 70);
   const allowed = (await Bun.file('/proc/self/status').text()).match(/^Cpus_allowed_list:\s*(\S+)$/m)?.[1] ?? null;
   const evidence = { startedAt: new Date().toISOString(), host: hostname(), kernel: release(), bun: Bun.version,
-    cpusAllowed: allowed, cooldownC, feedId: feed.id, urls, samples: {} as Record<string, unknown> };
-  async function sample(label: string, name: string, limit: number) {
+    cpusAllowed: allowed, cooldownC, feedId: feed.id, urls, rounds: Number(process.env.ROUNDS ?? 9),
+    // Set SHARED_HOST to a description when another benchmark runs on this host.
+    sharedHost: process.env.SHARED_HOST ?? null, samples: {} as Record<string, unknown> };
+  async function sample(label: string, name: string, limit: number, fetchMode: string) {
     const thermal = await waitForCooldown(cooldownC);
-    const proc = Bun.spawn([process.execPath, import.meta.path, 'child', output!, name, String(limit), ...urls], { stdout: 'pipe', stderr: 'inherit' });
+    const proc = Bun.spawn([process.execPath, import.meta.path, 'child', output!, name, String(limit), fetchMode, ...urls], { stdout: 'pipe', stderr: 'inherit' });
     const text = await new Response(proc.stdout).text();
     if (await proc.exited !== 0) throw new Error(`${label} failed`);
     const result = { ...JSON.parse(text), thermal };
@@ -135,9 +151,14 @@ if (command === 'child') {
     if (result.stop) throw new Error(result.stop);
   }
   const end = feed.primary.length;
-  for (let round = 1; round <= 3; round++) {
-    await sample(`remote-cold-${round}`, `remote-cold-${round}`, end);
-    await sample(`remote-warm-${round}-seed`, `remote-warm-${round}`, warmPage);
-    await sample(`remote-warm-${round}`, `remote-warm-${round}`, end);
+  const rounds = Number(process.env.ROUNDS ?? 9);
+  // Interleave sequential and concurrent fetching so CDN and edge state affect both alike.
+  for (let round = 1; round <= rounds; round++) {
+    for (const mode of round % 2 ? ['sequential', 'concurrent'] : ['concurrent', 'sequential']) {
+      const tag = mode === 'sequential' ? 'remote' : 'remote-concurrent';
+      await sample(`${tag}-cold-${round}`, `${tag}-cold-${round}`, end, mode);
+      await sample(`${tag}-warm-${round}-seed`, `${tag}-warm-${round}`, warmPage, mode);
+      await sample(`${tag}-warm-${round}`, `${tag}-warm-${round}`, end, mode);
+    }
   }
 }

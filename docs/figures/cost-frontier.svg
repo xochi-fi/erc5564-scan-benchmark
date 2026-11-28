@@ -50,11 +50,11 @@
 <line x1="70" y1="310" x2="720" y2="310" class="axis"/>
 <line x1="70" y1="110" x2="70" y2="310" class="axis"/>
 <text x="720" y="350" class="small muted" text-anchor="end">requests</text>
-<circle cx="187" cy="110" r="7" class="s3"><title>Two feeds: 48/48, 36 GET, 1.77 s over the network (38.8 ms on loopback)</title></circle>
+<circle cx="187" cy="110" r="7" class="s3"><title>Two feeds: 48/48, 36 GET, 0.49 s over the network (38.8 ms on loopback)</title></circle>
 <text x="187" y="96" class="label ink" text-anchor="middle">Two feeds</text>
 <circle cx="297.5" cy="110" r="6" class="s2 hollow" stroke-width="2.5"><title>Tenderly alone: 48/48, 70 POST, 18.82 s paced</title></circle>
 <text x="297.5" y="96" class="label ink" text-anchor="middle">Tenderly alone</text>
-<circle cx="300.8" cy="110" r="6" class="s2 hollow" stroke-width="2.5"><title>Tenderly alone, Bun client: 48/48, 71 POST, 6.90 s excluding pacing (19.33 s paced)</title></circle>
+<circle cx="300.8" cy="110" r="6" class="s2 hollow" stroke-width="2.5"><title>Tenderly alone, Bun client: 48/48, 71 POST, 8.48 s excluding pacing (19.44 s paced)</title></circle>
 <circle cx="531.5" cy="110" r="7" class="s3"><title>Tenderly × Sentio: 48/48, 142 POST, 28.76 s paced</title></circle>
 <text x="531.5" y="96" class="label ink" text-anchor="middle">Tenderly × Sentio</text>
 <circle cx="658.3" cy="110" r="7" class="s3"><title>Daybreak × Tenderly: 48/48, 181 POST, 31.25 s paced</title></circle>

@@ -185,10 +185,10 @@ export const feedSummary = (host = '') =>
   readJson<{ summaries: Record<FeedKey, FeedSummary> }>(`data/shared-feed/${host ? `${host}/` : ''}summary.json`).summaries;
 
 /** Hosts with a remote-feed run, as directory names under data/shared-feed/remote/. */
-export const REMOTE_HOSTS = ['bazzite', 'turing-node-3'];
-export type RemoteSummary = FeedSummary & { wireBytes: number[]; compressed: number[]; cacheHits: number[] };
+export const REMOTE_HOSTS = ['turing-node-3'];
+export type RemoteSummary = FeedSummary & { wireBytes: number[]; compressed: number[]; cacheHits: number[]; feed1PageMs: number[]; feed2PageMs: number[] };
 export const remoteSummary = (host: string) =>
-  readJson<{ summaries: Record<'remote-cold' | 'remote-warm', RemoteSummary> }>(`data/shared-feed/remote/${host}/summary.json`).summaries;
+  readJson<{ summaries: Record<`remote-${'' | 'concurrent-'}${'cold' | 'warm'}`, RemoteSummary> }>(`data/shared-feed/remote/${host}/summary.json`).summaries;
 export const remoteEvidence = (host: string) => readJson(`data/shared-feed/remote/${host}/evidence.json`);
 
 /**

@@ -311,49 +311,26 @@ const feedSpread = (values: number[]) => {
   const { median, min, max } = spreadOf(values);
   return `${ms(median)} [${ms(min)}–${ms(max)}]`;
 };
-type FeedPath = 'remote' | 'unpaced' | 'loopback' | 'paced';
-const FEED_PATH: Record<FeedPath, string> = {
-  remote: 'Dual feed, remote', unpaced: 'Live RPC, excluding pacing', loopback: 'Dual feed, loopback', paced: 'Live RPC, paced',
-};
-/** One row's cells after Path and Mode; `host` is '' for Bazzite or a Turing node directory. */
-function feedCells(path: FeedPath, mode: 'cold' | 'warm', host: string) {
-  if (path === 'remote') {
-    const s = remoteSummary(host || 'bazzite')[`remote-${mode}`];
-    return { s, wire: fixed(one(s.wireBytes, 'wire bytes'), 0), catchUp: feedSpread(s.elapsedMs), first: feedMedian(s.firstSyntheticMatchMs) };
-  }
-  const s = feedSummary(host)[`${path === 'loopback' ? 'dual' : 'rpc'}-${mode}` as FeedKey];
-  const elapsed = path === 'unpaced' ? rpcUnpaced(host)[mode].map(row => row.busyMs) : s.elapsedMs;
-  return { s, wire: '—', catchUp: feedSpread(elapsed), first: path === 'unpaced' ? '—' : feedMedian(s.firstSyntheticMatchMs) };
-}
+const REMOTE_LABEL: Record<string, [label: string, rpcDir: string]> = { bazzite: ['Bazzite', ''], 'turing-node-3': ['Turing node 3', 'turing-node-3'] };
+/** Remote feed (sequential and concurrent GETs) against live RPC without its pacing wait, per host and mode. */
 function feedTable() {
   const rows: string[][] = [];
-  for (const mode of ['cold', 'warm'] as const) {
-    for (const path of ['remote', 'unpaced', 'loopback', 'paced'] as const) {
-      const { s, wire, catchUp, first } = feedCells(path, mode, '');
-      rows.push([FEED_PATH[path], MODE[mode]!, `${one(s.observed, 'observed')}/${one(s.expected, 'expected')}`,
-        `${one(s.posts, 'posts')} / ${one(s.gets, 'gets')}`,
-        `${fixed(one(s.requestBytes, 'request bytes'), 0)} / ${fixed(one(s.responseBytes, 'response bytes'), 0)}`, wire,
-        feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), first, catchUp]);
+  for (const host of REMOTE_HOSTS) {
+    const [label, rpcDir] = REMOTE_LABEL[host]!;
+    const remote = remoteSummary(host);
+    const rpc = feedSummary(rpcDir);
+    for (const mode of ['cold', 'warm'] as const) {
+      const seq = remote[`remote-${mode}`];
+      const con = remote[`remote-concurrent-${mode}`];
+      const r = rpc[`rpc-${mode}`];
+      rows.push([label, MODE[mode]!, feedSpread(seq.elapsedMs), feedSpread(con.elapsedMs), feedSpread(rpcUnpaced(rpcDir)[mode].map(row => row.busyMs)),
+        `${one(seq.gets, 'gets')} / ${one(r.posts, 'posts')}`,
+        `${fixed(one(seq.wireBytes, 'wire bytes'), 0)} / ${fixed(one(r.responseBytes, 'response bytes'), 0)}`]);
     }
   }
-  return table(['Path', 'Mode', 'Exact logs in sampled range', 'POST / GET', 'Request / response body bytes', 'Compressed bytes',
-    'Fetch (ms)', 'Scan (ms)', 'Page verification (ms)', 'First synthetic match (ms)', 'Catch-up (ms), median [min–max]'],
-  ['l', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r'], rows);
-}
-function feedHostsTable() {
-  const hosts: [string, string][] = [['', 'Bazzite'], ['turing-node-1', 'node 1'], ['turing-node-2', 'node 2'], ['turing-node-3', 'node 3']];
-  const rows: string[][] = [];
-  for (const mode of ['cold', 'warm'] as const) {
-    for (const path of ['remote', 'unpaced', 'loopback', 'paced'] as const) {
-      for (const [dir, label] of hosts) {
-        if (path === 'remote' && !REMOTE_HOSTS.includes(dir || 'bazzite')) continue;
-        const { s, catchUp, first } = feedCells(path, mode, dir);
-        rows.push([FEED_PATH[path], MODE[mode]!, label, feedMedian(s.fetchMs), feedMedian(s.scanMs), feedMedian(s.verificationMs), first, catchUp]);
-      }
-    }
-  }
-  return table(['Path', 'Mode', 'Host', 'Fetch (ms)', 'Scan (ms)', 'Page verification (ms)', 'First synthetic match (ms)', 'Catch-up (ms), median [min–max]'],
-    ['l', 'l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
+  rows.push(['Bazzite', 'Cold, warm', 'pending', 'pending', feedSpread(rpcUnpaced('').cold.map(row => row.busyMs)), '—', '—']);
+  return table(['Host', 'Mode', 'Feed, sequential GETs (ms)', 'Feed, concurrent GETs (ms)', 'RPC without pacing (ms)', 'GET / POST',
+    'Bytes, feed compressed / RPC'], ['l', 'l', 'r', 'r', 'r', 'r', 'r'], rows);
 }
 
 function feedControlsTable() {
@@ -386,7 +363,6 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
-  'shared-feed-hosts': ['docs/shared-feed.md', feedHostsTable],
   'shared-feed-controls': ['docs/shared-feed.md', feedControlsTable],
 };
 

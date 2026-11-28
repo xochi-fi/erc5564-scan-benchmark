@@ -5,7 +5,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, STRATEGIES, bestRetrieval, chainLatest, chainVolume, consistency, feedBytesLog, feedEvidence, feedControls, feedSummary, num,
-  pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, remoteSummary, rpcUnpaced, scanCost, engineHeadlines, perAnnouncement, scanEngines, type Strategy,
+  pagedRepeat, perMonth, recoveryReference, recoveryRun, recoveryTimeline, REMOTE_HOSTS, remoteSummary, rpcUnpaced, scanCost, engineHeadlines, perAnnouncement, scanEngines, type Strategy,
 } from './data.ts';
 import { FAULTS } from './tables.ts';
 import { circle, decadeLabel, dotKey, legend, line, linearScale, logScale, rect, svg, text } from './svg.ts';
@@ -264,7 +264,7 @@ function outcomeMatrix(): string {
 function costFrontier(): string {
   const { expected } = recoveryReference();
   const feed = feedSummary();
-  const remote = remoteSummary('bazzite')['remote-cold'];
+  const remote = remoteSummary(REMOTE_HOSTS[0]!)['remote-cold'];
   const sec = (ms: number) => `${fmt(ms / 1000, 2)} s`;
   type Place = 'above' | 'below' | 'none';
   interface Point { label: string; requests: number; unit: string; found: number; verified: boolean; time: string; place: Place }
@@ -279,7 +279,7 @@ function costFrontier(): string {
     live('Tenderly alone', 'live-healthy-single', 'single', 'above'),
     // The Bun client run sits one request from the browser run; the shared label covers both.
     { label: 'Tenderly alone, Bun client', requests: one(feed['rpc-cold'].posts), unit: 'POST', found: one(feed['rpc-cold'].observed), verified: false,
-      time: `${sec(one(rpcUnpaced().cold.map(row => row.busyMs)))} excluding pacing (${sec(one(feed['rpc-cold'].elapsedMs))} paced)`, place: 'none' },
+      time: `${sec(one(rpcUnpaced(REMOTE_HOSTS[0] === 'bazzite' ? '' : REMOTE_HOSTS[0]).cold.map(row => row.busyMs)))} excluding pacing (${sec(one(feedSummary(REMOTE_HOSTS[0] === 'bazzite' ? '' : REMOTE_HOSTS[0])['rpc-cold'].elapsedMs))} paced)`, place: 'none' },
     live('Tenderly × Sentio', 'live-healthy-cross', 'cross', 'above'),
     live('Daybreak × Tenderly', 'live-daybreak-cross', 'cross', 'below'),
     live('Daybreak alone', 'live-daybreak-single', 'single', 'above'),
@@ -387,11 +387,11 @@ function feedBytes(): string {
   const bars: [label: string, raw: number, gzip: number | null, cls: string][] = [
     ['RPC, cold', one(summary['rpc-cold'].responseBytes), null, 's2'],
     ['RPC, cold, eth_getLogs only', sum(rpc.filter(r => r.operation === 'eth_getLogs')), null, 's2'],
-    ['Two feeds, cold', one(summary['dual-cold'].responseBytes), one(remoteSummary('bazzite')['remote-cold'].wireBytes), 's1'],
+    ['Two feeds, cold', one(summary['dual-cold'].responseBytes), one(remoteSummary(REMOTE_HOSTS[0]!)['remote-cold'].wireBytes), 's1'],
     ['One feed, cold', baseline.metric, Number(baseline.metrics.cold_gzip_bytes), 's1'],
     ['One feed, cold, optimized', best.metric, Number(best.metrics.cold_gzip_bytes), 's3'],
     ['RPC, warm', one(summary['rpc-warm'].responseBytes), null, 's2'],
-    ['Two feeds, warm', one(summary['dual-warm'].responseBytes), one(remoteSummary('bazzite')['remote-warm'].wireBytes), 's1'],
+    ['Two feeds, warm', one(summary['dual-warm'].responseBytes), one(remoteSummary(REMOTE_HOSTS[0]!)['remote-warm'].wireBytes), 's1'],
   ];
   const W = 760, L = 230, R = 680, T = 76, rowH = 30, barH = 16;
   const max = Math.ceil(Math.max(...bars.map(b => b[1])) / 50000) * 50000;

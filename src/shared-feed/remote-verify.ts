@@ -4,7 +4,7 @@ import { scope } from '../shared/base-windows.ts';
 import { digest, loadReference, warmPage } from './feed.ts';
 
 type Request = { source: string; operation: string; status: number; responseBytes: number; wireBytes: number | null;
-  encoding: string | null; cache: string | null; fetchMs: number };
+  encoding: string | null; cache: string | null; servedBy?: string | null; fetchMs: number };
 type Sample = {
   initialNext: number; initialBlock: number; next: number; block: number; stop: string | null; elapsedMs: number;
   catchUpMs: number | null; scanMs: number; verificationMs: number; firstSyntheticMatchMs: number | null;
@@ -15,7 +15,8 @@ type Sample = {
 const path = Bun.argv[2];
 if (!path) throw new Error('Usage: bun run shared-feed:remote-verify EVIDENCE_JSON');
 const evidence = await Bun.file(path).json() as {
-  host: string; bun: string; cpusAllowed: string | null; cooldownC: number; feedId: string; urls: string[]; samples: Record<string, Sample>;
+  host: string; bun: string; cpusAllowed: string | null; cooldownC: number; feedId: string; urls: string[];
+  rounds?: number; sharedHost?: string | null; samples: Record<string, Sample>;
 };
 const feed = await loadReference();
 assert.match(evidence.host, /^(bazzite|turing-node-[123])$/);
@@ -26,6 +27,7 @@ assert.equal(evidence.urls.length, 2);
 assert.notEqual(new URL(evidence.urls[0]!).host, new URL(evidence.urls[1]!).host);
 
 const end = feed.primary.length;
+const medianOf = (values: number[]) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)] ?? null;
 const range = (from: number, to: number) => Array.from({ length: to - from }, (_, i) => from + i);
 function check(label: string, initial: number, next: number) {
   const sample = evidence.samples[label];
@@ -60,24 +62,31 @@ function check(label: string, initial: number, next: number) {
     // Content-Length of compressed responses; null when any response lacked it.
     wireBytes: sample.requests.every(row => row.wireBytes !== null) ? sample.requests.reduce((total, row) => total + row.wireBytes!, 0) : null,
     compressed: compressed.length, cacheHits: sample.requests.filter(row => /HIT/i.test(row.cache ?? '')).length,
+    // Median page time per feed: separates a slow CDN edge (every request slow) from single misses.
+    feed1PageMs: medianOf(sample.requests.filter(row => row.source === 'feed-1' && row.operation === 'page').map(row => row.fetchMs)),
+    feed2PageMs: medianOf(sample.requests.filter(row => row.source === 'feed-2' && row.operation === 'page').map(row => row.fetchMs)),
     fetchMs: sum(sample.requests, 'fetchMs'), scanMs: sample.scanMs, verificationMs: sample.verificationMs,
     elapsedMs: sample.elapsedMs, firstSyntheticMatchMs: sample.firstSyntheticMatchMs,
   };
 }
 const summaries: Record<string, ReturnType<typeof check>[]> = {};
-for (const round of [1, 2, 3]) {
-  (summaries['remote-cold'] ??= []).push(check(`remote-cold-${round}`, 0, end));
-  check(`remote-warm-${round}-seed`, 0, warmPage);
-  (summaries['remote-warm'] ??= []).push(check(`remote-warm-${round}`, warmPage, end));
+const rounds = evidence.rounds ?? 3;
+const tags = evidence.rounds === undefined ? ['remote'] : ['remote', 'remote-concurrent'];
+for (const tag of tags) {
+  for (let round = 1; round <= rounds; round++) {
+    (summaries[`${tag}-cold`] ??= []).push(check(`${tag}-cold-${round}`, 0, end));
+    check(`${tag}-warm-${round}-seed`, 0, warmPage);
+    (summaries[`${tag}-warm`] ??= []).push(check(`${tag}-warm-${round}`, warmPage, end));
+  }
 }
-assert.equal(Object.keys(evidence.samples).length, 9);
-// [median, min, max] of three samples, as verify.ts.
+assert.equal(Object.keys(evidence.samples).length, tags.length * rounds * 3);
+// [median, min, max] per field, as verify.ts (an odd sample count, so the median is a sample).
 const stats = (values: (number | null)[]) => {
   const sorted = [...values].sort((a, b) => (a ?? 0) - (b ?? 0));
-  return [sorted[1], sorted[0], sorted[2]];
+  return [sorted[(sorted.length - 1) / 2], sorted[0], sorted.at(-1)];
 };
 console.log(JSON.stringify({
-  host: evidence.host, bun: evidence.bun, urls: evidence.urls,
+  host: evidence.host, bun: evidence.bun, urls: evidence.urls, rounds, sharedHost: evidence.sharedHost ?? null,
   thermal: { cooldownC: evidence.cooldownC, maxC: Math.max(...Object.values(evidence.samples).map(s => s.thermal.maxC ?? -Infinity)) },
   summaries: Object.fromEntries(Object.entries(summaries).map(([key, rows]) => [key, Object.fromEntries(
     Object.keys(rows[0]!).map(field => [field, stats(rows.map(row => row[field as keyof typeof row] as number | null))]))])),

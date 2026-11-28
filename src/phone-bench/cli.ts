@@ -6,7 +6,7 @@ import { cpus, hostname, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { PAGE_VERSION, PHONE_PACKED_SHA256, packedFixture } from './build.ts';
-import { runScan } from './page.ts';
+import { runScan } from './scan.ts';
 
 const { values } = parseArgs({ args: Bun.argv.slice(2), options: { engine: { type: 'string', default: 'crypto' }, count: { type: 'string', default: '1000' }, out: { type: 'string' } } });
 const fixture = await packedFixture(join(await mkdtemp(join(tmpdir(), 'phone-bench-')), 'fx'));

@@ -1,0 +1,19 @@
+name: Phone bench result
+description: A result from the phone bench page. The page fills this in; a workflow validates it and opens a pull request.
+title: "Phone bench: "
+labels: [phone-bench]
+body:
+  - type: textarea
+    id: result
+    attributes:
+      label: Result JSON
+      description: Filled in by the page. Do not edit it; edited results fail validation.
+      render: json
+    validations:
+      required: true
+  - type: checkboxes
+    id: credit
+    attributes:
+      label: Credit
+      options:
+        - label: Record my GitHub handle with the result

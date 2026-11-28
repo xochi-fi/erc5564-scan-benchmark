@@ -1,0 +1,66 @@
+name: Phone bench result
+
+# Validates a result submitted through the "Phone bench result" issue form and, if it passes, opens a pull
+# request that adds it under data/phone-bench/. Never pushes to main. The issue body is untrusted: it reaches
+# the validator through a file, never through the shell.
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: phone-bench-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  record:
+    if: contains(github.event.issue.labels.*.name, 'phone-bench') || startsWith(github.event.issue.title, 'Phone bench:')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Validate
+        id: validate
+        env:
+          BODY: ${{ github.event.issue.body }}
+          AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          printenv BODY > "$RUNNER_TEMP/issue.md"
+          set +e
+          bun run phone-bench:record "$RUNNER_TEMP/issue.md" --issue --author "$AUTHOR" > "$RUNNER_TEMP/out.txt" 2>&1
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          cat "$RUNNER_TEMP/out.txt"
+      - name: Open a pull request
+        if: steps.validate.outputs.code == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          bun run tables
+          branch="phone-bench/issue-$NUMBER"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add data/phone-bench docs/phone-bench.md
+          git commit -m "Record phone bench result from #$NUMBER"
+          git push --force origin "$branch"
+          gh pr view "$branch" > /dev/null 2>&1 || gh pr create --base main --head "$branch" \
+            --title "Record phone bench result from #$NUMBER" --body "Validated result from #$NUMBER. Closes #$NUMBER."
+          echo "Accepted. A pull request adds it: $(gh pr view "$branch" --json url -q .url)" > "$RUNNER_TEMP/comment.txt"
+      - name: Report rejection
+        if: steps.validate.outputs.code != '0'
+        run: |
+          { echo "Rejected; nothing was recorded. Run the page again and submit without editing the JSON."; echo; cat "$RUNNER_TEMP/out.txt"; } > "$RUNNER_TEMP/comment.txt"
+      - name: Comment
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: test -f "$RUNNER_TEMP/comment.txt" && gh issue comment "$NUMBER" --body-file "$RUNNER_TEMP/comment.txt"

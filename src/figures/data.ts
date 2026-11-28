@@ -1,6 +1,6 @@
 // Loads recorded results from data/ for `bun run figures` and `bun run tables`.
 // Everything here reads committed files only; nothing touches the network.
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { median } from '../shared/stats.ts';
 import { chainState, loadBaseline, loadSnapshots, type ChainState, type RefreshSnapshot } from '../chain-volume/refresh-state.ts';
@@ -396,3 +396,12 @@ export const realScan = () => readJson<{ measuredAt: string; chains: {
   sdkWholeBatch: { ok: boolean; matches: number | null; error: string | null }; sdkThrowsAlone: string[];
 }[] }>('data/real-announcements/scan.json');
 export const realTiming = (host: string) => readJson<{ host: string; timing: { clean: number; all: number; reps: number; cpu: string; cleanMs: number[]; syntheticMs: number[]; allMs: number[] } }>(`data/real-announcements/timing-${host}.json`);
+
+// ---- phone bench ----------------------------------------------------------------
+
+/** Accepted phone bench results in data/phone-bench/ (bun run phone-bench:record). */
+export function phoneResults(): Record<string, any>[] {
+  let files: string[] = [];
+  try { files = readdirSync(path('data/phone-bench')).filter(f => f.endsWith('.json')).sort(); } catch { return []; }
+  return files.map(f => readJson(`data/phone-bench/${f}`));
+}

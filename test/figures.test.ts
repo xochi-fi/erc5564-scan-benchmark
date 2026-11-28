@@ -11,7 +11,7 @@ describe('figures and tables', () => {
   test('every table renders from recorded data', () => {
     const files = renderTables();
     expect([...files.keys()].sort()).toEqual(
-      ['docs/browser-discovery.md', 'docs/chain-volume.md', 'docs/freshness.md', 'docs/omission-cause.md', 'docs/paged-discovery.md', 'docs/real-announcements.md', 'docs/rpc-recovery.md', 'docs/scan-cost.md', 'docs/shared-feed.md', 'docs/spam-cost.md']);
+      ['docs/browser-discovery.md', 'docs/chain-volume.md', 'docs/freshness.md', 'docs/omission-cause.md', 'docs/paged-discovery.md', 'docs/phone-bench.md', 'docs/real-announcements.md', 'docs/rpc-recovery.md', 'docs/scan-cost.md', 'docs/shared-feed.md', 'docs/spam-cost.md']);
   });
 
   test('every figure is a standalone SVG with light and dark styles', () => {

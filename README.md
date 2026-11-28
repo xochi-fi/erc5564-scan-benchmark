@@ -14,6 +14,7 @@ For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance))
 2. 28 min, 16,296 requests: keyless Base backfill. Other chains take seconds.
 3. 0 of 48: Base announcements Daybreak returns, without error. Two providers recover all.
 4. 0.34 s vs 6.9 s: cold rescan, two remote feeds vs live RPC without pacing.
+5. $435 a day buys 1M spam announcements on any measured chain.
 
 ![Outcome per strategy, fault and endpoint](docs/figures/outcome-matrix.svg)
 <sub>Hollow: one provider, blind to omissions.</sub>
@@ -22,9 +23,9 @@ For wallet and SDK developers ([guidance](docs/chain-volume.md#wallet-guidance))
 <sub>Feeds over the network.</sub>
 
 ![Scan time against announcements](docs/figures/scan-vs-volume.svg)
-<sub>Synthetic; rugs are real chains.</sub>
+<sub>Lines: synthetic fixtures. Ticks: each real chain's full history.</sub>
 
-[Scan cost](docs/scan-cost.md) · [Paged discovery](docs/paged-discovery.md) · [Chain volume](docs/chain-volume.md) · [Browser discovery](docs/browser-discovery.md) · [RPC recovery](docs/rpc-recovery.md) · [Shared feed](docs/shared-feed.md) · [Methods](METHODS.md) · [Data](data/README.md)
+[Scan cost](docs/scan-cost.md) · [Paged discovery](docs/paged-discovery.md) · [Chain volume](docs/chain-volume.md) · [Browser discovery](docs/browser-discovery.md) · [RPC recovery](docs/rpc-recovery.md) · [Shared feed](docs/shared-feed.md) · [Spam cost](docs/spam-cost.md) · [Phone bench](docs/phone-bench.md) · [Omission cause](docs/omission-cause.md) · [Freshness](docs/freshness.md) · [Real announcements](docs/real-announcements.md) · [Methods](METHODS.md) · [Data](data/README.md)
 
 ## Quickstart
 

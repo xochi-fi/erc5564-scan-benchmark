@@ -6,7 +6,7 @@ A shared feed. Two feeds recover every announcement in milliseconds, and OMR cos
 
 ## Decision
 
-Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
+Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. A keyless RPC tail from the last finalized block to head shows newer announcements as pending until their page is final ([freshness](freshness.md)). Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
 
 | Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
 | --- | ---: | ---: | ---: | --- |
@@ -18,7 +18,7 @@ Clients fetch every finalized feed page, scan locally, resume from a checkpoint,
 Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1 (N = 2^19, γ = γ̄ = 50, one GCP n4-standard-8, AVX512-IFMA52; revisions 2021/1256 2022-04-14, 2024/204 2024-11-21, 2024/510 2025-02-07). No DoS-resistant variant runs in production.
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
-<sub>Solid lines scale the scan-cost controls; dotted is single-thread native libsecp256k1 on Turing ([scan cost](scan-cost.md)). Dashed OMR lines are single-thread literature values on one cloud AVX512 core.</sub>
+<sub>Solid lines scale the scan-cost controls; dotted is single-thread native libsecp256k1 on Turing ([scan cost](scan-cost.md)). Dashed OMR lines are single-thread literature values on one cloud AVX512 core. Ticks: each chain's average daily rate.</sub>
 
 | Revisit when | Assumed budget | Breaks at |
 | --- | --- | ---: |
@@ -26,7 +26,7 @@ Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1 (N = 2^19, 
 | Daily feed bytes | 60 MB at ~620 B (2 × best format) | ~100k/day |
 | Wallets cover Umbra-scale streams | — | ~100k per chain |
 
-The budgets are assumptions. A Turing scan passes DoS-PerfOMR's 20 ms recipient time at ~12/day with the SDK and ~120/day with native libsecp256k1 ([rates](scan-cost.md)).
+The budgets are assumptions. A Turing scan passes DoS-PerfOMR's 20 ms recipient time at ~12/day with the SDK and ~120/day with native libsecp256k1 ([rates](scan-cost.md)). Spam can buy these volumes cheaply ([spam cost](spam-cost.md)).
 
 ## Privacy
 

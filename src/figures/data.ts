@@ -1,6 +1,6 @@
 // Loads recorded results from data/ for `bun run figures` and `bun run tables`.
 // Everything here reads committed files only; nothing touches the network.
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { median } from '../shared/stats.ts';
 import { chainState, loadBaseline, loadSnapshots, type ChainState, type RefreshSnapshot } from '../chain-volume/refresh-state.ts';
@@ -258,3 +258,153 @@ export function engineHeadlines(): EngineHeadline[] {
     return { host, sdk: get('sdk'), wasm: get('wasm'), native: get('native'), best };
   });
 }
+
+// ---- spam cost ------------------------------------------------------------------
+
+export const SPAM_CHAIN_ORDER = ['ethereum', 'base', 'arbitrum', 'optimism', 'gnosis', 'polygon', 'sepolia'] as const;
+const SPAM_NATIVE: Record<string, string | null> = {
+  ethereum: 'ethereum', base: 'ethereum', arbitrum: 'ethereum', optimism: 'ethereum', gnosis: 'xdai', polygon: 'polygon-ecosystem-token', sepolia: null,
+};
+const SPAM_NATIVE_LABEL: Record<string, string> = { ethereum: 'ETH', xdai: 'xDAI', 'polygon-ecosystem-token': 'POL' };
+/** Announcements per batch transaction assumed for the batched cost; the fixed per-transaction gas is spread over it. */
+export const SPAM_BATCH = 1000;
+const BLOCK_SECONDS: Record<string, number> = { ethereum: 12, base: 2, arbitrum: 0.25, optimism: 2, gnosis: 5, polygon: 2, sepolia: 12 };
+
+export interface SpamCost {
+  chain: string; measuredAt: string; url: string;
+  directGas: number; marginalGas: number; batchedGas: number; receiptGas: number[];
+  baseFeeWei: number; tipWei: number; l1FeeWeiPerTx: number; native: string | null; nativeUsd: number | null;
+  /** USD per announcement, batched; null on a testnet. */
+  usdPerAnnouncement: number | null;
+  /** Share of the chain's daily block gas limit used by 1M batched announcements; null when the limit is not a throughput cap. */
+  blockShareAt1M: number | null;
+}
+
+/** Cost of one batched announcement per chain, from data/spam-cost/ (bun run spam-cost). */
+export function spamCost(): { chains: SpamCost[]; pricesAt: string; priceSource: string } {
+  const prices = readJson('data/spam-cost/prices.json');
+  const chains = SPAM_CHAIN_ORDER.map(chain => {
+    const d = readJson(`data/spam-cost/${chain}.json`);
+    if (d.failed) throw new Error(`spam-cost: ${chain} has no successful probe`);
+    const gas = (x: any) => Number(BigInt(x.result));
+    const directGas = gas(d.direct);
+    const one = gas(d.batch['1']), many = gas(d.batch['101']);
+    const marginalGas = (many - one) / 100;
+    const batchedGas = marginalGas + (one - marginalGas) / SPAM_BATCH;
+    const baseFeeWei = median(d.fees.result.baseFeePerGas.slice(0, -1).map((h: string) => Number(BigInt(h))))!;
+    const tipWei = median(d.fees.result.reward.map((r: string[]) => Number(BigInt(r[0]!))))!;
+    const l1FeeWeiPerTx = d.l1 ? Number(BigInt(d.l1.getL1Fee.result)) : 0;
+    const native = SPAM_NATIVE[chain]!;
+    const nativeUsd = native ? prices.body[native].usd as number : null;
+    const wei = batchedGas * (baseFeeWei + tipWei) + l1FeeWeiPerTx / SPAM_BATCH;
+    const daily = (d.head.gasLimit as number) * 86400 / BLOCK_SECONDS[chain]!;
+    return {
+      chain, measuredAt: d.measuredAt, url: d.url, directGas, marginalGas, batchedGas,
+      receiptGas: d.receipts.filter((r: any) => r.gasUsed && r.to === '0x55649e01b5df198d18d95b5cc5051630cfd45564' && r.announcerLogs === 1).map((r: any) => r.gasUsed),
+      baseFeeWei, tipWei, l1FeeWeiPerTx, native: native ? SPAM_NATIVE_LABEL[native]! : null, nativeUsd,
+      usdPerAnnouncement: nativeUsd === null ? null : wei / 1e18 * nativeUsd,
+      blockShareAt1M: chain === 'arbitrum' ? null : 1e6 * batchedGas / daily,
+    };
+  });
+  return { chains, pricesAt: prices.fetchedAt, priceSource: prices.source };
+}
+
+// ---- omission cause ---------------------------------------------------------------
+
+export interface OmissionRow { chain: string; host: string; probes: number; omitted: number; noReceipt: number; canaryEmpty: number; caught: number; otherSizes: number }
+/** Per suspect provider: how often it omitted a known announcement, and how often a Transfer canary in the same block was empty too. */
+export function omissionCause(): OmissionRow[] {
+  return ['base', 'optimism'].flatMap(chain => {
+    const d = readJson(`data/omission-cause/${chain}.json`);
+    const control = new Map<string, any>();
+    for (const p of d.providers) if (p.control) for (const q of p.probes) control.set(`${p.pass}:${q.block}`, q);
+    const empty = (x: any) => typeof x?.count !== 'number' || x.count === 0;
+    const rows = new Map<string, OmissionRow>();
+    for (const p of d.providers) {
+      if (p.control) continue;
+      const host = new URL(p.url).host;
+      const row = rows.get(host) ?? { chain, host, probes: 0, omitted: 0, noReceipt: 0, canaryEmpty: 0, caught: 0, otherSizes: 0 };
+      for (const q of p.probes) {
+        const c = control.get(`${p.pass}:${q.block}`);
+        if (!c?.announcerOneBlock?.hasTarget || empty(c.canaryTransfers)) throw new Error(`omission-cause: control failed at ${q.block}`);
+        row.probes++;
+        const omitted = !q.announcerOneBlock?.hasTarget;
+        const canary = empty(q.canaryTransfers);
+        if (omitted) row.omitted++;
+        if (!q.receipt?.hasTarget) row.noReceipt++;
+        if (canary) row.canaryEmpty++;
+        if (omitted && canary) row.caught++;
+        if (omitted && [q.announcer50, q.announcer1000, q.announcerByHash, q.topicOnlyOneBlock].some(x => x?.hasTarget)) row.otherSizes++;
+      }
+      rows.set(host, row);
+    }
+    return [...rows.values()];
+  });
+}
+
+// ---- freshness ------------------------------------------------------------------
+
+export interface Freshness {
+  chain: string; samples: number; minutes: number;
+  /** Seconds from a block's timestamp to the sample receiving it as `latest`: when an RPC-only or hybrid wallet can first see it. */
+  headAgeS: number;
+  /** Seconds from mined to finalized, per finality step: median of the step means, and the largest. */
+  finalMedianS: number | null; finalMaxS: number | null; steps: number;
+  tailBlocks: number; tailRequests: number; tailBytes: number; tailMs: number;
+  /** Block numbers seen as `latest` with two different hashes. */
+  reorgs: number; errors: number;
+}
+/** Header sampling and RPC tail polls from data/freshness/ (bun run freshness). */
+export function freshness(): Freshness[] {
+  return ['ethereum', 'base', 'arbitrum', 'optimism', 'gnosis', 'polygon', 'sepolia'].map(chain => {
+    const d = readJson(`data/freshness/${chain}.json`);
+    const ok = d.samples.filter((s: any) => s.latest.block && s.finalized.block && s.tail.every((t: any) => t.logs));
+    const steps: { mean: number; max: number }[] = [];
+    for (let i = 1; i < ok.length; i++) {
+      const a = ok[i - 1].finalized.block, b = ok[i].finalized.block;
+      if (b.number <= a.number) continue;
+      const t = ok[i].finalized.receivedAt / 1000;
+      steps.push({ mean: t - (a.timestamp + b.timestamp) / 2, max: t - a.timestamp });
+    }
+    const seen = new Map<number, string>();
+    let reorgs = 0;
+    for (const s of ok) {
+      const prior = seen.get(s.latest.block.number);
+      if (prior !== undefined && prior !== s.latest.block.hash) reorgs++;
+      seen.set(s.latest.block.number, s.latest.block.hash);
+    }
+    const first = d.samples[0].latest.sentAt, last = d.samples.at(-1).latest.sentAt;
+    return {
+      chain, samples: ok.length, minutes: (last - first) / 60_000,
+      headAgeS: median(ok.map((s: any) => s.latest.receivedAt / 1000 - s.latest.block.timestamp))!,
+      finalMedianS: steps.length ? median(steps.map(s => s.mean))! : null,
+      finalMaxS: steps.length ? Math.max(...steps.map(s => s.max)) : null, steps: steps.length,
+      tailBlocks: median(ok.map((s: any) => s.latest.block.number - s.finalized.block.number))!,
+      tailRequests: median(ok.map((s: any) => s.tail.length))!,
+      tailBytes: median(ok.map((s: any) => s.tail.reduce((n: number, t: any) => n + t.bytes, 0)))!,
+      tailMs: median(ok.map((s: any) => s.tail.reduce((n: number, t: any) => n + t.ms, 0)))!,
+      reorgs, errors: d.samples.length - ok.length,
+    };
+  });
+}
+
+// ---- real announcements ---------------------------------------------------------
+
+export const realScan = () => readJson<{ measuredAt: string; chains: {
+  chain: string; announcements: number; parsed: number; clean: number; defects: Record<string, number>;
+  scheme1KeyBytes: Record<string, number>; crypto: { matches: number; errors: number };
+  sdkWholeBatch: { ok: boolean; matches: number | null; error: string | null }; sdkThrowsAlone: string[];
+}[] }>('data/real-announcements/scan.json');
+export const realTiming = (host: string) => readJson<{ host: string; timing: { clean: number; all: number; reps: number; cpu: string; cleanMs: number[]; syntheticMs: number[]; allMs: number[] } }>(`data/real-announcements/timing-${host}.json`);
+
+// ---- phone bench ----------------------------------------------------------------
+
+/** Accepted phone bench results in data/phone-bench/ (bun run phone-bench:record). */
+export function phoneResults(): Record<string, any>[] {
+  let files: string[] = [];
+  try { files = readdirSync(path('data/phone-bench')).filter(f => f.endsWith('.json')).sort(); } catch { return []; }
+  return files.map(f => readJson(`data/phone-bench/${f}`));
+}
+/** JavaScriptCore runs of the page's scan code outside a browser (bun run phone-bench:cli). */
+export const phoneProxies = (): Record<string, any>[] =>
+  readdirSync(path('data/phone-bench/proxy')).filter(f => f.endsWith('.json')).sort().map(f => readJson(`data/phone-bench/proxy/${f}`));

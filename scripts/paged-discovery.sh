@@ -9,16 +9,16 @@ cd "$ROOT"
 
 PLAN="${1:-}"
 case "$PLAN" in
-  bazzite | turing | smoke | repeat-bazzite | repeat-bazzite-light | repeat-turing | repeat-smoke) ;;
+  bazzite | turing | smoke | repeat-bazzite | repeat-bazzite-light | repeat-turing | repeat-smoke | batched-bazzite | batched-turing | batched-smoke) ;;
   *)
-    printf 'usage: %s bazzite|turing|smoke|repeat-bazzite|repeat-bazzite-light|repeat-turing|repeat-smoke\n' "$0" >&2
+    printf 'usage: %s bazzite|turing|smoke|repeat-bazzite|repeat-bazzite-light|repeat-turing|repeat-smoke|batched-bazzite|batched-turing|batched-smoke\n' "$0" >&2
     exit 2
     ;;
 esac
 
 # Bazzite plans: the same P-core threads as the scan-cost Bazzite controls; chain/link on two other P-cores.
 case "$PLAN" in
-  bazzite | repeat-bazzite*)
+  bazzite | repeat-bazzite* | batched-bazzite)
     export HOST_LABEL="${HOST_LABEL:-bazzite}"
     export WALLET_CPUS="${WALLET_CPUS:-0,2,4,6}"
     export CONTROL_CPUS="${CONTROL_CPUS:-0,2,4,6}"
@@ -145,7 +145,7 @@ sha256sum package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-dis
   || shasum -a 256 package.json bun.lock src/shared/*.ts src/scan-cost/*.ts src/paged-discovery/*.ts test/*.ts scripts/*.sh src/paged-discovery/matrix/*.json
 host_state "$RESULTS/host-before.txt"
 case "$PLAN" in
-  repeat-bazzite*) GATE_DEFAULT=1 ;;
+  repeat-bazzite* | batched-bazzite) GATE_DEFAULT=1 ;;
   *) GATE_DEFAULT=0 ;;
 esac
 if [[ "${HOST_GATE:-$GATE_DEFAULT}" == "1" ]]; then
@@ -210,11 +210,13 @@ case "$PLAN" in
     sweep million --fixtures "$FIXTURES/1000000-zero" --pages 64 --profiles none --scenarios cold \
       --control-fixture "$FIXTURES/100000-zero"
     ;;
-  repeat-*)
+  repeat-* | batched-*)
     case "$PLAN" in
       repeat-bazzite*) needed="100000-zero,100000-sparse,1000000-sparse" ;;
       repeat-turing) needed="100000-zero,100000-sparse,1000000-zero" ;;
-      repeat-smoke) needed="100000-zero,10000-sparse" ;;
+      repeat-smoke | batched-smoke) needed="100000-zero,10000-sparse" ;;
+      batched-bazzite) needed="100000-zero,100000-sparse,1000000-sparse" ;;
+      batched-turing) needed="100000-zero,100000-sparse" ;;
     esac
     section "fixtures"
     prepare "$needed"
@@ -222,15 +224,17 @@ case "$PLAN" in
     cooldown=()
     if [[ -n "${COOLDOWN_C:-}" ]]; then
       cooldown=(--cooldown-c "$COOLDOWN_C")
-    elif [[ "$PLAN" == "repeat-turing" ]]; then
+    elif [[ "$PLAN" == "repeat-turing" || "$PLAN" == "batched-turing" ]]; then
       cooldown=(--cooldown-c 70)
     fi
     control=()
-    [[ "$PLAN" == "repeat-smoke" ]] || control=(--control-fixture "$FIXTURES/100000-zero")
+    [[ "$PLAN" == *-smoke ]] || control=(--control-fixture "$FIXTURES/100000-zero")
     # kept: recorded evidence depends on the phase2-repeat-v1 seed
+    seed_default=phase2-repeat-v1
+    [[ "$PLAN" == batched-* ]] && seed_default=batched-verify-v1
     sweep repeat --matrix "$ROOT/src/paged-discovery/matrix/$PLAN.json" --fixtures-root "$FIXTURES" \
       --repetitions "${REPETITIONS:-3}" --first-repetition "$first_rep" \
-      --order shuffled --seed "${SEED:-phase2-repeat-v1}-${LABEL}-r${first_rep}" \
+      --order shuffled --seed "${SEED:-$seed_default}-${LABEL}-r${first_rep}" \
       "${cooldown[@]}" "${control[@]}"
     ;;
 esac

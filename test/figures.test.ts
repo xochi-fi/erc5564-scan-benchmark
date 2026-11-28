@@ -11,7 +11,7 @@ describe('figures and tables', () => {
   test('every table renders from recorded data', () => {
     const files = renderTables();
     expect([...files.keys()].sort()).toEqual(
-      ['docs/browser-discovery.md', 'docs/chain-volume.md', 'docs/paged-discovery.md', 'docs/rpc-recovery.md', 'docs/scan-cost.md', 'docs/shared-feed.md']);
+      ['docs/browser-discovery.md', 'docs/chain-volume.md', 'docs/freshness.md', 'docs/omission-cause.md', 'docs/paged-discovery.md', 'docs/phone-bench.md', 'docs/real-announcements.md', 'docs/rpc-recovery.md', 'docs/scan-cost.md', 'docs/shared-feed.md', 'docs/spam-cost.md']);
   });
 
   test('every figure is a standalone SVG with light and dark styles', () => {
@@ -21,5 +21,14 @@ describe('figures and tables', () => {
       expect(svg).toContain('prefers-color-scheme: dark');
       expect(svg).not.toContain('NaN');
     }
+  });
+
+  test('scan-vs-volume names its tick rows and the largest real history', () => {
+    const svg = FIGURES['scan-vs-volume.svg']!();
+    for (const label of ['Real chains, total announcements to date', 'ERC-5564 Announcer', 'Umbra contract', 'Umbra on Polygon PoS']) {
+      expect(svg).toContain(label);
+    }
+    expect(svg).toContain('extrapolated per announcement');
+    expect(FIGURES['scan-budget.svg']!()).toContain('Real chains, average announcements per day to date');
   });
 });

@@ -1,0 +1,48 @@
+{
+  "kind": "phone-bench",
+  "pageVersion": "6",
+  "startedAt": "2026-11-28T03:21:04.771Z",
+  "device": "iPhone 17 Pro",
+  "os": "iOS 18.7",
+  "browser": "DuckDuckGo 27.2",
+  "jit": "on",
+  "notes": null,
+  "detected": {
+    "os": "iOS",
+    "osVersion": "18.7",
+    "browser": "DuckDuckGo",
+    "browserVersion": "27.2",
+    "device": "iPhone",
+    "app": "DuckDuckGo 27.2",
+    "deviceCandidates": [
+      "iPhone 17, 17 Pro, 16 Pro"
+    ],
+    "jitGuess": "on",
+    "jitReason": "WebAssembly is available; JIT assumed on",
+    "uaChModel": null,
+    "uaChPlatform": null,
+    "uaChPlatformVersion": null
+  },
+  "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1 Ddg/27.2",
+  "screen": {
+    "width": 402,
+    "height": 874,
+    "devicePixelRatio": 3
+  },
+  "hardwareConcurrency": 4,
+  "webAssembly": true,
+  "secureContext": true,
+  "worker": true,
+  "engine": "wasm",
+  "count": 10000,
+  "chunk": 250,
+  "seed": "phone-bench:v1",
+  "fixtureSha256": "63ea0c665c7c8a98fe1643ccddc979c2407fc7748aad87e3addd091c8ff50444",
+  "packedSha256": "59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d",
+  "scanMs": 869,
+  "msPerAnnouncement": 0.0869,
+  "matches": 10,
+  "expectedMatches": 10,
+  "verified": true,
+  "source": "owner"
+}

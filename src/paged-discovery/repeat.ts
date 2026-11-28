@@ -12,7 +12,10 @@ export interface Setting {
   profile: LinkProfileName;
   scenario: Scenario;
   pageBlocks: number;
+  /** Omitted means sequential, as in every run before batched verification. */
+  verifyMode?: VerifyMode;
 }
+export type VerifyMode = 'sequential' | 'batched';
 
 export interface PlannedSample extends Setting {
   repetition: number;
@@ -25,6 +28,7 @@ const matrixEntrySchema = z.object({
   profiles: z.array(z.enum(LINK_PROFILE_NAMES as [LinkProfileName, ...LinkProfileName[]])).min(1),
   scenarios: z.array(z.enum(['cold', 'catchup'])).min(1),
   pages: z.array(z.number().int().min(1)).min(1),
+  verifyModes: z.array(z.enum(['sequential', 'batched'])).min(1).optional(),
 }).strict();
 
 export const matrixSchema = z.object({
@@ -33,7 +37,7 @@ export const matrixSchema = z.object({
 }).strict();
 export type Matrix = z.infer<typeof matrixSchema>;
 
-const settingKey = (s: Setting): string => `${s.fixtureDir}|${s.profile}|${s.scenario}|${s.pageBlocks}`;
+const settingKey = (s: Setting): string => `${s.fixtureDir}|${s.profile}|${s.scenario}|${s.pageBlocks}|${s.verifyMode ?? 'sequential'}`;
 
 /** Expands matrix entries into distinct settings; relative fixture names resolve against fixturesRoot. */
 export function matrixSettings(matrix: Matrix, fixturesRoot: string): Setting[] {
@@ -43,8 +47,10 @@ export function matrixSettings(matrix: Matrix, fixturesRoot: string): Setting[] 
     for (const profile of entry.profiles) {
       for (const scenario of entry.scenarios) {
         for (const pageBlocks of entry.pages) {
-          const setting = { fixtureDir, profile, scenario, pageBlocks };
-          seen.set(settingKey(setting), setting);
+          for (const verifyMode of entry.verifyModes ?? [undefined]) {
+            const setting: Setting = verifyMode === undefined ? { fixtureDir, profile, scenario, pageBlocks } : { fixtureDir, profile, scenario, pageBlocks, verifyMode };
+            seen.set(settingKey(setting), setting);
+          }
         }
       }
     }

@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
+  spamCost, omissionCause, freshness, realScan, phoneResults, phoneProxies, realTiming,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -337,6 +338,108 @@ function feedTable() {
 
 // ---- writer -------------------------------------------------------------------
 
+// ---- spam cost ------------------------------------------------------------------
+
+const gwei = (wei: number) => {
+  const g = wei / 1e9;
+  return g === 0 ? '0' : g >= 1 ? fixed(g, 0) : g >= 0.001 ? fixed(g, 3) : g.toExponential(1);
+};
+const usd = (value: number) => (value >= 100 ? `$${fixed(value, 0)}` : value >= 1 ? `$${fixed(value, 2)}` : value >= 0.01 ? `$${fixed(value, 2)}` : `<$0.01`);
+function spamTable() {
+  const { chains } = spamCost();
+  return table(['Chain', 'Gas, direct / batched', 'Base + p10 tip (gwei)', 'Native (USD)', '100k/day', '1M/day', 'Block gas at 1M/day'],
+    ['l', 'r', 'r', 'r', 'r', 'r', 'r'],
+    chains.map(c => [CHAIN_LABELS[c.chain]!, `${fixed(c.directGas, 0)} / ${fixed(c.batchedGas, 0)}`,
+      `${gwei(c.baseFeeWei)} + ${gwei(c.tipWei)}`,
+      c.native ? `${c.native} ${c.nativeUsd! >= 1 ? fixed(c.nativeUsd!, 2) : fixed(c.nativeUsd!, 3)}` : 'testnet',
+      c.usdPerAnnouncement === null ? 'free' : usd(1e5 * c.usdPerAnnouncement),
+      c.usdPerAnnouncement === null ? 'free' : usd(1e6 * c.usdPerAnnouncement),
+      c.blockShareAt1M === null ? '—' : `${fixed(100 * c.blockShareAt1M, 1)}%`]));
+}
+
+// ---- omission cause -------------------------------------------------------------
+
+const OMISSION_CLASS: Record<string, string> = {
+  'base.daybreak-rpc.network': 'No receipts or logs: headers only, `[]` for every filter, `block not found` by hash',
+  'rpc.degenprotocol.io': 'Intermittent: one pass drops the 1- and 50-block answers, keeps the 1,000-block one',
+  'rpc.baseazul.dev': 'Pruned below block 62.5M, served as `[]`, an error or a partial answer',
+  'public.1rpc.io': 'Filter bug: `[]` for one block, found in 50 blocks; receipts and canaries vary',
+};
+function omissionTable() {
+  return table(['Provider', 'Known announcements omitted', 'Receipt missing', 'Omissions with an empty Transfer canary', 'Found by another query', 'Class'],
+    ['l', 'r', 'r', 'r', 'r', 'l'],
+    omissionCause().map(r => [`${r.host} (${CHAIN_LABELS[r.chain]})`, `${r.omitted}/${r.probes}`, `${r.noReceipt}/${r.probes}`,
+      `${r.caught}/${r.omitted}`, `${r.otherSizes}/${r.omitted}`, OMISSION_CLASS[r.host] ?? '?']));
+}
+
+// ---- freshness ------------------------------------------------------------------
+
+const minSec = (s: number | null) => (s === null ? '-' : s >= 120 ? `${fixed(s / 60, 1)} min` : `${fixed(s, 0)} s`);
+function freshnessTable() {
+  return table(['Chain', 'RPC-only and hybrid: mined to seen', 'Feed-only: mined to finalized, median [max]', 'Tail blocks', 'Tail requests / bytes per poll', 'Reorged heads', 'Samples'],
+    ['l', 'r', 'r', 'r', 'r', 'r', 'r'],
+    freshness().map(f => [CHAIN_LABELS[f.chain]!, minSec(f.headAgeS), `${minSec(f.finalMedianS)} [${minSec(f.finalMaxS)}]`,
+      fixed(f.tailBlocks, 0), `${fixed(f.tailRequests, 0)} / ${fixed(f.tailBytes, 0)}`, String(f.reorgs), `${f.samples}${f.errors ? ` (+${f.errors} failed)` : ''}`]));
+}
+
+// ---- real announcements ---------------------------------------------------------
+
+function realScanTable() {
+  const rows = realScan().chains;
+  const d = (c: typeof rows[number], k: string) => fixed(c.defects[k] ?? 0, 0);
+  const total = (f: (c: typeof rows[number]) => number) => fixed(rows.reduce((n, c) => n + f(c), 0), 0);
+  return table(['Chain', 'Announcements', 'Decoded', 'Scheme ≠ 1', 'Scheme 1, bad key', 'Scheme 1, no view tag', 'Scheme 1, 65-byte key', '`crypto` engine throws', 'SDK batch'],
+    ['l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'l'],
+    [...rows.map(c => [CHAIN_LABELS[c.chain]!, fixed(c.announcements, 0), fixed(c.parsed, 0), d(c, 'other-scheme'), d(c, 'bad-key'), d(c, 'no-view-tag'),
+      fixed(c.scheme1KeyBytes['65'] ?? 0, 0), fixed(c.crypto.errors, 0), c.sdkWholeBatch.ok && c.sdkThrowsAlone.length === 0 ? 'completes' : 'throws']),
+    ['All', total(c => c.announcements), total(c => c.parsed), total(c => c.defects['other-scheme'] ?? 0), total(c => c.defects['bad-key'] ?? 0),
+      total(c => c.defects['no-view-tag'] ?? 0), total(c => c.scheme1KeyBytes['65'] ?? 0), total(c => c.crypto.errors), rows.every(c => c.sdkWholeBatch.ok) ? 'completes' : 'throws']]);
+}
+
+function realTimingTable() {
+  const t = realTiming('turing-node-3').timing;
+  const each = (ms: number[], n: number) => { const s = spreadOf(ms.map(v => v / n)); return `${fixed(s.median, 3)} [${fixed(s.min, 3)}-${fixed(s.max, 3)}]`; };
+  return table(['Host', 'Input', 'Announcements', 'ms each, median [min-max]'], ['l', 'l', 'r', 'r'], [
+    ['Turing node 3', 'Real, scheme 1 without defects', fixed(t.clean, 0), each(t.cleanMs, t.clean)],
+    ['Turing node 3', 'Synthetic, same count', fixed(t.clean, 0), each(t.syntheticMs, t.clean)],
+    ['Turing node 3', 'Real, all (defects throw early)', fixed(t.all, 0), each(t.allMs, t.all)],
+  ]);
+}
+
+// ---- batched verification ---------------------------------------------------------
+
+function pagedBatchedTable() {
+  const rows = readCsv('data/paged-discovery/batched.csv');
+  const key = (r: Row) => [r.host, r.count, r.scenario, r.pageBlocks].join('|');
+  const groups = new Map<string, Row[]>();
+  for (const r of rows) groups.set(key(r), [...(groups.get(key(r)) ?? []), r]);
+  const cell = (r: Row | undefined, m: string, digits: number) => (r ? `${fixed(num(r[`${m}Median`])!, digits)} [${fixed(num(r[`${m}Min`])!, digits)}-${fixed(num(r[`${m}Max`])!, digits)}]` : 'pending');
+  return table(['Host', 'Size', 'Scenario', 'Page blocks', 'Payments', 'Verify s, sequential', 'Verify s, batched', 'Total s, sequential', 'Total s, batched', 'Tainted'],
+    ['l', 'r', 'l', 'r', 'r', 'r', 'r', 'r', 'r', 'r'],
+    [...groups.values()].map(g => {
+      const seq = g.find(r => r.verifyMode === 'sequential'), bat = g.find(r => r.verifyMode === 'batched');
+      const r = (seq ?? bat)!;
+      return [({ bazzite: 'Bazzite i7-13700K', turing: 'Turing RK1 A76 (nodes 2-3)' } as Record<string, string>)[r.host!] ?? r.host!, fixed(Number(r.count), 0), r.scenario === 'cold' ? 'cold rescan' : '64-block catch-up', r.pageBlocks!, r.matches!,
+        cell(seq, 'verifyS', 2), cell(bat, 'verifyS', 2), cell(seq, 'totalS', 1), cell(bat, 'totalS', 1), `${Number(seq?.tainted ?? 0) + Number(bat?.tainted ?? 0)}/${Number(seq?.n ?? 0) + Number(bat?.n ?? 0)}`];
+    }));
+}
+
+// ---- phone bench -----------------------------------------------------------------
+
+function phoneProxyTable() {
+  return table(['Host', 'Runtime', 'JIT', 'Engine', 'ms per announcement'], ['l', 'l', 'l', 'l', 'r'],
+    phoneProxies().map((r: Record<string, any>) => [r.host, r.runtime, r.jit === 'on' ? 'on' : 'off (`BUN_JSC_useJIT=0`)', r.engine, fixed(r.msPerAnnouncement, 2)]));
+}
+
+function phoneTable() {
+  const rows = phoneResults();
+  const header = ['Device', 'OS', 'Browser', 'JIT', 'Engine', 'Announcements', 'ms per announcement', 'Credit'];
+  if (rows.length === 0) return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], [['No results yet', '', '', '', '', '', '', '']]);
+  // Runs under 2 s show their length: timer resolution and JIT warm-up weigh more there.
+  return table(header, ['l', 'l', 'l', 'l', 'l', 'r', 'r', 'l'], rows.map(r => [r.device, r.os, r.browser, r.jit, r.engine,
+    `${fixed(r.count, 0)}${r.scanMs < 2000 ? ` (${fixed(r.scanMs / 1000, 2)} s run)` : ''}`, fixed(r.msPerAnnouncement, r.msPerAnnouncement < 0.1 ? 3 : 2), r.source ?? '-']));
+}
+
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
@@ -350,6 +453,14 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
+  'spam-cost': ['docs/spam-cost.md', spamTable],
+  'omission-cause': ['docs/omission-cause.md', omissionTable],
+  'freshness': ['docs/freshness.md', freshnessTable],
+  'paged-batched': ['docs/paged-discovery.md', pagedBatchedTable],
+  'phone-bench': ['docs/phone-bench.md', phoneTable],
+  'phone-proxy': ['docs/phone-bench.md', phoneProxyTable],
+  'real-scan': ['docs/real-announcements.md', realScanTable],
+  'real-timing': ['docs/real-announcements.md', realTimingTable],
 };
 
 export function renderTables(): Map<string, string> {

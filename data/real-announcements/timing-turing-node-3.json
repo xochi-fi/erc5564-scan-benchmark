@@ -1,0 +1,234 @@
+{
+  "measuredAt": "2026-11-28T02:52:00.189Z",
+  "host": "turing-node-3",
+  "chains": [
+    {
+      "chain": "ethereum",
+      "announcements": 298,
+      "parsed": 298,
+      "clean": 297,
+      "defects": {
+        "other-scheme": 1
+      },
+      "scheme1KeyBytes": {
+        "33": 297
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 1
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    },
+    {
+      "chain": "base",
+      "announcements": 679,
+      "parsed": 679,
+      "clean": 373,
+      "defects": {
+        "other-scheme": 304,
+        "no-view-tag": 2
+      },
+      "scheme1KeyBytes": {
+        "33": 209,
+        "65": 166
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 306
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    },
+    {
+      "chain": "arbitrum",
+      "announcements": 19,
+      "parsed": 19,
+      "clean": 16,
+      "defects": {
+        "other-scheme": 3
+      },
+      "scheme1KeyBytes": {
+        "33": 16
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 3
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    },
+    {
+      "chain": "optimism",
+      "announcements": 2,
+      "parsed": 2,
+      "clean": 2,
+      "defects": {},
+      "scheme1KeyBytes": {
+        "33": 2
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 0
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    },
+    {
+      "chain": "gnosis",
+      "announcements": 3,
+      "parsed": 3,
+      "clean": 3,
+      "defects": {},
+      "scheme1KeyBytes": {
+        "33": 3
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 0
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    },
+    {
+      "chain": "polygon",
+      "announcements": 9,
+      "parsed": 9,
+      "clean": 9,
+      "defects": {},
+      "scheme1KeyBytes": {
+        "33": 9
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 0
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    },
+    {
+      "chain": "sepolia",
+      "announcements": 1039,
+      "parsed": 1039,
+      "clean": 771,
+      "defects": {
+        "other-scheme": 181,
+        "no-view-tag": 24,
+        "bad-key": 63
+      },
+      "scheme1KeyBytes": {
+        "0": 9,
+        "2": 18,
+        "33": 788,
+        "65": 43
+      },
+      "crypto": {
+        "matches": 0,
+        "errors": 268
+      },
+      "sdkWholeBatch": {
+        "ok": true,
+        "matches": 0,
+        "error": null
+      },
+      "sdkThrowsAlone": []
+    }
+  ],
+  "timing": {
+    "engine": "crypto",
+    "clean": 1471,
+    "all": 2049,
+    "reps": 20,
+    "cpu": "unknown",
+    "cleanMs": [
+      2356.627228999998,
+      2359.5341899999985,
+      2360.3573319999996,
+      2369.149676000001,
+      2374.5686510000014,
+      2371.884539999999,
+      2401.590895000001,
+      2388.3284370000038,
+      2374.0453629999975,
+      2372.0318419999967,
+      2370.438936000006,
+      2373.732965000003,
+      2371.647981000002,
+      2373.57487099999,
+      2375.325581000012,
+      2429.208182000002,
+      2390.427421999979,
+      2390.2270319999952,
+      2393.316006000008,
+      2388.3164769999858
+    ],
+    "syntheticMs": [
+      2370.3674720000054,
+      2368.225900999998,
+      2383.0185529999944,
+      2385.6807869999975,
+      2382.9800499999983,
+      2439.897954,
+      2402.9994549999974,
+      2400.590989999997,
+      2383.7343549999932,
+      2388.796012000006,
+      2387.097806000005,
+      2384.003291000001,
+      2386.583268999995,
+      2388.180843000009,
+      2411.056745000009,
+      2400.9214719999873,
+      2403.4232769999944,
+      2402.44262300001,
+      2400.23775499998,
+      2404.924303000007
+    ],
+    "allMs": [
+      2356.717653000007,
+      2360.2791599999982,
+      2373.4990309999994,
+      2371.8247439999977,
+      2376.2117279999948,
+      2431.122237000003,
+      2395.501038000002,
+      2374.8084180000005,
+      2379.19015200001,
+      2377.108375999989,
+      2374.865589000008,
+      2379.687479,
+      2376.7484340000083,
+      2379.3161600000167,
+      2430.0937459999986,
+      2394.4877149999957,
+      2392.8910159999796,
+      2394.0802269999986,
+      2395.2041000000027,
+      2393.5161030000017
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 
 What does a wallet pay to find its payments by paging through history over JSON-RPC?
 
-On a fast link the scan dominates. On a slow link page size sets the network cost, and each payment adds a fixed verification cost.
+On a fast link the scan dominates. On a slow link page size sets the network cost. Verification costs two round trips per payment, or one per page when a page's checks go in one JSON-RPC batch.
 
 ## Cold rescans (median [min–max], n = 3)
 
@@ -68,9 +68,42 @@ On a fast link the scan dominates. On a slow link page size sets the network cos
 
 1. The scan is 94–97% of a cold rescan on `none` and 89–96% on the single-run `lan`. 1M/100k is 9.95–10.1×. Turing is 3.6–3.7× slower than Bazzite: 3.4× on node 3, up to 4.3× on the throttled node 2.
 2. From 64-block pages, the network runs at the bandwidth floor, about 1.1 kB per announcement. Network terms vary by under 1%, so the spread in totals comes from the scan.
-3. Verification costs 0.2052–0.2082 s per candidate at 100 ms RTT in every setting: 23.4% of the best `public` total on Bazzite and 9.8% on Turing.
+3. Sequential verification costs 0.2052–0.2082 s per candidate at 100 ms RTT in every setting: 23.4% of the best `public` total on Bazzite and 9.8% on Turing. [Batching](#batched-verification) a page's checks makes it one round trip per page.
 4. First match takes about one page's fetch and scan, because the first scheduled match is at index 0. A 256-block page holds 32,768 announcements, about 29 MB. History adds 11% to RSS at 256 blocks only.
 5. Catch-up cost follows the new blocks, not the history. 1-block pages scan 8% (100k) and 6% (1M) slower than 256-block pages on Bazzite, and 11% slower on Turing. The cause is not isolated.
+
+## Batched verification
+
+Same receipt and balance checks, sent as one JSON-RPC batch per page (`verifyMode: batched`). Multicall3 could batch the balances on chain, but receipts still need a separate call.
+
+<!-- generated:paged-batched -->
+| Host | Size | Scenario | Page blocks | Payments | Verify s, sequential | Verify s, batched | Total s, sequential | Total s, batched | Tainted |
+| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Bazzite i7-13700K | 100,000 | 64-block catch-up | 1 | 8 | 1.64 [1.64-1.65] | 0.83 [0.83-0.83] | 14.4 [14.3-14.4] | 13.6 [13.5-13.7] | 1/6 |
+| Bazzite i7-13700K | 100,000 | 64-block catch-up | 16 | 8 | 1.65 [1.65-1.65] | 0.42 [0.42-0.42] | 7.9 [7.9-8.0] | 6.7 [6.7-6.7] | 0/6 |
+| Bazzite i7-13700K | 100,000 | 64-block catch-up | 256 | 8 | 1.64 [1.64-1.65] | 0.11 [0.11-0.11] | 7.3 [7.3-7.5] | 5.9 [5.8-5.9] | 0/6 |
+| Bazzite i7-13700K | 100,000 | cold rescan | 1 | 100 | 20.54 [20.52-20.55] | 10.35 [10.35-10.37] | 175.7 [175.3-176.1] | 165.6 [164.8-165.8] | 5/6 |
+| Bazzite i7-13700K | 100,000 | cold rescan | 16 | 100 | 20.55 [20.55-20.58] | 5.11 [5.10-5.12] | 95.9 [95.3-97.4] | 80.8 [80.6-86.0] | 1/6 |
+| Bazzite i7-13700K | 100,000 | cold rescan | 64 | 100 | 20.54 [20.53-20.57] | 1.39 [1.39-1.41] | 90.4 [90.1-94.7] | 71.4 [70.9-72.2] | 3/6 |
+| Bazzite i7-13700K | 100,000 | cold rescan | 256 | 100 | 20.52 [20.51-20.54] | 0.47 [0.47-0.48] | 88.2 [88.1-88.2] | 68.3 [68.3-68.6] | 3/6 |
+| Bazzite i7-13700K | 1,000,000 | cold rescan | 256 | 1000 | 205.41 [204.96-205.42] | 3.74 [3.74-3.76] | 881.2 [880.0-883.0] | 685.7 [673.7-687.5] | 6/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | 64-block catch-up | 1 | 8 | 1.65 [1.65-1.66] | 0.84 [0.83-0.84] | 26.9 [26.1-27.0] | 26.0 [25.5-26.2] | 0/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | 64-block catch-up | 16 | 8 | 1.67 [1.66-1.67] | 0.42 [0.42-0.42] | 19.0 [18.5-19.1] | 17.8 [17.3-17.9] | 0/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | 64-block catch-up | 256 | 8 | 1.67 [1.67-1.68] | 0.11 [0.11-0.12] | 18.3 [17.8-18.4] | 16.7 [16.2-16.9] | 0/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | cold rescan | 1 | 100 | 20.62 [20.61-20.62] | 10.41 [10.39-10.44] | 327.2 [319.2-327.9] | 316.9 [310.2-323.3] | 0/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | cold rescan | 16 | 100 | 20.77 [20.74-20.79] | 5.26 [5.25-5.27] | 234.1 [226.4-242.2] | 223.3 [210.7-231.6] | 0/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | cold rescan | 64 | 100 | 20.78 [20.76-20.78] | 1.46 [1.45-1.47] | 226.1 [214.7-237.4] | 211.6 [196.6-222.0] | 0/6 |
+| Turing RK1 A76 (nodes 2-3) | 100,000 | cold rescan | 256 | 100 | 20.76 [20.71-20.80] | 0.51 [0.50-0.51] | 226.6 [207.8-240.0] | 204.5 [189.2-220.6] | 0/6 |
+<!-- /generated:paged-batched -->
+
+2026-11-28, `public` profile, n = 3 per mode, median [min-max]. Turing pools nodes 2 and 3. Tainted samples swapped while they ran; verification is round-trip bound, so it is unaffected.
+
+```sh
+scripts/paged-discovery.sh batched-bazzite          # turing: batched-turing; check: batched-smoke
+bun run src/paged-discovery/repeat-report.ts --host bazzite=data/paged-discovery/batched/bazzite \
+  --host turing=data/paged-discovery/batched/turing-node-2 --host turing=data/paged-discovery/batched/turing-node-3 \
+  --csv data/paged-discovery/batched.csv
+```
 
 ## Controls
 

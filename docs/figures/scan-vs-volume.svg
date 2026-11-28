@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="536" viewBox="0 0 760 536" role="img" aria-label="Scan time against announcement count, log-log">
-<title>Scan time against announcement count, log-log</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="696" viewBox="0 0 760 696" role="img" aria-label="Scan time against announcement count, log-log, with each real chain's full history">
+<title>Scan time against announcement count, log-log, with each real chain's full history</title>
 <style>
   .bg { fill: #ffffff; }
   .ink { fill: #1f2328; }
@@ -30,9 +30,13 @@
   .label { font-size: 14px; }
   .small { font-size: 13px; }
 </style>
-<rect class="bg" x="0" y="0" width="760" height="536" rx="6"/>
+<rect class="bg" x="0" y="0" width="760" height="696" rx="6"/>
 <text x="20" y="30" class="title ink" text-anchor="start">Scan time vs announcements</text>
 <text x="20" y="54" class="small muted" text-anchor="start">seconds, log scale</text>
+<line x1="220" y1="49" x2="244" y2="49" class="axis" stroke-width="2"/>
+<text x="252" y="54" class="small muted" text-anchor="start">measured, 100k–1M</text>
+<line x1="400" y1="49" x2="424" y2="49" class="axis" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="432" y="54" class="small muted" text-anchor="start">dashed, dotted: extrapolated per announcement</text>
 <line x1="96" y1="66" x2="96" y2="420" class="grid"/>
 <text x="96" y="440" class="small muted" text-anchor="middle">1</text>
 <line x1="307.3" y1="66" x2="307.3" y2="420" class="grid"/>
@@ -90,22 +94,58 @@
 <text x="148" y="132" class="label ink" text-anchor="start">Cortex-A76, ScopeLift SDK: 1.75 ms each</text>
 <line x1="110" y1="149" x2="140" y2="149" class="s1" stroke-width="2" stroke-dasharray="5 4"/>
 <text x="148" y="154" class="label ink" text-anchor="start">i7-13700K, ScopeLift SDK: 0.50 ms each</text>
-<rect x="127.8" y="483" width="287" height="14" class="band" rx="3"></rect>
-<rect x="356.6" y="482" width="3" height="16" class="muted"><title>Ethereum: 302 announcements</title></rect>
-<rect x="394.1" y="482" width="3" height="16" class="muted"><title>Base: 685 announcements</title></rect>
-<rect x="229.6" y="482" width="3" height="16" class="muted"><title>Arbitrum One: 19 announcements</title></rect>
-<rect x="126.3" y="482" width="3" height="16" class="muted"><title>OP Mainnet: 2 announcements</title></rect>
-<rect x="144.9" y="482" width="3" height="16" class="muted"><title>Gnosis: 3 announcements</title></rect>
-<rect x="195.3" y="482" width="3" height="16" class="muted"><title>Polygon PoS: 9 announcements</title></rect>
-<rect x="413.3" y="482" width="3" height="16" class="muted"><title>Sepolia: 1,040 announcements</title></rect>
-<text x="88" y="495" class="small ink" text-anchor="end">ERC-5564</text>
-<rect x="339.6" y="509" width="285.9" height="14" class="band" rx="3"></rect>
-<rect x="560.2" y="508" width="3" height="16" class="muted"><title>Ethereum: 25,558 announcements</title></rect>
-<rect x="506.7" y="508" width="3" height="16" class="muted"><title>Base: 7,955 announcements</title></rect>
-<rect x="622.9" y="508" width="3" height="16" class="muted"><title>Arbitrum One: 100,196 announcements</title></rect>
-<rect x="607.9" y="508" width="3" height="16" class="muted"><title>OP Mainnet: 72,277 announcements</title></rect>
-<rect x="338.1" y="508" width="3" height="16" class="muted"><title>Gnosis: 202 announcements</title></rect>
-<rect x="624" y="508" width="3" height="16" class="muted"><title>Polygon PoS: 102,552 announcements</title></rect>
-<rect x="515.7" y="508" width="3" height="16" class="muted"><title>Sepolia: 9,690 announcements</title></rect>
-<text x="88" y="521" class="small ink" text-anchor="end">Umbra</text>
+<text x="20" y="492" class="label ink" text-anchor="start">Real chains, total announcements to date</text>
+<text x="20" y="518" class="small muted" text-anchor="start">ERC-5564 Announcer</text>
+<rect x="127.8" y="549" width="287" height="14" class="band" rx="3"></rect>
+<line x1="127.8" y1="547" x2="111.3" y2="539" class="axis" stroke-width="1"/>
+<text x="111.3" y="534" class="small ink" text-anchor="middle">OP Mainnet 2</text>
+<line x1="196.8" y1="547" x2="213.3" y2="539" class="axis" stroke-width="1"/>
+<text x="213.3" y="534" class="small ink" text-anchor="middle">Polygon PoS 9</text>
+<line x1="358.1" y1="547" x2="335.4" y2="539" class="axis" stroke-width="1"/>
+<text x="335.4" y="534" class="small ink" text-anchor="middle">Ethereum 302</text>
+<line x1="414.8" y1="547" x2="437.4" y2="539" class="axis" stroke-width="1"/>
+<text x="437.4" y="534" class="small ink" text-anchor="middle">Sepolia 1,040</text>
+<line x1="146.4" y1="565" x2="141.4" y2="574" class="axis" stroke-width="1"/>
+<text x="141.4" y="588" class="small ink" text-anchor="middle">Gnosis 3</text>
+<line x1="231.1" y1="565" x2="236.2" y2="574" class="axis" stroke-width="1"/>
+<text x="236.2" y="588" class="small ink" text-anchor="middle">Arbitrum One 19</text>
+<line x1="395.6" y1="565" x2="395.6" y2="574" class="axis" stroke-width="1"/>
+<text x="395.6" y="588" class="small ink" text-anchor="middle">Base 685</text>
+<rect x="126.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, OP Mainnet: 2</title></rect>
+<rect x="144.9" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Gnosis: 3</title></rect>
+<rect x="195.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Polygon PoS: 9</title></rect>
+<rect x="229.6" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Arbitrum One: 19</title></rect>
+<rect x="356.6" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Ethereum: 302</title></rect>
+<rect x="394.1" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Base: 685</title></rect>
+<rect x="413.3" y="548" width="3" height="16" class="muted"><title>ERC-5564 Announcer, Sepolia: 1,040</title></rect>
+<text x="20" y="616" class="small muted" text-anchor="start">Umbra contract</text>
+<rect x="339.6" y="647" width="285.9" height="14" class="band" rx="3"></rect>
+<line x1="339.6" y1="645" x2="315.2" y2="637" class="axis" stroke-width="1"/>
+<text x="315.2" y="632" class="small ink" text-anchor="middle">Gnosis 202</text>
+<line x1="517.2" y1="645" x2="410" y2="637" class="axis" stroke-width="1"/>
+<text x="410" y="632" class="small ink" text-anchor="middle">Sepolia 9,690</text>
+<line x1="609.4" y1="645" x2="530" y2="637" class="axis" stroke-width="1"/>
+<text x="530" y="632" class="small ink" text-anchor="middle">OP Mainnet 72,277</text>
+<line x1="625.5" y1="645" x2="671.6" y2="637" class="axis" stroke-width="1"/>
+<text x="671.6" y="632" class="small ink" text-anchor="middle">Polygon PoS 102,552</text>
+<line x1="508.2" y1="663" x2="428" y2="672" class="axis" stroke-width="1"/>
+<text x="428" y="686" class="small ink" text-anchor="middle">Base 7,955</text>
+<line x1="561.7" y1="663" x2="530" y2="672" class="axis" stroke-width="1"/>
+<text x="530" y="686" class="small ink" text-anchor="middle">Ethereum 25,558</text>
+<line x1="624.4" y1="663" x2="668" y2="672" class="axis" stroke-width="1"/>
+<text x="668" y="686" class="small ink" text-anchor="middle">Arbitrum One 100,196</text>
+<rect x="338.1" y="646" width="3" height="16" class="muted"><title>Umbra contract, Gnosis: 202</title></rect>
+<rect x="506.7" y="646" width="3" height="16" class="muted"><title>Umbra contract, Base: 7,955</title></rect>
+<rect x="515.7" y="646" width="3" height="16" class="muted"><title>Umbra contract, Sepolia: 9,690</title></rect>
+<rect x="560.2" y="646" width="3" height="16" class="muted"><title>Umbra contract, Ethereum: 25,558</title></rect>
+<rect x="607.9" y="646" width="3" height="16" class="muted"><title>Umbra contract, OP Mainnet: 72,277</title></rect>
+<rect x="622.9" y="646" width="3" height="16" class="muted"><title>Umbra contract, Arbitrum One: 100,196</title></rect>
+<rect x="624" y="646" width="3" height="16" class="ink"><title>Umbra contract, Polygon PoS: 102,552</title></rect>
+<line x1="625.5" y1="420" x2="625.5" y2="127.8" class="axis" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="625.5" cy="147" r="3.5" class="ink"><title>i7-13700K, Umbra on Polygon PoS (102,552): 51.5 s</title></circle>
+<circle cx="625.5" cy="127.8" r="3.5" class="ink"><title>Cortex-A76, Umbra on Polygon PoS (102,552): 179.7 s</title></circle>
+<text x="617.5" y="356" class="label ink" text-anchor="end">Umbra on Polygon PoS</text>
+<text x="617.5" y="374" class="small muted" text-anchor="end">102,552 announcements</text>
+<text x="617.5" y="392" class="small ink" text-anchor="end">i7-13700K: 52 s SDK, 0.87 s native</text>
+<text x="617.5" y="410" class="small ink" text-anchor="end">Cortex-A76: 3.0 min SDK, 5 s native</text>
 </svg>

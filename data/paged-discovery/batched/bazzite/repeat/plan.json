@@ -1,0 +1,434 @@
+[
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 0
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 1
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 2
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 3
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 4
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 5
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 6
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 7
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 8
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 9
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 1,
+    "order": 10
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 11
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 12
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 13
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 14
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 1,
+    "order": 15
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 16
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 17
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 18
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 19
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 20
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 21
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 22
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 23
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 24
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 25
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 26
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 27
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 28
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 29
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 2,
+    "order": 30
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 2,
+    "order": 31
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 32
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 33
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 34
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 35
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 36
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 37
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 38
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 39
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 16,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 40
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 41
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/1000000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 42
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 256,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 43
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 256,
+    "verifyMode": "batched",
+    "repetition": 3,
+    "order": 44
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 64,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 45
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "cold",
+    "pageBlocks": 1,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 46
+  },
+  {
+    "fixtureDir": "~/orca/workspaces/erc5564-scan-benchmark/scan-chart-ticks/work/bench-snap/work/fixtures/100000-sparse",
+    "profile": "public",
+    "scenario": "catchup",
+    "pageBlocks": 16,
+    "verifyMode": "sequential",
+    "repetition": 3,
+    "order": 47
+  }
+]

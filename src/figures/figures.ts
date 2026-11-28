@@ -16,6 +16,57 @@ const fmt = (value: number, digits = 0) =>
 const kilo = (value: number) => `${fmt(value / 1000)}k`;
 const logTick = (d: number) => (d >= 1 ? decadeLabel(d) : String(d));
 
+// A row of ticks, one per real chain, under a log x-axis. Labels alternate above and below the
+// row and are spread apart (dodge) with leader lines, so text never overlaps however the ticks crowd.
+const labelWidth = (s: string) => s.length * 7.2;
+function dodge(want: number[], widths: number[], lo: number, hi: number, gap = 12): number[] {
+  let groups = want.map((c, i) => ({ items: [i], left: c - widths[i]! / 2, width: widths[i]! }));
+  const place = (g: typeof groups[number]) => {
+    let offset = 0;
+    const shifts = g.items.map(i => { const s = want[i]! - offset - widths[i]! / 2; offset += widths[i]! + gap; return s; });
+    g.width = offset - gap;
+    g.left = Math.min(Math.max(shifts.reduce((a, b) => a + b, 0) / shifts.length, lo), hi - g.width);
+  };
+  for (let merged = true; merged;) {
+    merged = false;
+    for (let i = 1; i < groups.length; i++) {
+      const a = groups[i - 1]!, b = groups[i]!;
+      if (a.left + a.width + gap > b.left) {
+        groups.splice(i - 1, 2, { items: [...a.items, ...b.items], left: 0, width: 0 });
+        place(groups[i - 1]!);
+        merged = true;
+        break;
+      }
+    }
+  }
+  const centers: number[] = [];
+  for (const g of groups) {
+    let at = g.left;
+    for (const i of g.items) { centers[i] = at + widths[i]! / 2; at += widths[i]! + gap; }
+  }
+  return centers;
+}
+function tickRow(out: string[], scale: (v: number) => number, W: number, top: number, label: string,
+  items: [name: string, value: number, shown: string, tip?: string][], highlight?: string) {
+  const sorted = [...items].sort((a, b) => a[1] - b[1]);
+  const rowY = top + 38;
+  out.push(text(20, top, label, 'small muted'));
+  out.push(rect(scale(sorted[0]![1]), rowY - 7, scale(sorted.at(-1)![1]) - scale(sorted[0]![1]), 14, 'band', undefined, ' rx="3"'));
+  for (const side of [0, 1]) {
+    const picked = sorted.filter((_, i) => i % 2 === side);
+    const names = picked.map(([name, , shown]) => `${name} ${shown}`);
+    const centers = dodge(picked.map(([, v]) => scale(v)), names.map(labelWidth), 20, W - 20);
+    const labelY = side === 0 ? rowY - 22 : rowY + 32;
+    picked.forEach(([, v], i) => {
+      out.push(line(scale(v), side === 0 ? rowY - 9 : rowY + 9, centers[i]!, side === 0 ? labelY + 5 : labelY - 14, 'axis', ' stroke-width="1"'));
+      out.push(text(centers[i]!, labelY, names[i]!, 'small ink', 'middle'));
+    });
+  }
+  for (const [name, v, shown, tip] of sorted) {
+    out.push(rect(scale(v) - 1.5, rowY - 8, 3, 16, name === highlight ? 'ink' : 'muted', tip ?? `${label}, ${name}: ${shown}`));
+  }
+}
+
 // ---- 1. scan time against real announcement volume ----------------------------
 
 function scanVsVolume(): string {
@@ -30,6 +81,9 @@ function scanVsVolume(): string {
   const out: string[] = [
     text(20, 30, 'Scan time vs announcements', 'title ink'),
     text(20, 54, 'seconds, log scale', 'small muted'),
+    line(220, 49, 244, 49, 'axis', ' stroke-width="2"'), text(252, 54, 'measured, 100k–1M', 'small muted'),
+    line(400, 49, 424, 49, 'axis', ' stroke-width="2" stroke-dasharray="5 4"'),
+    text(432, 54, 'dashed, dotted: extrapolated per announcement', 'small muted'),
   ];
   for (const d of x.decades.filter((_, i) => i % 2 === 0)) {
     out.push(line(x.scale(d), T, x.scale(d), B, 'grid'));
@@ -80,18 +134,30 @@ function scanVsVolume(): string {
     out.push(text(L + 52, ky, label, 'label ink'));
   });
 
-  // Rugs: each chain's full history, canonical Announcer and Umbra.
-  const rug = (rowY: number, label: string, counts: [string, number][]) => {
-    const values = counts.map(([, n]) => n);
-    const lo = Math.min(...values), hi = Math.max(...values);
-    out.push(rect(x.scale(lo), rowY - 7, x.scale(hi) - x.scale(lo), 14, 'band', undefined, ' rx="3"'));
-    for (const [chain, n] of counts) out.push(rect(x.scale(n) - 1.5, rowY - 8, 3, 16, 'muted', `${chain}: ${fmt(n)} announcements`));
-    out.push(text(L - 8, rowY + 5, label, 'small ink', 'end'));
-  };
+  // Ticks: each real chain's full announcement history, read against the x-axis as a full-history scan.
+  const LARGEST = 'Polygon PoS';
+  out.push(text(20, B + 72, 'Real chains, total announcements to date', 'label ink'));
   // ERC-5564 counts follow the weekly refresh; Umbra stays at the 2026-11-26 recording.
-  rug(B + 70, 'ERC-5564', chains.map(c => [CHAIN_LABELS[c.chain]!, chainLatest(c.chain).count]));
-  rug(B + 96, 'Umbra', chains.filter(c => c.umbra !== null).map(c => [CHAIN_LABELS[c.chain]!, c.umbra!]));
-  return svg(W, B + 116, 'Scan time against announcement count, log-log', out);
+  tickRow(out, x.scale, W, B + 98, 'ERC-5564 Announcer', chains.map(c => { const n = chainLatest(c.chain).count; return [CHAIN_LABELS[c.chain]!, n, fmt(n)]; }));
+  tickRow(out, x.scale, W, B + 196, 'Umbra contract',
+    chains.filter(c => c.umbra !== null).map(c => [CHAIN_LABELS[c.chain]!, c.umbra!, fmt(c.umbra!)]), LARGEST);
+
+  // The largest real history, Umbra on Polygon PoS, read off each host's line.
+  const largest = chains.find(c => CHAIN_LABELS[c.chain] === LARGEST)!.umbra!;
+  const lx = x.scale(largest);
+  const onLine = (h: typeof hosts[number]) => {
+    const start = (h.before + h.after) / 2;
+    return start * (h.million / start) ** Math.log10(largest / 1e5);
+  };
+  const times = hosts.map(onLine);
+  out.push(line(lx, B, lx, y.scale(Math.max(...times)), 'axis', ' stroke-width="1.5" stroke-dasharray="3 3"'));
+  const duration = (s: number) => (s < 1 ? `${fmt(s, 2)} s` : s < 120 ? `${fmt(s)} s` : `${fmt(s / 60, 1)} min`);
+  hosts.forEach((h, i) => out.push(circle(lx, y.scale(times[i]!), 3.5, 'ink', `${series[i]![1]}, Umbra on ${LARGEST} (${fmt(largest)}): ${fmt(times[i]!, 1)} s`)));
+  out.push(text(lx - 8, B - 64, `Umbra on ${LARGEST}`, 'label ink', 'end'));
+  out.push(text(lx - 8, B - 46, `${fmt(largest)} announcements`, 'small muted', 'end'));
+  hosts.forEach((_, i) => out.push(text(lx - 8, B - 28 + i * 18,
+    `${series[i]![1]}: ${duration(times[i]!)} SDK, ${duration(largest * headlines[i]!.best.seconds)} ${headlines[i]!.best.engine}`, 'small ink', 'end')));
+  return svg(W, B + 276, 'Scan time against announcement count, log-log, with each real chain\'s full history', out);
 }
 
 // ---- 2. cold-start requests per chain by strategy -----------------------------
@@ -533,13 +599,10 @@ function scanBudget(): string {
   out.push(circle(x.scale(1e6), y.scale(1e6 * fast), 4, 's2 hollow', `1M/day on the A76, libsecp256k1: ${fmt(1e6 * fast / 60, 1)} min CPU`, ' stroke-width="2"'));
   // Real ERC-5564 rates per chain.
   const chains = chainVolume().map(c => [CHAIN_LABELS[c.chain]!, perMonth(bestRetrieval(c.chain)) / 30.44] as [string, number]);
-  const lo = Math.min(...chains.map(([, v]) => v)), hi = Math.max(...chains.map(([, v]) => v));
-  const rowY = B + 70;
-  out.push(rect(x.scale(lo), rowY - 7, x.scale(hi) - x.scale(lo), 14, 'band', undefined, ' rx="3"'));
-  for (const [chain, v] of chains) out.push(rect(x.scale(v) - 1.5, rowY - 8, 3, 16, 'muted', `${chain}: ${fmt(v, 3)} announcements/day; A76 CPU ${fmt(v * a76 * 1000, 1)} ms/day`));
-  out.push(text(L - 8, rowY + 5, 'ERC-5564', 'small ink', 'end'));
-  out.push(text(x.scale(hi) + 10, rowY + 5, 'real chains', 'small muted'));
-  return svg(W, rowY + 24, 'CPU per day to scan announcements against real chain rates and a phone budget', out);
+  out.push(text(20, B + 72, 'Real chains, average announcements per day to date', 'label ink'));
+  tickRow(out, x.scale, W, B + 98, 'ERC-5564 Announcer', chains.map(([chain, v]) =>
+    [chain, v, fmt(v, v < 0.1 ? 3 : 2), `${chain}: ${fmt(v, 3)} announcements/day; A76 CPU ${fmt(v * a76 * 1000, 1)} ms/day`]));
+  return svg(W, B + 180, 'CPU per day to scan announcements against real chain rates and a phone budget', out);
 }
 
 // ---- writer -------------------------------------------------------------------

@@ -61,7 +61,7 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | --- | --- |
 | Chain volume | ≤4 requests/s |
 | RPC recovery | ≥270 ms between request starts |
-| Browser-discovery reference, shared feed | ≥275 ms between request starts |
+| Browser-discovery reference, shared feed, spam cost, omission cause, freshness, real announcements | ≥275 ms between request starts |
 | Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |
 
 ### Weekly refresh
@@ -191,6 +191,19 @@ After the timers stop, each sample checks its result and persisted cache against
 | `HOST_GATE`, `ALLOW_BUSY_HOST` | Enable the host gate (default for `repeat-bazzite*`), or run anyway and log the override |
 | `GATE_MIN_AVAILABLE_GIB`, `GATE_MAX_SWAP_PAGES_PER_S`, `GATE_MAX_PSI_AVG60` | Defaults 8 GiB, 100 pages/s, PSI some avg60 1.0 |
 
+## Spam cost
+
+`bun run spam-cost` writes `data/spam-cost/<chain>.json` and `prices.json`. Nothing is signed or sent.
+
+| Quantity | Source |
+| --- | --- |
+| Direct gas | `eth_estimateGas` of `announce`, 33-byte ephemeral key, 1-byte metadata |
+| Batched gas | `eth_estimateGas` with a state override: a loop contract forwarding the call 1 and 101 times; marginal gas plus the fixed cost spread over 1,000 |
+| Fee per gas | Median base fee and median 10th-percentile tip, last 1,024 blocks (`eth_feeHistory`) |
+| L1 fee | OP Mainnet, Base: `GasPriceOracle.getL1Fee` of one direct call, spread over 1,000. Arbitrum: included in `eth_estimateGas` |
+| Block gas | Latest `gasLimit` × blocks per day. Not a cap on Arbitrum |
+| Price | One CoinGecko quote |
+
 ## Commands
 
 Runs write under ignored `results/` or `work/` and exit nonzero on an oracle miss. After changing `data/`, regenerate figures and tables. CI fails on stale output.
@@ -210,6 +223,11 @@ bun run tables
 | `src/chain-volume/` | Keyless endpoint probe, adaptive retriever, indexer clients, report |
 | `src/browser-discovery/`, `src/rpc-recovery/` | Browser harnesses |
 | `src/shared-feed/` | Feed builder, benchmark, verifier and format search |
+| `src/spam-cost/` | Read-only gas, fee and price probe for spam cost |
+| `src/freshness/` | Header and tail sampler; hybrid checkpoint logic |
+| `src/real-announcements/` | Raw-log fetch and engine scan over real announcements |
+| `src/omission-cause/` | Per-provider queries about known omitted announcements |
+| `src/phone-bench/` | Phone bench page build, server and result recorder |
 | `src/figures/` | `bun run figures` and `bun run tables`: README figures and the generated result tables, from `data/` |
 | `scripts/` | `paged-discovery.sh` and `scan-engines.sh`, the host runners |
 | `test/` | `bun test` suites and recorded fixtures |

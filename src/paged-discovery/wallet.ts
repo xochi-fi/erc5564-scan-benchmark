@@ -68,6 +68,32 @@ export class RpcClient {
     const parseMs = performance.now() - fetched;
     return { result: parsed.data, requestBodyBytes: body.byteLength, responseBodyBytes: bytes.byteLength, fetchMs: fetched - start, parseMs };
   }
+
+  /** One JSON-RPC batch request: every call in one round trip. Results come back in call order. */
+  async batch(calls: { method: string; params: unknown[]; schema: z.ZodType<unknown> }[]): Promise<RpcCallResult<unknown[]>> {
+    const ids = calls.map(() => this.nextId++);
+    const body = encoder.encode(JSON.stringify(calls.map((c, i) => ({ jsonrpc: '2.0', id: ids[i], method: c.method, params: c.params }))));
+    const start = performance.now();
+    const response = await fetch(this.url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    const fetched = performance.now();
+    if (!response.ok) throw new Error(`batch: HTTP ${response.status}: ${decoder.decode(bytes).slice(0, 200)}`);
+    const envelopes = z.array(z.object({
+      jsonrpc: z.literal('2.0'), id: z.number(), result: z.unknown().optional(),
+      error: z.object({ code: z.number(), message: z.string() }).passthrough().optional(),
+    }).passthrough()).parse(JSON.parse(decoder.decode(bytes)));
+    // Servers may reorder batch responses; match by id.
+    const byId = new Map(envelopes.map(e => [e.id, e]));
+    const result = calls.map((c, i) => {
+      const envelope = byId.get(ids[i]!);
+      if (envelope === undefined) throw new Error(`batch: no response for ${c.method} id ${ids[i]}`);
+      if (envelope.error !== undefined) throw new Error(`${c.method}: RPC error ${envelope.error.code}: ${envelope.error.message}`);
+      const parsed = c.schema.safeParse(envelope.result);
+      if (!parsed.success) throw new Error(`${c.method}: unexpected result shape`, { cause: parsed.error });
+      return parsed.data;
+    });
+    return { result, requestBodyBytes: body.byteLength, responseBodyBytes: bytes.byteLength, fetchMs: fetched - start, parseMs: performance.now() - fetched };
+  }
 }
 
 const quantitySchema = z.string().regex(/^0x[0-9a-fA-F]+$/);
@@ -105,7 +131,43 @@ export async function verifyCandidate(client: RpcClient, announcement: Announcem
   const receipt = await client.call('eth_getTransactionReceipt', [announcement.transactionHash], receiptSchema);
   const balance = await client.call('eth_getBalance', [announcement.stealthAddress, 'latest'], quantitySchema);
   const localStart = performance.now();
-  const value = receipt.result;
+  const match = checkCandidate(announcement, receipt.result, balance.result);
+  return {
+    match,
+    networkMs: receipt.fetchMs + balance.fetchMs,
+    localMs: performance.now() - localStart + receipt.parseMs + balance.parseMs,
+    requestBodyBytes: receipt.requestBodyBytes + balance.requestBodyBytes,
+    responseBodyBytes: receipt.responseBodyBytes + balance.responseBodyBytes,
+  };
+}
+
+/** Same checks as verifyCandidate for every candidate of a page, in one JSON-RPC batch round trip. */
+export async function verifyCandidatesBatched(client: RpcClient, announcements: AnnouncementLog[]): Promise<{ matches: CacheMatch[] } & Omit<VerificationResult, 'match'>> {
+  const calls = announcements.flatMap(a => {
+    if (a.transactionHash === null) throw new Error('candidate announcement lacks an on-chain identity');
+    return [
+      { method: 'eth_getTransactionReceipt', params: [a.transactionHash], schema: receiptSchema as z.ZodType<unknown> },
+      { method: 'eth_getBalance', params: [a.stealthAddress, 'latest'], schema: quantitySchema as z.ZodType<unknown> },
+    ];
+  });
+  const batch = await client.batch(calls);
+  const localStart = performance.now();
+  const matches = announcements.map((a, i) =>
+    checkCandidate(a, batch.result[2 * i] as z.infer<typeof receiptSchema>, batch.result[2 * i + 1] as string));
+  return {
+    matches,
+    networkMs: batch.fetchMs,
+    localMs: performance.now() - localStart + batch.parseMs,
+    requestBodyBytes: batch.requestBodyBytes,
+    responseBodyBytes: batch.responseBodyBytes,
+  };
+}
+
+/** Receipt status 1, same block, this exact log in the receipt, and a balance covering the announced amount. */
+function checkCandidate(announcement: AnnouncementLog, value: z.infer<typeof receiptSchema>, balanceHex: string): CacheMatch {
+  if (announcement.transactionHash === null || announcement.logIndex === null || announcement.blockHash === null || announcement.blockNumber === null) {
+    throw new Error('candidate announcement lacks an on-chain identity');
+  }
   if (value === null) throw new Error(`no receipt for ${announcement.transactionHash}`);
   if (value.status !== '0x1') throw new Error(`receipt status ${value.status} for ${announcement.transactionHash}`);
   if (value.blockHash.toLowerCase() !== announcement.blockHash.toLowerCase() || BigInt(value.blockNumber) !== announcement.blockNumber) {
@@ -119,22 +181,15 @@ export async function verifyCandidate(client: RpcClient, announcement: Announcem
     log.topics.every((topic, i) => topic.toLowerCase() === announcement.topics[i]?.toLowerCase()));
   if (!included) throw new Error(`announcement log not found in receipt ${announcement.transactionHash}`);
   const amount = ethAmountFromMetadata(announcement.metadata);
-  const held = BigInt(balance.result);
+  const held = BigInt(balanceHex);
   if (held < amount) throw new Error(`stealth address ${announcement.stealthAddress} holds ${held}, announced ${amount}`);
-  const localMs = performance.now() - localStart + receipt.parseMs + balance.parseMs;
   return {
-    match: {
-      identity: announcementIdentity(announcement),
-      blockNumber: Number(announcement.blockNumber),
-      transactionHash: announcement.transactionHash,
-      logIndex: announcement.logIndex,
-      stealthAddress: announcement.stealthAddress,
-      amountWei: amount.toString(),
-    },
-    networkMs: receipt.fetchMs + balance.fetchMs,
-    localMs,
-    requestBodyBytes: receipt.requestBodyBytes + balance.requestBodyBytes,
-    responseBodyBytes: receipt.responseBodyBytes + balance.responseBodyBytes,
+    identity: announcementIdentity(announcement),
+    blockNumber: Number(announcement.blockNumber),
+    transactionHash: announcement.transactionHash,
+    logIndex: announcement.logIndex,
+    stealthAddress: announcement.stealthAddress,
+    amountWei: amount.toString(),
   };
 }
 
@@ -163,6 +218,7 @@ export interface SyncParams {
   startBlock: number;
   cachePath: string;
   cache: ScanCache | null;
+  verifyMode?: 'sequential' | 'batched';
 }
 
 export interface SyncResult {
@@ -199,7 +255,7 @@ export async function syncWallet(params: SyncParams): Promise<SyncResult> {
   let firstCandidateMs: number | null = null;
   let firstVerifiedMs: number | null = null;
   const bytes = { getLogsRequestBody: head.requestBodyBytes, getLogsResponseBody: head.responseBodyBytes, verifyRequestBody: 0, verifyResponseBody: 0, maxPageResponseBody: 0 };
-  const requests = { getLogs: 0, blockNumber: 1, receipts: 0, balances: 0 };
+  const requests = { getLogs: 0, blockNumber: 1, receipts: 0, balances: 0, verifyRoundTrips: 0 };
 
   for (let pageStart = fromBlock; pageStart <= headBlock; pageStart += pageBlocks) {
     const pageEnd = Math.min(pageStart + pageBlocks - 1, headBlock);
@@ -218,10 +274,24 @@ export async function syncWallet(params: SyncParams): Promise<SyncResult> {
     const pageScanMs = performance.now() - scanStart;
     if (candidates.length > 0 && firstCandidateMs === null) firstCandidateMs = performance.now() - t0;
     let pageVerifyMs = 0;
-    for (const candidate of candidates) {
+    if (params.verifyMode === 'batched' && candidates.length > 0) {
+      const verified = await verifyCandidatesBatched(client, candidates);
+      requests.receipts += candidates.length;
+      requests.balances += candidates.length;
+      requests.verifyRoundTrips += 1;
+      verifyNetworkMs += verified.networkMs;
+      verifyLocalMs += verified.localMs;
+      pageVerifyMs += verified.networkMs + verified.localMs;
+      bytes.verifyRequestBody += verified.requestBodyBytes;
+      bytes.verifyResponseBody += verified.responseBodyBytes;
+      newMatches.push(...verified.matches);
+      cache.matches.push(...verified.matches);
+      if (firstVerifiedMs === null) firstVerifiedMs = performance.now() - t0;
+    } else for (const candidate of candidates) {
       const verified = await verifyCandidate(client, candidate);
       requests.receipts += 1;
       requests.balances += 1;
+      requests.verifyRoundTrips += 2;
       verifyNetworkMs += verified.networkMs;
       verifyLocalMs += verified.localMs;
       pageVerifyMs += verified.networkMs + verified.localMs;
@@ -359,6 +429,7 @@ export async function runWallet(options: WalletOptions): Promise<WalletSample> {
     startBlock: options.startBlock,
     cachePath: options.cachePath,
     cache,
+    verifyMode: options.verifyMode,
   });
   const cpu = process.cpuUsage(cpuStart);
   const processLifetimePeakRssBytes = process.resourceUsage().maxRSS * 1024;
@@ -381,6 +452,7 @@ export async function runWallet(options: WalletOptions): Promise<WalletSample> {
     // kept: recorded evidence depends on it
     kind: 'phase2-wallet',
     scenario: options.scenario,
+    verifyMode: options.verifyMode,
     engine: options.engine,
     pageBlocks: options.pageBlocks,
     pageAnnouncements: options.pageBlocks * 128,

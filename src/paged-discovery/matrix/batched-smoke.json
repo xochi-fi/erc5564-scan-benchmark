@@ -1,0 +1,6 @@
+{
+  "description": "Two-minute check of sequential against batched verification.",
+  "entries": [
+    { "fixture": "10000-sparse", "scenarios": ["cold", "catchup"], "profiles": ["public"], "pages": [4, 64], "verifyModes": ["sequential", "batched"] }
+  ]
+}

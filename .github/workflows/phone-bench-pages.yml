@@ -1,0 +1,38 @@
+name: Phone bench page
+
+# Publishes the phone bench page to GitHub Pages from main. Needs Settings → Pages → Source: GitHub Actions,
+# and the repository variable PHONE_BENCH_PAGES=true; until both are set this does nothing.
+on:
+  push:
+    branches: [main]
+    paths: ['src/phone-bench/**', 'src/shared/**', 'bun.lock']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: vars.PHONE_BENCH_PAGES == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run phone-bench:build _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

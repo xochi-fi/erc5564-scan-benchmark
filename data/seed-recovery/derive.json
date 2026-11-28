@@ -1,0 +1,16 @@
+{"mnemonicSha256":"d63972c868e09556e3eabb679c36aec91f4c6a3d1c2ad33faa0cca0253757c26","rows":[
+{"wallet":"ScopeLift SDK example","variant":"Four ECDSA libraries, two runs each, chain 1","derivations":8,"distinctKeys":1,"accepted":8,"findsPayment":true},
+{"wallet":"ScopeLift SDK example","variant":"Seven chains","derivations":7,"distinctKeys":7,"accepted":7,"findsPayment":false},
+{"wallet":"Umbra","variant":"Four ECDSA libraries, two runs each, chain 1","derivations":8,"distinctKeys":1,"accepted":8,"findsPayment":true},
+{"wallet":"Umbra","variant":"Seven chains","derivations":7,"distinctKeys":7,"accepted":7,"findsPayment":false},
+{"wallet":"Fluidkey (PIN 0000)","variant":"Four ECDSA libraries, two runs each, chain 1","derivations":8,"distinctKeys":1,"accepted":8,"findsPayment":true},
+{"wallet":"Fluidkey (PIN 0000)","variant":"Seven chains","derivations":7,"distinctKeys":1,"accepted":7,"findsPayment":true},
+{"wallet":"kohaku-cli (BIP-32 paths)","variant":"Seven chains","derivations":7,"distinctKeys":1,"accepted":7,"findsPayment":true},
+{"wallet":"Fluidkey (PIN 0000)","variant":"PIN 1234","derivations":1,"distinctKeys":1,"accepted":1,"findsPayment":false},
+{"wallet":"ScopeLift SDK example","variant":"v as 0/1 instead of 27/28","derivations":1,"distinctKeys":1,"accepted":1,"findsPayment":true},
+{"wallet":"ScopeLift SDK example","variant":"Same signature with high s, also valid","derivations":1,"distinctKeys":1,"accepted":1,"findsPayment":false},
+{"wallet":"ScopeLift SDK example","variant":"Hedged nonce (viem setSignEntropy), two runs","derivations":2,"distinctKeys":2,"accepted":2,"findsPayment":false},
+{"wallet":"ScopeLift SDK example","variant":"Second account of the seed","derivations":1,"distinctKeys":1,"accepted":1,"findsPayment":false},
+{"wallet":"ScopeLift SDK example","variant":"P-256 passkey signer, two runs","derivations":2,"distinctKeys":2,"accepted":2,"findsPayment":false},
+{"wallet":"ScopeLift SDK example","variant":"Two-owner Safe signature, 130 bytes","derivations":1,"distinctKeys":0,"accepted":0,"findsPayment":false}
+]}

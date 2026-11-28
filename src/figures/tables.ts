@@ -7,6 +7,7 @@ import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
   spamCost, omissionCause, freshness, realScan, phoneResults, phoneProxies, realTiming,
+  seedDerive, seedRecovery,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -475,6 +476,40 @@ function phoneTable() {
     `${fixed(r.count, 0)}${r.scanMs < 2000 ? ` (${fixed(r.scanMs / 1000, 2)} s run)` : ''}`, fixed(r.msPerAnnouncement, r.msPerAnnouncement < 0.1 ? 3 : 2), r.source ?? '-']));
 }
 
+// ---- seed recovery ---------------------------------------------------------------
+
+function seedRecoveryTable() {
+  const derive = seedDerive().rows, chains = seedRecovery();
+  const d = (wallet: string, variant: string) => derive.find(r => r.wallet.startsWith(wallet) && r.variant.startsWith(variant))!;
+  const sum = (f: (c: Record<string, any>) => number) => chains.reduce((n, c) => n + f(c), 0);
+  const kB = (bytes: number) => `${fixed(bytes / 1000, 0)} kB`;
+  const s = (ms: number) => `${fixed(ms / 1000, ms < 10_000 ? 1 : 0)} s`;
+  const meta = (k: string) => sum(c => c.assets.metadata[k] ?? 0);
+  const scheme1 = sum(c => Object.values(c.assets.metadata as Record<string, number>).reduce((a, b) => a + b, 0));
+  const t = (c: Record<string, any>) => c.assets.transfers;
+  const partial = chains.filter(c => !t(c).complete);
+  const keysOn = (w: string) => { const n = d(w, 'Seven').distinctKeys; return `${n} key pair${n === 1 ? '' : 's'} on 7 chains`; };
+  const sig = [d('ScopeLift', 'Four'), d('ScopeLift', 'v as'), d('ScopeLift', 'Same signature'), d('ScopeLift', 'Hedged'), d('ScopeLift', 'P-256'), d('ScopeLift', 'Two-owner')];
+  return table(['Step', 'From seed alone', 'Cost', 'What breaks it'], ['l', 'l', 'l', 'l'], [
+    ['Keys: ScopeLift SDK example', 'depends', 'One signature per chain', `${keysOn('ScopeLift')}: the message names the chain`],
+    ['Keys: Umbra', 'depends', 'One signature per chain', `${keysOn('Umbra')}; sha256 where the SDK uses keccak256, so the same signature gives other keys`],
+    ['Keys: Fluidkey', 'no', 'One signature', `${keysOn('Fluidkey')}, but the message holds a PIN; PIN 1234 gives other keys`],
+    ['Keys: kohaku-cli', 'yes', 'BIP-32, no signature', `${keysOn('kohaku')}; the path must be known`],
+    ['Signature', 'depends', '-', `${sig[0]!.derivations} signatures from four libraries give ${sig[0]!.distinctKeys} key pair; v framing is ignored. High s, a hedged nonce or a passkey signer give new keys${sig[3]!.distinctKeys > 1 ? ' each time' : ''}; a 130-byte Safe signature is rejected`],
+    ['Announcements: keyless RPC', 'depends', '[Chain volume](chain-volume.md)', 'Range caps, budgets and [silent omissions](rpc-recovery.md)'],
+    ['Announcements: both feeds', 'yes', `${sum(c => c.feed.requests)} GETs, ${kB(sum(c => c.feed.bytes))}, ${s(Math.max(...chains.map(c => c.feed.fetchMs)))} for the slowest chain`, 'Finalized blocks only ([freshness](freshness.md))'],
+    ['Scan, SDK', 'yes', `${s(sum(c => c.feed.scanMs))} for ${fixed(sum(c => c.feed.announcements), 0)} announcements`, 'Other scheme ids ([real announcements](real-announcements.md))'],
+    ['Native balances', 'yes', `${fixed(sum(c => c.assets.native.calls), 0)} addresses in ${sum(c => c.assets.native.requests)} Multicall3 requests; ${fixed(sum(c => c.assets.native.nonzero), 0)} hold a balance`, 'Each request shows the provider up to 100 addresses together'],
+    ['Tokens named in announcements', 'depends', `${sum(c => c.assets.announcedTokens.requests)} requests`, `${fixed(meta('token') + meta('token, 54-byte layout'), 0)} of ${fixed(scheme1, 0)} scheme-1 announcements name a token (${fixed(meta('token'), 0)} in the ERC-5564 layout, ${fixed(meta('token, 54-byte layout'), 0)} in a 54-byte one), ${fixed(meta('native'), 0)} name the native coin, ${fixed(meta('other layout'), 0)} use other layouts and ${fixed(meta('no asset field'), 0)} name no asset`],
+    ['Tokens never announced', 'depends', `ERC-20, ERC-721 and ERC-1155 Transfer logs to the addresses: ${fixed(sum(c => t(c).requests), 0)} requests, ${s(sum(c => t(c).ms))}${partial.map(c => {
+      const spans = Math.ceil((t(c).to - t(c).from + 1) / t(c).finalSpan);
+      return `; ${CHAIN_LABELS[c.chain]} reached ${fixed(100 * (t(c).coveredTo - t(c).from + 1) / (t(c).to - t(c).from + 1), 2)}% at ${fixed(t(c).finalSpan, 0)} blocks per request, so a full scan needs ${fixed(spans * 2 * Math.ceil(c.assets.stealthAddresses / 50), 0)} requests, ${fixed(spans * 2, 0)} for a single address`;
+    }).join('')}`,
+      `${fixed(sum(c => t(c).addressesWithUnannounced), 0)} of ${fixed(sum(c => c.assets.stealthAddresses), 0)} addresses received a token that no parsed announcement names; the filter shows the provider every address`],
+    ['Payment never announced', 'no', '-', 'No ephemeral key to scan. Fluidkey derives ephemeral keys from the viewing key, so its wallet can enumerate them (read, not run)'],
+  ]);
+}
+
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
@@ -497,6 +532,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'real-scan': ['docs/real-announcements.md', realScanTable],
   'real-timing': ['docs/real-announcements.md', realTimingTable],
   feed: ['docs/feed-format.md', feedBuildTable],
+  'seed-recovery': ['docs/seed-recovery.md', seedRecoveryTable],
 };
 
 export function renderTables(): Map<string, string> {

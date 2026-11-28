@@ -1,10 +1,9 @@
-// Checks a remote-feed evidence file and prints its summary.
+// Checks a remote-feed samples.jsonl and prints its summary.
 import { strict as assert } from 'node:assert';
 import { scope } from '../shared/base-windows.ts';
 import { digest, loadReference, warmPage } from './feed.ts';
+import { readSamples, type Request } from './remote-format.ts';
 
-type Request = { source: string; operation: string; status: number; responseBytes: number; wireBytes: number | null;
-  encoding: string | null; cache: string | null; servedBy?: string | null; fetchMs: number };
 type Sample = {
   initialNext: number; initialBlock: number; next: number; block: number; stop: string | null; elapsedMs: number;
   catchUpMs: number | null; scanMs: number; verificationMs: number; firstSyntheticMatchMs: number | null;
@@ -13,8 +12,9 @@ type Sample = {
   thermal: { maxC: number | null; waitMs: number };
 };
 const path = Bun.argv[2];
-if (!path) throw new Error('Usage: bun run shared-feed:remote-verify EVIDENCE_JSON');
-const evidence = await Bun.file(path).json() as {
+if (!path) throw new Error('Usage: bun run shared-feed:remote-verify SAMPLES_JSONL');
+const { header, samples: raw } = readSamples(await Bun.file(path).text());
+const evidence = { ...header, samples: raw } as unknown as {
   host: string; bun: string; cpusAllowed: string | null; cooldownC: number; feedId: string; urls: string[];
   rounds?: number; sharedHost?: string | null; samples: Record<string, Sample>;
 };
@@ -54,13 +54,12 @@ function check(label: string, initial: number, next: number) {
   }
   for (const duration of [sample.scanMs, sample.verificationMs]) assert.ok(duration >= 0 && duration <= sample.elapsedMs, label);
   const sum = (rows: Request[], key: 'responseBytes' | 'fetchMs') => rows.reduce((total, row) => total + row[key], 0);
-  const compressed = sample.requests.filter(row => row.encoding !== null);
   return {
     expected: feed.primary.slice(initial, next).reduce((total, page) => total + page.rows.length, 0),
     observed: sample.pages.slice(initial).reduce((total, page) => total + page.count, 0),
     posts: 0, gets: sample.requests.length, requestBytes: 0, responseBytes: sum(sample.requests, 'responseBytes'),
     wireBytes: sample.requests.every(row => row.wireBytes !== null) ? sample.requests.reduce((total, row) => total + row.wireBytes!, 0) : null,
-    compressed: compressed.length, cacheHits: sample.requests.filter(row => /HIT/i.test(row.cache ?? '')).length,
+    cacheHits: sample.requests.filter(row => /HIT/i.test(row.cache ?? '')).length,
     feed1PageMs: medianOf(sample.requests.filter(row => row.source === 'feed-1' && row.operation === 'page').map(row => row.fetchMs)),
     feed2PageMs: medianOf(sample.requests.filter(row => row.source === 'feed-2' && row.operation === 'page').map(row => row.fetchMs)),
     fetchMs: sum(sample.requests, 'fetchMs'), scanMs: sample.scanMs, verificationMs: sample.verificationMs,

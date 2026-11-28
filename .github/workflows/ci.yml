@@ -22,7 +22,7 @@ jobs:
       - name: Recorded evidence verifies offline
         run: |
           bun run shared-feed:verify data/shared-feed/evidence.json
-          for f in data/shared-feed/remote/*/*evidence.json; do bun run shared-feed:remote-verify "$f" > /dev/null; done
+          for f in data/shared-feed/remote/*/samples.jsonl; do bun run shared-feed:remote-verify "$f" > /dev/null; done
           bun run rpc-recovery:verify data/rpc-recovery/reference.json data/rpc-recovery
       - name: Generated figures and tables are up to date
         run: |

@@ -6,7 +6,7 @@ A shared feed. Two feeds recover every announcement in milliseconds, and OMR cos
 
 ## Decision
 
-Clients fetch every finalized [feed](feed-format.md) page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
+Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
 
 | Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
 | --- | ---: | ---: | ---: | --- |
@@ -58,13 +58,13 @@ A keep/revert search over [`tune.ts`](../src/shared-feed/tune.ts) cut one feed's
 
 ## Method
 
-Both paths scan the [RPC-recovery windows](rpc-recovery.md#windows) in 17 pages of four; warm catch-up starts after window 32. The remote feeds are those pages on raw.githubusercontent.com and jsDelivr (commit `7b78192`), a fresh process per run. RPC without pacing drops the client's ≥275 ms start-to-start wait from the recorded samples.
+Both paths scan the [RPC-recovery windows](rpc-recovery.md#windows) in 17 pages of four; warm catch-up starts after window 32. The remote feeds are `data/shared-feed/static/`, served by raw.githubusercontent.com and jsDelivr from commit `7b78192`; the files stay in the repo because those URLs read them from a commit. A fresh process per run. RPC without pacing drops the client's ≥275 ms start-to-start wait from the recorded samples.
 
 ```sh
 bun run shared-feed results/shared-feed-replay                       # taskset -c 4-7 on a Turing node
 bun run shared-feed:verify data/shared-feed/evidence.json
 bun run shared-feed:static
 ROUNDS=9 bun run shared-feed:remote results/remote https://raw.githubusercontent.com/xochi-fi/erc5564-scan-benchmark/COMMIT/data/shared-feed/static/tenderly/ https://cdn.jsdelivr.net/gh/xochi-fi/erc5564-scan-benchmark@COMMIT/data/shared-feed/static/sentio/
-bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/evidence.json
+bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/samples.jsonl
 taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9
 ```

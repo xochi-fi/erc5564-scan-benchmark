@@ -7,11 +7,8 @@ import { decodeAnnouncements, type RawLog } from '../shared/raw-logs.ts';
 import { scope } from '../shared/base-windows.ts';
 import { waitForCooldown } from '../shared/host.ts';
 import { compact, digest, expand, loadReference, warmPage, type Feed } from './feed.ts';
+import { writeSamples, type Request } from './remote-format.ts';
 
-type Request = {
-  source: string; operation: string; status: number; responseBytes: number; wireBytes: number | null;
-  encoding: string | null; cache: string | null; servedBy: string | null; age: string | null; fetchMs: number;
-};
 type PageSummary = { index: number; count: number; digest: string; syntheticMatches: number; canonicalMatches: number };
 type Checkpoint = { id: string; next: number; block: number; pages: PageSummary[] };
 
@@ -35,9 +32,9 @@ async function child(output: string, name: string, limit: number, fetchMode: str
     const length = response.headers.get('content-length');
     requests.push({
       source: `feed-${source + 1}`, operation, status: response.status, responseBytes: bytes.byteLength,
-      wireBytes: length === null ? null : Number(length), encoding: response.headers.get('content-encoding'),
+      wireBytes: length === null ? null : Number(length),
       cache: response.headers.get('x-cache') ?? response.headers.get('cf-cache-status'),
-      servedBy: response.headers.get('x-served-by') ?? response.headers.get('cf-ray'), age: response.headers.get('age'),
+      servedBy: response.headers.get('x-served-by') ?? response.headers.get('cf-ray'),
       fetchMs: performance.now() - start,
     });
     if (!response.ok) throw new Error(`feed-${source + 1} ${operation} HTTP ${response.status}`);
@@ -142,7 +139,8 @@ if (command === 'child') {
     if (await proc.exited !== 0) throw new Error(`${label} failed`);
     const result = { ...JSON.parse(text), thermal };
     evidence.samples[label] = result;
-    await Bun.write(`${output}/evidence.json`, JSON.stringify(evidence, null, 2) + '\n');
+    const { samples, ...header } = evidence;
+    await Bun.write(`${output}/samples.jsonl`, writeSamples(header, samples as never));
     console.log(label, result.next, result.stop ?? result.elapsedMs.toFixed(1));
     if (result.stop) throw new Error(result.stop);
   }

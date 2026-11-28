@@ -394,41 +394,29 @@ function spamTable() {
 
 // ---- stealth gas ------------------------------------------------------------------
 
-// Gas, fee and sample columns are measured; "Who learns" is inferred; "Works for" links its source.
 const STEALTH_ROWS = [
-  { option: 'Fund it from another address', key: 'fund', later: null, learns: 'Everyone: the funding transfer is public', works: 'ERC-20 (ETH pays its own gas)',
-    seen: ['funded'], umbraSeen: ['funded'], noun: 'paid by funding' },
-  { option: 'Umbra relayer, fee in the token', key: 'umbra', later: null, learns: 'Relayer: IP, timing, destination; chain: the relayer address', works: 'ERC-20 paid through [Umbra](https://github.com/ScopeLift/umbra-protocol)',
-    seen: null, umbraSeen: ['relayed'], noun: 'relayed' },
-  { option: 'ERC-2612 permit to a relayer', key: 'permit', later: null, learns: 'Relayer, as above', works: 'ERC-20 with `permit` (USDC; USDT on Ethereum has none); [Permit2](https://github.com/Uniswap/permit2) needs an ETH-paid approval first',
-    seen: ['relayed'], umbraSeen: null, noun: 'moved by another sender' },
-  { option: 'EIP-7702 delegation, ERC-4337 paymaster pays', key: 'aaSponsored', later: 'aaSponsoredLater', learns: 'Bundler and paymaster: IP and the operation; chain: paymaster and delegate name the wallet', works: 'Both, on chains with [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)',
-    seen: ['4337', '7702'], umbraSeen: null, noun: 'through a delegation' },
-  { option: 'EIP-7702 delegation, paymaster paid in the token', key: 'aaTokenFee', later: 'aaTokenFeeLater', learns: 'As above', works: 'ERC-20 the paymaster accepts', seen: null, umbraSeen: null, noun: '' },
-  { option: 'Spend received ETH directly, e.g. to an exchange', key: null, later: null, learns: 'An exchange ties its account to the stealth address', works: 'ETH only',
-    seen: ['own-eth'], umbraSeen: null, noun: 'spending own ETH' },
+  { option: 'Fund from another address (ERC-20)', key: 'fund', later: null, learns: 'Everyone, from the public funding transfer', seen: ['funded'], umbraSeen: ['funded'] },
+  { option: 'Umbra relayer (tokens paid through Umbra)', key: 'umbra', later: null, learns: 'Relayer: IP, timing, destination', seen: null, umbraSeen: ['relayed'] },
+  { option: 'Permit relayer (ERC-2612; Permit2 needs ETH first)', key: 'permit', later: null, learns: 'Relayer: IP, timing, destination', seen: ['relayed'], umbraSeen: null },
+  { option: 'EIP-7702 + ERC-4337 paymaster', key: 'aaSponsored', later: 'aaSponsoredLater', learns: 'Bundler, paymaster; delegate names the wallet', seen: ['4337', '7702'], umbraSeen: null },
+  { option: 'EIP-7702 + paymaster paid in the token', key: 'aaTokenFee', later: 'aaTokenFeeLater', learns: 'Bundler, paymaster; delegate names the wallet', seen: null, umbraSeen: null },
+  { option: 'Spend received ETH (ETH only)', key: null, later: null, learns: 'An exchange, if sent there', seen: ['own-eth'], umbraSeen: null },
 ] as const;
 const cents = (value: number) => (value === 0 ? '$0' : value >= 0.01 ? `$${fixed(value, 2)}` : `$${value.toPrecision(2)}`);
 function stealthGasTable() {
-  const chains = stealthGas();
+  const eth = stealthGas().find(c => c.chain === 'ethereum')!;
   const spends = stealthSpends().filter(r => r.route !== 'unspent');
-  const eth = chains.find(c => c.chain === 'ethereum')!;
-  const priced = chains.filter(c => c.chain !== 'ethereum' && c.chain !== 'sepolia');
-  const count = (kind: string, routes: readonly string[] | null, noun: string) => {
+  const count = (kind: string, label: string, routes: readonly string[] | null) => {
     if (!routes) return null;
-    const of = spends.filter(r => r.kind === kind);
-    const hit = of.filter(r => routes.includes(r.route));
-    const linked = hit.filter(r => r.link).length, clustered = hit.filter(r => !r.link && r.clustered).length;
-    return `${hit.length} of ${of.length} ${noun} (${linked} linked${clustered ? `, ${clustered} more clustered` : ''})`;
+    const of = spends.filter(r => r.kind === kind), hit = of.filter(r => routes.includes(r.route));
+    return `${label} ${hit.length} of ${of.length}, ${hit.filter(r => r.link).length} linked`;
   };
-  return table(['Option', 'Extra gas, Ethereum', 'Extra fee, Ethereum', 'Extra fee, other mainnets (max)', 'Who learns the link (inferred)', 'Works for', 'Seen on chain'],
-    ['l', 'r', 'r', 'r', 'l', 'l', 'l'],
+  return table(['Option', 'Extra gas', 'Extra fee, Ethereum', 'Who learns the link', 'Seen on chain'], ['l', 'r', 'r', 'l', 'l'],
     STEALTH_ROWS.map(row => {
-      const extra = (c: typeof eth, key: string | null) => (key ? c.extra[key as keyof typeof c.extra] : { gas: 0, usd: 0 });
-      const gas = `${fixed(extra(eth, row.key).gas, 0)}${row.later ? ` (${fixed(extra(eth, row.later).gas, 0)} later)` : ''}`;
-      const max = priced.map(c => ({ c, usd: extra(c, row.key).usd! })).sort((a, b) => b.usd - a.usd)[0]!;
-      const seen = [count('erc5564', row.seen, `ERC-5564 spends ${row.noun}`), count('umbra', row.umbraSeen, `Umbra withdrawals ${row.noun}`)].filter(Boolean).join('; ');
-      return [row.option, gas, cents(extra(eth, row.key).usd!), max.usd === 0 ? '$0' : `${cents(max.usd)} (${CHAIN_LABELS[max.c.chain]})`, row.learns, row.works, seen || '-'];
+      const extra = (key: string | null) => (key ? eth.extra[key as keyof typeof eth.extra] : { gas: 0, usd: 0 });
+      const gas = row.later ? `${fixed(extra(row.key).gas, 0)} first, ${fixed(extra(row.later).gas, 0)} later` : fixed(extra(row.key).gas, 0);
+      const seen = [count('erc5564', 'ERC-5564', row.seen), count('umbra', 'Umbra', row.umbraSeen)].filter(Boolean).join('; ');
+      return [row.option, gas, cents(extra(row.key).usd!), row.learns, seen || '-'];
     }));
 }
 

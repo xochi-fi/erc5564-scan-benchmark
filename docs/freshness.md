@@ -2,7 +2,7 @@
 
 How long after inclusion does a wallet see an announcement?
 
-A feed-only wallet waits for finality: 16–20 min on Ethereum, Sepolia and the L2s, 3.4 min on Gnosis, 10 s on Polygon. An RPC tail from the last finalized block to head sees it within 14 s, for one `eth_getLogs` per poll. So the decision is feed plus tail: the checkpoint moves only with finalized feed pages, and tail matches stay pending until then.
+A feed-only wallet waits for finality, minutes on most chains. An RPC tail from the last finalized block to head sees it within seconds, for one `eth_getLogs` per poll. So the decision is feed plus tail: the checkpoint moves only with finalized feed pages, and tail matches stay pending until then.
 
 <!-- generated:freshness -->
 | Chain | RPC-only and hybrid: mined to seen | Feed-only: mined to finalized, median [max] | Tail blocks | Tail requests / bytes per poll | Reorged heads | Samples |

@@ -1,5 +1,5 @@
 // `bun run real-announcements:scan [--time REPS] [--out FILE]`: runs the scan engines over every real
-// announcement in data/real-announcements/. Classifies malformed fields, checks whether one bad entry aborts
+// announcement fetched to work/real-announcements/. Classifies malformed fields, checks whether one bad entry aborts
 // the SDK's getAnnouncementsForUser for the whole batch, and with --time compares per-announcement crypto
 // scan time on real and on synthetic input of the same size.
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -60,7 +60,7 @@ if (import.meta.main) {
   /** Scheme-1 entries without defects: the input the timing compares against synthetic data. */
   const clean: AnnouncementLog[] = [];
   for (const chain of CHAINS) {
-    const raw: RawLog[] = JSON.parse(readFileSync(`${ROOT}data/real-announcements/${chain}.json`, 'utf8')).logs;
+    const raw: RawLog[] = JSON.parse(readFileSync(`${ROOT}work/real-announcements/${chain}.json`, 'utf8')).logs;
     const rows = raw.map(defects);
     const parsed = rows.flatMap(r => (r.log ? [r.log] : []));
     const counts: Record<string, number> = {};

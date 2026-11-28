@@ -25,7 +25,7 @@ JavaScriptCore without its JIT bounds the Lockdown Mode case until a phone measu
 | turing-node-3 | bun 1.4.4 | off (`BUN_JSC_useJIT=0`) | sdk | 11.04 |
 <!-- /generated:phone-proxy -->
 
-The page is a few static files. It scans the first 1,000, 5,000 or 10,000 announcements of a pinned seeded fixture (WASM can repeat it to 100,000) (`phone-bench:v1`, a match every 1,000) with the SDK, its `checkStealthAddress` (`crypto`) or libsecp256k1 in WASM, in a Web Worker or in short main-thread steps where workers are missing, and checks the matches against the fixture schedule. Its Content-Security-Policy blocks every network request. Nothing leaves the device until the user submits, copies or downloads the result.
+The page is a few static files. It scans up to 10,000 announcements of a pinned seeded fixture (`phone-bench:v1`, a match every 1,000) with the SDK, its `checkStealthAddress` (`crypto`) or libsecp256k1 in WASM, and checks the matches against the fixture schedule. WASM can repeat the fixture to 100,000 so fast phones run for seconds. The scan runs in a Web Worker, or in short main-thread steps where workers are missing. Its Content-Security-Policy blocks every network request. Nothing leaves the device until the user submits, copies or downloads the result.
 
 | Field in a result | Source |
 | --- | --- |

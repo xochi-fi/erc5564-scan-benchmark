@@ -12,7 +12,8 @@ One directory per experiment, with home paths shown as `~` ([hosts](../METHODS.m
 | [spam-cost/](spam-cost/) | [Spam cost](../docs/spam-cost.md). Per chain: endpoint, `eth_estimateGas` of a direct and a state-override batched `announce`, latest block, 1,024-block `eth_feeHistory`, OP Stack `getL1Fee`, receipts of recorded announcements. `prices.json`: one CoinGecko quote. |
 | [omission-cause/](omission-cause/) | [Omission cause](../docs/omission-cause.md). Per chain, two passes: each suspect provider's and Tenderly's answers about every known omitted announcement. |
 | [freshness/](freshness/) | [Freshness](../docs/freshness.md). Per chain: 12-s samples of `latest` and `finalized` headers and the Announcer tail poll between them. |
-| [real-announcements/](real-announcements/) | [Real announcements](../docs/real-announcements.md). Raw logs of every recorded ERC-5564 announcement; `scan.json` engine results; `timing-<host>.json`. |
+| [phone-bench/](phone-bench/) | [Phone bench](../docs/phone-bench.md). Accepted results, one file each; `proxy/`: JavaScriptCore runs on Turing. |
+| [real-announcements/](real-announcements/) | [Real announcements](../docs/real-announcements.md). `scan.json`: engine results; `timing-<host>.json`: real against synthetic. Raw logs come from `bun run real-announcements:fetch`. |
 | [shared-feed/](shared-feed/) | [Shared feed](../docs/shared-feed.md). Request metrics, page digests, sample timings, checkpoint controls, per-node evidence and the feed format search. `static/` and `remote/`: the benchmark feeds as files and runs fetching them over the network. |
 
 ## Not included

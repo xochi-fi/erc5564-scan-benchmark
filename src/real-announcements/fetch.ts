@@ -1,5 +1,5 @@
 // `bun run real-announcements:fetch`: raw logs of every canonical ERC-5564 announcement recorded in
-// data/chain-volume (identities only there). Keyless, read-only. Writes data/real-announcements/<chain>.json
+// data/chain-volume (identities only there). Keyless, read-only. Writes work/real-announcements/<chain>.json
 // and fails unless the fetched identities equal the recorded set.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PoliteHttp } from '../chain-volume/http.ts';
@@ -38,7 +38,7 @@ async function getLogs(url: string, from: number, to: number): Promise<any[]> {
 }
 
 if (import.meta.main) {
-  mkdirSync(`${ROOT}data/real-announcements`, { recursive: true });
+  mkdirSync(`${ROOT}work/real-announcements`, { recursive: true });
   const only = Bun.argv.slice(2);
   for (const chain of only.length ? only : Object.keys(SOURCES)) {
     const { url, span } = SOURCES[chain]!;
@@ -50,7 +50,7 @@ if (import.meta.main) {
     const got = logs.map(l => `${Number(BigInt(l.blockNumber))}:${Number(BigInt(l.logIndex))}:${l.transactionHash.toLowerCase()}`).sort();
     const want = ids.map(i => i.toLowerCase()).sort();
     if (got.length !== want.length || got.some((g, i) => g !== want[i])) throw new Error(`${chain}: fetched ${got.length} logs, recorded ${want.length}; sets differ`);
-    writeFileSync(`${ROOT}data/real-announcements/${chain}.json`, `${JSON.stringify({ chain, url, fetchedAt: new Date().toISOString(), logs })}\n`);
+    writeFileSync(`${ROOT}work/real-announcements/${chain}.json`, `${JSON.stringify({ chain, url, fetchedAt: new Date().toISOString(), logs })}\n`);
     console.log(chain, logs.length);
   }
 }

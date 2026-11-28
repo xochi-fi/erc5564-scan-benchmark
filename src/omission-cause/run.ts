@@ -97,6 +97,6 @@ if (import.meta.main) {
       providers.push({ url, pass, control: url === t.control, probes });
       console.log(chain, url, probes.map(p => `${p.block}: ann=${p.announcerOneBlock.count ?? 'err'} rcpt=${p.receipt.hasTarget ?? 'null'} canary=${p.canaryTransfers.count ?? 'err'}`).join(' | '));
     }
-    writeFileSync(`${ROOT}data/omission-cause/${chain}.json`, `${JSON.stringify({ chain, measuredAt: new Date().toISOString(), canaryToken: t.canaryToken, targets, providers }, null, 2)}\n`);
+    writeFileSync(`${ROOT}data/omission-cause/${chain}.json`, `${JSON.stringify({ chain, measuredAt: new Date().toISOString(), canaryToken: t.canaryToken, targets, providers })}\n`);
   }
 }

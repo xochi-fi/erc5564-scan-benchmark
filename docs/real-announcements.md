@@ -2,7 +2,7 @@
 
 Do the scan engines handle every real ERC-5564 announcement?
 
-All 2,049 recorded announcements decode. 489 use another scheme and 89 scheme-1 entries lack a valid key or view tag. The SDK's `getAnnouncementsForUser` scans every batch to the end: it settles each entry separately and drops the ones that throw. This repo's `crypto` engine calls `checkStealthAddress` directly and stops at the first of 578 throwing entries, so a wallet built that way needs a per-entry guard.
+Every recorded announcement decodes; some use another scheme or lack a valid key or view tag. The SDK's `getAnnouncementsForUser` scans every batch to the end: it settles each entry separately and drops the ones that throw. This repo's `crypto` engine calls `checkStealthAddress` directly and stops at the first entry that throws, so a wallet built that way needs a per-entry guard.
 
 <!-- generated:real-scan -->
 | Chain | Announcements | Decoded | Scheme ≠ 1 | Scheme 1, bad key | Scheme 1, no view tag | Scheme 1, 65-byte key | `crypto` engine throws | SDK batch |

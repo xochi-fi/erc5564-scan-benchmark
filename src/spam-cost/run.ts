@@ -124,7 +124,10 @@ if (import.meta.main) {
   const only = process.argv.slice(2).filter(a => !a.startsWith('-'));
   for (const chain of only.length ? only : Object.keys(SPAM_CHAINS)) {
     const record = await probeChain(chain);
-    writeFileSync(`${OUT}${chain}.json`, `${JSON.stringify(record, null, 2)}\n`);
+    // Keep only what the tables read: base fees and the 10th-percentile tips.
+    const fees = (record as any).fees?.result;
+    if (fees) (record as any).fees.result = { oldestBlock: fees.oldestBlock, baseFeePerGas: fees.baseFeePerGas, reward: fees.reward.map((r: string[]) => [r[0]]) };
+    writeFileSync(`${OUT}${chain}.json`, `${JSON.stringify(record)}\n`);
     console.log(chain, 'failed' in record ? 'FAILED' : `direct ${hexNum((record as any).direct.result)} via ${(record as any).url}`);
   }
   if (!process.argv.includes('--no-prices')) writeFileSync(`${OUT}prices.json`, `${JSON.stringify(await prices(), null, 2)}\n`);

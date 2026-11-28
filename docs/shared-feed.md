@@ -6,7 +6,7 @@ A shared feed. Two feeds recover every announcement in milliseconds, and OMR cos
 
 ## Decision
 
-Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
+Clients fetch every finalized feed page, scan locally, resume from a checkpoint, and retry a window when the two feeds disagree. A keyless RPC tail from the last finalized block to head shows newer announcements as pending until their page is final ([freshness](freshness.md)). Signed page commitments wait for log indexes with proofs: drafts [EIP-7745](https://eips.ethereum.org/EIPS/eip-7745), [EIP-8304](https://eips.ethereum.org/EIPS/eip-8304) or EIP-7792. Erigon #16364 and Nethermind #9178 are [silent `getLogs` omissions](https://docs.envio.dev/blog/nodes-silently-miss-events).
 
 | Scheme | Detector ms/msg, 1 / 2 threads | Recipient ms | Clue bytes | DoS-resistant |
 | --- | ---: | ---: | ---: | --- |

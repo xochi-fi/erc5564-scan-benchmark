@@ -68,14 +68,10 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 
 | Item | Rule |
 | --- | --- |
-| Refreshed | Chain-volume counts, rates, last announcement, silent recheck, endpoint checks ([tables](docs/chain-volume.md#weekly-refresh)) |
-| Fixed | Everything else, including every hardware timing, the 2026-11-26 probes, cold-start costs and Umbra counts |
+| Refreshed | Chain-volume counts, rates and silent recheck ([table](docs/chain-volume.md#weekly-refresh)). All else, hardware timings included, is fixed. |
 | Range | Last agreed block + 1 to the lower of two heads minus 15 min of blocks |
-| Endpoint sets | Two, no provider in common, silent hosts excluded, widest recorded span first |
-| Accept | Same block, log index and tx hash in both sets. Otherwise the count holds and the pull request says why. |
-| Silent recheck | Recorded targets and windows, two attempts, beside a control that returned all of them on 2026-11-26 |
-| Endpoint check | Every endpoint probed on 2026-11-26: 10 recent blocks, then its recorded span |
-| Vantage | Runner kind and cloud region (Azure instance metadata), or `--vantage`; never an address |
+| Accept | Two endpoint sets with no provider in common return the same block, log index and tx hash. Otherwise the count holds. |
+| Vantage | `--vantage`, or runner kind and Azure region; never an address |
 
 ## Browser runs
 

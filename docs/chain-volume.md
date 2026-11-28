@@ -36,36 +36,21 @@ One run on 2026-11-26 under the [live RPC rules](../METHODS.md#live-rpc), from t
 
 ## Weekly refresh
 
-[`weekly-refresh.yml`](../.github/workflows/weekly-refresh.yml) re-measures these tables every Monday. The rest of this page is the 2026-11-26 recording.
+[`weekly-refresh.yml`](../.github/workflows/weekly-refresh.yml) re-measures this table every Monday. The rest of this page is the 2026-11-26 recording.
 
 <!-- generated:chain-volume-refresh -->
-| Chain | Announcements, 2026-11-26 | Announcements, 2026-11-28 | Per day since 2026-11-26 | Per month (since first) | Last announcement | Checked through block | Run of 2026-11-28 |
-| --- | ---: | ---: | ---: | ---: | --- | --- | --- |
-| Ethereum | 298 | **302** | 2.90 (1.4 days) | 12.3 | 26,500,859 (2026-11-26) | 26,510,117 (2026-11-28) | sets agree |
-| Base | 679 | **685** | 4.70 (1.3 days) | 23.9 | 62,949,449 (2026-11-27) | 63,176,659 (2026-11-28) | sets agree |
-| Arbitrum One | 19 | **19** | 0.00 (1.4 days) | 2.1 | 522,929,374 (2026-11-10) | 528,149,344 (2026-11-28) | sets agree |
-| OP Mainnet | 2 | **2** | 0.00 (1.4 days) | 0.5 | 154,455,081 (2026-07-20) | 160,113,731 (2026-11-28) | sets agree |
-| Gnosis | 3 | **3** | 0.00 (1.4 days) | 0.2 | 41,054,058 (2025-07-12) | 49,504,392 (2026-11-28) | sets agree |
-| Polygon PoS | 9 | **9** | 0.00 (1.4 days) | 1.3 | 95,895,782 (2026-10-21) | 98,080,764 (2026-11-28) | sets agree |
-| Sepolia | 1,039 | **1,040** | 0.71 (1.4 days) | 36.1 | 12,218,263 (2026-11-26) | 12,226,789 (2026-11-28) | sets agree |
+| Chain | Recorded 2026-11-26 | Latest 2026-11-28 | Per month | Status |
+| --- | ---: | ---: | ---: | --- |
+| Ethereum | 298 | 302 | 12.3 | agree |
+| Base | 679 | 685 | 23.9 | agree |
+| Arbitrum One | 19 | 19 | 2.1 | agree |
+| OP Mainnet | 2 | 2 | 0.5 | agree |
+| Gnosis | 3 | 3 | 0.2 | agree |
+| Polygon PoS | 9 | 9 | 1.3 | agree |
+| Sepolia | 1,039 | 1,040 | 36.1 | agree |
+
+Still silent on 2026-11-28: Base `base.daybreak-rpc.network`, `rpc.baseazul.dev`; OP Mainnet `public.1rpc.io`. Base `rpc.degenprotocol.io` returned every known announcement this time, after empty answers on 2026-11-26. Detail per endpoint and vantage is in [2026-11-28.json](../data/chain-volume/refresh/2026-11-28.json).
 <!-- /generated:chain-volume-refresh -->
-
-<!-- generated:chain-volume-silent -->
-| Chain | Endpoint | 2026-11-26: returned / empty / errors | 2026-11-28: returned / empty / errors | 2026-11-28 | Control |
-| --- | --- | --- | --- | --- | --- |
-| Base | `rpc.degenprotocol.io` | 4 / 2 / 0 | 6 / 0 / 0 | returns all | `base.gateway.tenderly.co` |
-| Base | `base.daybreak-rpc.network` | 0 / 6 / 0 | 0 / 6 / 0 | still silent | `base.gateway.tenderly.co` |
-| Base | `rpc.baseazul.dev` | 2 / 3 / 1 | 3 / 3 / 0 | still silent | `base.gateway.tenderly.co` |
-| OP Mainnet | `public.1rpc.io` | 0 / 4 / 0 | 3 / 1 / 0 | still silent | `lb.routeme.sh` |
-<!-- /generated:chain-volume-silent -->
-
-Checks that differ between vantages ([method](../METHODS.md#weekly-refresh)):
-
-<!-- generated:chain-volume-vantage -->
-Only one vantage recorded so far (residential, Europe, 2026-11-28). The first scheduled run after merge adds the GitHub-hosted runner.
-<!-- /generated:chain-volume-vantage -->
-
-A new announcement counts only when two endpoint sets with no provider in common both return it. The job skips the indexers.
 
 ## Wallet guidance
 

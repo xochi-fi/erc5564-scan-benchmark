@@ -7,7 +7,7 @@ import {
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
-import { statePerMonth, stateSinceBaseline, vantageComparison } from '../chain-volume/refresh-state.ts';
+import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
 
 // ---- formatting ---------------------------------------------------------------
 
@@ -187,46 +187,34 @@ function chainVolumeTable() {
 
 // Weekly refresh: counts and rates move; everything in chainVolumeTable stays the 2026-11-26 recording.
 const BASELINE_DATE = '2026-11-26';
+const list = (items: string[]) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
 function chainRefreshTable() {
-  const snapshots = refreshSnapshots();
-  const latest = snapshots.at(-1);
+  const latest = refreshSnapshots().at(-1);
   if (latest === undefined) return 'No refresh recorded yet.';
   const n = (value: number) => fixed(value, 0);
-  return table(['Chain', `Announcements, ${BASELINE_DATE}`, `Announcements, ${latest.date}`, `Per day since ${BASELINE_DATE}`, 'Per month (since first)',
-    'Last announcement', 'Checked through block', `Run of ${latest.date}`],
-  ['l', 'r', 'r', 'r', 'r', 'l', 'l', 'l'],
-  Object.keys(CHAIN_LABELS).map(chain => {
-    const state = chainLatest(chain);
-    const since = stateSinceBaseline(state);
-    const rate = statePerMonth(state);
-    const entry = state.latest;
-    const run = entry === null || entry.date !== latest.date ? 'not run'
-      : entry.status === 'agreed' ? `sets agree${entry.reason ? ` (${entry.reason})` : ''}`
-        : `**${entry.status}**: ${entry.reason}; count held`;
-    return [CHAIN_LABELS[chain]!, n(bestRetrieval(chain).result.count), `**${n(state.count)}**`,
-      since === null ? '-' : `${fixed(since.perDay, 2)} (${fixed(since.days, 1)} days)`, rate === null ? '-' : rate.toFixed(1),
-      `${n(state.lastBlock)} (${state.lastTime.slice(0, 10)})`,
-      `${n(state.throughBlock)}${state.throughTime ? ` (${state.throughTime.slice(0, 10)})` : ''}`, run];
-  }));
-}
-function silentRecheckTable() {
-  const latest = refreshSnapshots().at(-1);
-  if (latest === undefined) return 'No recheck recorded yet.';
-  const counts = (e: { returned: number; empty: number; errors: number }) => `${e.returned} / ${e.empty} / ${e.errors}`;
-  return table(['Chain', 'Endpoint', `${BASELINE_DATE}: returned / empty / errors`, `${latest.date}: returned / empty / errors`, `${latest.date}`, 'Control'],
-    ['l', 'l', 'l', 'l', 'l', 'l'],
-    latest.silent.map(check => {
-      const recorded = readJson(`data/chain-volume/consistency/${check.chain}.json`).endpoints.find((e: any) => e.host === check.host);
-      return [CHAIN_LABELS[check.chain]!, `\`${check.host}\``, counts(recorded), counts(check), check.verdict, check.control ? `\`${check.control}\`` : 'none'];
+  const rows = table(['Chain', `Recorded ${BASELINE_DATE}`, `Latest ${latest.date}`, 'Per month', 'Status'], ['l', 'r', 'r', 'r', 'l'],
+    Object.keys(CHAIN_LABELS).map(chain => {
+      const state = chainLatest(chain);
+      const rate = statePerMonth(state);
+      const entry = state.latest;
+      const status = entry === null || entry.date !== latest.date ? 'not run'
+        : entry.status === 'agreed' ? (entry.reason ? `agree (${entry.reason})` : 'agree') : `held: ${entry.reason}`;
+      return [CHAIN_LABELS[chain]!, n(bestRetrieval(chain).result.count), n(state.count), rate === null ? '-' : rate.toFixed(1), status];
     }));
-}
-
-function vantageTable() {
-  const { columns, rows } = vantageComparison(refreshSnapshots());
-  if (columns.length < 2) return `Only one vantage recorded so far${columns[0] ? ` (${columns[0].vantage}, ${columns[0].date})` : ''}. The first scheduled run after merge adds the GitHub-hosted runner.`;
-  if (rows.length === 0) return `Every check agrees between ${columns.map(c => `${c.vantage} (${c.date})`).join(' and ')}.`;
-  return table(['Chain', 'Endpoint', 'Check', ...columns.map(c => `${c.vantage}, ${c.date}`)], ['l', 'l', 'l', ...columns.map(() => 'l' as const)],
-    rows.map(r => [CHAIN_LABELS[r.chain]!, `\`${r.host}\``, r.measure, ...r.cells]));
+  // Silent hosts of 2026-11-26, grouped by today's verdict and chain.
+  const hosts = (verdict: string) => {
+    const byChain = new Map<string, string[]>();
+    for (const c of latest.silent.filter(c => c.verdict === verdict)) byChain.set(c.chain, [...(byChain.get(c.chain) ?? []), `\`${c.host}\``]);
+    return [...byChain].map(([chain, names]) => `${CHAIN_LABELS[chain]} ${names.join(', ')}`).join('; ');
+  };
+  const lines: string[] = [];
+  if (hosts('still silent')) lines.push(`Still silent on ${latest.date}: ${hosts('still silent')}.`);
+  if (hosts('returns all')) lines.push(`${hosts('returns all')} returned every known announcement this time, after empty answers on ${BASELINE_DATE}.`);
+  for (const verdict of ['errors', 'inconclusive']) if (hosts(verdict)) lines.push(`${hosts(verdict)}: ${verdict}.`);
+  const { columns, rows: differing } = vantageComparison(refreshSnapshots());
+  if (columns.length >= 2) lines.push(`${differing.length} endpoint checks differ between ${list(columns.map(c => `${c.vantage} (${c.date})`))}.`);
+  lines.push(`Detail per endpoint and vantage is in [${latest.date}.json](../data/chain-volume/refresh/${latest.date}.json).`);
+  return `${rows}\n\n${lines.join(' ')}`;
 }
 
 // ---- browser discovery --------------------------------------------------------
@@ -377,8 +365,6 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'paged-single-catchup': ['docs/paged-discovery.md', pagedSingleCatchupTable],
   'chain-volume': ['docs/chain-volume.md', chainVolumeTable],
   'chain-volume-refresh': ['docs/chain-volume.md', chainRefreshTable],
-  'chain-volume-silent': ['docs/chain-volume.md', silentRecheckTable],
-  'chain-volume-vantage': ['docs/chain-volume.md', vantageTable],
   'browser-discovery': ['docs/browser-discovery.md', browserTable],
   'recovery-live': ['docs/rpc-recovery.md', recoveryLiveTable],
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],

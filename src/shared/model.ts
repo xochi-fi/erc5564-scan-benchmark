@@ -34,7 +34,7 @@ export interface LoadedFixture {
   fixtureBytes: number;
 }
 
-export type Engine = 'sdk' | 'crypto';
+export type Engine = 'sdk' | 'crypto' | 'noble' | 'wasm' | 'native';
 
 export interface WorkerOptions {
   fixtureDir: string;
@@ -42,6 +42,8 @@ export interface WorkerOptions {
   batchSize: number;
   warmupCount: number;
   repetition: number;
+  /** Bun worker threads for a fast engine; 1 scans in the main thread. */
+  threads?: number;
 }
 
 export interface MemorySnapshot {
@@ -66,6 +68,9 @@ export interface BenchmarkSample {
   engine: Engine;
   mode: 'full' | 'incremental';
   batchSize: number;
+  threads: number;
+  /** Starting the threads and copying their slices, outside scanMs. */
+  threadSetupMs: number;
   warmupCount: number;
   repetition: number;
   scanMs: number;

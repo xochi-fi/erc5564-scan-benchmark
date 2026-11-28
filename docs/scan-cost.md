@@ -2,51 +2,37 @@
 
 How long does a local ERC-5564 scan take?
 
-It is linear in announcements: 1M take about 10× as long as 100k.
+Nearly all of the ScopeLift SDK's scan time is pure-JS curve arithmetic. libsecp256k1 does the same check about 4× faster as WASM and 10–15× faster native.
 
-<!-- generated:scan-cost -->
-| Host | 100k before/after controls, s | 1M, s | 1M / 100k |
-| --- | --- | --- | --- |
-| Bazzite, P-core threads 0,2,4,6 | 48.531–51.951 | 519.084 | 9.99–10.70 |
-| Turing node 1, Cortex-A76 cores 4–7 | 168.457–181.946 | 1804.305 | 9.92–10.71 |
-<!-- /generated:scan-cost -->
+<!-- generated:scan-engines -->
+| Engine | Threads | Bazzite, µs | Speed-up | Turing node 1, µs | Speed-up |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| ScopeLift SDK | 1 | 483.6 | 1.0× | 1,749.1 | 1.0× |
+| noble, the SDK's curve in a lean loop | 1 | 481.4 | 1.0× | 1,751.6 | 1.0× |
+| libsecp256k1 WASM | 1 | 124.5 | 3.9× | 431.2 | 4.1× |
+| libsecp256k1 WASM | 2 | 63.1 | 7.7× | 222.2 | 7.9× |
+| libsecp256k1 WASM | 4 | 33.4 | 14.5× | 136.4 | 12.8× |
+| libsecp256k1 native | 1 | 31.3 | 15.4× | 166.4 | 10.5× |
+| libsecp256k1 native | 2 | 15.6 | 30.9× | 83.9 | 20.9× |
+| libsecp256k1 native | 4 | 8.4 | 57.2× | 50.8 | 34.4× |
+<!-- /generated:scan-engines -->
 
-Crypto engine, zero-match fixtures, two 100k controls per [host](../METHODS.md#hosts-and-software). Both hosts share cores with other work. At this rate the largest chain history, [Umbra on Polygon](chain-volume.md#umbra), takes about 180 s on Turing.
+Cells are wall time per announcement: the median over the 100k and 1M zero and sparse fixtures, which agree within 9% (one Bazzite WASM 2-thread run: 14%). `noble` runs the SDK's curve in the same loop as `wasm` and `native`, so the curve library accounts for the whole gap. Scans are linear: 1M takes 9.9–10.7× as long as 100k ([`results.csv`](../data/scan-cost/results.csv)).
 
-## Retained working set
-
-Every profile scans the same 100k prefix, digest `46416d7ef2564c31807dd4c3eed410673b38091d3fa320c96dcd76c33d837b05`.
-
-| Host | Retain 100k, s | Retain 1M, s | Ratio |
-| --- | --- | --- | --- |
-| M1, shared development host (more page faults and swap; cause not isolated) | 52.734 | 161.425 | 3.06 |
-| Bazzite | 48.226 | 47.157 | 0.98 |
-| Turing node 1 | 180.607 | 180.927 | 1.00 |
-
-## Initial sweep on the M1
-
-One repetition per scenario, 1,000-announcement batches, no warmup.
-
-| Announcements | Scan time across eight scenarios | Peak RSS, including loading and the retained fixture |
-| --- | --- | --- |
-| 100,000 | 48.9–80.4 s | 464–487 MiB |
-| 1,000,000 | 1,013.4–1,482.5 s | 3,879–4,099 MiB |
+Caveats: thread rows leave out worker start and slice copy (up to 6.3 s at 1M); on aarch64, `secp256k1` 5.0.2 builds libsecp256k1 with 32-bit limbs, so Turing's native rows may understate it; both hosts share cores with other work ([controls](../data/scan-cost/engines/)).
 
 ## Profile
 
-| Share of Linux 1M profile | Value |
-| --- | --- |
-| noble `add` and `M`, sampled self hits | 83–85% |
-| GC, wall time | about 0.1% |
+In the Linux 1M profiles, noble's `add` and `M` take 83–85% of sampled self hits and GC about 0.1% of wall time. Retaining 1M announcements instead of 100k leaves a 100k scan unchanged on Bazzite (0.98×) and Turing (1.00×); the M1 slowed 3.06× ([`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/), [`profiling-turing/`](../data/scan-cost/profiling-turing/), [`profiling-1m/`](../data/scan-cost/profiling-1m/)). The first M1 sweep, eight scenarios, took 48.9–80.4 s at 100k and 1,013–1,483 s at 1M, with peak RSS up to 4,099 MiB ([`baseline-100k-1m/`](../data/scan-cost/baseline-100k-1m/)).
 
 [Method](../METHODS.md#scan-cost)
 
 ## Reproduce
 
 ```sh
-bun run bench --sizes 256 --match-every 16 --batch-size 37 --repetitions 1   # all eight scenarios, small
 bun run bench --sizes 10000,100000,1000000                                  # 1M needs several GiB of RAM and disk, and hours
+scripts/scan-engines.sh bazzite                                             # or turing; REUSE_FIXTURES=dir,dir
 bun run profile --fixture results/baseline-100k-1m/fixtures/100000-zero --output results/profile-100k --engine crypto --batch-size 0
 ```
 
-[`results.csv`](../data/scan-cost/results.csv) · [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/) · [`profiling-turing/`](../data/scan-cost/profiling-turing/) · [`baseline-100k-1m/`](../data/scan-cost/baseline-100k-1m/)
+[`results.csv`](../data/scan-cost/results.csv) · [`engines/`](../data/scan-cost/engines/) · [`profiling-bazzite/`](../data/scan-cost/profiling-bazzite/) · [`profiling-turing/`](../data/scan-cost/profiling-turing/) · [`baseline-100k-1m/`](../data/scan-cost/baseline-100k-1m/)

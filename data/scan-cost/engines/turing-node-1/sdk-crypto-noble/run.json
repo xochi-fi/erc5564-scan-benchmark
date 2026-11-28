@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "sdkVersion": "1.0.0-beta.5",
+  "sdkCommit": "88bcc27c3b6163080ee18f330dfd6336dc8bd2e2",
+  "startedAt": "2026-11-28T00:30:18.878Z",
+  "options": {
+    "sizes": [
+      100000
+    ],
+    "cases": [
+      "zero",
+      "sparse"
+    ],
+    "matchEvery": 1000,
+    "engines": [
+      "sdk",
+      "crypto",
+      "noble"
+    ],
+    "threads": [
+      1
+    ],
+    "reuseFixtures": [
+      "~/stealth-scan-phase2/work/fixtures",
+      "~/scan-fixtures"
+    ],
+    "modes": [
+      "full"
+    ],
+    "batchSize": 1000,
+    "repetitions": 1,
+    "warmupCount": 0,
+    "seed": "erc5564-scan-v1",
+    "output": "~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/sdk-crypto-noble"
+  }
+}

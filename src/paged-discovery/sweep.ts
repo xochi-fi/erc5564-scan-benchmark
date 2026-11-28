@@ -5,7 +5,7 @@ import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { z } from 'zod';
-import { SDK_COMMIT, SDK_VERSION, type Engine } from '../shared/model.ts';
+import { SDK_COMMIT, SDK_VERSION } from '../shared/model.ts';
 import { FIRST_BLOCK, readManifest, ENTRIES_PER_BLOCK } from './chain.ts';
 import { buildPlan, readMatrix, type PlannedSample, type Setting } from './repeat.ts';
 import {
@@ -107,7 +107,7 @@ function parseOptions() {
     scenarios,
     catchupBlocks: z.coerce.number().int().min(1).parse(values['catchup-blocks']),
     prefixPages: z.coerce.number().int().min(1).parse(values['prefix-pages']),
-    engine: z.enum(['sdk', 'crypto']).parse(values.engine) as Engine,
+    engine: z.enum(['sdk', 'crypto']).parse(values.engine),
     repetitions: z.coerce.number().int().min(1).parse(values.repetitions),
     firstRepetition: z.coerce.number().int().min(1).parse(values['first-repetition']),
     order: z.enum(['grouped', 'shuffled']).parse(values.order),

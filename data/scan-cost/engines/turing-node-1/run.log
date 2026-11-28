@@ -1,0 +1,489 @@
+Linux turing-node-1 5.10.160-rockchip #30 SMP Mon Jan 29 02:38:59 UTC 2024 aarch64 aarch64 aarch64 GNU/Linux
+8
+               total        used        free      shared  buff/cache   available
+Mem:            7685         409         585           1        6690        6723
+Swap:           4866           3        4863
+ 00:26:53 up 74 days, 17:45,  0 users,  load average: 1.21, 0.34, 0.12
+1.4.4
+bun install v1.4.4 (38afee6c8)
+
+Checked 38 installs across 58 packages (no changes) [10.00ms]
+$ tsc --noEmit
+bun test v1.4.4 (38afee6c8)
+
+test/fixtures.test.ts:
+(pass) deterministic ERC-5564 fixtures > identical options produce byte-identical JSONL and manifests with exact byte accounting [332.28ms]
+(pass) deterministic ERC-5564 fixtures > changing the seed changes recipient, ephemeral keys, hashes, and bytes [50.90ms]
+(pass) deterministic ERC-5564 fixtures > sparse fixtures scan to sender-selected identities and derive spendable test-only keys [1301.73ms]
+(pass) deterministic ERC-5564 fixtures > view-tag counts use fresh target ECDH for every announcement, including decoys [2836.92ms]
+(pass) deterministic ERC-5564 fixtures > matchEvery zero produces no intended or actual matches [88.00ms]
+(pass) deterministic ERC-5564 fixtures > empty fixtures retain the SHA256 of exact empty bytes and an empty RPC result [5.87ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid generation options: {"count":-1,"seed":"invalid","matchEvery":1} [1.56ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid generation options: {"count":0.5,"seed":"invalid","matchEvery":1} [0.49ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid generation options: {"count":1,"seed":"invalid","matchEvery":-1} [0.41ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid generation options: {"count":1,"seed":"","matchEvery":1} [0.39ms]
+(pass) deterministic ERC-5564 fixtures > rejects damaged JSONL rather than returning no matches: truncated-row [20.88ms]
+(pass) deterministic ERC-5564 fixtures > rejects damaged JSONL rather than returning no matches: missing-row [20.92ms]
+(pass) deterministic ERC-5564 fixtures > rejects damaged JSONL rather than returning no matches: invalid-json [23.18ms]
+(pass) deterministic ERC-5564 fixtures > rejects damaged JSONL rather than returning no matches: blank-row [21.22ms]
+(pass) deterministic ERC-5564 fixtures > rejects damaged JSONL rather than returning no matches: hash-mismatch [22.82ms]
+(pass) deterministic ERC-5564 fixtures > rejects semantically invalid rows even when their SHA256 is updated: removed [21.61ms]
+(pass) deterministic ERC-5564 fixtures > rejects semantically invalid rows even when their SHA256 is updated: quantity [22.68ms]
+(pass) deterministic ERC-5564 fixtures > rejects semantically invalid rows even when their SHA256 is updated: abi [21.25ms]
+(pass) deterministic ERC-5564 fixtures > rejects semantically invalid rows even when their SHA256 is updated: topics [23.56ms]
+(pass) deterministic ERC-5564 fixtures > rejects semantically invalid rows even when their SHA256 is updated: duplicate [21.85ms]
+(pass) deterministic ERC-5564 fixtures > rejects semantically invalid rows even when their SHA256 is updated: extra-field [22.06ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: version [23.65ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: sdk [20.00ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: expected [21.95ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: duplicate-index [20.08ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: out-of-range [19.95ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: counts [21.41ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: scalar [22.79ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: seed-recipient [20.44ms]
+(pass) deterministic ERC-5564 fixtures > rejects invalid manifests instead of accepting an apparent no-match fixture: rpc-bytes [23.33ms]
+
+test/chain-volume.test.ts:
+(pass) error classification on recorded provider messages > base xrpc.cl: http [1.70ms]
+(pass) error classification on recorded provider messages > base lb.routeme.sh: rate-limit [0.09ms]
+(pass) error classification on recorded provider messages > base rpc.nodeflare.app: auth-required [0.07ms]
+(pass) error classification on recorded provider messages > base mainnet.base.org: rate-limit [0.03ms]
+(pass) error classification on recorded provider messages > base li-fi-base.intustechno.workers.dev: rate-limit [0.04ms]
+(pass) error classification on recorded provider messages > base base.public.blockpi.network: range-limit [1.64ms]
+(pass) error classification on recorded provider messages > base base.public.blockpi.network: archive-missing [0.11ms]
+(pass) error classification on recorded provider messages > base public.1rpc.io: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > base public.1rpc.io: http [0.06ms]
+(pass) error classification on recorded provider messages > base public.1rpc.io: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > base base-public.nodies.app: range-limit [0.26ms]
+(pass) error classification on recorded provider messages > base base.meowrpc.com: unsupported [0.07ms]
+(pass) error classification on recorded provider messages > base base-mainnet.public.blastapi.io: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > base base.gateway.tenderly.co: range-limit [0.05ms]
+(pass) error classification on recorded provider messages > base gateway.tenderly.co: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > base base-rpc.publicnode.com: range-limit [0.07ms]
+(pass) error classification on recorded provider messages > base base-rpc.publicnode.com: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > base base.api.onfinality.io: rate-limit [0.02ms]
+(pass) error classification on recorded provider messages > base base-mainnet.gateway.tatum.io: rate-limit [0.05ms]
+(pass) error classification on recorded provider messages > base api.zan.top: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > base rpc.numa.network: timeout [0.03ms]
+(pass) error classification on recorded provider messages > base base.api.pocket.network: range-limit [0.05ms]
+(pass) error classification on recorded provider messages > base base.drpc.org: range-limit [0.10ms]
+(pass) error classification on recorded provider messages > base base.rpc.sentio.xyz: range-limit [0.07ms]
+(pass) error classification on recorded provider messages > base rpc.swiftnodes.io: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > base rpc.degenprotocol.io: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > base rpc-base.blockmachine.io: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > base base.daybreak-rpc.network: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > base rpc.driftguard.live: blocked [0.01ms]
+(pass) error classification on recorded provider messages > base rpc.baseazul.dev: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > base rpc.baseazul.dev: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > base rpc.satelink.network: http [0.06ms]
+(pass) error classification on recorded provider messages > base base-rpc.blockreq.com: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > base api.blockvectra.com: unsupported [0.05ms]
+(pass) error classification on recorded provider messages > base 8453.rpc.thirdweb.com: result-limit [0.03ms]
+(pass) error classification on recorded provider messages > gnosis lb.routeme.sh: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > gnosis xdai-archive.blockscout.com: http [0.08ms]
+(pass) error classification on recorded provider messages > gnosis gnosis-public.nodies.app: auth-required [0.05ms]
+(pass) error classification on recorded provider messages > gnosis gnosis-mainnet.public.blastapi.io: auth-required [0.04ms]
+(pass) error classification on recorded provider messages > gnosis gnosis.api.onfinality.io: rate-limit [0.04ms]
+(pass) error classification on recorded provider messages > gnosis gnosis.drpc.org: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > gnosis endpoints.omniatech.io: http [0.04ms]
+(pass) error classification on recorded provider messages > gnosis gnosis-rpc.publicnode.com: range-limit [0.10ms]
+(pass) error classification on recorded provider messages > gnosis public.1rpc.io: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > gnosis gno-mainnet.gateway.tatum.io: rate-limit [0.09ms]
+(pass) error classification on recorded provider messages > gnosis gnosis.api.pocket.network: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > gnosis rpc.ankr.com: auth-required [0.04ms]
+(pass) error classification on recorded provider messages > gnosis gnosis.blockpi.network: auth-required [0.70ms]
+(pass) error classification on recorded provider messages > gnosis gnosis.oat.farm: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > gnosis gnosis-rpc.blockreq.com: archive-missing [0.05ms]
+(pass) error classification on recorded provider messages > gnosis gnosis-rpc.blockreq.com: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > gnosis 100.rpc.thirdweb.com: result-limit [0.02ms]
+(pass) error classification on recorded provider messages > arbitrum arb1.arbitrum.io: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum public.1rpc.io: unsupported [0.02ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum-one-public.nodies.app: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum-one.public.blastapi.io: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum-one-rpc.publicnode.com: archive-missing [0.04ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum.meowrpc.com: unsupported [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum.drpc.org: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum.api.onfinality.io: rate-limit [0.02ms]
+(pass) error classification on recorded provider messages > arbitrum arb-one-mainnet.gateway.tatum.io: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum arb-one.api.pocket.network: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum public-arb-mainnet.fastnode.io: http [0.04ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum-one.rpc.sentio.xyz: range-limit [0.05ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum-one-mainnet.gateway.tatum.io: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > arbitrum rpc-arbitrum.blockmachine.io: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum arbitrum-one-rpc.blockreq.com: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > arbitrum 42161.rpc.thirdweb.com: result-limit [0.02ms]
+(pass) error classification on recorded provider messages > polygon public.blazingnode.com: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > polygon public.blazingnode.com: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > polygon rpc-mainnet.matic.quiknode.pro: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > polygon polygon-public.nodies.app: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > polygon polygon-mainnet.public.blastapi.io: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > polygon polygon-bor-rpc.publicnode.com: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > polygon polygon-bor-rpc.publicnode.com: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > polygon polygon.api.onfinality.io: rate-limit [0.01ms]
+(pass) error classification on recorded provider messages > polygon polygon.drpc.org: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > polygon polygon-mainnet.gateway.tatum.io: range-limit [0.05ms]
+(pass) error classification on recorded provider messages > polygon poly.api.pocket.network: range-limit [0.05ms]
+(pass) error classification on recorded provider messages > polygon matic.rpc.sentio.xyz: range-limit [0.05ms]
+(pass) error classification on recorded provider messages > polygon rpc-polygon.blockmachine.io: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > polygon polygon-mainnet.rpc.thyme.sh: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > polygon polygon-bor-rpc.blockreq.com: archive-missing [0.05ms]
+(pass) error classification on recorded provider messages > polygon api.blockvectra.com: other [0.07ms]
+(pass) error classification on recorded provider messages > polygon 137.rpc.thirdweb.com: result-limit [0.02ms]
+(pass) error classification on recorded provider messages > optimism mainnet.optimism.io: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > optimism optimism-mainnet.public.blastapi.io: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > optimism optimism-public.nodies.app: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > optimism optimism.public.blockpi.network: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > optimism optimism.api.onfinality.io: rate-limit [0.02ms]
+(pass) error classification on recorded provider messages > optimism optimism-rpc.publicnode.com: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > optimism api.zan.top: auth-required [0.02ms]
+(pass) error classification on recorded provider messages > optimism optimism.drpc.org: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > optimism optimism-mainnet.gateway.tatum.io: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > optimism op.api.pocket.network: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > optimism op.api.pocket.network: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > optimism public-op-mainnet.fastnode.io: archive-missing [0.01ms]
+(pass) error classification on recorded provider messages > optimism optimism.rpc.sentio.xyz: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > optimism rpc-optimism.blockmachine.io: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > optimism optimism-mainnet.rpc.thyme.sh: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > optimism optimism-rpc.blockreq.com: archive-missing [0.04ms]
+(pass) error classification on recorded provider messages > optimism 10.rpc.thirdweb.com: result-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-rpc.publicnode.com: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > ethereum cloudflare-eth.com: other [0.03ms]
+(pass) error classification on recorded provider messages > ethereum eth-mainnet.public.blastapi.io: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-public.nodies.app: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum ethereum.public.blockpi.network: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum rpc.eth.gateway.fm: auth-required [0.05ms]
+(pass) error classification on recorded provider messages > ethereum eth.meowrpc.com: unsupported [0.03ms]
+(pass) error classification on recorded provider messages > ethereum eth.drpc.org: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum api.zan.top: unsupported [0.03ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-mainnet.gateway.tatum.io: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-mainnet.gateway.tatum.io: rate-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum eth.api.onfinality.io: rate-limit [0.01ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-json-rpc.stakely.io: unsupported [0.02ms]
+(pass) error classification on recorded provider messages > ethereum eth.api.pocket.network: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum mainnet.rpc.sentio.xyz: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > ethereum rpc-eth.blockmachine.io: range-limit [0.03ms]
+(pass) error classification on recorded provider messages > ethereum rpc-eth.blockmachine.io: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > ethereum rpc.driftguard.live: blocked [0.01ms]
+(pass) error classification on recorded provider messages > ethereum eth.blocktailor.com: other [0.01ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-mainnet.rpc.thyme.sh: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > ethereum ethras.org: http [0.02ms]
+(pass) error classification on recorded provider messages > ethereum api.mycryptoapi.com: auth-required [0.05ms]
+(pass) error classification on recorded provider messages > ethereum ethereum-rpc.blockreq.com: archive-missing [0.03ms]
+(pass) error classification on recorded provider messages > ethereum api.blockvectra.com: unsupported [0.02ms]
+(pass) error classification on recorded provider messages > ethereum 1.rpc.thirdweb.com: result-limit [0.01ms]
+(pass) error classification on recorded provider messages > sepolia eth-sepolia.public.blastapi.io: auth-required [0.03ms]
+(pass) error classification on recorded provider messages > sepolia ethereum-sepolia-rpc.publicnode.com: other [0.01ms]
+(pass) error classification on recorded provider messages > sepolia ethereum-sepolia-public.nodies.app: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > sepolia 0xrpc.io: other [0.02ms]
+(pass) error classification on recorded provider messages > sepolia ethereum-sepolia.gateway.tatum.io: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > sepolia eth-sepolia-testnet.api.pocket.network: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > sepolia sepolia.rpc.sentio.xyz: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > sepolia ethereum-sepolia.rpc.thyme.sh: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > sepolia rpc.sepolia.ethpandaops.io: range-limit [0.02ms]
+(pass) error classification on recorded provider messages > sepolia sepolia.drpc.org: auth-required [0.02ms]
+(pass) error classification on recorded provider messages > sepolia ethereum-sepolia-rpc.blockreq.com: range-limit [0.04ms]
+(pass) error classification on recorded provider messages > sepolia ethereum-sepolia-rpc.blockreq.com: archive-missing [0.02ms]
+(pass) error classification on recorded provider messages > limit hints [0.45ms]
+(pass) error classification on recorded provider messages > rate limit wins over other words when HTTP 429 [0.09ms]
+(pass) error classification on recorded provider messages > Cloudflare challenge page is "blocked" [0.16ms]
+(pass) error classification on recorded provider messages > successful result is parsed [0.17ms]
+(pass) error classification on recorded provider messages > retry-after [0.10ms]
+(pass) endpoint list filtering > credentials, templates, relays and demo keys are excluded [0.56ms]
+(pass) endpoint list filtering > chainlist entries (object and string forms) are deduplicated [1.49ms]
+(pass) max-range binary search > finds exact limit 1 [0.75ms]
+(pass) max-range binary search > finds exact limit 50 [0.04ms]
+(pass) max-range binary search > finds exact limit 100 [0.03ms]
+(pass) max-range binary search > finds exact limit 800 [0.06ms]
+(pass) max-range binary search > finds exact limit 1000 [0.02ms]
+(pass) max-range binary search > finds exact limit 2000 [0.02ms]
+(pass) max-range binary search > finds exact limit 3333 [0.06ms]
+(pass) max-range binary search > finds exact limit 10000 [0.05ms]
+(pass) max-range binary search > finds exact limit 50000 [0.02ms]
+(pass) max-range binary search > finds exact limit 123457 [0.06ms]
+(pass) max-range binary search > whole history accepted is reported as unbounded [0.17ms]
+(pass) max-range binary search > nothing accepted [0.13ms]
+(pass) max-range binary search > percentile [0.11ms]
+(pass) deploy block bisection > finds first block with code [0.28ms]
+(pass) deploy block bisection > reports missing archive state [0.11ms]
+(pass) wallet retriever > halves on range errors and gets the exact set [25.80ms]
+(pass) wallet retriever > falls back to the next endpoint when one has no archive [12.81ms]
+(pass) wallet retriever > retries transient 502s and 429s without skipping a window [7.98ms]
+(pass) wallet retriever > a silently pruned endpoint returns too few logs, which the set comparison catches [1.58ms]
+(pass) wallet retriever > resumes from a saved checkpoint without gaps or duplicates [50.57ms]
+(pass) wallet retriever > reports failure when every endpoint refuses [0.55ms]
+(pass) set comparison > tx hash mismatches and missing tx hashes are separated [0.21ms]
+(pass) indexer parsing and paging (recorded bodies) > Blockscout v2 page with empty transaction_hash rows [2.24ms]
+(pass) indexer parsing and paging (recorded bodies) > etherscan-compatible paging continues past a 100-result cap [6.40ms]
+(pass) indexer parsing and paging (recorded bodies) > etherscan error body [0.21ms]
+(pass) indexer parsing and paging (recorded bodies) > v2 paging follows next_page_params and stops on Cloudflare [1.02ms]
+
+test/worker.test.ts:
+(pass) sdk scan > preserves sparse sender-known matches with batch size 0 [26.29ms]
+(pass) sdk scan > returns no matches with batch size 0 [23.50ms]
+(pass) sdk scan > preserves duplicate input matches with batch size 0 [8.67ms]
+(pass) sdk scan > preserves sparse sender-known matches with batch size 1 [24.94ms]
+(pass) sdk scan > returns no matches with batch size 1 [22.12ms]
+(pass) sdk scan > preserves duplicate input matches with batch size 1 [10.01ms]
+(pass) sdk scan > preserves sparse sender-known matches with batch size 5 [23.60ms]
+(pass) sdk scan > returns no matches with batch size 5 [21.70ms]
+(pass) sdk scan > preserves duplicate input matches with batch size 5 [9.68ms]
+(pass) sdk scan > preserves sparse sender-known matches with batch size 100 [23.20ms]
+(pass) sdk scan > returns no matches with batch size 100 [22.96ms]
+(pass) sdk scan > preserves duplicate input matches with batch size 100 [8.11ms]
+(pass) sdk scan > rejects a view-tag hit whose stealth address differs [3.79ms]
+(pass) sdk scan > handles empty full and incremental inputs [0.36ms]
+(pass) sdk scan > rejects invalid batch sizes instead of looping [0.25ms]
+(pass) crypto scan > preserves sparse sender-known matches with batch size 0 [23.60ms]
+(pass) crypto scan > returns no matches with batch size 0 [21.48ms]
+(pass) crypto scan > preserves duplicate input matches with batch size 0 [9.69ms]
+(pass) crypto scan > preserves sparse sender-known matches with batch size 1 [23.00ms]
+(pass) crypto scan > returns no matches with batch size 1 [23.17ms]
+(pass) crypto scan > preserves duplicate input matches with batch size 1 [8.12ms]
+(pass) crypto scan > preserves sparse sender-known matches with batch size 5 [24.41ms]
+(pass) crypto scan > returns no matches with batch size 5 [21.68ms]
+(pass) crypto scan > preserves duplicate input matches with batch size 5 [9.69ms]
+(pass) crypto scan > preserves sparse sender-known matches with batch size 100 [23.05ms]
+(pass) crypto scan > returns no matches with batch size 100 [22.95ms]
+(pass) crypto scan > preserves duplicate input matches with batch size 100 [8.27ms]
+(pass) crypto scan > rejects a view-tag hit whose stealth address differs [2.00ms]
+(pass) crypto scan > handles empty full and incremental inputs [0.04ms]
+(pass) crypto scan > rejects invalid batch sizes instead of looping [0.09ms]
+(pass) noble scan > preserves sparse sender-known matches with batch size 0 [25.35ms]
+(pass) noble scan > returns no matches with batch size 0 [21.80ms]
+(pass) noble scan > preserves duplicate input matches with batch size 0 [9.66ms]
+(pass) noble scan > preserves sparse sender-known matches with batch size 1 [23.35ms]
+(pass) noble scan > returns no matches with batch size 1 [22.98ms]
+(pass) noble scan > preserves duplicate input matches with batch size 1 [8.41ms]
+(pass) noble scan > preserves sparse sender-known matches with batch size 5 [24.79ms]
+(pass) noble scan > returns no matches with batch size 5 [21.91ms]
+(pass) noble scan > preserves duplicate input matches with batch size 5 [8.06ms]
+(pass) noble scan > preserves sparse sender-known matches with batch size 100 [24.86ms]
+(pass) noble scan > returns no matches with batch size 100 [21.81ms]
+(pass) noble scan > preserves duplicate input matches with batch size 100 [9.69ms]
+(pass) noble scan > rejects a view-tag hit whose stealth address differs [2.02ms]
+(pass) noble scan > handles empty full and incremental inputs [0.03ms]
+(pass) noble scan > rejects invalid batch sizes instead of looping [0.08ms]
+(pass) wasm scan > preserves sparse sender-known matches with batch size 0 [16.12ms]
+(pass) wasm scan > returns no matches with batch size 0 [5.67ms]
+(pass) wasm scan > preserves duplicate input matches with batch size 0 [3.56ms]
+(pass) wasm scan > preserves sparse sender-known matches with batch size 1 [7.22ms]
+(pass) wasm scan > returns no matches with batch size 1 [5.41ms]
+(pass) wasm scan > preserves duplicate input matches with batch size 1 [3.37ms]
+(pass) wasm scan > preserves sparse sender-known matches with batch size 5 [7.00ms]
+(pass) wasm scan > returns no matches with batch size 5 [5.41ms]
+(pass) wasm scan > preserves duplicate input matches with batch size 5 [3.47ms]
+(pass) wasm scan > preserves sparse sender-known matches with batch size 100 [6.85ms]
+(pass) wasm scan > returns no matches with batch size 100 [5.34ms]
+(pass) wasm scan > preserves duplicate input matches with batch size 100 [3.29ms]
+(pass) wasm scan > rejects a view-tag hit whose stealth address differs [0.86ms]
+(pass) wasm scan > handles empty full and incremental inputs [0.02ms]
+(pass) wasm scan > rejects invalid batch sizes instead of looping [0.04ms]
+(pass) native scan > preserves sparse sender-known matches with batch size 0 [31.56ms]
+(pass) native scan > returns no matches with batch size 0 [2.16ms]
+(pass) native scan > preserves duplicate input matches with batch size 0 [1.45ms]
+(pass) native scan > preserves sparse sender-known matches with batch size 1 [3.02ms]
+(pass) native scan > returns no matches with batch size 1 [2.19ms]
+(pass) native scan > preserves duplicate input matches with batch size 1 [1.35ms]
+(pass) native scan > preserves sparse sender-known matches with batch size 5 [2.71ms]
+(pass) native scan > returns no matches with batch size 5 [2.06ms]
+(pass) native scan > preserves duplicate input matches with batch size 5 [1.39ms]
+(pass) native scan > preserves sparse sender-known matches with batch size 100 [2.66ms]
+(pass) native scan > returns no matches with batch size 100 [2.05ms]
+(pass) native scan > preserves duplicate input matches with batch size 100 [1.29ms]
+(pass) native scan > rejects a view-tag hit whose stealth address differs [0.35ms]
+(pass) native scan > handles empty full and incremental inputs [0.02ms]
+(pass) native scan > rejects invalid batch sizes instead of looping [0.08ms]
+(pass) exact ordered identity verification > rejects missing and extra matches [0.33ms]
+(pass) exact ordered identity verification > rejects wrong identities and incorrect ordering [0.22ms]
+(pass) exact ordered identity verification > rejects changed duplicate multiplicities even when total count matches [0.09ms]
+(pass) exact ordered identity verification > detects a silent SDK omission using original expected identities [3.08ms]
+(pass) crypto error propagation > does not swallow malformed metadata [0.28ms]
+(pass) crypto error propagation > does not swallow malformed curve points or unsupported schemes [0.27ms]
+(pass) noble error propagation > does not swallow malformed metadata [0.04ms]
+(pass) noble error propagation > does not swallow malformed curve points or unsupported schemes [0.08ms]
+(pass) wasm error propagation > does not swallow malformed metadata [0.03ms]
+(pass) wasm error propagation > does not swallow malformed curve points or unsupported schemes [0.17ms]
+(pass) native error propagation > does not swallow malformed metadata [0.03ms]
+(pass) native error propagation > does not swallow malformed curve points or unsupported schemes [0.09ms]
+(pass) multi-threaded scan > noble on 2 threads keeps matches in order [178.25ms]
+(pass) multi-threaded scan > noble on 5 threads keeps matches in order [173.23ms]
+(pass) multi-threaded scan > wasm on 2 threads keeps matches in order [72.60ms]
+(pass) multi-threaded scan > wasm on 5 threads keeps matches in order [114.18ms]
+(pass) multi-threaded scan > native on 2 threads keeps matches in order [76.54ms]
+(pass) multi-threaded scan > native on 5 threads keeps matches in order [105.82ms]
+(pass) multi-threaded scan > propagates a thread error [31.90ms]
+
+test/paged-discovery.test.ts:
+(pass) expected-identity oracle > matches identities from the shared fixture loader [0.39ms]
+(pass) synthetic chain > rejects a fixture whose bytes differ from the manifest [7.61ms]
+(pass) synthetic chain > eth_getLogs returns exactly the fixture logs of the requested block range [28.88ms]
+(pass) synthetic chain > filters by announcer address and topic, and respects the head [8.98ms]
+(pass) synthetic chain > reports metadata amounts and unknown hashes [2.77ms]
+(pass) candidate verification > confirms receipt inclusion and balance for a real match [3.52ms]
+(pass) candidate verification > rejects candidates the chain does not confirm [7.56ms]
+(pass) paged wallet sync > sdk cold sync with 1-block pages finds every payment [695.12ms]
+(pass) paged wallet sync > sdk cold sync with 2-block pages finds every payment [667.86ms]
+(pass) paged wallet sync > sdk cold sync with 5-block pages finds every payment [664.07ms]
+(pass) paged wallet sync > crypto cold sync with 1-block pages finds every payment [671.50ms]
+(pass) paged wallet sync > crypto cold sync with 2-block pages finds every payment [643.58ms]
+(pass) paged wallet sync > crypto cold sync with 5-block pages finds every payment [632.16ms]
+(pass) paged wallet sync > catch-up from a checkpoint scans only new blocks and ends with every payment [682.91ms]
+(pass) paged wallet sync > rejects a cache that belongs to another recipient [1.04ms]
+(pass) paged wallet sync > zero-match fixture returns no candidates and no verification calls [294.90ms]
+(pass) paged wallet sync > identity verification rejects a missing payment [0.18ms]
+(pass) link emulator > passes traffic through and counts payload bytes including headers [4.59ms]
+(pass) link emulator > adds round-trip latency [165.20ms]
+(pass) link emulator > limits downlink bandwidth [620.67ms]
+(pass) summary output > renders a CSV row per sample [672.36ms]
+(pass) repeat plan > matrix expands to distinct settings with fixtures resolved against the root [0.08ms]
+(pass) repeat plan > shuffled order is a seeded permutation per repetition block [0.63ms]
+(pass) repeat plan > spread reports median, min and max and ignores missing values [0.24ms]
+
+test/figures.test.ts:
+(pass) figures and tables > parseCsv handles quoted fields, commas and doubled quotes [0.23ms]
+(pass) figures and tables > every table renders from recorded data [91.09ms]
+(pass) figures and tables > every figure is a standalone SVG with light and dark styles [44.51ms]
+
+ 323 pass
+ 0 fail
+ 759 expect() calls
+Ran 323 tests across 5 files. [16.10s]
+
+=== control-before (2026-11-28T00:27:11+00:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/stealth-scan-phase2/work/fixtures,~/scan-fixtures" --output "~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/control-before" --sizes "100000" --cases zero --engines crypto --modes full --repetitions "1"
+Fixture 100000-zero: reused ~/stealth-scan-phase2/work/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: crypto/full/1t (1/1)
+┌───┬────────┬──────┬────────┬──────┬─────────┬─────────┬──────┬────────────┬──────────────┐
+│   │ count  │ case │ engine │ mode │ threads │ matches │ runs │ median ms  │ peak RSS MiB │
+├───┼────────┼──────┼────────┼──────┼─────────┼─────────┼──────┼────────────┼──────────────┤
+│ 0 │ 100000 │ zero │ crypto │ full │ 1       │ 0       │ 1    │ 166541.237 │ 498.19       │
+└───┴────────┴──────┴────────┴──────┴─────────┴─────────┴──────┴────────────┴──────────────┘
+Verified 1 isolated samples. Results: ~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/control-before
+
+=== sdk-crypto-noble (2026-11-28T00:30:18+00:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/stealth-scan-phase2/work/fixtures,~/scan-fixtures" --output "~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/sdk-crypto-noble" --sizes "100000" --engines "sdk,crypto,noble" --modes full --repetitions "1"
+Fixture 100000-zero: reused ~/stealth-scan-phase2/work/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: sdk/full/1t (1/1)
+Scanning 100000 zero: crypto/full/1t (1/1)
+Scanning 100000 zero: noble/full/1t (1/1)
+Fixture 100000-sparse: reused ~/stealth-scan-phase2/work/fixtures/100000-sparse (SHA256 verified against manifest and pinned digest)
+Scanning 100000 sparse: sdk/full/1t (1/1)
+Scanning 100000 sparse: crypto/full/1t (1/1)
+Scanning 100000 sparse: noble/full/1t (1/1)
+┌───┬────────┬────────┬────────┬──────┬─────────┬─────────┬──────┬────────────┬──────────────┐
+│   │ count  │ case   │ engine │ mode │ threads │ matches │ runs │ median ms  │ peak RSS MiB │
+├───┼────────┼────────┼────────┼──────┼─────────┼─────────┼──────┼────────────┼──────────────┤
+│ 0 │ 100000 │ zero   │ sdk    │ full │ 1       │ 0       │ 1    │ 171034.485 │ 496.66       │
+│ 1 │ 100000 │ zero   │ crypto │ full │ 1       │ 0       │ 1    │ 172262.887 │ 502.32       │
+│ 2 │ 100000 │ zero   │ noble  │ full │ 1       │ 0       │ 1    │ 173795.008 │ 494.6        │
+│ 3 │ 100000 │ sparse │ sdk    │ full │ 1       │ 100     │ 1    │ 178794.193 │ 495.75       │
+│ 4 │ 100000 │ sparse │ crypto │ full │ 1       │ 100     │ 1    │ 176791.023 │ 500.66       │
+│ 5 │ 100000 │ sparse │ noble  │ full │ 1       │ 100     │ 1    │ 176519.005 │ 493.33       │
+└───┴────────┴────────┴────────┴──────┴─────────┴─────────┴──────┴────────────┴──────────────┘
+Verified 6 isolated samples. Results: ~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/sdk-crypto-noble
+
+=== fast-small (2026-11-28T00:49:52+00:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/stealth-scan-phase2/work/fixtures,~/scan-fixtures" --output "~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/fast-small" --sizes "100000" --engines "wasm,native" --modes full --threads "1,2,4" --repetitions "3"
+Fixture 100000-zero: reused ~/stealth-scan-phase2/work/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: wasm/full/1t (1/3)
+Scanning 100000 zero: wasm/full/1t (2/3)
+Scanning 100000 zero: wasm/full/1t (3/3)
+Scanning 100000 zero: wasm/full/2t (1/3)
+Scanning 100000 zero: wasm/full/2t (2/3)
+Scanning 100000 zero: wasm/full/2t (3/3)
+Scanning 100000 zero: wasm/full/4t (1/3)
+Scanning 100000 zero: wasm/full/4t (2/3)
+Scanning 100000 zero: wasm/full/4t (3/3)
+Scanning 100000 zero: native/full/1t (1/3)
+Scanning 100000 zero: native/full/1t (2/3)
+Scanning 100000 zero: native/full/1t (3/3)
+Scanning 100000 zero: native/full/2t (1/3)
+Scanning 100000 zero: native/full/2t (2/3)
+Scanning 100000 zero: native/full/2t (3/3)
+Scanning 100000 zero: native/full/4t (1/3)
+Scanning 100000 zero: native/full/4t (2/3)
+Scanning 100000 zero: native/full/4t (3/3)
+Fixture 100000-sparse: reused ~/stealth-scan-phase2/work/fixtures/100000-sparse (SHA256 verified against manifest and pinned digest)
+Scanning 100000 sparse: wasm/full/1t (1/3)
+Scanning 100000 sparse: wasm/full/1t (2/3)
+Scanning 100000 sparse: wasm/full/1t (3/3)
+Scanning 100000 sparse: wasm/full/2t (1/3)
+Scanning 100000 sparse: wasm/full/2t (2/3)
+Scanning 100000 sparse: wasm/full/2t (3/3)
+Scanning 100000 sparse: wasm/full/4t (1/3)
+Scanning 100000 sparse: wasm/full/4t (2/3)
+Scanning 100000 sparse: wasm/full/4t (3/3)
+Scanning 100000 sparse: native/full/1t (1/3)
+Scanning 100000 sparse: native/full/1t (2/3)
+Scanning 100000 sparse: native/full/1t (3/3)
+Scanning 100000 sparse: native/full/2t (1/3)
+Scanning 100000 sparse: native/full/2t (2/3)
+Scanning 100000 sparse: native/full/2t (3/3)
+Scanning 100000 sparse: native/full/4t (1/3)
+Scanning 100000 sparse: native/full/4t (2/3)
+Scanning 100000 sparse: native/full/4t (3/3)
+┌────┬────────┬────────┬────────┬──────┬─────────┬─────────┬──────┬───────────┬──────────────┐
+│    │ count  │ case   │ engine │ mode │ threads │ matches │ runs │ median ms │ peak RSS MiB │
+├────┼────────┼────────┼────────┼──────┼─────────┼─────────┼──────┼───────────┼──────────────┤
+│  0 │ 100000 │ zero   │ wasm   │ full │ 1       │ 0       │ 3    │ 43084.768 │ 483.08       │
+│  1 │ 100000 │ zero   │ wasm   │ full │ 2       │ 0       │ 3    │ 22230.263 │ 450.42       │
+│  2 │ 100000 │ zero   │ wasm   │ full │ 4       │ 0       │ 3    │ 13356.116 │ 455.39       │
+│  3 │ 100000 │ zero   │ native │ full │ 1       │ 0       │ 3    │ 16885.233 │ 502.01       │
+│  4 │ 100000 │ zero   │ native │ full │ 2       │ 0       │ 3    │ 8286.321  │ 481.34       │
+│  5 │ 100000 │ zero   │ native │ full │ 4       │ 0       │ 3    │ 4893.546  │ 491.18       │
+│  6 │ 100000 │ sparse │ wasm   │ full │ 1       │ 100     │ 3    │ 43150.258 │ 469.51       │
+│  7 │ 100000 │ sparse │ wasm   │ full │ 2       │ 100     │ 3    │ 22216.636 │ 476.25       │
+│  8 │ 100000 │ sparse │ wasm   │ full │ 4       │ 100     │ 3    │ 13175.088 │ 445.6        │
+│  9 │ 100000 │ sparse │ native │ full │ 1       │ 100     │ 3    │ 16724.601 │ 501.7        │
+│ 10 │ 100000 │ sparse │ native │ full │ 2       │ 100     │ 3    │ 8286.49   │ 492.09       │
+│ 11 │ 100000 │ sparse │ native │ full │ 4       │ 100     │ 3    │ 5046.415  │ 451.31       │
+└────┴────────┴────────┴────────┴──────┴─────────┴─────────┴──────┴───────────┴──────────────┘
+Verified 36 isolated samples. Results: ~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/fast-small
+
+=== fast-large (2026-11-28T01:12:47+00:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/stealth-scan-phase2/work/fixtures,~/scan-fixtures" --output "~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/fast-large" --sizes "1000000" --engines "wasm,native" --modes full --threads "1,2,4" --repetitions "1"
+Fixture 1000000-zero: reused ~/stealth-scan-phase2/work/fixtures/1000000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 1000000 zero: wasm/full/1t (1/1)
+Scanning 1000000 zero: wasm/full/2t (1/1)
+Scanning 1000000 zero: wasm/full/4t (1/1)
+Scanning 1000000 zero: native/full/1t (1/1)
+Scanning 1000000 zero: native/full/2t (1/1)
+Scanning 1000000 zero: native/full/4t (1/1)
+Fixture 1000000-sparse: reused ~/scan-fixtures/1000000-sparse (SHA256 verified against manifest and pinned digest)
+Scanning 1000000 sparse: wasm/full/1t (1/1)
+Scanning 1000000 sparse: wasm/full/2t (1/1)
+Scanning 1000000 sparse: wasm/full/4t (1/1)
+Scanning 1000000 sparse: native/full/1t (1/1)
+Scanning 1000000 sparse: native/full/2t (1/1)
+Scanning 1000000 sparse: native/full/4t (1/1)
+┌────┬─────────┬────────┬────────┬──────┬─────────┬─────────┬──────┬────────────┬──────────────┐
+│    │ count   │ case   │ engine │ mode │ threads │ matches │ runs │ median ms  │ peak RSS MiB │
+├────┼─────────┼────────┼────────┼──────┼─────────┼─────────┼──────┼────────────┼──────────────┤
+│  0 │ 1000000 │ zero   │ wasm   │ full │ 1       │ 0       │ 1    │ 425348.123 │ 3788         │
+│  1 │ 1000000 │ zero   │ wasm   │ full │ 2       │ 0       │ 1    │ 221861.842 │ 2892.19      │
+│  2 │ 1000000 │ zero   │ wasm   │ full │ 4       │ 0       │ 1    │ 139333.995 │ 2810.92      │
+│  3 │ 1000000 │ zero   │ native │ full │ 1       │ 0       │ 1    │ 165078.394 │ 3976.51      │
+│  4 │ 1000000 │ zero   │ native │ full │ 2       │ 0       │ 1    │ 84904.41   │ 3038.8       │
+│  5 │ 1000000 │ zero   │ native │ full │ 4       │ 0       │ 1    │ 51206.462  │ 3112.1       │
+│  6 │ 1000000 │ sparse │ wasm   │ full │ 1       │ 1000    │ 1    │ 437260.409 │ 3776.58      │
+│  7 │ 1000000 │ sparse │ wasm   │ full │ 2       │ 1000    │ 1    │ 223576.462 │ 2799.5       │
+│  8 │ 1000000 │ sparse │ wasm   │ full │ 4       │ 1000    │ 1    │ 143433.219 │ 2844.47      │
+│  9 │ 1000000 │ sparse │ native │ full │ 1       │ 1000    │ 1    │ 165520.513 │ 3979.5       │
+│ 10 │ 1000000 │ sparse │ native │ full │ 2       │ 1000    │ 1    │ 85070.527  │ 2985.38      │
+│ 11 │ 1000000 │ sparse │ native │ full │ 4       │ 1000    │ 1    │ 51774.279  │ 3141.97      │
+└────┴─────────┴────────┴────────┴──────┴─────────┴─────────┴──────┴────────────┴──────────────┘
+Verified 12 isolated samples. Results: ~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/fast-large
+
+=== control-after (2026-11-28T02:31:20+00:00) ===
+$ bun run src/scan-cost/cli.ts --reuse-fixtures "~/stealth-scan-phase2/work/fixtures,~/scan-fixtures" --output "~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/control-after" --sizes "100000" --cases zero --engines crypto --modes full --repetitions "1"
+Fixture 100000-zero: reused ~/stealth-scan-phase2/work/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)
+Scanning 100000 zero: crypto/full/1t (1/1)
+┌───┬────────┬──────┬────────┬──────┬─────────┬─────────┬──────┬────────────┬──────────────┐
+│   │ count  │ case │ engine │ mode │ threads │ matches │ runs │ median ms  │ peak RSS MiB │
+├───┼────────┼──────┼────────┼──────┼─────────┼─────────┼──────┼────────────┼──────────────┤
+│ 0 │ 100000 │ zero │ crypto │ full │ 1       │ 0       │ 1    │ 175174.889 │ 493.32       │
+└───┴────────┴──────┴────────┴──────┴─────────┴─────────┴──────┴────────────┴──────────────┘
+Verified 1 isolated samples. Results: ~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z/control-after
+ 02:34:36 up 74 days, 19:53,  0 users,  load average: 1.09, 1.57, 1.71
+
+Results: ~/erc5564-scan-engines/results/scan-engines/turing-node-1-20261128T002653Z

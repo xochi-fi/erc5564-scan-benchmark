@@ -183,3 +183,57 @@ export const feedBytesLog = () => readFileSync(path('data/shared-feed/autoresear
   .map(line => JSON.parse(line) as { run: number; description: string; status: string; metric: number; metrics: Record<string, string> });
 export const feedSummary = (host = '') =>
   readJson<{ summaries: Record<FeedKey, FeedSummary> }>(`data/shared-feed/${host ? `${host}/` : ''}summary.json`).summaries;
+
+// ---- scan engines -------------------------------------------------------------
+
+export const ENGINE_HOSTS = ['bazzite', 'turing-node-1'] as const;
+export const ENGINE_RUNS = ['control-before', 'sdk-crypto-noble', 'fast-small', 'fast-large', 'control-after'] as const;
+export interface EngineRow {
+  host: string; run: string; count: number; case: 'zero' | 'sparse'; engine: string; threads: number;
+  samples: number; medianMs: number; minMs: number; maxMs: number; cpuMsMedian: number;
+}
+/** Every recorded scan-engine scenario, from each run's samples.jsonl. */
+export function scanEngines(): EngineRow[] {
+  return ENGINE_HOSTS.flatMap(host => ENGINE_RUNS.flatMap(run => {
+    const samples = readFileSync(path(`data/scan-cost/engines/${host}/${run}/samples.jsonl`), 'utf8').trim().split('\n').map(l => JSON.parse(l));
+    const groups = new Map<string, any[]>();
+    for (const s of samples) {
+      if (s.verified !== true) throw new Error(`scan-engines: unverified sample in ${host}/${run}`);
+      const key = JSON.stringify([s.count, s.matchEvery, s.engine, s.threads ?? 1]);
+      groups.set(key, [...(groups.get(key) ?? []), s]);
+    }
+    return [...groups.values()].map(group => {
+      const first = group[0]!;
+      const times = spreadOf(group.map(s => s.scanMs as number));
+      return {
+        host, run, count: first.count, case: first.matchEvery === 0 ? 'zero' : 'sparse', engine: first.engine, threads: first.threads ?? 1,
+        samples: group.length, medianMs: times.median, minMs: times.min, maxMs: times.max,
+        cpuMsMedian: median(group.map(s => (s.cpuUserMs as number) + (s.cpuSystemMs as number)))!,
+      } as EngineRow;
+    });
+  }));
+}
+
+/** Seconds per announcement for one engine and thread count: the median over its 100k and 1M, zero and sparse scans. */
+export function perAnnouncement(rows: readonly EngineRow[], host: string, engine: string, threads: number, cpu = false): number | null {
+  const values = rows.filter(r => r.host === host && !r.run.startsWith('control') && r.engine === engine && r.threads === threads)
+    .map(r => (cpu ? r.cpuMsMedian : r.medianMs) / 1000 / r.count);
+  return values.length === 0 ? null : median(values)!;
+}
+
+export interface EngineHeadline { host: string; sdk: number; wasm: number; native: number; best: { engine: string; threads: number; seconds: number } }
+/** Per host: SDK, single-thread WASM and native seconds per announcement, and the fastest wall-clock scenario. */
+export function engineHeadlines(): EngineHeadline[] {
+  const rows = scanEngines();
+  return ENGINE_HOSTS.map(host => {
+    const get = (engine: string, threads = 1) => {
+      const value = perAnnouncement(rows, host, engine, threads);
+      if (value === null) throw new Error(`scan-engines: ${host} has no ${engine}/${threads}t`);
+      return value;
+    };
+    const candidates = rows.filter(r => r.host === host && r.engine !== 'crypto' && r.engine !== 'sdk')
+      .map(r => ({ engine: r.engine, threads: r.threads, seconds: perAnnouncement(rows, host, r.engine, r.threads)! }));
+    const best = candidates.sort((a, b) => a.seconds - b.seconds)[0]!;
+    return { host, sdk: get('sdk'), wasm: get('wasm'), native: get('native'), best };
+  });
+}

@@ -1,0 +1,1 @@
+reused ~/CODE/stealth-scan-benchmark-20261119/results/baseline-100k-1m/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)

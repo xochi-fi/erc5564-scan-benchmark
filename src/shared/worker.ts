@@ -19,14 +19,24 @@ import {
   type WorkerOptions,
 } from './model.ts';
 import { memorySnapshot } from './host.ts';
+import { curveFor, FAST_ENGINES, scanRange, type FastEngine } from './engines.ts';
+import { startPool } from './scan-pool.ts';
 
 const workerOptionsSchema = z.object({
   fixtureDir: z.string().min(1),
-  engine: z.enum(['sdk', 'crypto']),
+  engine: z.enum(['sdk', 'crypto', ...FAST_ENGINES]),
   batchSize: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
   warmupCount: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER),
   repetition: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
-}).strict();
+  threads: z.number().int().min(1).max(64).default(1),
+}).strict().refine(
+  options => options.threads === 1 || (isFastEngine(options.engine) && options.batchSize === 0 && options.warmupCount === 0),
+  'threads > 1 needs a fast engine, batch size 0 and no warmup',
+);
+
+export function isFastEngine(engine: Engine): engine is FastEngine {
+  return (FAST_ENGINES as readonly string[]).includes(engine);
+}
 
 export function announcementIdentity(log: AnnouncementLog): string {
   return JSON.stringify([log.blockHash, log.transactionHash, log.logIndex]);
@@ -93,6 +103,14 @@ export async function scanAnnouncements(
 
   const matches: AnnouncementLog[] = [];
   const step = batchSize === 0 ? announcements.length : batchSize;
+  if (isFastEngine(engine)) {
+    const curve = curveFor(engine);
+    const indices: number[] = [];
+    for (let start = 0; start < announcements.length; start += step) {
+      scanRange(curve, announcements, recipient, start, Math.min(start + step, announcements.length), indices);
+    }
+    return indices.map(index => announcements[index]!);
+  }
   if (engine === 'crypto') {
     for (let start = 0; start < announcements.length; start += step) {
       scanCryptoRange(
@@ -117,6 +135,9 @@ async function environmentProvenance(): Promise<BenchmarkSample['environment']> 
   const dependencyNames = [
     '@scopelift/stealth-address-sdk',
     '@noble/secp256k1',
+    '@noble/hashes',
+    'tiny-secp256k1',
+    'secp256k1',
     'viem',
     'graphql-request',
   ];
@@ -154,6 +175,7 @@ async function environmentProvenance(): Promise<BenchmarkSample['environment']> 
 export async function runWorker(options: WorkerOptions): Promise<BenchmarkSample> {
   const validated = workerOptionsSchema.safeParse(options);
   if (!validated.success) throw new Error('Invalid worker options', { cause: validated.error });
+  const { threads } = validated.data;
   const environment = await environmentProvenance();
 
   Bun.gc(true);
@@ -174,15 +196,22 @@ export async function runWorker(options: WorkerOptions): Promise<BenchmarkSample
     );
   }
 
+  const setupStart = performance.now();
+  const pool = threads > 1 && isFastEngine(options.engine)
+    ? await startPool(options.engine, threads, announcements, manifest.recipient)
+    : null;
+  const threadSetupMs = pool === null ? 0 : performance.now() - setupStart;
+
   Bun.gc(true);
   const memoryBeforeScan = memorySnapshot();
   const cpuStart = process.cpuUsage();
   const scanStart = performance.now();
-  const actual = await scanAnnouncements(
-    announcements, manifest.recipient, options.engine, options.batchSize,
-  );
+  const actual = pool === null
+    ? await scanAnnouncements(announcements, manifest.recipient, options.engine, options.batchSize)
+    : (await pool.scan()).map(index => announcements[index]!);
   const scanMs = performance.now() - scanStart;
   const cpu = process.cpuUsage(cpuStart);
+  pool?.close();
   const processLifetimePeakRssBytes = process.resourceUsage().maxRSS * 1024;
   const memoryAfterScan = memorySnapshot();
 
@@ -203,6 +232,8 @@ export async function runWorker(options: WorkerOptions): Promise<BenchmarkSample
     engine: options.engine,
     mode: options.batchSize === 0 ? 'full' : 'incremental',
     batchSize: options.batchSize,
+    threads,
+    threadSetupMs,
     warmupCount,
     repetition: options.repetition,
     scanMs,

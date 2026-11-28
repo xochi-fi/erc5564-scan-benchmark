@@ -1,0 +1,1 @@
+reused ~/CODE/stealth-scan-phase2/work/fixtures/1000000-sparse (SHA256 verified against manifest and pinned digest)

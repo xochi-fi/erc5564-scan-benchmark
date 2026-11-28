@@ -6,6 +6,8 @@ import type { AnnouncementLog } from '@scopelift/stealth-address-sdk';
 import { generateFixture, loadFixture } from '../src/shared/fixtures.ts';
 import type { Engine, LoadedFixture } from '../src/shared/model.ts';
 import { announcementIdentity, assertMatches, scanAnnouncements } from '../src/shared/worker.ts';
+import { FAST_ENGINES } from '../src/shared/engines.ts';
+import { startPool } from '../src/shared/scan-pool.ts';
 
 let directory: string | undefined;
 let sparse: LoadedFixture;
@@ -41,7 +43,7 @@ function firstTwoMatches(): [AnnouncementLog, AnnouncementLog] {
   return [first, second];
 }
 
-const engines: Engine[] = ['sdk', 'crypto'];
+const engines: Engine[] = ['sdk', 'crypto', 'noble', 'wasm', 'native'];
 for (const engine of engines) {
   describe(`${engine} scan`, () => {
     for (const batchSize of [0, 1, 5, 100]) {
@@ -69,6 +71,12 @@ for (const engine of engines) {
         expect(actual).toHaveLength(4);
       });
     }
+
+    test('rejects a view-tag hit whose stealth address differs', async () => {
+      const [first] = firstTwoMatches();
+      const other = { ...first, stealthAddress: zero.announcements[0]!.stealthAddress };
+      expect(await scanAnnouncements([other], sparse.manifest.recipient, engine, 0)).toEqual([]);
+    });
 
     test('handles empty full and incremental inputs', async () => {
       for (const batchSize of [0, 3]) {
@@ -118,19 +126,49 @@ describe('exact ordered identity verification', () => {
   });
 });
 
-describe('crypto error propagation', () => {
-  test('does not swallow malformed metadata', async () => {
-    const [first] = firstTwoMatches();
-    await expect(scanAnnouncements([{ ...first, metadata: '0x' }], sparse.manifest.recipient, 'crypto', 0))
-      .rejects.toThrow('Invalid metadata format');
-  });
+for (const engine of ['crypto', ...FAST_ENGINES] as const) {
+  describe(`${engine} error propagation`, () => {
+    test('does not swallow malformed metadata', async () => {
+      const [first] = firstTwoMatches();
+      await expect(scanAnnouncements([{ ...first, metadata: '0x' }], sparse.manifest.recipient, engine, 0))
+        .rejects.toThrow('Invalid metadata format');
+    });
 
-  test('does not swallow malformed curve points or unsupported schemes', async () => {
+    test('does not swallow malformed curve points or unsupported schemes', async () => {
+      const [first] = firstTwoMatches();
+      await expect(scanAnnouncements([{ ...first, ephemeralPubKey: '0x00' }], sparse.manifest.recipient, engine, 1))
+        .rejects.toThrow();
+      await expect(scanAnnouncements([{ ...first, schemeId: 2n }], sparse.manifest.recipient, engine, 1))
+        .rejects.toThrow();
+    });
+  });
+}
+
+
+describe('multi-threaded scan', () => {
+  for (const engine of FAST_ENGINES) {
+    for (const threads of [2, 5]) {
+      test(`${engine} on ${threads} threads keeps matches in order`, async () => {
+        const pool = await startPool(engine, threads, sparse.announcements, sparse.manifest.recipient);
+        try {
+          expect(await pool.scan()).toEqual(sparse.manifest.expectedIndices);
+          expect(await pool.scan()).toEqual(sparse.manifest.expectedIndices);
+        } finally {
+          pool.close();
+        }
+      });
+    }
+  }
+
+  test('propagates a thread error', async () => {
     const [first] = firstTwoMatches();
-    await expect(scanAnnouncements([{ ...first, ephemeralPubKey: '0x00' }], sparse.manifest.recipient, 'crypto', 1))
-      .rejects.toThrow();
-    await expect(scanAnnouncements([{ ...first, schemeId: 2n }], sparse.manifest.recipient, 'crypto', 1))
-      .rejects.toThrow();
+    const pool = await startPool('wasm', 2, [first, { ...first, ephemeralPubKey: '0x00' }], sparse.manifest.recipient);
+    try {
+      // expect(...).rejects hangs on a promise settled from a worker message under bun test 1.4.4.
+      const error = await pool.scan().then(() => null, (cause: unknown) => cause);
+      expect(String(error)).toContain('scan thread failed');
+    } finally {
+      pool.close();
+    }
   });
 });
-

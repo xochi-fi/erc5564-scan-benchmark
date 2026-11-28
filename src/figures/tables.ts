@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedControls, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
-  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, spreadOf, type FeedKey, type FeedSummary, type Row,
+  bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, scanCost, scanEngines, perAnnouncement, spreadOf, type FeedKey, type FeedSummary, type Row,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -35,18 +35,23 @@ function table(header: string[], align: ('l' | 'r')[], rows: string[][]): string
 
 // ---- scan cost ----------------------------------------------------------------
 
-const SCAN_HOST_LABELS: Record<string, string> = {
-  Bazzite: 'Bazzite, P-core threads 0,2,4,6',
-  'Turing Pi': 'Turing node 1, Cortex-A76 cores 4–7',
+const ENGINE_LABELS: Record<string, string> = {
+  sdk: 'ScopeLift SDK', noble: 'noble, the SDK\'s curve in a lean loop', wasm: 'libsecp256k1 WASM', native: 'libsecp256k1 native',
 };
-function scanCostTable() {
-  return table(['Host', '100k before/after controls, s', '1M, s', '1M / 100k'], ['l', 'l', 'l', 'l'],
-    scanCost().map(h => {
-      const low = Math.min(h.before, h.after);
-      const high = Math.max(h.before, h.after);
-      return [SCAN_HOST_LABELS[h.host] ?? h.host, range(h.before.toFixed(3), h.after.toFixed(3), '–'), h.million.toFixed(3),
-        range((h.million / high).toFixed(2), (h.million / low).toFixed(2), '–')];
-    }));
+function scanEnginesTable() {
+  const rows = scanEngines();
+  const hosts = ['bazzite', 'turing-node-1'];
+  const sdk = hosts.map(host => perAnnouncement(rows, host, 'sdk', 1)!);
+  const out: string[][] = [];
+  for (const engine of ['sdk', 'noble', 'wasm', 'native']) {
+    for (const threads of [1, 2, 4]) {
+      const each = hosts.map(host => perAnnouncement(rows, host, engine, threads));
+      if (each.some(value => value === null)) continue;
+      out.push([ENGINE_LABELS[engine]!, String(threads),
+        ...each.flatMap((value, i) => [fixed(value! * 1e6, 1), `${fixed(sdk[i]! / value!, 1)}×`])]);
+    }
+  }
+  return table(['Engine', 'Threads', 'Bazzite, µs', 'Speed-up', 'Turing node 1, µs', 'Speed-up'], ['l', 'r', 'r', 'r', 'r', 'r'], out);
 }
 
 // ---- paged discovery ----------------------------------------------------------
@@ -357,7 +362,7 @@ function feedControlsTable() {
 // ---- writer -------------------------------------------------------------------
 
 const TABLES: Record<string, [file: string, render: () => string]> = {
-  'scan-cost': ['docs/scan-cost.md', scanCostTable],
+  'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
   'paged-catchup': ['docs/paged-discovery.md', pagedCatchupTable],
   'paged-single-controls': ['docs/paged-discovery.md', pagedSingleControlsTable],

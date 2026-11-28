@@ -1,0 +1,1 @@
+reused ~/stealth-scan-phase2/work/fixtures/100000-zero (SHA256 verified against manifest and pinned digest)

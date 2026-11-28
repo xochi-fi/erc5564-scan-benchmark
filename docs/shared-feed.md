@@ -17,7 +17,7 @@ No DoS-resistant OMR variant runs in production.
 | [PerfOMR2](https://eprint.iacr.org/2024/204) | 21.5 / 11.3 | 11 | 583 | No |
 | [DoS-PerfOMR](https://eprint.iacr.org/2024/510) | 4.9 / 2.6 | 20 | 1,996 | Yes (2024/510 Theorem 7.2) |
 
-Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one GCP n4-standard-8 with SEAL HEXL / AVX512-IFMA52. Detector time is per scanned message, for one recipient's digest. Table 2 gives DoS-PerfOMR 4.95 ms/msg amortized. Table 1 cites Theorem 5.3, which 7.2 builds on. Citations use revisions 2022-04-14 (2021/1256), 2024-11-21 (2024/204) and 2025-02-07 (2024/510, latest). [2021/1256](https://eprint.iacr.org/2021/1256) puts server cost at ~$1 per million messages. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4× the speed of PerfOMR.
+Rows are [eprint 2024/510](https://eprint.iacr.org/2024/510) Table 1: N = 2^19 messages, γ = γ̄ = 50, one GCP n4-standard-8 with SEAL HEXL / AVX512-IFMA52. Detector time is per scanned message, for one recipient's digest. Table 2 gives DoS-PerfOMR 4.95 ms/msg amortized. Table 1 cites Theorem 5.3, which 7.2 builds on. Cited revisions: 2021/1256 2022-04-14, 2024/204 2024-11-21, 2024/510 2025-02-07. [2021/1256](https://eprint.iacr.org/2021/1256) puts server cost at ~$1 per million messages. [SophOMR](https://eprint.iacr.org/2024/1814) reports 3.4× the speed of PerfOMR.
 
 ![CPU per day to scan announcements against real chain rates and a phone budget](figures/scan-budget.svg)
 <sub>Solid lines scale the scan-cost controls. Dashed OMR lines are single-thread literature values on one cloud AVX512 core.</sub>
@@ -34,20 +34,16 @@ The budgets are assumptions. At 1M/day, Turing needs 29 min.
 
 ## Privacy
 
-Privacy does not change the decision. A full download is OMR's full-scan baseline ([2021/1256](https://eprint.iacr.org/2021/1256) §1); both leak only IP and timing.
+Privacy changes the decision only past the 60 MB/day feed budget, where wallets must fetch selectively or delegate a viewing key.
 
-| Path | Observer | Learns | Source |
-| --- | --- | --- | --- |
-| Per-wallet `eth_getLogs` | RPC provider | IP, sync times, block ranges; every wallet sends the same filter | [`wallet.ts`](../src/paged-discovery/wallet.ts) |
-| RPC receipt, balance | RPC provider | Your stealth addresses, tied to IP | [METHODS.md](../METHODS.md), `verifyCandidate` |
-| Full feed download | Feed host, CDN | IP, fetch times, last checkpoint (inferred) | [Method](#method) |
-| Feed retries, later calls | Feed host; RPC provider | Retries mark feed disagreement; later checks leak as RPC, linkable by timing (inferred) | — |
-| OMR detection | Detector | Nothing about pertinence | 2021/1256 §4.2, Def. 4.1; [2024/204](https://eprint.iacr.org/2024/204) §1; [2024/510](https://eprint.iacr.org/2024/510) §7.1 |
-| OMR keys and queries | Detector | Query time, k̄, IP; identity only if keys link (OMRp2, DoS-PerfOMR: unlinkable); ~129 MB key | 2021/1256 §9.1, §9.3, §12; 2024/510 Remark 7.3 |
-| OMR DoS | Recipients | Completeness needs an honest-but-curious detector; crafted PerfOMR clues overflow recipients into a retry or full download | 2021/1256 §8.1; 2024/510 §5.1, §7.1, §7.4 |
-| ERC-5564 view tag | Everyone | 1 byte of the shared secret (128 → 124 bits); a scanner holding the viewing key sees all matches | [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) "Parsing considerations"; 2021/1256 §1 |
+| Path | Who learns | What |
+| --- | --- | --- |
+| Per-wallet RPC | RPC provider | IP, sync times; receipts and balances reveal your stealth addresses |
+| Full feed download | Feed host, CDN | IP, fetch times, last checkpoint; retries reveal only feed disagreement |
+| OMR | Detector | IP, query time, k̄, never pertinence; ~129 MB key; PerfOMR is DoS-prone |
+| ERC-5564 view tag | Everyone | 1 byte of the shared secret: 128 → 124 bits |
 
-OMR is more private only past the 60 MB/day feed budget, where wallets would fetch selectively or delegate a viewing key (inferred). [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) ("Recommendation (TL;DR)") calls FHE OMR "far-fetched" near term.
+Sources: [2021/1256](https://eprint.iacr.org/2021/1256) §1, §4.2, §8.1, §9.1, §12; [2024/204](https://eprint.iacr.org/2024/204) §1; [2024/510](https://eprint.iacr.org/2024/510) §5.1, §7.1, §7.4, Remark 7.3; [OMR Landscape](https://hackmd.io/@keewoolee/SJfUTqER-x) TL;DR; [ERC-5564](https://eips.ethereum.org/EIPS/eip-5564) "Parsing considerations". Checkpoint leak and selective-fetch fallback are inferred.
 
 ## Feed against live RPC
 

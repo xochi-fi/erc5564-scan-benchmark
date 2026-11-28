@@ -1,0 +1,36 @@
+{
+ "chain": "optimism",
+ "chainId": 10,
+ "url": "https://mainnet.optimism.io",
+ "measuredAt": "2026-11-28T13:17:21.580Z",
+ "block": 160136532,
+ "token": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+ "tokenName": "USD Coin",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 21000,
+  "erc20Transfer": 57155,
+  "permitRelay": 127728,
+  "umbraRelay": 82211,
+  "aaSponsoredFirstUse": 152535,
+  "aaSponsored": 130035,
+  "aaTokenFeeFirstUse": 165893,
+  "aaTokenFee": 143393
+ },
+ "l1": {
+  "unit": "wei",
+  "ethTransfer": 592055093,
+  "erc20Transfer": 592055093,
+  "permitRelay": 1689265802,
+  "umbraRelay": 1194011716,
+  "aaSponsoredFirstUse": 2308333409,
+  "aaSponsored": 1827936946,
+  "aaTokenFeeFirstUse": 2447004553,
+  "aaTokenFee": 1966608090
+ },
+ "attempts": []
+}

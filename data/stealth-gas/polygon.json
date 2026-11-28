@@ -1,0 +1,26 @@
+{
+ "chain": "polygon",
+ "chainId": 137,
+ "url": "https://polygon-bor-rpc.publicnode.com",
+ "measuredAt": "2026-11-28T13:17:40.409Z",
+ "block": 98110921,
+ "token": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+ "tokenName": "USD Coin",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 21000,
+  "erc20Transfer": 73955,
+  "permitRelay": 157968,
+  "umbraRelay": 104891,
+  "aaSponsoredFirstUse": 175215,
+  "aaSponsored": 152715,
+  "aaTokenFeeFirstUse": 191081,
+  "aaTokenFee": 168581
+ },
+ "l1": null,
+ "attempts": []
+}

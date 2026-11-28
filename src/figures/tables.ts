@@ -6,7 +6,7 @@ import { gzipSync } from 'node:zlib';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
-  spamCost, omissionCause, freshness, realScan, phoneResults, phoneProxies, realTiming,
+  spamCost, stealthGas, stealthSpends, omissionCause, freshness, realScan, phoneResults, phoneProxies, realTiming,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -392,6 +392,46 @@ function spamTable() {
       c.blockShareAt1M === null ? '—' : `${fixed(100 * c.blockShareAt1M, 1)}%`]));
 }
 
+// ---- stealth gas ------------------------------------------------------------------
+
+// Gas, fee and sample columns are measured; "Who learns" is inferred; "Works for" links its source.
+const STEALTH_ROWS = [
+  { option: 'Fund it from another address', key: 'fund', later: null, learns: 'Everyone: the funding transfer is public', works: 'ERC-20 (ETH pays its own gas)',
+    seen: ['funded'], umbraSeen: ['funded'], noun: 'paid by funding' },
+  { option: 'Umbra relayer, fee in the token', key: 'umbra', later: null, learns: 'Relayer: IP, timing, destination; chain: the relayer address', works: 'ERC-20 paid through [Umbra](https://github.com/ScopeLift/umbra-protocol)',
+    seen: null, umbraSeen: ['relayed'], noun: 'relayed' },
+  { option: 'ERC-2612 permit to a relayer', key: 'permit', later: null, learns: 'Relayer, as above', works: 'ERC-20 with `permit` (USDC; USDT on Ethereum has none); [Permit2](https://github.com/Uniswap/permit2) needs an ETH-paid approval first',
+    seen: ['relayed'], umbraSeen: null, noun: 'moved by another sender' },
+  { option: 'EIP-7702 delegation, ERC-4337 paymaster pays', key: 'aaSponsored', later: 'aaSponsoredLater', learns: 'Bundler and paymaster: IP and the operation; chain: paymaster and delegate name the wallet', works: 'Both, on chains with [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)',
+    seen: ['4337', '7702'], umbraSeen: null, noun: 'through a delegation' },
+  { option: 'EIP-7702 delegation, paymaster paid in the token', key: 'aaTokenFee', later: 'aaTokenFeeLater', learns: 'As above', works: 'ERC-20 the paymaster accepts', seen: null, umbraSeen: null, noun: '' },
+  { option: 'Spend received ETH directly, e.g. to an exchange', key: null, later: null, learns: 'An exchange ties its account to the stealth address', works: 'ETH only',
+    seen: ['own-eth'], umbraSeen: null, noun: 'spending own ETH' },
+] as const;
+const cents = (value: number) => (value === 0 ? '$0' : value >= 0.01 ? `$${fixed(value, 2)}` : `$${value.toPrecision(2)}`);
+function stealthGasTable() {
+  const chains = stealthGas();
+  const spends = stealthSpends().filter(r => r.route !== 'unspent');
+  const eth = chains.find(c => c.chain === 'ethereum')!;
+  const priced = chains.filter(c => c.chain !== 'ethereum' && c.chain !== 'sepolia');
+  const count = (kind: string, routes: readonly string[] | null, noun: string) => {
+    if (!routes) return null;
+    const of = spends.filter(r => r.kind === kind);
+    const hit = of.filter(r => routes.includes(r.route));
+    const linked = hit.filter(r => r.link).length, clustered = hit.filter(r => !r.link && r.clustered).length;
+    return `${hit.length} of ${of.length} ${noun} (${linked} linked${clustered ? `, ${clustered} more clustered` : ''})`;
+  };
+  return table(['Option', 'Extra gas, Ethereum', 'Extra fee, Ethereum', 'Extra fee, other mainnets (max)', 'Who learns the link (inferred)', 'Works for', 'Seen on chain'],
+    ['l', 'r', 'r', 'r', 'l', 'l', 'l'],
+    STEALTH_ROWS.map(row => {
+      const extra = (c: typeof eth, key: string | null) => (key ? c.extra[key as keyof typeof c.extra] : { gas: 0, usd: 0 });
+      const gas = `${fixed(extra(eth, row.key).gas, 0)}${row.later ? ` (${fixed(extra(eth, row.later).gas, 0)} later)` : ''}`;
+      const max = priced.map(c => ({ c, usd: extra(c, row.key).usd! })).sort((a, b) => b.usd - a.usd)[0]!;
+      const seen = [count('erc5564', row.seen, `ERC-5564 spends ${row.noun}`), count('umbra', row.umbraSeen, `Umbra withdrawals ${row.noun}`)].filter(Boolean).join('; ');
+      return [row.option, gas, cents(extra(eth, row.key).usd!), max.usd === 0 ? '$0' : `${cents(max.usd)} (${CHAIN_LABELS[max.c.chain]})`, row.learns, row.works, seen || '-'];
+    }));
+}
+
 // ---- omission cause -------------------------------------------------------------
 
 const OMISSION_CLASS: Record<string, string> = {
@@ -489,6 +529,7 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'recovery-faults': ['docs/rpc-recovery.md', recoveryFaultTable],
   'shared-feed': ['docs/shared-feed.md', feedTable],
   'spam-cost': ['docs/spam-cost.md', spamTable],
+  'stealth-gas': ['docs/stealth-gas.md', stealthGasTable],
   'omission-cause': ['docs/omission-cause.md', omissionTable],
   'freshness': ['docs/freshness.md', freshnessTable],
   'paged-batched': ['docs/paged-discovery.md', pagedBatchedTable],

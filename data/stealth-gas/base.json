@@ -1,0 +1,36 @@
+{
+ "chain": "base",
+ "chainId": 8453,
+ "url": "https://base-rpc.publicnode.com",
+ "measuredAt": "2026-11-28T13:17:00.428Z",
+ "block": 63407225,
+ "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+ "tokenName": "USD Coin",
+ "slots": {
+  "balance": 9,
+  "umbra": 4,
+  "deposit": 0
+ },
+ "gasUsed": {
+  "ethTransfer": 21000,
+  "erc20Transfer": 57155,
+  "permitRelay": 127736,
+  "umbraRelay": 82223,
+  "aaSponsoredFirstUse": 152535,
+  "aaSponsored": 130035,
+  "aaTokenFeeFirstUse": 165881,
+  "aaTokenFee": 143381
+ },
+ "l1": {
+  "unit": "wei",
+  "ethTransfer": 499935598,
+  "erc20Transfer": 499935598,
+  "permitRelay": 1451520015,
+  "umbraRelay": 1016596042,
+  "aaSponsoredFirstUse": 1961719291,
+  "aaSponsored": 1551887086,
+  "aaTokenFeeFirstUse": 2087178130,
+  "aaTokenFee": 1677345924
+ },
+ "attempts": []
+}

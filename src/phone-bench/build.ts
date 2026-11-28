@@ -9,7 +9,7 @@ import type { PackedFixture } from './scan.ts';
 export const PHONE_SEED = 'phone-bench:v1';
 export const PHONE_COUNT = 10_000;
 export const PHONE_MATCH_EVERY = 1_000;
-export const PAGE_VERSION = '5';
+export const PAGE_VERSION = '6';
 /** SHA256 of the packed rows of the 10,000-announcement fixture; the record script accepts only this fixture. */
 export const PHONE_PACKED_SHA256 = '59eed706f08063ec731f66f6868376f1bef809c5fcb98151850a11badd00720d';
 const ROOT = new URL('../../', import.meta.url).pathname;
@@ -77,6 +77,11 @@ const BOOT = `(function () {
   $('state').textContent = 'Loading';
   $('message').textContent = 'Loading the app (step 1 of 1)…';
   step = 'loading app.js'; details();
+  // A cached page may be older than the one served: version.js is never cached and names the served version.
+  var v = document.createElement('script');
+  v.src = 'version.js?t=' + Date.now();
+  v.onload = function () { if (window.SERVED_VERSION && window.SERVED_VERSION !== PAGE_VERSION) { $('stale').hidden = false; $('stale').textContent = 'A newer version (v' + window.SERVED_VERSION + ') is available. Reload the page before running.'; } };
+  document.head.appendChild(v);
   var t = setTimeout(function () { fail('app.js did not start within 30 s. Reload; if it stays, read out the details line below.'); }, 30000);
   var s = document.createElement('script');
   s.src = 'app.js?v=' + PAGE_VERSION;
@@ -92,6 +97,7 @@ export function html(): string {
 <title>Scan bench</title><style>${STYLE}</style></head><body data-state="idle">
 <h1>ERC-5564 scan bench <span id="version" class="muted"></span></h1>
 <p class="muted">Scans a seeded test fixture on this device and checks the result. Nothing leaves the device unless you submit, copy or download it. Test keys only; never fund them.</p>
+<p id="stale" class="bad" hidden></p>
 <div id="statusbar" role="status" aria-live="polite"><span id="dot"></span><span id="state">Loading</span></div>
 <p id="message" class="muted">If this text stays, JavaScript did not start: read out the details line at the bottom.</p>
 <div id="progress-box" hidden>
@@ -146,6 +152,7 @@ export async function site(fixture: PackedFixture): Promise<Record<string, strin
     'index.html': html(),
     'app.js': await bundle('page.ts'),
     'worker.js': await bundle('worker.ts'),
+    'version.js': `self.SERVED_VERSION = ${JSON.stringify(PAGE_VERSION)};\n`,
     'fixture.js': `self.FIXTURE = ${JSON.stringify(fixture)};\n`,
     'worker-wasm.js': `importScripts('wasm-bytes.js?v=${PAGE_VERSION}');\n${await bundle('worker-wasm.ts')}`,
     'wasm-bytes.js': `self.SECP256K1_WASM = ${JSON.stringify(Buffer.from(await Bun.file(`${ROOT}node_modules/tiny-secp256k1/lib/secp256k1.wasm`).arrayBuffer()).toString('base64'))};\n`,

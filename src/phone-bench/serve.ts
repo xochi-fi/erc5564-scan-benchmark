@@ -9,7 +9,7 @@ const dir = values.dir ?? new URL('../../work/phone-bench/', import.meta.url).pa
 const FILES: Record<string, string> = {
   '/': 'index.html', '/index.html': 'index.html',
   '/app.js': 'app.js', '/worker.js': 'worker.js', '/fixture.js': 'fixture.js',
-  '/worker-wasm.js': 'worker-wasm.js', '/wasm-bytes.js': 'wasm-bytes.js',
+  '/worker-wasm.js': 'worker-wasm.js', '/wasm-bytes.js': 'wasm-bytes.js', '/version.js': 'version.js',
 };
 const TYPES: Record<string, string> = { html: 'text/html; charset=utf-8', js: 'text/javascript; charset=utf-8' };
 const server = Bun.serve({

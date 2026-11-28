@@ -64,7 +64,7 @@ Over the network, two feeds take 1.8 s for a cold rescan and live RPC without pa
 
 | Row | Measured |
 | --- | --- |
-| Dual feed, remote | 2026-11-28 on Bazzite, shared with another worker's benchmark (every sample passed the 70 °C gate). Same pages as loopback, on raw.githubusercontent.com and jsDelivr at commit `7b78192`, TLS, gzip and brotli. Each sample is a fresh process. Fetch sums both feeds, fetched in parallel. The first cold sample met empty CDN caches (3.8 s) |
+| Dual feed, remote | 2026-11-28 on Bazzite, shared with another worker's benchmark, and on idle Turing node 3 (`taskset -c 4-7`). Every sample passed the 70 °C gate. Same pages as loopback, on raw.githubusercontent.com and jsDelivr at commit `7b78192`, TLS, gzip and brotli. Each sample is a fresh process. Fetch sums both feeds, fetched in parallel. Raw GitHub cache hits take 12–260 ms per request, most of the spread |
 | Live RPC, excluding pacing | The 2026-11-27 samples minus the client's ≥275 ms start-to-start wait: recorded request, scan and verification time, which run in sequence. No new RPC requests |
 | Dual feed, loopback; Live RPC, paced | 2026-11-27, Tenderly from the Bun client, two loopback feeds without TLS or compression |
 
@@ -91,7 +91,7 @@ Nodes 1–3 ran in sequence, 2026-11-27 17:20–17:36 UTC. Each sample starts be
 | Path | Mode | Host | Fetch (ms) | Scan (ms) | Page verification (ms) | First synthetic match (ms) | Catch-up (ms), median [min–max] |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | Dual feed, remote | Cold | Bazzite | 2,027 | 47.5 | 2.5 | 637.1 | 1,775 [430.5–3,774] |
-| Dual feed, remote | Cold | Turing node | pending | pending | pending | pending | pending |
+| Dual feed, remote | Cold | node 3 | 3,590 | 163.0 | 14.5 | 741.1 | 3,423 [529.3–4,185] |
 | Live RPC, excluding pacing | Cold | Bazzite | 6,834 | 41.4 | 4.8 | — | 6,895 [6,652–8,020] |
 | Live RPC, excluding pacing | Cold | node 1 | 8,331 | 127.0 | 8.9 | — | 8,467 [7,505–9,085] |
 | Live RPC, excluding pacing | Cold | node 2 | 12,183 | 121.5 | 8.2 | — | 12,312 [11,663–12,689] |
@@ -105,7 +105,7 @@ Nodes 1–3 ran in sequence, 2026-11-27 17:20–17:36 UTC. Each sample starts be
 | Live RPC, paced | Cold | node 2 | 12,183 | 121.5 | 8.2 | 4,182 | 19,865 [19,713–20,139] |
 | Live RPC, paced | Cold | node 3 | 8,354 | 118.5 | 9.3 | 3,948 | 19,443 [19,424–19,874] |
 | Dual feed, remote | Warm | Bazzite | 2,154 | 24.3 | 1.5 | 487.3 | 1,964 [256.9–2,138] |
-| Dual feed, remote | Warm | Turing node | pending | pending | pending | pending | pending |
+| Dual feed, remote | Warm | node 3 | 390.4 | 97.8 | 4.0 | 121.4 | 326.0 [322.0–343.5] |
 | Live RPC, excluding pacing | Warm | Bazzite | 3,833 | 23.6 | 2.8 | — | 3,860 [3,808–4,021] |
 | Live RPC, excluding pacing | Warm | node 1 | 3,817 | 82.3 | 5.0 | — | 3,904 [3,841–6,757] |
 | Live RPC, excluding pacing | Warm | node 2 | 6,291 | 69.5 | 4.8 | — | 6,365 [5,892–6,964] |
@@ -126,8 +126,9 @@ Nodes 1–3 ran in sequence, 2026-11-27 17:20–17:36 UTC. Each sample starts be
 | RPC response bytes | Up to 2,416 B apart, in the finalized-block reply only |
 | Omission-resume control | 113–119 ms |
 | Scan time | 2.9–3.7× |
-| Feed cold rescan / catch-up | 3.3–3.6× / 2.7–2.8× |
-| Live RPC | Within 3.8%; pacing and provider latency dominate |
+| Loopback feed cold rescan / catch-up | 3.3–3.6× / 2.7–2.8× |
+| Remote feed against RPC excluding pacing, cold, node 3 | 2.5× faster (Bazzite 3.9×) |
+| Paced live RPC | Within 3.8%; pacing and provider latency dominate |
 
 [Node 1](../data/shared-feed/turing-node-1/summary.json) · [Node 2](../data/shared-feed/turing-node-2/summary.json) · [Node 3](../data/shared-feed/turing-node-3/summary.json)
 
@@ -166,7 +167,7 @@ bun run shared-feed:verify results/shared-feed-replay/evidence.json
 bun run shared-feed:verify data/shared-feed/evidence.json
 bun run shared-feed:static                                                      # rewrite data/shared-feed/static
 taskset -c 0,2,4,6 bun run shared-feed:remote results/remote https://raw.githubusercontent.com/xochi-fi/erc5564-scan-benchmark/COMMIT/data/shared-feed/static/tenderly/ https://cdn.jsdelivr.net/gh/xochi-fi/erc5564-scan-benchmark@COMMIT/data/shared-feed/static/sentio/
-bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/evidence.json
+bun run shared-feed:remote-verify data/shared-feed/remote/bazzite/evidence.json   # or turing-node-3
 taskset -c 4-7 bun run shared-feed results/shared-feed-replay                # Turing node N, host name turing-node-N
 bun run shared-feed:verify data/shared-feed/turing-node-N/evidence.json
 taskset -c 4-7 bun run shared-feed:tune data/shared-feed/autoresearch/feed-bytes.params.json 9   # format search, no RPC

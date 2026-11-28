@@ -32,9 +32,13 @@
     "tables": "bun run src/figures/tables.ts",
     "spam-cost": "bun run src/spam-cost/run.ts",
     "omission-cause": "bun run src/omission-cause/run.ts",
+    "freshness": "bun run src/freshness/run.ts",
+    "real-announcements:fetch": "bun run src/real-announcements/fetch.ts",
+    "real-announcements:scan": "bun run src/real-announcements/scan.ts",
     "phone-bench:build": "bun run src/phone-bench/build.ts",
     "phone-bench:serve": "bun run src/phone-bench/serve.ts",
-    "phone-bench:record": "bun run src/phone-bench/record.ts"
+    "phone-bench:record": "bun run src/phone-bench/record.ts",
+    "phone-bench:cli": "bun run src/phone-bench/cli.ts"
   },
   "dependencies": {
     "@noble/hashes": "1.8.0",

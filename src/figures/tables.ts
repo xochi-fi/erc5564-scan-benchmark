@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import {
   CHAIN_LABELS, ROOT, browserSamples, feedSummary, num, pagedControls, pagedRepeat, pagedSingle, readCsv, readJson,
   bestRetrieval, chainLatest, chainRetrieval, perMonth, refreshSnapshots, recoveryReference, recoveryRun, remoteSummary, rpcUnpaced, scanCost, scanEngines, perAnnouncement, spreadOf, REMOTE_HOSTS, type FeedKey, type Row,
-  spamCost, omissionCause,
+  spamCost, omissionCause, freshness, realScan,
 } from './data.ts';
 import { median } from '../shared/stats.ts';
 import { statePerMonth, vantageComparison } from '../chain-volume/refresh-state.ts';
@@ -372,6 +372,30 @@ function omissionTable() {
       `${r.caught}/${r.omitted}`, `${r.otherSizes}/${r.omitted}`, OMISSION_CLASS[r.host] ?? '?']));
 }
 
+// ---- freshness ------------------------------------------------------------------
+
+const minSec = (s: number | null) => (s === null ? '-' : s >= 120 ? `${fixed(s / 60, 1)} min` : `${fixed(s, 0)} s`);
+function freshnessTable() {
+  return table(['Chain', 'RPC-only and hybrid: mined to seen', 'Feed-only: mined to finalized, median [max]', 'Tail blocks', 'Tail requests / bytes per poll', 'Reorged heads', 'Samples'],
+    ['l', 'r', 'r', 'r', 'r', 'r', 'r'],
+    freshness().map(f => [CHAIN_LABELS[f.chain]!, minSec(f.headAgeS), `${minSec(f.finalMedianS)} [${minSec(f.finalMaxS)}]`,
+      fixed(f.tailBlocks, 0), `${fixed(f.tailRequests, 0)} / ${fixed(f.tailBytes, 0)}`, String(f.reorgs), `${f.samples}${f.errors ? ` (+${f.errors} failed)` : ''}`]));
+}
+
+// ---- real announcements ---------------------------------------------------------
+
+function realScanTable() {
+  const rows = realScan().chains;
+  const d = (c: typeof rows[number], k: string) => fixed(c.defects[k] ?? 0, 0);
+  const total = (f: (c: typeof rows[number]) => number) => fixed(rows.reduce((n, c) => n + f(c), 0), 0);
+  return table(['Chain', 'Announcements', 'Decoded', 'Scheme ≠ 1', 'Scheme 1, bad key', 'Scheme 1, no view tag', 'Scheme 1, 65-byte key', '`crypto` engine throws', 'SDK batch'],
+    ['l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'l'],
+    [...rows.map(c => [CHAIN_LABELS[c.chain]!, fixed(c.announcements, 0), fixed(c.parsed, 0), d(c, 'other-scheme'), d(c, 'bad-key'), d(c, 'no-view-tag'),
+      fixed(c.scheme1KeyBytes['65'] ?? 0, 0), fixed(c.crypto.errors, 0), c.sdkWholeBatch.ok && c.sdkThrowsAlone.length === 0 ? 'completes' : 'throws']),
+    ['All', total(c => c.announcements), total(c => c.parsed), total(c => c.defects['other-scheme'] ?? 0), total(c => c.defects['bad-key'] ?? 0),
+      total(c => c.defects['no-view-tag'] ?? 0), total(c => c.scheme1KeyBytes['65'] ?? 0), total(c => c.crypto.errors), rows.every(c => c.sdkWholeBatch.ok) ? 'completes' : 'throws']]);
+}
+
 const TABLES: Record<string, [file: string, render: () => string]> = {
   'scan-engines': ['docs/scan-cost.md', scanEnginesTable],
   'paged-cold': ['docs/paged-discovery.md', pagedColdTable],
@@ -387,6 +411,8 @@ const TABLES: Record<string, [file: string, render: () => string]> = {
   'shared-feed': ['docs/shared-feed.md', feedTable],
   'spam-cost': ['docs/spam-cost.md', spamTable],
   'omission-cause': ['docs/omission-cause.md', omissionTable],
+  'freshness': ['docs/freshness.md', freshnessTable],
+  'real-scan': ['docs/real-announcements.md', realScanTable],
 };
 
 export function renderTables(): Map<string, string> {

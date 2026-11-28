@@ -61,7 +61,7 @@ Live runs are read-only and keyless, from a residential IP in Europe.
 | --- | --- |
 | Chain volume | ≤4 requests/s |
 | RPC recovery | ≥270 ms between request starts |
-| Browser-discovery reference, shared feed, spam cost, omission cause | ≥275 ms between request starts |
+| Browser-discovery reference, shared feed, spam cost, omission cause, freshness, real announcements | ≥275 ms between request starts |
 | Weekly refresh | ≤4 requests/s per provider, hostnames of one operator together; ≤6,000 requests per endpoint set per chain |
 
 ### Weekly refresh
@@ -224,6 +224,8 @@ bun run tables
 | `src/browser-discovery/`, `src/rpc-recovery/` | Browser harnesses |
 | `src/shared-feed/` | Feed builder, benchmark, verifier and format search |
 | `src/spam-cost/` | Read-only gas, fee and price probe for spam cost |
+| `src/freshness/` | Header and tail sampler; hybrid checkpoint logic |
+| `src/real-announcements/` | Raw-log fetch and engine scan over real announcements |
 | `src/omission-cause/` | Per-provider queries about known omitted announcements |
 | `src/phone-bench/` | Phone bench page build, server and result recorder |
 | `src/figures/` | `bun run figures` and `bun run tables`: README figures and the generated result tables, from `data/` |

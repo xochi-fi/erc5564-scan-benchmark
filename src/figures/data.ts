@@ -341,3 +341,58 @@ export function omissionCause(): OmissionRow[] {
     return [...rows.values()];
   });
 }
+
+// ---- freshness ------------------------------------------------------------------
+
+export interface Freshness {
+  chain: string; samples: number; minutes: number;
+  /** Seconds from a block's timestamp to the sample receiving it as `latest`: when an RPC-only or hybrid wallet can first see it. */
+  headAgeS: number;
+  /** Seconds from mined to finalized, per finality step: median of the step means, and the largest. */
+  finalMedianS: number | null; finalMaxS: number | null; steps: number;
+  tailBlocks: number; tailRequests: number; tailBytes: number; tailMs: number;
+  /** Block numbers seen as `latest` with two different hashes. */
+  reorgs: number; errors: number;
+}
+/** Header sampling and RPC tail polls from data/freshness/ (bun run freshness). */
+export function freshness(): Freshness[] {
+  return ['ethereum', 'base', 'arbitrum', 'optimism', 'gnosis', 'polygon', 'sepolia'].map(chain => {
+    const d = readJson(`data/freshness/${chain}.json`);
+    const ok = d.samples.filter((s: any) => s.latest.block && s.finalized.block && s.tail.every((t: any) => t.logs));
+    const steps: { mean: number; max: number }[] = [];
+    for (let i = 1; i < ok.length; i++) {
+      const a = ok[i - 1].finalized.block, b = ok[i].finalized.block;
+      if (b.number <= a.number) continue;
+      const t = ok[i].finalized.receivedAt / 1000;
+      steps.push({ mean: t - (a.timestamp + b.timestamp) / 2, max: t - a.timestamp });
+    }
+    const seen = new Map<number, string>();
+    let reorgs = 0;
+    for (const s of ok) {
+      const prior = seen.get(s.latest.block.number);
+      if (prior !== undefined && prior !== s.latest.block.hash) reorgs++;
+      seen.set(s.latest.block.number, s.latest.block.hash);
+    }
+    const first = d.samples[0].latest.sentAt, last = d.samples.at(-1).latest.sentAt;
+    return {
+      chain, samples: ok.length, minutes: (last - first) / 60_000,
+      headAgeS: median(ok.map((s: any) => s.latest.receivedAt / 1000 - s.latest.block.timestamp))!,
+      finalMedianS: steps.length ? median(steps.map(s => s.mean))! : null,
+      finalMaxS: steps.length ? Math.max(...steps.map(s => s.max)) : null, steps: steps.length,
+      tailBlocks: median(ok.map((s: any) => s.latest.block.number - s.finalized.block.number))!,
+      tailRequests: median(ok.map((s: any) => s.tail.length))!,
+      tailBytes: median(ok.map((s: any) => s.tail.reduce((n: number, t: any) => n + t.bytes, 0)))!,
+      tailMs: median(ok.map((s: any) => s.tail.reduce((n: number, t: any) => n + t.ms, 0)))!,
+      reorgs, errors: d.samples.length - ok.length,
+    };
+  });
+}
+
+// ---- real announcements ---------------------------------------------------------
+
+export const realScan = () => readJson<{ measuredAt: string; chains: {
+  chain: string; announcements: number; parsed: number; clean: number; defects: Record<string, number>;
+  scheme1KeyBytes: Record<string, number>; crypto: { matches: number; errors: number };
+  sdkWholeBatch: { ok: boolean; matches: number | null; error: string | null }; sdkThrowsAlone: string[];
+}[] }>('data/real-announcements/scan.json');
+export const realTiming = (host: string) => readJson<{ host: string; timing: { clean: number; all: number; reps: number; cpu: string; cleanMs: number[]; syntheticMs: number[]; allMs: number[] } }>(`data/real-announcements/timing-${host}.json`);
